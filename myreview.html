@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="euc-kr">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>예약내역</title>
+</head>
+<style>
+    div.header div.footer{clear:left}
+    div.left{float:left;}
+    .header{height: 200px;}
+    .top{height: 70px;
+        margin: auto;}
+    .footer{height: 30px;}
+    .left{height: 500px; width:200px;}
+    .contents{height: 500px;}
+    #login,#signin,#cafename{
+    text-decoration:none;
+    color:black;
+    }
+    nav a{
+    text-decoration:none;
+    color:black;
+    margin:2em;
+    }
+    nav{
+    display:flex;
+    justify-content:center;
+    }
+</style>
+<body>
+    <div class="container">
+        
+        <div class="header">
+            <p align=right><a id="login" href='Login'>로그인</a>
+                &nbsp;&nbsp;<a id="signin" href='Signin'>회원가입</a></p>
+            <h1 align=center>WITH PET</h1>
+            <nav>
+                <a href=#">숙소</a>
+                <a href=#">카페</a>
+                <a href=#">맛집</a>
+                <a href=#">상점</a>
+                <a href=#">게시판</a>
+            </nav>
+        </div>
+    
+        <div class="top">
+            <img src="userimg.png">OOO님&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;포인트
+        </div>
+    
+        <div class="left">
+            <div style="height:120px"><a href>예약내역</a></div>
+            <div style="height:120px"><a href>저장목록</a></div><br><br>
+            <div style="height:120px"><a href>내 후기</a></div><br><br>
+            <div style="height:120px"><a href>내가 남긴 글</a></div>
+        </div>
+    
+        <div class="contents" style="word-break:break-all;word-wrap:break-word;">
+            <h3>후기</h3>
+            <table style="width:600px">
+                <tr><td><a href="#"><img src="후기.png"></a></td><td><a href="#">상호명</a></td><td><a href="#">제품 좋아요!</a></td>
+                <td><input type="button" value="수정"><br><input type="button" value="삭제"></td></tr>
+
+                <tr><td><a href="#"><img src="후기.png"></a></td><td><a href="#">상호명</a></td><td><a href="#">제품 좋아요!</a></td>
+                    <td><input type="button" value="수정"><br><input type="button" value="삭제"></td></tr>
+            </table>
+        </div>
+        <div class="footer">footer
+        </div>
+    </div>
+</body>
+</html>
