@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <style>
+    body{
+        margin:0;
+    }
+    #cafeimg{
+        width:1280px;
+        height:250px;
+    }
+    #login,#signin,#cafename{
+        text-decoration:none;
+        color:black;
+    }
+    nav a{
+        text-decoration:none;
+        color:black;
+        margin:2em;
+    }
+    nav{
+        display:flex;
+        justify-content:center;
+    }
+    
+    table{
+        border-spacing:30px;
+        position:absolute;
+        left:300px;
+    }
+    #img_all,#img_parking{
+    width:50px;
+    }
+    </style>
+    <p align=right><a id="login" href='Login'>로그인</a>&nbsp;&nbsp;<a id="signin" href='Signin'>회원가입</a></p>
+    <h1 align=center>WITH PET</h1>
+    <nav>
+        <a href="#">숙소</a>
+        <a href="#">카페</a>
+        <a href="#">맛집</a>
+        <a href="#">상점</a>
+        <a href="#">게시판</a>
+    </nav>
+    <img id="cafeimg" src="">
+    <table>
+        <tr>
+            <td><a id="cafename" href="/cafeInfo"><h1>카페이름</h1></a></td>
+        </tr>
+        <tr>
+            <td><img id=img_all src="resources/img/all.png"></td>
+        </tr>
+        <tr>
+            <td>(간단소개)</td><td></td>
+        </tr>
+        <tr>
+            <td>영업시간</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>이용안내</td><td></td>
+        </tr>
+        <tr>
+            <td>메뉴</td><td></td>
+        </tr>
+        <tr>
+            <td>전화번호</td><td></td>
+        </tr>
+        <tr>
+            <td>주소</td><td></td>
+        </tr>
+        <tr id="review_spacing"><td>후기</td></tr>
+        <tr><td>작성자</td></tr>
+        <tr><td>별점</td></tr>
+        <tr><td>내용</td><img src=""></tr>
+        <tr><td>작성일</td></tr>
+        
+    </table>
+</body>
+</html>

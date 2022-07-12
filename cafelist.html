@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <style>
+    #cafename{
+        font-size:25px;
+    }
+    #login,#signin,#cafename{
+        text-decoration:none;
+        color:black;
+    }
+    nav a{
+        text-decoration:none;
+        color:black;
+        margin:2em;
+    }
+    nav{
+        display:flex;
+        justify-content:center;
+    }
+    #img{
+        position:relative;
+        width:200px;
+    }
+    #tb{
+        position:absolute;
+        left:300px;
+    }
+    /* .heart{
+    width:500px;
+    height:500px;
+    background:#ea2027;
+    } 
+    position:absolute;
+    top:100px;
+    left:100px;
+    */
+    .heart{
+    display:inline;
+    color:red;
+    }
+    </style>
+    <p align=right><a id="login" href='Login'>로그인</a>&nbsp;&nbsp;<a id="signin" href='Signin'>회원가입</a></p>
+    <h1 align=center>WITH PET</h1>
+    <nav>
+        <a href=#">숙소</a>
+        <a href=#">카페</a>
+        <a href=#">맛집</a>
+        <a href=#">상점</a>
+        <a href=#">게시판</a>
+    </nav>
+    <table id=tb>
+        <tr>
+            <td><a href="cafeInfo"><img id=img src="resources/img/img.png"/></a></td>
+            <td>
+                <a id="cafename" href="cafeInfo">카페이름</a><br>
+                <section>견종</section>
+                <button class="heart">♡</button>
+            </td>
+            
+        </tr>
+            <tr>
+            <td><a href="cafeInfo"><img id=img src="resources/img/img.png"/><div class="heart"></div></a></td>
+            <td>
+                <a id="cafename" href="cafeInfo">카페이름</a><br>
+                <section>견종</section>
+            </td>
+        </tr>
+    
+    </table>
+</body>
+</html>
