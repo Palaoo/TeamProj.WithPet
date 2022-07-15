@@ -1,7 +1,7 @@
 package com.example.WithPet.Service;
 
 import com.example.WithPet.domain.BusinessUser;
-import com.example.WithPet.repository.BusinessUser.BusinessUserRepository;
+import com.example.WithPet.repository.BusinessUserRepository;
 import org.springframework.transaction.annotation.Transactional;
 
 @Transactional
@@ -16,12 +16,12 @@ public class BusinessUserService {
         validDuplicateBusinessUser(businessUser);
 
         businessUserRepository.save(businessUser);
-        return businessUser.getBusiness_id();
+        return businessUser.getUserId();
     }
 
-    public Long isBusinessUser(String user_id) {
+    public Long isBusinessUser(String userid) {
         try {
-            return businessUserRepository.findByUser_Id(user_id).get().getBusiness_id();
+            return businessUserRepository.findByUserId(userid).get().getUserId();
         } catch (IllegalStateException e) {
             return -1L;
         }
@@ -29,7 +29,7 @@ public class BusinessUserService {
     }
 
     private void validDuplicateBusinessUser(BusinessUser businessUser) {
-        businessUserRepository.findByUser_Id(businessUser.getUser_id())
+        businessUserRepository.findByUserId(businessUser.getUser())
                 .ifPresent(b -> {
                     throw new IllegalStateException("이미 사업자 ID가 존재합니다.");
                 });

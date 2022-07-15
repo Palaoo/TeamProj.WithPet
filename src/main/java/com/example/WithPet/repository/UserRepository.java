@@ -1,4 +1,4 @@
-package com.example.WithPet.repository.User;
+package com.example.WithPet.repository;
 
 import com.example.WithPet.domain.User;
 

@@ -14,7 +14,7 @@ public class BusinessUserController {
         this.businessUserService = businessUserService;
     }
 
-    @GetMapping
-    public
+//    @GetMapping
+//    public
 
 }

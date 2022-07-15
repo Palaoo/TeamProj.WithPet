@@ -2,9 +2,8 @@ package com.example.WithPet;
 
 import com.example.WithPet.Service.BusinessUserService;
 import com.example.WithPet.Service.UserService;
-import com.example.WithPet.domain.BusinessUser;
-import com.example.WithPet.repository.BusinessUser.BusinessUserRepository;
-import com.example.WithPet.repository.User.UserRepository;
+import com.example.WithPet.repository.BusinessUserRepository;
+import com.example.WithPet.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

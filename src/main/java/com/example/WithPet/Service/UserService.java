@@ -1,7 +1,7 @@
 package com.example.WithPet.Service;
 
 import com.example.WithPet.domain.User;
-import com.example.WithPet.repository.User.UserRepository;
+import com.example.WithPet.repository.UserRepository;
 
 import java.util.NoSuchElementException;
 import java.util.Optional;

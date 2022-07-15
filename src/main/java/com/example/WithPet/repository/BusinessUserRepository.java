@@ -1,4 +1,4 @@
-package com.example.WithPet.repository.BusinessUser;
+package com.example.WithPet.repository;
 
 import com.example.WithPet.domain.BusinessUser;
 
@@ -8,9 +8,9 @@ import java.util.Optional;
 public interface BusinessUserRepository {
     BusinessUser save(BusinessUser businessUser);
 
-    Optional<BusinessUser> findByBusiness_Id(Long business_id);
+    Optional<BusinessUser> findByBusinessId(Long businessId);
 
-    Optional<BusinessUser> findByUser_Id(String user_id);
+    Optional<BusinessUser> findByUserId(String userid);
 
     List<BusinessUser> findAll();
 }

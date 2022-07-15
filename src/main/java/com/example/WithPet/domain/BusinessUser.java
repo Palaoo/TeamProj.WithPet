@@ -3,27 +3,28 @@ package com.example.WithPet.domain;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 
 @Entity
 public class BusinessUser {
     @Id
-    private Long business_id;
-    @Column
-    private String user_id;
+    private Long businessId;
+    @JoinColumn(name="user_id")
+    private String userId;
 
-    public Long getBusiness_id() {
-        return business_id;
+    public Long getUserId() {
+        return businessId;
     }
 
-    public void setBusiness_id(Long business_id) {
-        this.business_id = business_id;
+    public void setUserId(Long businessId) {
+        this.businessId = businessId;
     }
 
-    public String getUser_id() {
-        return user_id;
+    public String getUser() {
+        return userId;
     }
 
-    public void setUser_id(String user_id) {
-        this.user_id = user_id;
+    public void setUser(String userid) {
+        this.userId = userid;
     }
 }
