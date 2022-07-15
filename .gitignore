@@ -38,3 +38,4 @@ out/
 
 ### critical information ###
 application.properties
+AwsS3Config
