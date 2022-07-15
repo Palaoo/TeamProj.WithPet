@@ -1,7 +1,7 @@
 package com.example.WithPet.Service;
 
 import com.example.WithPet.domain.User;
-import com.example.WithPet.repository.UserRepository;
+import com.example.WithPet.repository.User.UserRepository;
 
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -37,10 +37,10 @@ public class UserService {
     }
 
     public void validDuplicateUser(User user) {
-        System.out.println("ID 중복 검사중");
         userRepository.findById(user.getId())
                 .ifPresent(m -> {
                     throw new IllegalStateException("이미 존재하는 회원입니다.");
                 });
+        System.out.println("ID 중복 검사 통과");
     }
 }

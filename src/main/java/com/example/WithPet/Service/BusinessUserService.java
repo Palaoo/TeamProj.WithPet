@@ -1,8 +1,10 @@
 package com.example.WithPet.Service;
 
 import com.example.WithPet.domain.BusinessUser;
-import com.example.WithPet.repository.BusinessUserRepository;
+import com.example.WithPet.repository.BusinessUser.BusinessUserRepository;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.NoSuchElementException;
 
 @Transactional
 public class BusinessUserService {
@@ -12,24 +14,32 @@ public class BusinessUserService {
         this.businessUserRepository = businessUserRepository;
     }
 
-    public Long join(BusinessUser businessUser) {
-        validDuplicateBusinessUser(businessUser);
+    public Long join(String uid) {
+        validDuplicateBusinessUser(uid);
+        BusinessUser businessUser=new BusinessUser();
+        businessUser.setUid(uid);
 
         businessUserRepository.save(businessUser);
-        return businessUser.getUserId();
+        return businessUserRepository.findByUid(uid).get().getBid();
     }
 
-    public Long isBusinessUser(String userid) {
+    public Long isBusinessUser(String uid) {
         try {
-            return businessUserRepository.findByUserId(userid).get().getUserId();
+            return businessUserRepository.findByUid(uid).get().getBid();
         } catch (IllegalStateException e) {
+            return -1L;
+        } catch (NoSuchElementException e) {
             return -1L;
         }
 
     }
 
-    private void validDuplicateBusinessUser(BusinessUser businessUser) {
-        businessUserRepository.findByUserId(businessUser.getUser())
+    public BusinessUser findByUid(String uid) {
+        return businessUserRepository.findByUid(uid).get();
+    }
+
+    private void validDuplicateBusinessUser(String uid) {
+        businessUserRepository.findByUid(uid)
                 .ifPresent(b -> {
                     throw new IllegalStateException("이미 사업자 ID가 존재합니다.");
                 });

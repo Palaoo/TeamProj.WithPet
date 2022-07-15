@@ -1,30 +1,28 @@
 package com.example.WithPet.domain;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
+import javax.persistence.*;
 
 @Entity
 public class BusinessUser {
     @Id
-    private Long businessId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long bid;
     @JoinColumn(name="user_id")
-    private String userId;
+    private String uid;
 
-    public Long getUserId() {
-        return businessId;
+    public Long getBid() {
+        return bid;
     }
 
-    public void setUserId(Long businessId) {
-        this.businessId = businessId;
+    public void setBid(Long bid) {
+        this.bid = bid;
     }
 
-    public String getUser() {
-        return userId;
+    public String getUid() {
+        return uid;
     }
 
-    public void setUser(String userid) {
-        this.userId = userid;
+    public void setUid(String uid) {
+        this.uid = uid;
     }
 }

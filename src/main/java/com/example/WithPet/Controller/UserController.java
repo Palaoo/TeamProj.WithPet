@@ -51,7 +51,7 @@ public class UserController {
         user.setMobile(mobile);
 
         try {
-            userService.validDuplicateUser(user);
+            userService.join(user);
         } catch (IllegalStateException e) {
             e.printStackTrace();
             return "1";
@@ -81,11 +81,11 @@ public class UserController {
 
     @GetMapping("/")
     public String home(HttpServletRequest req, Model model) {
-        if (tools.isUserLogined(req)) {
-            model.addAttribute("userLogined", req.getSession().getAttribute("userLogined"));
-            return "home";
+        if (!tools.isUserLogined(req)) {
+            return "login";
         }
-        return "homeTest";
+        model.addAttribute("userLogined", req.getSession().getAttribute("userLogined"));
+        return "home";
     }
 
     @PostMapping("/login")
