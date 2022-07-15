@@ -37,4 +37,4 @@ out/
 .vscode/
 
 ### critical information ###
-src/main/resources/application.properties
+application.properties
