@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <style>
+    body{
+        margin:0;
+    }
+    #cafeimg{
+        width:1280px;
+        height:250px;
+    }
+    #login,#signin,#cafename{
+        text-decoration:none;
+        color:black;
+    }
+    nav a{
+        text-decoration:none;
+        color:black;
+        margin:2em;
+    }
+    nav{
+        display:flex;
+        justify-content:center;
+    }
+    
+    table{
+        border-spacing:30px;
+        position:absolute;
+        left:300px;
+    }
+    #img_all,#img_parking{
+    width:50px;
+    }
+    #name,#price,#info{
+        width: 500px;
+    }
+    </style>
+
+    <header>
+        <p align=right><a id="login" href='Login'>로그인</a>&nbsp;&nbsp;<a id="signin" href='Signin'>회원가입</a></p>
+        <h1 align=center>WITH PET</h1>
+        <nav>
+            <a href="#">숙소</a>
+            <a href="#">카페</a>
+            <a href="#">맛집</a>
+            <a href="#">상점</a>
+            <a href="#">게시판</a>
+        </nav>
+    </header>
+    <content>
+        
+        <table align="center">
+            <caption><b>상품등록</b></caption>
+            <tr>
+                <td>이미지첨부</td><td><button name="upload">업로드</button><button name="add">추가</button></td>
+            </tr>
+            <tr>
+                <td>상품이름</td><td><input type="text" id="name"></td>
+            </tr>
+            <tr>
+                <td>가격</td><td><input type="number" min="0" id="price"></td>
+            </tr>
+            <tr>
+                <td>상세정보</td><td><textarea id="info"></textarea></td>
+            </tr>
+            <tr><td colspan="2" align="center"><button name="submit">등록하기</button><button name="cancle">취소</button></td></tr>
+        </table>
+    </content>
+</body>
+</html>
