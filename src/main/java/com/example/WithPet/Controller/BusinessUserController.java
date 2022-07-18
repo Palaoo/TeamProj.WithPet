@@ -44,7 +44,7 @@ public class BusinessUserController {
             return "login";
         }
         model.addAttribute("businessId", businessUserService.findByUid(req.getSession().getAttribute("userLogined").toString()).getBid());
-
+        req.getSession().setAttribute("businessId", model.getAttribute("businessId").toString());
         return "businessInfo";
     }
 
