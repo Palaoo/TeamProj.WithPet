@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>회원가입</title>
+</head>
+
+<body>
+    <table align="center">
+        <tr>
+            <td>ID</td>
+            <td><input type=text id="id"></td>
+            <td><input type="button" value="중복확인" id="btnValid"></td>
+        </tr>
+        <tr>
+            <td>PASSWORD</td>
+            <td><input type=password id="password"></td>
+        </tr>
+        <tr>
+            <td>NAME</td>
+            <td><input type=text id="name"></td>
+        </tr>
+        <tr>
+            <td>MOBILE</td>
+            <td><input type=text id="mobile"></td>
+        </tr>
+
+        <tr>
+            <td colspan="3" align="center"><input type=button value="회원가입" id="btnsignup"></td>
+        </tr>
+    </table>
+</body>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).on('click', '#btnsignup', function () {
+        $.ajax({
+            type: 'post',
+            url: 'appendUser',
+            data: {
+                id: $('#id').val(),
+                password: $('#password').val(),
+                name: $('#name').val(),
+                mobile: $('#mobile').val()
+            },
+            dataType: 'text',
+            success: function (data) {    // 회원가입 성공 : 0 / 아이디 중복 : 1 / 
+                if (data == '0') {
+                    alert('회원가입 성공 ' + data)
+                    location = 'loginPage'
+                }
+                else if (data == '1') {
+                    alert('사용 불가능한 ID 입니다.')
+                }
+            }
+        })
+    }).on('click', '#btnValid', function () {
+        $.ajax({
+            type: 'get',
+            url: 'validId',
+            data: {
+                id: $('#id').val()
+            },
+            dataType: 'text',
+            success: function (data) {        // 아이디 중복 안됨 : 0 / 중복 : 1
+                console.log(data)
+                if (data == '0')
+                    alert('사용 가능한 ID 입니다.')
+                else if (data == '1')
+                    alert('사용 불가능한 ID 입니다.')
+            }
+        })
+    })
+</script>
+
+</html>
