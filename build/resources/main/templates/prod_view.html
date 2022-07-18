@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>/mall proto</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <title>Title</title>
+    <script src="https://js.tosspayments.com/v1"></script>
+</head>
+<style>
+    #login,
+    #signin,
+    #myshopping,
+    #basket_shopping,
+    #userInfo,
+    #cafename {
+        text-decoration: none;
+        color: black;
+    }
+
+    nav a {
+        text-decoration: none;
+        color: black;
+        margin: 2em;
+    }
+
+    nav {
+        display: flex;
+        justify-content: center;
+    }
+</style>
+
+<body>
+
+    <p align=right><a id="myshopping" href='myshopping'>마이쇼핑</a>&nbsp;&nbsp;<a id="basket_shopping"
+            href='basket_shopping'>장바구니</a>&nbsp;&nbsp;<a id="userInfo" href='userInfo'>회원정보</a>&nbsp;&nbsp;<a
+            id="login" href='Login'>로그인</a></p>
+    <h1 align=center>WITH PET</h1>
+    <nav>
+        <a href=#">숙소</a>
+        <a href=#">카페</a>
+        <a href=#">맛집</a>
+        <a href=#">상점</a>
+        <a href=#">게시판</a>
+    </nav>
+    <hr>
+    <input type="text" id="price">
+    <input type="button" id="payment" value="TossPay 결제">
+
+</body>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    var clientKey = 'test_ck_mnRQoOaPz8L0knPzxY58y47BMw6v'
+    var tossPayments = TossPayments(test_ck_mnRQoOaPz8L0knPzxY58y47BMw6v)
+
+    $(document).on('click', '#payment', function () {
+        let price = parseInt($('#price').val());
+        tossPayments.requestPayment('카드', {
+            // 결제 수단 파라미터
+            // 결제 정보 파라미터
+            amount: price,
+            orderId: 'L6o8LEvy99H1wUTR6vOT3',
+            orderName: '토스 티셔츠 외 2건',
+            customerName: '박토스',
+            successUrl: 'http://localhost:8080/success',
+            failUrl: 'http://localhost:8080/fail',
+        })
+
+    })
+</script>
+
+</html>
