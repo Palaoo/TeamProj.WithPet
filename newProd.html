@@ -63,11 +63,11 @@
         </nav>
     </header>
 
-    <form name="smartEditorText" method="post" action="/text/insertText" enctype="multipart/form-data">
+    <form name="form" method="post" action="newProd" enctype="multipart/form-data">
         <table align="center">
             <tr ><td colspan="2"><h5 align="left">상품등록</h5></td></tr>
             <tr><td>상품이름 </td><td><input type=text name="prodName" value="proName"></td></tr>
-            <tr><td>상품설명 </td><td class="form-floating"><textarea class="form-control" id="textTest" name="textTest" placeholder="detail" id="floatingTextarea2" style="height: 100px">detail</textarea></td></tr> <!--<input name="detail" value="detail"/>-->
+            <tr><td>상품설명 </td><td class="form-floating"><textarea class="form-control" id="textTest" name="textTest" value="detail" id="floatingTextarea2" style="height: 100px">detail</textarea></td></tr> <!--<input name="detail" value="detail"/>-->
             <tr><td>상품가격 </td><td><input type=text name="price" value="price"/></td></tr>
             <tr><td>타입 </td>
                 <td>
@@ -83,7 +83,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </body>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script type="text/javascript" src="d:/html/naver-smarteditor2/demo/js/service/HuskyEZCreator.js" charset="utf-8"></script>
+<!-- <script type="text/javascript" src="d:/html/naver-smarteditor2/demo/js/service/HuskyEZCreator.js" charset="utf-8"></script>
 <script type="text/javascript">
 var oEditors = [];
     nhn.husky.EZCreator.createInIFrame({ oAppRef : oEditors,
@@ -99,5 +99,5 @@ var oEditors = [];
 function submitContents(){
     oEditors.getById["class_tutorIntroduce"].exec("UPDATE_CONTENTS_FIELD",[]);
 }
-</script>
+</script> -->
 </html>
