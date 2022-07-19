@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+</head>
+<style>
+    #login,#signin,#cafename,#title{
+        text-decoration:none;
+        color:black;
+    }
+    nav a{
+        text-decoration:none;
+        color:black;
+        margin:2em;
+    }
+    nav{
+        display:flex;
+        justify-content:center;
+    }
+     *{margin: 0; padding: 0; box-sizing: border-box;}
+        ul,li{list-style: none;}
+        [name='slide']{display: none;}
+        .slidebox{max-width: 1000px;width: 100%;margin: 0 auto;}
+        .slidebox img{ max-width: 100%;}
+        .slidebox .slidelist{
+            white-space:nowrap;
+            font-size: 0;
+            overflow: hidden;
+        }
+        .slidebox .slideitem{
+            position: relative;
+            display: inline-block;
+            vertical-align: middle;
+            width: 100%;
+            transition: all .35s;
+        }
+        .slidebox .slideitem label{
+            position: absolute;
+            z-index: 1;
+            top: 50%;
+            transform: translateY(-50%);
+            padding: 20px;
+            border-radius: 20px;
+            cursor: pointer;
+        }
+        label.left{
+            left: 20px;
+            background-color: #ffffff;
+            background-image: url('img/left.png');
+            background-position: center center;
+            background-size: 50%;
+            background-repeat: no-repeat;
+        }
+        label.right{
+            right: 20px;
+            background-color: #ffffff;
+            background-image: url('img/right.png');
+            background-position: center center;
+            background-size: 50%;
+            background-repeat: no-repeat;
+        }
+        [id="slide01"]:checked ~ .slidelist .slideitem {transform: translateX(0); animation: slide01 20x infinite;}
+        [id="slide02"]:checked ~ .slidelist .slideitem {transform: translateX(-100%); animation: slide02 20x infinite;}
+        [id="slide03"]:checked ~ .slidelist .slideitem {transform: translateX(-200%); animation: slide03 20x infinite;}
+        [id="slide04"]:checked ~ .slidelist .slideitem {transform: translateX(-300%); animation: slide04 20x infinite;}
+
+        @keyframes slide01 {
+            0% {left: 0%;}
+            23% {left: 0%;}
+            25% {left: -100%;}
+            48% {left: -100%;}
+            50% {left: 200%;}
+            73% {left: 200%;}
+            75% {left: 100%;}
+            98% {left: 100%;}
+            100% {left: 0%;}
+        }
+
+        @keyframes slide02 {
+            0% {left: 0%;}
+            23% {left: 0%;}
+            25% {left: -100%;}
+            48% {left: -100%;}
+            50% {left: 200%;}
+            73% {left: 200%;}
+            75% {left: 100%;}
+            98% {left: 100%;}
+            100% {left: 0%;}
+        }
+
+        @keyframes slide03 {
+            0% {left: 0%;}
+            23% {left: 0%;}
+            25% {left: -100%;}
+            48% {left: -100%;}
+            50% {left: 200%;}
+            73% {left: 200%;}
+            75% {left: 100%;}
+            98% {left: 100%;}
+            100% {left: 0%;}
+        }
+
+        @keyframes slide04 {
+            0% {left: 0%;}
+            23% {left: 0%;}
+            25% {left: -100%;}
+            48% {left: -100%;}
+            50% {left: 200%;}
+            73% {left: 200%;}
+            75% {left: 100%;}
+            98% {left: 100%;}
+            100% {left: 0%;}
+        }
+</style>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-xs-1 col-sm-12">
+            <!-- <p align=left><input type="text">&nbsp;<input type="button" value="검색"></p> -->
+            <p align=right><a id="my_shop" href='#'>마이쇼핑</a>&nbsp;&nbsp;<a id="cart" href='#'>장바구니</a>
+                &nbsp;&nbsp;<a id="signin" href='signin'>회원가입</a>&nbsp;&nbsp;<a id="login" href='login'>로그인</a></p>
+            <a href="home" id="title"><h1 align=center>WITH PET</h1></a>
+            <nav>
+                <a href="#">숙소</a>
+                <a href="cafelist">카페</a>
+                <a href="#">맛집</a>
+                <a href="#">상점</a>
+                <a href="#">게시판</a>
+            </nav>
+        </div>
+    </div>
