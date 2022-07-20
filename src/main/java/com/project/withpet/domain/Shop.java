@@ -29,7 +29,6 @@ public class Shop {
     @JoinColumn(name = "regid")
     private Region region;
 
-
     @ManyToOne
     @JoinColumn(name = "typeid")
     private Shoptype shoptype;
