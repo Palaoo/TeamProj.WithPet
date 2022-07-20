@@ -1,7 +1,7 @@
 package com.project.withpet.controller;
 
 public class BoardForm {
-    private Long boardCode;
+    private Long boardcode;
     private String content;
     private String date;
     private String writer;
@@ -15,12 +15,12 @@ public class BoardForm {
         this.title = title;
     }
 
-    public Long getBoardCode() {
-        return boardCode;
+    public Long getBoardcode() {
+        return boardcode;
     }
 
-    public void setBoardCode(Long boardCode) {
-        this.boardCode = boardCode;
+    public void setBoardcode(Long boardcode) {
+        this.boardcode = boardcode;
     }
 
     public String getContent() {

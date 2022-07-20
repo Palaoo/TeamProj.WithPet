@@ -58,7 +58,13 @@ public class LoginController {
         } else {
             return "redirect:/login";
         }
+    }
 
+    @GetMapping("logout")
+    public String logout(HttpServletRequest req){
+        HttpSession session = req.getSession();
+        session.removeAttribute("userid");
+        return "redirect:/";
     }
 
 

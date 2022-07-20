@@ -4,22 +4,22 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=<device-width>, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+    <th:block th:replace="fragments/common::style"></th:block>
 </head>
-<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
 <style>
-
+body{
+    font-size: medium;
+}
 </style>
 <body>
-<p align=right><a id="login" href='Login'>로그인</a>
-    &nbsp;&nbsp;<a id="signin" href='Signin'>회원가입</a></p>
-<h1 align=center>WITH PET</h1>
-<nav>
-    <a href=#>숙소</a>
-    <a href=#>카페</a>
-    <a href=#>맛집</a>
-    <a href=#>상점</a>
-    <a href="/community">게시판</a>
-</nav>
+
+<div th:replace="fragments/common :: header"></div>
+
 <h2>게시물 작성</h2>
 
 <form action="newpost" method="post">
@@ -30,6 +30,7 @@
         <input type="submit" value="제출">&nbsp;<input type="button" value="취소">
     </div>
 </form>
+<th:block th:replace="fragments/common :: footer"></th:block>
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
 </body>
 <script>
