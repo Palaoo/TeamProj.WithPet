@@ -2,6 +2,8 @@ package com.project.withpet.service;
 
 import com.project.withpet.domain.Board;
 import com.project.withpet.repository.BoardRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import javax.transaction.Transactional;
 import java.util.Optional;
@@ -22,5 +24,13 @@ public class BoardService {
 
     public Optional<Board> findById(Long boardcode){
         return boardRepository.findById(boardcode);
+    }
+
+    public Page<Board> postList(Pageable pageable){
+        return boardRepository.findAll(pageable);
+    }
+
+    public Long getLastBoardCode(){
+        return boardRepository.findFirstByOrderByBoardcodeDesc().get().getBoardcode();
     }
 }
