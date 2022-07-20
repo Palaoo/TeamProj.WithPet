@@ -1,8 +1,8 @@
-buildscript {
-	dependencies {
-		classpath("gradle.plugin.com.ewerk.gradle.plugins:querydsl-plugin:1.0.10")
-	}
-}
+//buildscript {
+//	dependencies {
+//		classpath("gradle.plugin.com.ewerk.gradle.plugins:querydsl-plugin:1.0.10")
+//	}
+//}
 
 plugins {
 	id 'org.springframework.boot' version '2.6.7'
@@ -14,13 +14,13 @@ group = 'com.project'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
 
-apply plugin: "com.ewerk.gradle.plugins.querydsl"
-
-configurations {
-	compileOnly {
-		extendsFrom annotationProcessor
-	}
-}
+//apply plugin: "com.ewerk.gradle.plugins.querydsl"
+//
+//configurations {
+//	compileOnly {
+//		extendsFrom annotationProcessor
+//	}
+//}
 
 
 repositories {
@@ -41,40 +41,35 @@ dependencies {
 	implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
 //	implementation 'io.springfox:springfox-swagger2:3.0.0'
 //	implementation 'io.springfox:springfox-swagger-ui:3.0.0'
-	implementation "com.querydsl:querydsl-jpa:"
-	implementation "com.querydsl:querydsl-core:"
-	implementation "com.querydsl:querydsl-apt:"
-//	annotationProcessor "com.querydsl:querydsl-apt:5.0.0:jpa"
-//	annotationProcessor(
-//			"javax.persistence:javax.persistence-api",
-//			"javax.annotation:javax.annotation-api",
-//	)
+//	implementation "com.querydsl:querydsl-jpa:"
+//	implementation "com.querydsl:querydsl-core:"
+//	implementation "com.querydsl:querydsl-apt:"
 }
 
-def queryDslSrcDir = "$buildDir/generated"
-querydsl {
-library = 'com.querydsl:querydsl-apt'
-jpa = true
-querydslSourcesDir = queryDslSrcDir
-}
-sourceSets {
-main {
-	java {
-		srcDirs = ['src/main/java', queryDslSrcDir]
-	}
-}
-}
-
-task deleteGeneratedSources(type: Delete) {
-delete file(queryDslSrcDir)
-}
-
-tasks.withType(JavaCompile) { it.dependsOn('deleteGeneratedSources') }
-
-compileQuerydsl{
-options.annotationProcessorPath = configurations.querydsl
-}
-
-configurations {
-querydsl.extendsFrom compileClasspath
-}
+//def queryDslSrcDir = "$buildDir/generated"
+//querydsl {
+//library = 'com.querydsl:querydsl-apt'
+//jpa = true
+//querydslSourcesDir = queryDslSrcDir
+//}
+//sourceSets {
+//main {
+//	java {
+//		srcDirs = ['src/main/java', queryDslSrcDir]
+//	}
+//}
+//}
+//
+//task deleteGeneratedSources(type: Delete) {
+//delete file(queryDslSrcDir)
+//}
+//
+//tasks.withType(JavaCompile) { it.dependsOn('deleteGeneratedSources') }
+//
+//compileQuerydsl{
+//options.annotationProcessorPath = configurations.querydsl
+//}
+//
+//configurations {
+//querydsl.extendsFrom compileClasspath
+//}

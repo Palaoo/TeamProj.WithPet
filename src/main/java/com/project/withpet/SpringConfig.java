@@ -2,12 +2,8 @@ package com.project.withpet;
 
 import com.project.withpet.repository.*;
 import com.project.withpet.service.*;
-import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 
 @Configuration
 public class SpringConfig {
@@ -16,18 +12,17 @@ public class SpringConfig {
     private final BoardRepository boardRepository;
     private final BoardimgRepository boardimgRepository;
     private final ReplyRepository replyRepository;
-
-    @PersistenceContext
-    private EntityManager entityManager;
+    private final ShopRepository shopRepository;
 
 
     public SpringConfig(UserRepository userRepository, BoardRepository boardRepository,
-                        BoardimgRepository boardimgRepository, ReplyRepository replyRepository) {
+                        BoardimgRepository boardimgRepository, ReplyRepository replyRepository, ShopRepository shopRepository) {
 
         this.userRepository = userRepository;
         this.boardRepository = boardRepository;
         this.boardimgRepository = boardimgRepository;
         this.replyRepository = replyRepository;
+        this.shopRepository = shopRepository;
     }
 
     @Bean
@@ -51,8 +46,8 @@ public class SpringConfig {
     }
 
     @Bean
-    public JPAQueryFactory jpaQueryFactory() {
-        return new JPAQueryFactory(entityManager);
+    public ShopService shopService(){
+        return new ShopService(shopRepository);
     }
 
 }
