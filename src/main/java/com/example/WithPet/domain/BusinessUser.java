@@ -9,6 +9,16 @@ public class BusinessUser {
     private Long bid;
     @JoinColumn(name="user_id")
     private String uid;
+    @Column
+    private String mobile;
+
+    public String getMobile() {
+        return mobile;
+    }
+
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
+    }
 
     public Long getBid() {
         return bid;
