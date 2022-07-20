@@ -1,6 +1,8 @@
 package com.project.withpet.domain;
 
+import lombok.AccessLevel;
 import lombok.Builder;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
@@ -23,11 +25,14 @@ public class Shop {
     @Column
     private String tel;
 
-    @JoinColumn(name = "region_regid")
-    private Long regid;
+    @ManyToOne
+    @JoinColumn(name = "regid")
+    private Region region;
 
-    @JoinColumn(name = "shoptype_typeid")
-    private Long typeid;
+
+    @ManyToOne
+    @JoinColumn(name = "typeid")
+    private Shoptype shoptype;
 
     public Long getShopid() {
         return shopid;
@@ -35,21 +40,6 @@ public class Shop {
 
     public void setShopid(Long shopid) {
         this.shopid = shopid;
-    }
-
-    @Builder
-    private Shop(Long shopid, String name, String intro, String hour,
-                 String info, String address, String tel, Long regid,
-                 Long typeid){
-        this.shopid = shopid;
-        this.name = name;
-        this.intro = intro;
-        this.hour = hour;
-        this.info = info;
-        this.address = address;
-        this.tel = tel;
-        this.regid = regid;
-        this.typeid = typeid;
     }
 
     public String getName() {
@@ -100,20 +90,19 @@ public class Shop {
         this.tel = tel;
     }
 
-    public Long getRegid() {
-        return regid;
+    public Region getRegion() {
+        return region;
     }
 
-    public void setRegid(Long regid) {
-        this.regid = regid;
+    public void setRegion(Region region) {
+        this.region = region;
     }
 
-    public Long getTypeid() {
-        return typeid;
+    public Shoptype getShoptype() {
+        return shoptype;
     }
 
-    public void setTypeid(Long typeid) {
-        this.typeid = typeid;
+    public void setShoptype(Shoptype shoptype) {
+        this.shoptype = shoptype;
     }
-
 }
