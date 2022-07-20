@@ -18,13 +18,13 @@ import java.util.UUID;
 public class S3Uploader {
     private final AmazonS3Client amazonS3Client;
 
-    public S3Uploader(AmazonS3Client amazonS3Client, String bucket) {
-        this.amazonS3Client = amazonS3Client;
-        this.bucket = bucket;
-    }
-
     @Value("${cloud.aws.s3.bucket}")
     private String bucket;
+
+    public S3Uploader(AmazonS3Client amazonS3Client) {
+        this.amazonS3Client = amazonS3Client;
+    }
+
 
     public String uploadFiles(MultipartFile multipartFile, String dirName) throws IOException {
         File uploadFile = convert(multipartFile)  // 파일 변환할 수 없으면 에러

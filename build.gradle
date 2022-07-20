@@ -44,11 +44,11 @@ dependencies {
 	implementation "com.querydsl:querydsl-jpa:"
 	implementation "com.querydsl:querydsl-core:"
 	implementation "com.querydsl:querydsl-apt:"
-	annotationProcessor "com.querydsl:querydsl-apt:5.0.0:jpa"
-	annotationProcessor(
-			"javax.persistence:javax.persistence-api",
-			"javax.annotation:javax.annotation-api",
-	)
+//	annotationProcessor "com.querydsl:querydsl-apt:5.0.0:jpa"
+//	annotationProcessor(
+//			"javax.persistence:javax.persistence-api",
+//			"javax.annotation:javax.annotation-api",
+//	)
 }
 
 def queryDslSrcDir = "$buildDir/generated"

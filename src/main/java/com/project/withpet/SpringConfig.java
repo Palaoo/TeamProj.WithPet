@@ -17,18 +17,17 @@ public class SpringConfig {
     private final BoardimgRepository boardimgRepository;
     private final ReplyRepository replyRepository;
 
-    private final JPAQueryFactory jpaQueryFactory;
+    @PersistenceContext
+    private EntityManager entityManager;
 
-    private final ShopRepositoryCustom shopRepositoryCustom;
 
-    public SpringConfig(UserRepository userRepository, BoardRepository boardRepository, BoardimgRepository boardimgRepository, ReplyRepository replyRepository, EntityManager entityManager, JPAQueryFactory jpaQueryFactory, ShopRepositoryCustom shopRepositoryCustom) {
+    public SpringConfig(UserRepository userRepository, BoardRepository boardRepository,
+                        BoardimgRepository boardimgRepository, ReplyRepository replyRepository) {
 
         this.userRepository = userRepository;
         this.boardRepository = boardRepository;
         this.boardimgRepository = boardimgRepository;
         this.replyRepository = replyRepository;
-        this.jpaQueryFactory = jpaQueryFactory;
-        this.shopRepositoryCustom = shopRepositoryCustom;
     }
 
     @Bean
@@ -50,17 +49,10 @@ public class SpringConfig {
     public ReplyService replyService(){
         return new ReplyService(replyRepository);
     }
-    
-    @Bean
-    public ShopRepositoryImpl shopService(){
-        return new ShopRepositoryImpl(jpaQueryFactory, shopRepositoryCustom);
-    }
-
-    @PersistenceContext
-    private EntityManager entityManager;
 
     @Bean
-    public JPAQueryFactory jpaQueryFactory(){
+    public JPAQueryFactory jpaQueryFactory() {
         return new JPAQueryFactory(entityManager);
     }
+
 }

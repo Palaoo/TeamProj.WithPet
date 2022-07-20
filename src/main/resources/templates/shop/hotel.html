@@ -47,13 +47,12 @@
     </select>&nbsp;
 </div><br>
 
-<div class="row"th:each="shop : ${shops}">
+<div class="row" th:each="hotel : ${shopList}">
     <div class="col">
         <img src="../../static/숙소기본이미지.png" style="float:left; margin:10px">
     </div>
-    <div class="col">
-        <th:block th:text="${shop.name}"></th:block> | 별점(댓글수)<br>
-        <th:block th:text="${shop}"></th:block>
+    <div class="col" >
+        <th:block th:text="${hotel.getRegion().getRegname()}"></th:block> | 별점(댓글수)<br>
         특성1, 특성2<br>
         50,000(숙박 가격)<br>
     </div>
