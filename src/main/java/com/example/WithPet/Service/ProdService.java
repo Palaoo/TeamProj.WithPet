@@ -24,9 +24,8 @@ public class ProdService {
         return prodRepository.findAll(pageable);
     }
 
-
-
     public Optional<Product> findOne(Long id) {
         return prodRepository.findById(id);
     }
+
 }

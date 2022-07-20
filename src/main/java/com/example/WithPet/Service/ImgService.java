@@ -30,11 +30,15 @@ public class ImgService {
         return imgRepository.findById(id);
     }
 
+    public Optional<Img> findByProdid(Long prodid) {
+        return imgRepository.findByProdid(prodid);
+    }
+
     public List<String> findImgURLs(Page<Product> products) {
         ArrayList<String> pathList = new ArrayList<String>();
         for (Product product : products) {
             String path = imgRepository.findByProdid(product.getId()).get().getPath();
-            System.out.printf("From ImgService, path = %s", path);
+            System.out.printf("From ImgService, path = %s\n", path);
             pathList.add(path);
         }
         return pathList;
