@@ -1,10 +1,12 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
-<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=<device-width>, initial-scale=1.0">
+    <title>Document</title>
+    <th:block th:replace="fragments/common::style"></th:block>
 </head>
 <style>
     body{
@@ -24,18 +26,10 @@
         justify-content:center;
     }
 </style>
-
 <body>
-<p align=right><a id="login" href='Login'>로그인</a>
-    &nbsp;&nbsp;<a id="signin" href='Signin'>회원가입</a></p>
-<h1 align=center>WITH PET</h1>
-<nav>
-    <a href=#">숙소</a>
-    <a href=#">카페</a>
-    <a href=#">맛집</a>
-    <a href=#">상점</a>
-    <a href=#">게시판</a>
-</nav>
+
+<div th:replace="fragments/common :: header"></div>
+
 <h2>호텔 찾기</h2>
 <div>
     <input type="date">&nbsp;<input type="date">&nbsp;
@@ -53,14 +47,18 @@
     </select>&nbsp;
 </div><br>
 
-<div>
-    <img src="../../static/숙소기본이미지.png" style="float:left; margin:10px">
-    <div style="float:left; margin:10px">
-        숙소명 | 별점(댓글수)<br>
-        특성1, 특성2<br><br>
-        50,000(숙박 가격)
-    </div><br><br><br><br><br><br>
+<div class="row"th:each="shop : ${shops}">
+    <div class="col">
+        <img src="../../static/숙소기본이미지.png" style="float:left; margin:10px">
+    </div>
+    <div class="col">
+        <th:block th:text="${shop.name}"></th:block> | 별점(댓글수)<br>
+        <th:block th:text="${shop}"></th:block>
+        특성1, 특성2<br>
+        50,000(숙박 가격)<br>
+    </div>
 </div>
+
 
 <div>
     <img src="../../static/숙소기본이미지.png" style="float:left; margin:10px">
@@ -78,6 +76,9 @@
         50,000(숙박 가격)
     </div><br><br><br><br><br><br>
 </div>
+
+<th:block th:replace="fragments/common :: footer"></th:block>
 
 </body>
+<script></script>
 </html>
