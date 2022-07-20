@@ -10,12 +10,11 @@
 </head>
 <style>
     body{
-        font-size: 12px;
-        margin-left: 50px;
+        font-size: 15px;
+        margin: 50px;
     }
-    .post{
-        float:left;
-        margin:10px;
+    .card{
+        width: 25rem;
     }
     nav a{
         text-decoration:none;
@@ -26,27 +25,33 @@
         display:flex;
         justify-content:center;
     }
-    ul,li{
-        all:unset;
-    }
+    /*.row row-cols-1 row-cols-md-3 g-4{*/
+    /*    margin: 100px;*/
+    /*}*/
+
 </style>
 <body>
 
-<div th:replace="fragments/common :: navbar"></div>
+<div th:replace="fragments/common :: header"></div>
 
 게시판&nbsp<a href="community/newpost">+</a><br>
 
-<div th:each="post: ${posts}">
-    <div class="post">
-        <a th:href="@{/community/postdetail(boardcode=${post.boardcode})}">
-            <img src="../../static/게시물사진.png" width="250px" height="200px"><br>
-            <span style="font-weight: bolder" th:text="${post.title}"></span><br>
-            <span id=postContent th:utext="${post.content}"></span><br><br>
-            <img src="../../static/userimg.png" width="40px" height="40px" style="float:left">&nbsp;
-            <div style="float:left"><span th:text="${post.writer}"></span><br>
-                <span th:text="${post.date}"></span>&nbsp;조회수&nbsp;좋아요&nbsp;댓글</div>
-            <input type="hidden" th:value="${post.boardcode}">
-        </a><br><br><br><br>
+<div class="row row-cols-1 row-cols-md-3 g-4">
+    <div class="col" th:each="post: ${posts}">
+        <div class="card border-dark mb-3">
+            <a th:href="@{/community/postdetail(boardcode=${post.boardcode})}">
+                <img class="card-img-top" src="/image/catsock.jfif" alt="" width="200" height="200">
+                <div class="card-body">
+                    <h5 class="card-title" th:text="${post.title}"></h5>
+                    <p class="card-text" id=postContent th:utext="${post.content}"></p>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item" th:text="${post.writer}"></li>
+                        <li class="list-group-item" th:text="${post.date}">&nbsp;조회수&nbsp;좋아요&nbsp;댓글</li>
+                    </ul>
+                </div>
+            </a>
+        </div>
+        <input type="hidden" th:value="${post.boardcode}">
     </div>
 </div>
 
@@ -92,6 +97,7 @@
         $('.pagination li').removeClass('active');
         $(this).addClass('active');
     });
+
     /*    $('.pagination').on('click', 'li:not(.prev):not(.next)', function() {
             $('.pagination li').removeClass('active');
             $(this).not('.prev,.next').addClass('active');

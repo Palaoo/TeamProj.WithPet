@@ -42,7 +42,7 @@ public class BoardController {
     @GetMapping("/community")
     public String posts(Model model,
                         @PageableDefault(sort = "date", direction = Sort.Direction.DESC, size = 6)
-                        Pageable pageable) {
+                        Pageable pageable, HttpServletRequest req) {
 
         Page<Board> posts = boardService.postList(pageable);
         model.addAttribute("posts", posts);
@@ -51,6 +51,10 @@ public class BoardController {
         model.addAttribute("hasNext", posts.hasNext());
         model.addAttribute("hasPrev", posts.hasPrevious());
         model.addAttribute("totalPage", posts.getTotalPages());
+        HttpSession session = req.getSession();
+        if(session.getAttribute("userid")!=null){
+            model.addAttribute("userid", session.getAttribute("userid"));
+        }
         return "board/community";
     }
 
@@ -63,7 +67,6 @@ public class BoardController {
         model.addAttribute("date", post.get().getDate());
         model.addAttribute("boardcode", post.get().getBoardcode());
         model.addAttribute("content", post.get().getContent());
-
 
         HttpSession session = req.getSession();
         if(session.getAttribute("userid")!=null){
@@ -85,44 +88,21 @@ public class BoardController {
 
     @GetMapping("/community/newpost")
     public String createPost(HttpServletRequest req, Model model){
-        Long lastBoardCode = boardService.getLastBoardCode();
-//        model.addAttribute("lastBoardCode", lastBoardCode);
         HttpSession session = req.getSession();
         if(session.getAttribute("userid")==null){
             return "redirect:/login";
         } else {
-            session.setAttribute("boardCodestr", lastBoardCode + 1);
             return "board/community_newpost";
         }
     }
-
-    @PostMapping("/community/newreply")
-    @ResponseBody
-    public Object newreply(HttpServletRequest req, @RequestParam("writer") String writer,
-                           @RequestParam("content") String content,
-                           @RequestParam("boardcode") Long boardcode){
-
-        Reply reply = new Reply();
-        reply.setWriter(writer);
-        reply.setContent(content);
-        reply.setBoardcode(boardcode);
-        replyService.newReply(reply);
-        List<Reply> replies = replyService.findList(boardcode);
-        return replies;
-
-    }
-
-
 
     @PostMapping("/community/newpost")
     public String create(BoardForm form, HttpServletRequest req
                         ) throws IOException {
 
-
         HttpSession session = req.getSession();
 
         Board board = new Board();
-//        board.setBoardcode(form.getBoardCode());
         board.setTitle(form.getTitle());
         board.setContent(form.getContent());
         Object userId = session.getAttribute("userid");
@@ -145,5 +125,20 @@ public class BoardController {
 //        boardimgService.save(boardimg);
     }
 
+
+    @PostMapping("/community/newreply")
+    @ResponseBody
+    public Object newreply(HttpServletRequest req, @RequestParam("writer") String writer,
+                           @RequestParam("content") String content,
+                           @RequestParam("boardcode") Long boardcode) {
+
+        Reply reply = new Reply();
+        reply.setWriter(writer);
+        reply.setContent(content);
+        reply.setBoardcode(boardcode);
+        replyService.newReply(reply);
+        List<Reply> replies = replyService.findList(boardcode);
+        return replies;
+    }
 
 }
