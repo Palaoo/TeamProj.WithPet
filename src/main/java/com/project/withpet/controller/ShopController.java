@@ -27,6 +27,8 @@ public class ShopController {
         List<Shop> shops = shopService.shopList();
         model.addAttribute("shops", shops);
 
+        shops.get(1).getShopFeats().get(1).getFeatname();
+
         HttpSession session = req.getSession();
         if(session.getAttribute("userid")!=null){
             model.addAttribute("userid", session.getAttribute("userid"));

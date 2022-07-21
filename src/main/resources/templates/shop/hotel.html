@@ -53,7 +53,9 @@
     </div>
     <div class="col" >
         <th:block th:text="${shop.getName()}"></th:block> | 별점(댓글수)<br>
-        특성1, 특성2<br>
+        <th:block th:each="feat:${shop.getShopFeats()}">
+            <th:block th:text="${feat.getFeatname()}"></th:block>
+        </th:block><br>
         50,000(숙박 가격)<br>
     </div>
 </div>
