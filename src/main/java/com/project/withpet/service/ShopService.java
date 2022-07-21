@@ -5,6 +5,7 @@ import com.project.withpet.repository.ShopRepository;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @Transactional
 public class ShopService {
@@ -16,5 +17,9 @@ public class ShopService {
 
     public List<Shop> shopList(){
         return shopRepository.findAll();
+    }
+
+    public Optional<Shop> findById(Long id){
+        return shopRepository.findById(id);
     }
 }

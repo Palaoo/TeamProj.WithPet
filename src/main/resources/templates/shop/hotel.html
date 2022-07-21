@@ -38,45 +38,34 @@
         <option>요금순</option>
     </select>&nbsp;
     <select>
-        <option>강아지</option>
-        <option>고양이</option>
-    </select>&nbsp;
-    <select>
-        <option>특성1</option>
-        <option>특성2</option>
+        <option>소형견</option>
+        <option>중형견</option>
+        <option>대형견</option>
+        <option>모든견종</option>
     </select>&nbsp;
 </div><br>
 
-<div class="row" th:each="shop : ${shops}">
-    <div class="col">
-        <img src="../../static/숙소기본이미지.png" style="float:left; margin:10px">
-    </div>
-    <div class="col" >
-        <th:block th:text="${shop.getName()}"></th:block> | 별점(댓글수)<br>
-        <th:block th:each="feat:${shop.getShopFeats()}">
-            <th:block th:text="${feat.getFeatname()}"></th:block>
-        </th:block><br>
-        50,000(숙박 가격)<br>
-    </div>
+
+<div class="card mb-3" th:each="shop : ${shops}" style="max-width: 540px;">
+    <a th:href="@{/hotel/detail(shopid=${shop.getShopid()})}">
+        <div class="row g-0" >
+            <div class="col-md-4">
+                <img src="/image/poolvil.jfif" style="height: 150px" class="img-fluid rounded-start">
+            </div>
+            <div class="col-md-8" >
+                <div class="card-body">
+                    <h3 class="card-title" th:text="${shop.getName()}"></h3><br>
+                    별점(댓글수)<br>
+                    <th:block th:each="feat:${shop.getShopFeats()}">
+                        <span class="card-text" th:text="${feat.getFeatname()}"></span>
+                    </th:block><br><br>
+                    <p class="card-text" style="text-align: right">50,000(숙박 가격)</p>
+                </div>
+            </div>
+        </div>
+    </a>
 </div>
 
-
-<div>
-    <img src="../../static/숙소기본이미지.png" style="float:left; margin:10px">
-    <div style="float:left; margin:10px">
-        숙소명 | 별점(댓글수)<br>
-        특성1, 특성2<br><br>
-        50,000(숙박 가격)
-    </div><br><br><br><br><br><br>
-</div>
-<div>
-    <img src="../../static/숙소기본이미지.png" style="float:left; margin:10px">
-    <div style="float:left; margin:10px">
-        숙소명 | 별점(댓글수)<br>
-        특성1, 특성2<br><br>
-        50,000(숙박 가격)
-    </div><br><br><br><br><br><br>
-</div>
 
 <th:block th:replace="fragments/common :: footer"></th:block>
 

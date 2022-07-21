@@ -1,0 +1,130 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=<device-width>, initial-scale=1.0">
+    <title>Document</title>
+    <th:block th:replace="fragments/common::style"></th:block>
+</head>
+<style>
+    body{
+        margin-left: 50px;
+    }
+    img, .rating{
+        float: left;
+        margin: 10px;
+    }
+    #login,#signin,#cafename{
+        text-decoration:none;
+        color:black;
+    }
+    nav a{
+        text-decoration:none;
+        color:black;
+        margin:2em;
+    }
+    nav{
+        display:flex;
+        justify-content:center;
+    }
+</style>
+<body>
+
+<div th:replace="fragments/common :: header"></div>
+
+<div class="row">
+    <img class="col" src="/image/poolvil.jfif" style="size: auto">
+    <div class="col">
+        <br>
+        <h5 th:text="${shop.getName()}"></h5>&nbsp;<input type="button" value="좋아요">&nbsp;★★★★★(댓글수)<br><br>
+        <th:block th:each="feat : ${feats}">
+            <span th:text="${feat.getFeatname()}"></span>
+        </th:block><br>
+        <th:block th:text="${shop.getIntro()}"></th:block><br>
+    </div>
+</div>
+<br><br>
+
+<div>
+    <h2>이용안내</h2>
+    <th:block th:text="${shop.getInfo()}"></th:block>
+</div>
+<br><br>
+
+<div>
+    <div class="row">
+        <div class="datebar" style="margin:10px">
+            <input type="date">&nbsp;<input type="date">&nbsp;<input type="text" readonly>&nbsp;
+            <input type="button" value="변경">
+        </div>
+    </div>
+    <br>
+
+    <div class="row" th:each="room:${hotelrooms}" style="width: 700px">
+        <img class="col-4" src="/image/poolvil.jfif" style="width: 200px; height: 100px">
+        <div class="col">
+            <span th:text="${room.getRoomname()}"></span><br>
+            <span th:text="${room.getContent()}"></span><br>
+            <span th:text="${room.getPrice()}"></span><br>
+            <input type="button" style="float: right" value="예약하기">
+        </div>
+    </div>
+</div>
+<br><br>
+
+<div class="row">
+    <h2>기본정보</h2>
+    <img src="../../static/지도.png" style="float:left">
+    <div>
+        <br>
+        전화번호: <th:block th:text="${shop.getTel()}"></th:block><br>
+        주소: <th:block th:text="${shop.getAddress()}"></th:block>
+    </div>
+</div>
+<br><br>
+<div>
+    <h2>사용자 후기</h2>
+    <div class="row">
+        사용자 이름<br>
+        별점<br>
+        후기 내용<br>
+        후기 쓴 날짜<br>
+        <br>
+    </div>
+    <div class="row">
+        사용자 이름<br>
+        별점<br>
+        후기 내용<br>
+        후기 쓴 날짜
+    </div>
+</div>
+<br><br>
+
+<div>
+    <h2>블로그 후기</h2>
+    <div class="card mb-3" th:each="item:${review.items}" style="width: 700px">
+        <a th:href="${item.link}">
+            <div class="card-body" >
+                <h3 class="card-title" th:utext="${item.title}"></h3><br>
+                <p class="card-text" th:utext="${item.description}"></p><br>
+                <p class="card-text">
+                    <small class="text-muted" th:utext="${item.bloggername}"></small>&nbsp;
+                    <small class="text-muted" th:utext="${item.postdate}"></small>
+                </p>
+            </div>
+        </a>
+    </div>
+    <div class="postbar" style="clear:both; text-align: center;">
+        <a th:href="@{https://search.naver.com/search.naver(query=${shop.getName()})}">검색 결과 더 보기</a>
+    </div><br>
+</div>
+
+
+
+<th:block th:replace="fragments/common :: footer"></th:block>
+
+</body>
+</html>

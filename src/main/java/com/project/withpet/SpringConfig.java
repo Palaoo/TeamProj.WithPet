@@ -14,15 +14,17 @@ public class SpringConfig {
     private final ReplyRepository replyRepository;
     private final ShopRepository shopRepository;
 
+    private final HotelroomRepository hotelroomRepository;
 
     public SpringConfig(UserRepository userRepository, BoardRepository boardRepository,
-                        BoardimgRepository boardimgRepository, ReplyRepository replyRepository, ShopRepository shopRepository) {
+                        BoardimgRepository boardimgRepository, ReplyRepository replyRepository, ShopRepository shopRepository, HotelroomRepository hotelroomRepository) {
 
         this.userRepository = userRepository;
         this.boardRepository = boardRepository;
         this.boardimgRepository = boardimgRepository;
         this.replyRepository = replyRepository;
         this.shopRepository = shopRepository;
+        this.hotelroomRepository = hotelroomRepository;
     }
 
     @Bean
@@ -50,4 +52,8 @@ public class SpringConfig {
         return new ShopService(shopRepository);
     }
 
+    @Bean
+    public HotelroomService hotelroomService(){
+        return new HotelroomService(hotelroomRepository);
+    }
 }
