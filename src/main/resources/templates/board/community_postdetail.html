@@ -8,6 +8,16 @@
 </head>
 <style>
 
+#row{
+    width:1000px;
+    margin-left:130px;
+}
+h3{
+ <!--   margin-top:3%;-->
+    text-align:center;
+    font-size:36px;
+    width:800px;
+}
 #addReply{
     border: none;
     outline: none;
@@ -22,19 +32,75 @@
      border: 1px solid;
      color:  #518581;
 }
+#hr{
+    align:center;
+    width:100%;
+}
+#ctent{
+    width: 100%;
+    height: 500px;
+    text-align:left;
+}
+textarea{
+    width:800px;
+<!--    height:6.25em;-->
+<!--    border:none;-->
+    resize:none;
+}
 
+.writer_date{ text-align:right;}
 </style>
 <body>
 
 <div th:replace="fragments/common :: header"></div>
 
-<div class="row">
-    <div class="col-xs-1 col-sm-12">
-        <table>
-            <th><td><h3 th:text="${title}">게시물 제목</h3></td></th>
+<div id="row">
+    <div class="row" align="center">
+        <div class="col-xs-1 col-sm-12">
+            <h3 th:text="${title}">게시물 제목</h3>
+            <hr id="hr">
+            <div class="writer_date">
+                <th:block th:text="${writer}"></th:block> | <th:block th:text="${date}"></th:block>
+            </div>
+        </div>
+        <br>
+        <div class="row" align="left">
+            <div class="col-sm-12" id="ctent">
+                <th:block th:utext="${content}"></th:block>
+            </div>
+            <div class="col-sm-12">
+                <p><h4>댓글</h4></p>
+            </div>
+            <div class="col-sm-12">
+                <table>
 
+                </table>
+            </div>
+            <div th:if="${not #strings.isEmpty(userid)}" class="col-sm-12">
+                <form action="newreply" method="post">
+                    <table id="rtable2">
+                        <tr><td id="writer"><th:block th:text="${userid}" name="writer"></th:block></td>
+                            <td><textarea name="content" id="content" placeholder="댓글 달기"></textarea></td>
+                            <input type="hidden" name="boardcode" th:value="${boardcode}" id="boardcode">
+                            <td><input type="button" value="작성" id="addReply"></td></tr>
+                    </table>
+                    <table id="rtable">
+                    </table>
+                </form>
+            </div>
+            <div  th:if="${#strings.isEmpty(userid)}" class="col-sm-12">
+                <textarea readonly>댓글을 작성하시려면 로그인해주세요.</textarea>
+            </div>
+            <div class="row">
+                <div class="col-sm-12"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--<div class="row">
+    <div class="col-xs-1 col-sm-12">
+        <h3 th:text="${title}">게시물 제목</h3>
         <th:block th:text="${writer}"></th:block> | <th:block th:text="${date}"></th:block>
-        </table>
     </div>
     <br>
     <div class="row">
@@ -68,7 +134,7 @@
             <div class="col-sm-12"></div>
         </div>
     </div>
-</div>
+</div>-->
 
 <th:block th:replace="fragments/common :: footer"></th:block>
 
