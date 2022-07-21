@@ -8,6 +8,7 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @JoinColumn(name = "businessUser_bid")
+    @Column(columnDefinition = "BIGINT UNSIGNED")
     private Long bid;
     @Column
     private String name;

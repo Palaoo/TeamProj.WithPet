@@ -28,14 +28,14 @@ public class OrderService {
         return orderRepository.findByUserid(userid).get();
     }
 
-    public List<Ordertable> findByDate(String userid, LocalDateTime start, LocalDateTime end) {
+    public List<Ordertable> findByDate(String userid, LocalDateTime start, LocalDateTime end, int paging) {
         String query = "select o from Ordertable o where o.userid = :userid and o.orderdate between :start and :end";
-        List<Ordertable> findOrder = em.createQuery(query, Ordertable.class)
-                .setParameter("start", start).setParameter("end", end).getResultList();
+        List<Ordertable> findOrder = em.createQuery(query, Ordertable.class).setParameter("userid", userid)
+                .setParameter("start", start).setParameter("end", end).setFirstResult(paging * 10).setMaxResults(10).getResultList();
         System.out.printf("From OrderService findByDate(), start: %s, end: %s\n",
                 start.toString(), end.toString());
         for (Ordertable ordertable : findOrder) {
-            System.out.printf("From OrderService findByDate(), ordertable.userid: %s, ordertable.orderdate\n",
+            System.out.printf("From OrderService findByDate(), ordertable.userid: %s, ordertable.orderdate:%s\n",
                     ordertable.getUserid(), ordertable.getOrderdate());
         }
         return findOrder;

@@ -5,10 +5,12 @@ import com.example.WithPet.repository.Prod.ProdRepository;
 import com.example.WithPet.repository.Prod.SpringDataJpaProd;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
+@Transactional
 public class ProdService {
     private final ProdRepository prodRepository;
 

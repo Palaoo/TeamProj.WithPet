@@ -37,4 +37,9 @@ public class Ordertable {
     public void setOrderdate(LocalDateTime orderdate) {
         this.orderdate = orderdate;
     }
+
+    @PrePersist
+    public  void orderdate() {
+        this.orderdate = LocalDateTime.now();
+    }
 }
