@@ -10,7 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Optional;
 
-@Transactional
 public class ProdService {
     private final ProdRepository prodRepository;
 
@@ -26,8 +25,11 @@ public class ProdService {
         return prodRepository.findAll(pageable);
     }
 
-    public Optional<Product> findOne(Long id) {
-        return prodRepository.findById(id);
+    public Product findByName(String prodName) {
+        return prodRepository.findByName(prodName).get();
+    }
+    public Product findById(Long id) {
+        return prodRepository.findById(id).get();
     }
 
 }
