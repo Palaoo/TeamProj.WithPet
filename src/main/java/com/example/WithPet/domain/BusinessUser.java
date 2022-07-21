@@ -6,6 +6,7 @@ import javax.persistence.*;
 public class BusinessUser {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(columnDefinition = "BIGINT UNSIGNED")
     private Long bid;
     @JoinColumn(name="user_id")
     private String uid;

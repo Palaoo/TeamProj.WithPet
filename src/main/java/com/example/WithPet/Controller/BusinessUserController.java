@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 @Controller
 public class BusinessUserController {
     private final BusinessUserService businessUserService;
-    private final Tools tools = new Tools();
+    private final Tools tools=new Tools();
 
     @Autowired
     public BusinessUserController(BusinessUserService businessUserService) {

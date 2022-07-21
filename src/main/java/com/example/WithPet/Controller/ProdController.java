@@ -6,8 +6,6 @@ import com.example.WithPet.Service.ProdService;
 import com.example.WithPet.domain.Cimg;
 import com.example.WithPet.domain.Img;
 import com.example.WithPet.domain.Product;
-import org.apache.http.HttpStatus;
-import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,28 +13,24 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletRequestWrapper;
-import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.*;
 
 
 @Controller
 public class ProdController {
     private final S3Uploader s3Uploader;
-    private final Tools tools = new Tools();
+    private final Tools tools=new Tools();
     private final ProdService prodService;
     private final ImgService imgService;
     private final CimgService cimgService;
 
     @Autowired
-    public ProdController(S3Uploader s3Uploader, ProdService prodService, ImgService imgService, CimgService cimgService) {
+    public ProdController(S3Uploader s3Uploader,  ProdService prodService, ImgService imgService, CimgService cimgService) {
         this.s3Uploader = s3Uploader;
         this.prodService = prodService;
         this.imgService = imgService;
