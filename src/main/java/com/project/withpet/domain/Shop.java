@@ -42,6 +42,7 @@ public class Shop {
     )
     List<Feat> shopFeats;
 
+
     public Long getShopid() {
         return shopid;
     }
@@ -121,4 +122,6 @@ public class Shop {
     public void setShopFeats(List<Feat> shopFeats) {
         this.shopFeats = shopFeats;
     }
+
+
 }
