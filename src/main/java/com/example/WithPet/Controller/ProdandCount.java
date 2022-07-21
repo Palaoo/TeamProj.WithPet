@@ -23,6 +23,7 @@ public class ProdandCount {
     }
 
     public ProdandCount(Product product, int count) {
-
+        this.prod = product;
+        this.count = count;
     }
 }

@@ -6,6 +6,7 @@ import com.example.WithPet.Service.ProdService;
 import com.example.WithPet.domain.Orderprod;
 import com.example.WithPet.domain.Ordertable;
 import com.example.WithPet.domain.Product;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,8 +23,10 @@ public class OrderController {
     private final Tools tools = new Tools();
     private final OrderService orderService;
     private final OrderprodService orderprodService;
+    @Autowired
     private final ProdService prodService;
 
+    @Autowired
     public OrderController(OrderService orderService, OrderprodService orderprodService, ProdService prodService) {
         this.orderService = orderService;
         this.orderprodService = orderprodService;
@@ -81,11 +84,13 @@ public class OrderController {
             ArrayList<ProdandCount> prodandCounts = new ArrayList<>();
             for (int i = 0; i < prodIdArr.length; i++) {
                 System.out.printf("From OrderController searchMyshopping(), countArr[%d]: %s, prodIdArr[%d]: %s\n", i, countArr[i], i, prodIdArr[i]);
-                prodandCounts.add(new ProdandCount(prodService.findOne(Long.decode(prodIdArr[i])).get(), Integer.parseInt(countArr[i])));
+                Long prodId = Long.parseLong(prodIdArr[i]);
+                prodandCounts.add(new ProdandCount(prodService.findById(prodId), Integer.parseInt(countArr[i])));
 
             }
-            System.out.printf("From OrderController searchMyshopping(), prod.name: %s ", prodandCounts.get(0).prod.getName());
+//            System.out.printf("From OrderController searchMyshopping(), prod.name: %s ", prodandCounts.get(0).prod.getName());
             System.out.printf("From OrderController searchMyshopping(), prodIdArr[i]: %d\n",Long.parseLong(prodIdArr[0]));
+
             //            for (String prodId : prodIdArr) {
 //                prods.add(prodService.findOne(Long.parseLong(prodId)).get());
 //            }
@@ -93,9 +98,9 @@ public class OrderController {
 //            for (String count : countArr) {
 //                countList.add(Integer.parseInt(count));
 //            }
+
             orderListDTOs.add(new OrderListDTO(prodandCounts, ordertable));
         }
-
 
         model.addAttribute("orderDTOList", orderListDTOs);
         return "myshopping";
