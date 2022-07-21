@@ -14,28 +14,6 @@ public class Region {
     @Column
     private String regname;
 
-//    @OneToMany(mappedBy = "region", cascade = CascadeType.ALL)
-//    private List<Shop> shops = new ArrayList<>();
-//
-//    public Region(String regname){
-//        this.regname = regname;
-//    }
-//
-//
-//
-//    public void addShop(Shop shop){
-//        shops.add(shop);
-//        shop.setRegion(this);
-//    }
-//
-//    public List<Shop> getShops() {
-//        return shops;
-//    }
-//
-//    public void setShops(List<Shop> shops) {
-//        this.shops = shops;
-//    }
-
     public Long getRegid() {
         return regid;
     }
