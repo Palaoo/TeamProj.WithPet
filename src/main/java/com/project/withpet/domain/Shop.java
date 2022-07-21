@@ -5,10 +5,11 @@ import lombok.Builder;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 public class Shop {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long shopid;
@@ -32,6 +33,14 @@ public class Shop {
     @ManyToOne
     @JoinColumn(name = "typeid")
     private Shoptype shoptype;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "featlist",
+            joinColumns = @JoinColumn(name = "shopid"),
+            inverseJoinColumns = @JoinColumn(name = "featid")
+    )
+    List<Feat> shopFeats;
 
     public Long getShopid() {
         return shopid;
@@ -103,5 +112,13 @@ public class Shop {
 
     public void setShoptype(Shoptype shoptype) {
         this.shoptype = shoptype;
+    }
+
+    public List<Feat> getShopFeats() {
+        return shopFeats;
+    }
+
+    public void setShopFeats(List<Feat> shopFeats) {
+        this.shopFeats = shopFeats;
     }
 }
