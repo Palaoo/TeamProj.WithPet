@@ -8,6 +8,21 @@
 </head>
 <style>
 
+#addReply{
+    border: none;
+    outline: none;
+    width: 100px;
+    height: 50px;
+    background-color: #518581;
+    border-radius: 4px;
+    color:white;
+}
+#addReply:hover{
+     background: white;
+     border: 1px solid;
+     color:  #518581;
+}
+
 </style>
 <body>
 
@@ -15,8 +30,11 @@
 
 <div class="row">
     <div class="col-xs-1 col-sm-12">
-        <h3 th:text="${title}">게시물 제목</h3>
+        <table>
+            <th><td><h3 th:text="${title}">게시물 제목</h3></td></th>
+
         <th:block th:text="${writer}"></th:block> | <th:block th:text="${date}"></th:block>
+        </table>
     </div>
     <br>
     <div class="row">
@@ -24,7 +42,7 @@
             <th:block th:utext="${content}"></th:block>
         </div>
         <div class="col-sm-12">
-            <h3>댓글</h3>
+            <h4>댓글</h4>
         </div>
         <div class="col-sm-12">
             <table>
