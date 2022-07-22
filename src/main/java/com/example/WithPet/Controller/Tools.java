@@ -41,5 +41,9 @@ public class Tools {
         return list;
     }
 
+    public LocalDateTime getLDTnow() {
+        return LocalDateTime.now();
+    }
+
 }
 

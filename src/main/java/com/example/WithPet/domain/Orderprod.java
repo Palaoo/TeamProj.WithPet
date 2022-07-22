@@ -13,6 +13,15 @@ public class Orderprod {
     private String prodlist;
     private String count;
 
+    public Orderprod(Long orderid, String prodlist, String count) {
+        this.orderid = orderid;
+        this.prodlist = prodlist;
+        this.count = count;
+    }
+
+    public Orderprod() {
+    }
+
     public Long getOrderid() {
         return orderid;
     }

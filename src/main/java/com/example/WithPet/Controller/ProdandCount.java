@@ -5,6 +5,15 @@ import com.example.WithPet.domain.Product;
 public class ProdandCount {
     Product prod;
     int count;
+    String imgPath;
+
+    public String getImgPath() {
+        return imgPath;
+    }
+
+    public void setImgPath(String imgPath) {
+        this.imgPath = imgPath;
+    }
 
     public Product getProd() {
         return prod;
@@ -22,8 +31,9 @@ public class ProdandCount {
         this.count = count;
     }
 
-    public ProdandCount(Product product, int count) {
+    public ProdandCount(Product product, int count, String imgPath) {
         this.prod = product;
         this.count = count;
+        this.imgPath = imgPath;
     }
 }

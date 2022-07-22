@@ -29,7 +29,7 @@ public class OrderService {
     }
 
     public List<Ordertable> findByDate(String userid, LocalDateTime start, LocalDateTime end, int paging) {
-        String query = "select o from Ordertable o where o.userid = :userid and o.orderdate between :start and :end";
+        String query = "select o from Ordertable o where o.userid = :userid and o.orderdate between :start and :end order by o.orderdate DESC";
         List<Ordertable> findOrder = em.createQuery(query, Ordertable.class).setParameter("userid", userid)
                 .setParameter("start", start).setParameter("end", end).setFirstResult(paging * 10).setMaxResults(10).getResultList();
         System.out.printf("From OrderService findByDate(), start: %s, end: %s\n",
