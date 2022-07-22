@@ -56,6 +56,7 @@ public class cafe {
     List<feat> shopFeats;
 
 
+
 //    @ManyToOne
 //    @JoinColumn (name = "shopid")
 //    private featlist featlist;

@@ -1,6 +1,5 @@
 package god.withpet.service;
 
-import god.withpet.entity.cafe;
 import god.withpet.entity.shopreview;
 import god.withpet.repository.cafeRepository;
 import god.withpet.repository.shopreviewRepository;
@@ -27,7 +26,16 @@ public class reviewService {
         return shopreviewRepository.findAll();
     }
 
-    public Optional<shopreview> findById(Long shopid) {
-        return shopreviewRepository.findById(shopid);
+//    public Optional<shopreview> findById(Long shopid) {
+//        return shopreviewRepository.findById(shopid);
+//    }
+
+
+    public List<shopreview> findByshopid(Long shopid) {
+        return shopreviewRepository.findByShopid(shopid);
     }
+
+//    public Optional<shopreview> findById(Long shopid) {
+//        return shopreviewRepository.findById(shopid);
+//    }
 }

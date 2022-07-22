@@ -12,4 +12,6 @@ public interface cafeRepository extends JpaRepository<cafe, Long> {
     List<cafe> findAll();
 
 
+    List<cafe> findAllByShoptypeTypeid(Long typeid);
+
 }

@@ -11,15 +11,16 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
+@Table(name = "shopreview")
 public class shopreview {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long rid;
 
-    @ManyToOne
-    @JoinColumn(name = "shopid")
-    private cafe cafe;
+
+    @JoinColumn(name = "shop_shopid")
+    private Long shopid;
 
     @Column
     private String content;
@@ -31,9 +32,12 @@ public class shopreview {
     @Column
     private Long score;
 
-    @ManyToOne
-    @JoinColumn(name = "userid")
-    private member member;
+    @JoinColumn(name = "user_userid")
+    private String userid;
+
+//    @ManyToOne
+//    @JoinColumn(name = "userid")
+//    private member member;
 
 //    @ManyToMany
 //    @JoinColumn(name = "userid")

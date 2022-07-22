@@ -1,9 +1,11 @@
 package god.withpet.controller;
 
+import god.withpet.dto.reviewDto;
 import god.withpet.entity.cafe;
 import god.withpet.entity.region;
 import god.withpet.entity.shopreview;
 import god.withpet.repository.cafeRepository;
+import god.withpet.repository.shopreviewRepository;
 import god.withpet.service.cafeService;
 import god.withpet.service.reviewService;
 import lombok.extern.slf4j.Slf4j;
@@ -29,6 +31,9 @@ public class cafeController {
     @Autowired
     private reviewService reviewService;
 
+    @Autowired
+    private shopreviewRepository shopreviewRepository;
+
 
 //    @GetMapping("cafe_list")
 //    public String showCafe(Model model) {
@@ -41,7 +46,7 @@ public class cafeController {
 
     @GetMapping("cafe_list")
     public String viewList(Model model) {
-        List<cafe> cafeList = cafeService.findAll();
+        List<cafe> cafeList = cafeService.findByshoptype(2L);
         model.addAttribute("cafeList", cafeList);
         return "cafe_list";
     }
@@ -55,19 +60,33 @@ public class cafeController {
         model.addAttribute("cafe", cafeinfo);
 //        model.addAttribute("cafeList",cafeList);
         log.info(cafe.toString());
-        return "cafeinfo";
-    }
-
-    @GetMapping("cafeinfo")
-    public String showReview(@RequestParam("shopid") Long shopid, Model model) {
-        log.info("id= "+ shopid);
-//        List<shopreview> shopreviewList = reviewService.findAll();
-        Optional<shopreview> shopreview = reviewService.findById(shopid);
-        shopreview shopreviewList = shopreview.get();
-
-        model.addAttribute("shopriview", shopreviewList);
+        List<shopreview> shopreviewList = reviewService.findByshopid(shopid);
+        model.addAttribute("shopreview",shopreviewList);
         log.info(shopreviewList.toString());
         return "cafeinfo";
     }
+
+    @PostMapping("cafeinfo")
+    public String createReview(reviewDto dto) {
+        shopreview shopreview = dto.toEntity();
+        shopreview saved = shopreviewRepository.save(shopreview);
+        log.info(saved.toString());
+        return "";
+    }
+//    @GetMapping("cafeinfo/review")
+//    public String showReview(@RequestParam("shopid") Long shopid, Model model) {
+//        log.info("id= "+ shopid);
+//        List<shopreview> shopreview = reviewService.findByshopid(shopid);
+//        model.addAttribute("shopreviewList", shopreview);
+//        log.info(shopreview.toString());
+//        return "";
+
+//    @GetMapping("cafeinfo/review")
+//    public String ReviewList(Model model,@RequestParam) {
+//        List<shopreview> shopreviewList = reviewService.findAll();
+//        model.addAttribute("shopreviewList", shopreviewList);
+//        log.info(shopreviewList.toString());
+//        return "cafeinfo";
+//    }
 
 }

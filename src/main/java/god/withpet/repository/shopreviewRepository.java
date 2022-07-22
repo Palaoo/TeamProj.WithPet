@@ -10,4 +10,5 @@ public interface shopreviewRepository extends JpaRepository<shopreview, Long> {
     @Override
     List<shopreview> findAll();
 
+    List<shopreview> findByShopid(Long shopid);
 }
