@@ -18,6 +18,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 import java.util.*;
 
 
@@ -159,6 +163,7 @@ public class ProdController {
         model.addAttribute("product", prodService.findById(prodId));   // 상품 튜플
         model.addAttribute("img", imgService.findByProdid(prodId).get().getPath());   // 썸네일 URL
         model.addAttribute("cimgs", cimgService.findImgURLs(prodId));
+
 
 
         return "prod_view";

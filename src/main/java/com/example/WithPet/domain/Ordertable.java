@@ -14,8 +14,17 @@ public class Ordertable {
     @Column
     private LocalDateTime orderdate;
 
+    public Ordertable() {
+
+    }
+
     public Long getOrderid() {
         return orderid;
+    }
+
+    public Ordertable( String userid, LocalDateTime orderdate) {
+        this.userid = userid;
+        this.orderdate = orderdate;
     }
 
     public void setOrderid(Long orderid) {
