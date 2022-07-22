@@ -2,8 +2,12 @@ package com.project.withpet;
 
 import com.project.withpet.repository.*;
 import com.project.withpet.service.*;
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 @Configuration
 public class SpringConfig {
@@ -15,6 +19,9 @@ public class SpringConfig {
     private final ShopRepository shopRepository;
 
     private final HotelroomRepository hotelroomRepository;
+
+    @PersistenceContext
+    private EntityManager entityManager;
 
     public SpringConfig(UserRepository userRepository, BoardRepository boardRepository,
                         BoardimgRepository boardimgRepository, ReplyRepository replyRepository, ShopRepository shopRepository, HotelroomRepository hotelroomRepository) {
@@ -55,5 +62,10 @@ public class SpringConfig {
     @Bean
     public HotelroomService hotelroomService(){
         return new HotelroomService(hotelroomRepository);
+    }
+
+    @Bean
+    public JPAQueryFactory jpaQueryFactory(){
+        return new JPAQueryFactory(entityManager);
     }
 }
