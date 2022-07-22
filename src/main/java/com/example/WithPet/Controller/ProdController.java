@@ -28,13 +28,13 @@ import java.util.*;
 @Controller
 public class ProdController {
     private final S3Uploader s3Uploader;
-    private final Tools tools=new Tools();
+    private final Tools tools = new Tools();
     private final ProdService prodService;
     private final ImgService imgService;
     private final CimgService cimgService;
 
     @Autowired
-    public ProdController(S3Uploader s3Uploader,  ProdService prodService, ImgService imgService, CimgService cimgService) {
+    public ProdController(S3Uploader s3Uploader, ProdService prodService, ImgService imgService, CimgService cimgService) {
         this.s3Uploader = s3Uploader;
         this.prodService = prodService;
         this.imgService = imgService;
@@ -44,13 +44,14 @@ public class ProdController {
 
     @GetMapping("/mallPage")
     public String mallPage(HttpServletRequest req, Model model,
-                           @PageableDefault(sort = "id", direction = Sort.Direction.DESC, size = 6) Pageable pageable) {
+                           @PageableDefault(sort = "id", direction = Sort.Direction.DESC, size = 9) Pageable pageable) {
         if (!tools.isUserLogined(req)) {
             return "login";
         }
         model.addAttribute("userLogined", req.getSession().getAttribute("userLogined"));
         ArrayList<ProdDTO> pDTOs = new ArrayList<ProdDTO>();
         Page<Product> prods = prodService.findProds(pageable);
+        System.out.printf("From prodController mallPage(), prods.getTotalElements(): %d\n", prods.getTotalElements());
         List<String> imgURLs = imgService.findImgURLs(prods);
         for (int i = 0; i < prods.getTotalElements(); i++) {
             Product product = prods.toList().get(i);
@@ -158,16 +159,20 @@ public class ProdController {
 
 
     @GetMapping("prod_view")
-    public String prodView(Model model,HttpServletRequest req) {
+    public String prodView(Model model, HttpServletRequest req) {
         Long prodId = Long.parseLong(req.getParameter("prodId"));
         model.addAttribute("product", prodService.findById(prodId));   // 상품 튜플
         model.addAttribute("img", imgService.findByProdid(prodId).get().getPath());   // 썸네일 URL
         model.addAttribute("cimgs", cimgService.findImgURLs(prodId));
 
 
-
         return "prod_view";
     }
 
+//    @GetMapping("append_bascket")
+//    public String appendBascket(@RequestParam Long prodId,HttpServletRequest req) {
+//
+//
+//    }
 
 }
