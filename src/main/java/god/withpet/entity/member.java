@@ -19,6 +19,7 @@ import javax.persistence.Id;
 public class member {
 
    @Id
+   @Column(name = "userid")
     private String userid;
    @Column
    private String password;

@@ -26,6 +26,7 @@ public class cafeService {
         return cafeRepository.findAll();
     }
 
+
 //    public Optional<cafe> showinfo(Long shopid) {
 //        return cafeRepository.findById(shopid);
 //    }

@@ -49,7 +49,7 @@
     </nav>
   </div>
   <div class="content">
-    <th:block th:value="${cafe.getShopid()}"></th:block>
+    <th:block th:value="${cafe.shopid}"></th:block>
     <div class="row pb-4 mb-4 border-bottom">
       <div class="col-md-12 pb-4 mb-4">
         <img src="tamar.jpg" alt="" width="1000" height="400">
@@ -59,28 +59,29 @@
     </div>
 
     <div class="row mb-1">
-      <div><h5 class="pb-4 mb-4 border-bottom">featname / featname / featname</h5></div>
+      <div class="pb-4 mb-4 border-bottom">
+        <span th:each="feat: ${cafe.getShopFeats()}" th:text="${feat.getFeatname()}+' '" ></span>
+      </div>
     </div>
 
     <div class="pb-4 mb-4 border-bottom">
       <h5>소개글</h5>
       <div class="px-6 leading-6 mb-4">
-        {intro}"많은 종류의 수제 스콘과 조각 케이크를 파는 소형견 동반 가능 카페입니다."
+        <p th:text="${cafe.getIntro()}"></p>
       </div>
     </div>
 
-    <div><h5>영업시간</h5></div>
-    <div class="pb-4 mb-4 border-bottom">
-      <p>매일  12:00~22:00{hour}</p>
-      <p>일요일   휴무</p>
+    <div class="pb-4 mb-4 border-bottom"><h5>영업시간</h5>
+      <div>
+        <p th:text="${cafe.getHour()}"></p>
+      </div>
     </div>
 
-    <div><h5>이용안내</h5></div>
     <div class="pb-4 mb-4 border-bottom">
-      <p>{info} 주차는 3대 정도 가능합니다.<br>
-        업소의 사정으로 반려동물 동반 여부, 시설물의 정보가 예고없이 변경 될 수 있습니다.<br>
-        방문 전에 전화 문의 부탁 드립니다.<br>
-      </p>
+      <h5>이용안내</h5>
+      <div>
+        <p th:text="${cafe.getInfo()}"></p>
+      </div>
     </div>
 
     <div class="row pb-4 mb-4 border-bottom">
@@ -90,16 +91,15 @@
         <P>주소</P>
       </div>
       <div class="col-sm-8">
-        <p>{tel}010-1234-5678</p>
-        <p>{address}충남 천안시 동남구 공고담길 43-6</p>
+        <p th:text="${cafe.getTel()}"></p>
+        <p id="address" th:text="${cafe.getAddress()}"></p>
       </div>
     </div>
-
     <div>
       <h5>리뷰</h5>
-      <p>6 개</p>
+      <p>n 개</p>
       <div  class="row">
-        <div class="col-sm-3"><img src="dd.JPG">{writer}</div>
+        <div class="col-sm-3"><img src="dd.JPG"><p th:text="${shopreviewList.getUserid()}"></p></div>
         <div class="col-sm-6">
           <p>★★★★★{score}</p>
           <p>{content}분위기가 좋아요</p>
@@ -110,8 +110,7 @@
       </div>
     </div>
     <div id="map" style="width:500px; height:400px"></div>
-    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=1c12d27c88e0ef576fe237323f586e7d"></script>
-
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=1c12d27c88e0ef576fe237323f586e7d&libraries=services"></script>
     <script>
       var mapContainer = document.getElementById('map'), // 지도를 표시할 div
     mapOption = {
@@ -126,7 +125,7 @@ var map = new kakao.maps.Map(mapContainer, mapOption);
 var geocoder = new kakao.maps.services.Geocoder();
 
 // 주소로 좌표를 검색합니다
-geocoder.addressSearch('제주특별자치도 제주시 첨단로 242', function(result, status) {
+geocoder.addressSearch(document.getElementById("address").innerHTML , function(result, status) {
 
     // 정상적으로 검색이 완료됐으면
      if (status === kakao.maps.services.Status.OK) {
@@ -139,11 +138,11 @@ geocoder.addressSearch('제주특별자치도 제주시 첨단로 242', function
             position: coords
         });
 
-        // 인포윈도우로 장소에 대한 설명을 표시합니다
-        var infowindow = new kakao.maps.InfoWindow({
-            content: '<div style="width:150px;text-align:center;padding:6px 0;">우리회사</div>'
-        });
-        infowindow.open(map, marker);
+<!--        // 인포윈도우로 장소에 대한 설명을 표시합니다-->
+<!--        var infowindow = new kakao.maps.InfoWindow({-->
+<!--            content: '<div style="width:150px;text-align:center;padding:6px 0;">우리회사</div>'-->
+<!--        });-->
+<!--        infowindow.open(map, marker);-->
 
         // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
         map.setCenter(coords);
