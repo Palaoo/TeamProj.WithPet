@@ -10,6 +10,8 @@ public interface ShopRepository {
 
     List<Shop> findAll();
 
+    List<Shop> findAllByshoptypeTypeid(Long typeid);
+
     Optional<Shop> findById(Long id);
 
 

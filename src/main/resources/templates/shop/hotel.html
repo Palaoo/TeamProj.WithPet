@@ -32,7 +32,13 @@
 
 <h2>호텔 찾기</h2>
 <div>
-    <input type="date">&nbsp;<input type="date">&nbsp;
+    <form action="/hotel" method="post" id="frminfo">
+        <input type="date" name="checkin" id="checkin" th:value="${checkin}">&nbsp;
+        <input type="date" name="checkout" id="checkout" th:value="${checkout}">&nbsp;
+        인원수&nbsp;<input type="number" th:value="2" name="person" id="person">
+        <input type="submit" th:value="조회" id="submit">
+    </form>
+
     <select>
         <option>평점순</option>
         <option>요금순</option>
@@ -45,9 +51,9 @@
     </select>&nbsp;
 </div><br>
 
-
+<div id=""
 <div class="card mb-3" th:each="shop : ${shops}" style="max-width: 540px;">
-    <a th:href="@{/hotel/detail(shopid=${shop.getShopid()})}">
+    <a th:href="@{/hotel/detail(shopid=${shop.getShopid()})}" class="detail">
         <div class="row g-0" >
             <div class="col-md-4">
                 <img src="/image/poolvil.jfif" style="height: 150px" class="img-fluid rounded-start">
@@ -70,5 +76,19 @@
 <th:block th:replace="fragments/common :: footer"></th:block>
 
 </body>
-<script></script>
+<script>
+$(document)
+    .on('click','#submit',function (){
+        var today = new Date().toISOString().substring(0, 10)
+
+        if($('#checkin').val()>=$('#checkout').val()||$('#checkin').val()<today){
+            alert("날짜를 확인해주세요.")
+            return false;
+        } else if($('#person').val()<=0){
+            alert("인원수를 확인해주세요.")
+            return false;
+        }
+    })
+
+</script>
 </html>
