@@ -10,9 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
@@ -49,7 +47,7 @@ public class OrderController {
                              @RequestParam String priceid, @RequestParam String count,
                              HttpServletRequest req) throws IOException, InterruptedException {
 //        orderService.findByDate()
-
+        System.out.printf("From OrderController paySuccess(), priceid= %s, count: %s\n", priceid, count);
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create("https://api.tosspayments.com/v1/payments/confirm"))
                 .header("Authorization", "Basic dGVzdF9za196WExrS0V5cE5BcldtbzUwblgzbG1lYXhZRzVSOg==")
@@ -73,7 +71,7 @@ public class OrderController {
         if (!tools.isUserLogined(req)) {
             return "login";
         }
-        if (startDate == null && endDate == null) {
+        if ((startDate != null && endDate != null) || (startDate != "" && endDate != "")) {
             startDate = LocalDate.now().minusMonths(1).toString();
             endDate = LocalDate.now().toString();
             System.out.println(startDate + " " + endDate);

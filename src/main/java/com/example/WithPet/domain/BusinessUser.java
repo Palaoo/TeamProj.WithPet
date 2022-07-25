@@ -11,14 +11,14 @@ public class BusinessUser {
     @JoinColumn(name="user_id")
     private String uid;
     @Column
-    private String mobile;
+    private String brand;
 
-    public String getMobile() {
-        return mobile;
+    public String getBrand() {
+        return brand;
     }
 
-    public void setMobile(String mobile) {
-        this.mobile = mobile;
+    public void setBrand(String mobile) {
+        this.brand = mobile;
     }
 
     public Long getBid() {
