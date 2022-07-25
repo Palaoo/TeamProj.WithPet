@@ -26,4 +26,5 @@ public class ShopService {
     public List<Shop> hotelList(Long typeid){
         return shopRepository.findAllByshoptypeTypeid(typeid);
     }
+
 }
