@@ -24,7 +24,9 @@ public class reviewDto {
     private String userid;
     private Long shopid;
 
-//    public reviewDto(shopreview shopreview) {
+
+
+    //    public reviewDto(shopreview shopreview) {
 //        this.rid = shopreview.getRid();
 //        this.content = shopreview.getContent();
 //        this.date = shopreview.getDate();
@@ -33,6 +35,7 @@ public class reviewDto {
 //        this.shopid = shopreview.getCafe().getShopid();
 //    }
     public shopreview toEntity() {
+
         return new shopreview(null, shopid, content, date, score, userid);
     }
 

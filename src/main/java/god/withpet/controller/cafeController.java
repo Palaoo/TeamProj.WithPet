@@ -35,23 +35,16 @@ public class cafeController {
     private shopreviewRepository shopreviewRepository;
 
 
-//    @GetMapping("cafe_list")
-//    public String showCafe(Model model) {
-//        List<cafe> cafeEntityList = cafeRepository.findAll();
-//        model.addAttribute("cafeList", cafeEntityList);
-//        log.info("From cafeController showCafe(), "+cafeEntityList.toString());
-//        return "cafe_list";
-//    }
 
 
-    @GetMapping("cafe_list")
+    @GetMapping("cafe_list")   //카페 목록 가져오기
     public String viewList(Model model) {
         List<cafe> cafeList = cafeService.findByshoptype(2L);
         model.addAttribute("cafeList", cafeList);
         return "cafe_list";
     }
 
-    @GetMapping("cafeinfo")
+    @GetMapping("cafeinfo") //카페 상세정보
     public String showInfo(Model model, @RequestParam("shopid") Long shopid) {
         log.info("id= " + shopid);
         Optional<cafe> cafe = cafeService.findById(shopid);
@@ -66,27 +59,7 @@ public class cafeController {
         return "cafeinfo";
     }
 
-    @PostMapping("cafeinfo")
-    public String createReview(reviewDto dto) {
-        shopreview shopreview = dto.toEntity();
-        shopreview saved = shopreviewRepository.save(shopreview);
-        log.info(saved.toString());
-        return "";
-    }
-//    @GetMapping("cafeinfo/review")
-//    public String showReview(@RequestParam("shopid") Long shopid, Model model) {
-//        log.info("id= "+ shopid);
-//        List<shopreview> shopreview = reviewService.findByshopid(shopid);
-//        model.addAttribute("shopreviewList", shopreview);
-//        log.info(shopreview.toString());
-//        return "";
 
-//    @GetMapping("cafeinfo/review")
-//    public String ReviewList(Model model,@RequestParam) {
-//        List<shopreview> shopreviewList = reviewService.findAll();
-//        model.addAttribute("shopreviewList", shopreviewList);
-//        log.info(shopreviewList.toString());
-//        return "cafeinfo";
-//    }
+
 
 }

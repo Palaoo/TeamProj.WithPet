@@ -18,24 +18,31 @@ public class reviewService {
     @Autowired
     private cafeRepository cafeRepository;
 
-//    public List<shopreview> showReview() {
-//        return shopreviewRepository.findById(shopid);
-//    }
+    public Optional<shopreview> findByUserId(String userid) {
+        return shopreviewRepository.findByUserid(userid);
+    }
+
+    public Optional<shopreview> findById(Long rid) {
+        return shopreviewRepository.findById(rid);
+    }
 
     public List<shopreview> findAll() {
         return shopreviewRepository.findAll();
     }
 
-//    public Optional<shopreview> findById(Long shopid) {
-//        return shopreviewRepository.findById(shopid);
-//    }
-
-
     public List<shopreview> findByshopid(Long shopid) {
         return shopreviewRepository.findByShopid(shopid);
     }
 
-//    public Optional<shopreview> findById(Long shopid) {
-//        return shopreviewRepository.findById(shopid);
+    public void deleteReview(Long rid) {
+
+        shopreviewRepository.deleteById(rid);
+    }
+
+
+
+//    public List<shopreview> findByuserid(String userid) {
+//        return shopreviewRepository.findByUserid(userid);
 //    }
+
 }

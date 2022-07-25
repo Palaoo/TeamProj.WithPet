@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class cafeService {
@@ -20,9 +21,7 @@ public class cafeService {
     @Autowired
     private shopreviewRepository shopreviewRepository;
 
-//    public List<cafe> showCafe() {
-//        return cafeRepository.findAll();
-//    }
+
 
     public Optional<cafe> findById(Long shopid) {
         return cafeRepository.findById(shopid);
@@ -42,13 +41,5 @@ public class cafeService {
     }
 
 
-//    public Optional<cafe> showinfo(Long shopid) {
-//        return cafeRepository.findById(shopid);
-//    }
 
-
-
-//    public List<featlist> showFeat() {
-//        return cafeRepository.findById();
-//    }
 }

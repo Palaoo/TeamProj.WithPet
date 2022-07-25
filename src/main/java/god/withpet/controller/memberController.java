@@ -24,8 +24,10 @@ public class memberController {
 
     @GetMapping("login")
     public String doLogin(){
+
         return "login";
     }
+
 
     @GetMapping("signup")
     public String newmemberForm(){
