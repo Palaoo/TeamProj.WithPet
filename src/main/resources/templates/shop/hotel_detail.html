@@ -57,21 +57,31 @@
 <div>
     <div class="row">
         <div class="datebar" style="margin:10px">
-            <input type="date" th:value="${checkin}">&nbsp;<input type="date" th:value="${checkout}">&nbsp;<input type="text" readonly>&nbsp;
-            <input type="button" value="변경">
+            <form id="frmChange" method="post" action="/hotel/detail">
+                <input type="hidden" name="shopid" id="shopid" th:value="${shop.getShopid()}">
+                <input type="date" name="checkin" id="checkin" th:value="${checkin}">&nbsp;
+                <input type="date" name="checkout" id="checkout" th:value="${checkout}">&nbsp;
+                인원수&nbsp;<input type="text" name="person" id="person" th:value="${person}" readonly>&nbsp;
+                <input type="submit" value="변경" id="submit">
+            </form>
         </div>
     </div>
     <br>
-
-    <div class="row" th:each="room:${hotelrooms}" style="width: 700px">
-        <img class="col-4" src="/image/poolvil.jfif" style="width: 200px; height: 100px">
-        <div class="col">
-            <span th:text="${room.getRoomname()}"></span><br>
-            <span th:text="${room.getContent()}"></span><br>
-            <span th:text="${room.getPrice()}"></span><br>
-            <input type="button" style="float: right" value="예약하기">
+    <div id="rooms">
+        <div class="row" th:each="hotelroom:${hotelrooms}" style="width: 700px">
+            <img class="col-4" src="/image/poolvil.jfif" style="width: 200px; height: 100px">
+            <div class="col">
+                <span th:text="${hotelroom.getRoomname()}"></span><br>
+                <span th:text="${hotelroom.getContent()}"></span><br>
+                <span th:text="${hotelroom.getPerson()}"></span><br>
+                <span th:if="${#strings.equals(hotelroom.getAvail(), 'true')}"
+                        th:text="${hotelroom.getPrice()}"></span><br>
+                <span th:unless="${#strings.equals(hotelroom.getAvail(), 'true')}">예약 마감</span><br>
+                <input type="button" style="float: right" value="예약하기">
+            </div>
         </div>
     </div>
+
 </div>
 <br><br>
 
@@ -127,6 +137,48 @@
 
 </body>
 <script>
+
+    $(document)
+        .on('click','#submit',function (){
+            var today = new Date().toISOString().substring(0, 10)
+
+            if($('#checkin').val()>=$('#checkout').val()||$('#checkin').val()<today){
+                alert("날짜를 확인해주세요.")
+                return false;
+            } else if($('#person').val()<=0){
+                alert("인원수를 확인해주세요.")
+                return false;
+            }
+
+            var form1 = $('#frminfo').serialize();
+
+            $.ajax({
+                url:"/hotel/detail",
+                type:"post",
+                data:form1,
+                success:function (data){
+                    for(i=0;i<data.size;)
+                    $('#rooms').text(
+
+                //         <div className="row" th:each="hotelroom:${hotelrooms}" style="width: 700px">
+                //             <img className="col-4" src="/image/poolvil.jfif" style="width: 200px; height: 100px">
+                //                 <div className="col">
+                //                     <span th:text="${hotelroom.getRoomname()}"></span><br>
+                //                     <span th:text="${hotelroom.getContent()}"></span><br>
+                //                     <span th:text="${hotelroom.getPerson()}"></span><br>
+                // <span th:if="${#strings.equals(hotelroom.getAvail(), 'true')}"
+                //       th:text="${hotelroom.getPrice()}"></span><br>
+                //                     <span th:unless="${#strings.equals(hotelroom.getAvail(), 'true')}">예약 마감</span><br>
+                //                     <input type="button" style="float: right" value="예약하기">
+                //                 </div>
+                //         </div>
+                    )
+
+                }
+            })
+
+        })
+
     var mapContainer = document.getElementById('map'), // 지도를 표시할 div
         mapOption = {
             center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표

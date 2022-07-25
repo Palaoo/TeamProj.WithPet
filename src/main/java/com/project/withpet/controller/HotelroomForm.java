@@ -1,29 +1,14 @@
-package com.project.withpet.domain;
+package com.project.withpet.controller;
 
-import javax.persistence.*;
+public class HotelroomForm {
 
-@Entity
-public class Hotelroom {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long roomid;
-
-    @JoinColumn(name = "shop_shopid")
     private Long shopid;
-
-    @Column
     private String roomname;
-
-    @Column
     private Long price;
-
-    @Column
     private Long person;
-
-    @Column
     private String content;
-
+    private String avail;
 
     public Long getRoomid() {
         return roomid;
@@ -71,5 +56,13 @@ public class Hotelroom {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public String getAvail() {
+        return avail;
+    }
+
+    public void setAvail(String avail) {
+        this.avail = avail;
     }
 }
