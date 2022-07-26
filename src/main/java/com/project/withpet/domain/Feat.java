@@ -1,6 +1,7 @@
 package com.project.withpet.domain;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -13,7 +14,7 @@ public class Feat {
     private String featname;
 
     @ManyToMany(mappedBy = "shopFeats")
-    Set<Shop> feats;
+    List<Shop> feats;
 
     public Long getFeatid() {
         return featid;

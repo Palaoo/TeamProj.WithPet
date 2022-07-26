@@ -5,6 +5,7 @@ import com.project.withpet.repository.HotelroomRepository;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @Transactional
 public class HotelroomService {
@@ -15,6 +16,10 @@ public class HotelroomService {
     }
 
     public List<Hotelroom> findByShopid(Long shopid){
-        return hotelroomRepository.findByShopid(shopid);
+        return hotelroomRepository.findByShopidOrderByPriceAsc(shopid);
+    }
+
+    public Optional<Hotelroom> cheapRoom(Long shopid){
+        return hotelroomRepository.findTop1ByShopidOrderByPriceAsc(shopid);
     }
 }

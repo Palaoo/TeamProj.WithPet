@@ -22,4 +22,9 @@ public class ShopService {
     public Optional<Shop> findById(Long id){
         return shopRepository.findById(id);
     }
+
+    public List<Shop> hotelList(Long typeid){
+        return shopRepository.findAllByshoptypeTypeid(typeid);
+    }
+
 }
