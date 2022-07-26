@@ -1,6 +1,7 @@
 package com.example.WithPet.Controller;
 
 import com.example.WithPet.Service.BasketService;
+import com.example.WithPet.Service.BusinessUserService;
 import com.example.WithPet.Service.ImgService;
 import com.example.WithPet.Service.ProdService;
 import com.example.WithPet.domain.Basket;
@@ -18,12 +19,14 @@ public class BasketController {
     private final BasketService basketService;
     private final ProdService prodService;
     private final ImgService imgService;
+    private final BusinessUserService businessUserService;
     private final Tools tools = new Tools();
 
-    public BasketController(BasketService basketService, ProdService prodService, ImgService imgService) {
+    public BasketController(BasketService basketService, ProdService prodService, ImgService imgService, BusinessUserService businessUserService) {
         this.basketService = basketService;
         this.prodService = prodService;
         this.imgService = imgService;
+        this.businessUserService = businessUserService;
     }
 
     @GetMapping("basket_view")
@@ -37,7 +40,8 @@ public class BasketController {
         ArrayList<BascketDTO> bascketDTOs = new ArrayList<>();
         for (Basket basket : basketList) {
             Product prod = prodService.findById(basket.getProdid());
-            bascketDTOs.add(new BascketDTO(basket.getProdid(), prod.getName(), prod.getPrice(), imgService.findByProdid(basket.getProdid()).get().getPath()));
+            String brand = businessUserService.findByBid(prod.getBid()).getBrand();
+            bascketDTOs.add(new BascketDTO(basket.getProdid(), prod.getName(), prod.getPrice(), imgService.findByProdid(basket.getProdid()).get().getPath(), brand));
         }
         model.addAttribute("BasketDTOs", bascketDTOs);
         model.addAttribute("userLogined", userId);

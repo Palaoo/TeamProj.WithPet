@@ -5,6 +5,7 @@ import com.example.WithPet.repository.Basket.BasketRepository;
 import com.example.WithPet.repository.BusinessUser.BusinessUserRepository;
 import com.example.WithPet.repository.Cimg.CimgRepository;
 import com.example.WithPet.repository.Img.ImgRepository;
+import com.example.WithPet.repository.Like.LikeRepository;
 import com.example.WithPet.repository.Order.OrderRepository;
 import com.example.WithPet.repository.Orderprod.OrderprodRepository;
 import com.example.WithPet.repository.Prod.ProdRepository;
@@ -22,11 +23,14 @@ public class SpringConfig {
     private final CimgRepository cimgRepository;
     private final OrderRepository orderRepository;
     private final OrderprodRepository orderprodRepository;
-    private final BasketRepository bascketRepository;
+    private final BasketRepository basketRepository;
+    private final LikeRepository likeRepository;
 
     @Autowired
     public SpringConfig(UserRepository userRepository, BusinessUserRepository businessUserRepository,
-                        ProdRepository prodRepository, ImgRepository imgRepository, CimgRepository cimgRepository, OrderRepository orderRepository, OrderprodRepository orderprodRepository, BasketRepository bascketRepository) {
+                        ProdRepository prodRepository, ImgRepository imgRepository, CimgRepository cimgRepository,
+                        OrderRepository orderRepository, OrderprodRepository orderprodRepository,
+                        BasketRepository basketRepository, LikeRepository likeRepository) {
         this.userRepository = userRepository;
         this.businessUserRepository = businessUserRepository;
         this.prodRepository = prodRepository;
@@ -34,7 +38,8 @@ public class SpringConfig {
         this.cimgRepository = cimgRepository;
         this.orderRepository = orderRepository;
         this.orderprodRepository = orderprodRepository;
-        this.bascketRepository = bascketRepository;
+        this.basketRepository = basketRepository;
+        this.likeRepository = likeRepository;
     }
 
     @Bean
@@ -73,7 +78,12 @@ public class SpringConfig {
     }
 
     @Bean
-    public BasketService bascketService() {
-        return new BasketService(bascketRepository);
+    public BasketService basketService() {
+        return new BasketService(basketRepository);
+    }
+
+    @Bean
+    public LikeService likeService() {
+        return new LikeService(likeRepository);
     }
 }

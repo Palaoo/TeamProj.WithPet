@@ -2,10 +2,20 @@ package com.example.WithPet.Controller;
 
 public class BascketDTO {
     private String path;
+
+
     private String name;
     private int price;
     private Long prodid;
+    private String brand;
 
+    public String getBrand() {
+        return brand;
+    }
+
+    public void setBrand(String brand) {
+        this.brand = brand;
+    }
     public String getPath() {
         return path;
     }
@@ -38,10 +48,11 @@ public class BascketDTO {
         this.prodid = prodid;
     }
 
-    public BascketDTO(Long prodid, String name, int price, String path) {
+    public BascketDTO(Long prodid, String name, int price, String path,String brand) {
         this.path = path;
         this.name = name;
         this.price = price;
         this.prodid = prodid;
+        this.brand = brand;
     }
 }

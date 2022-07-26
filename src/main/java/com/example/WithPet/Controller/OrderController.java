@@ -71,7 +71,7 @@ public class OrderController {
         if (!tools.isUserLogined(req)) {
             return "login";
         }
-        if ((startDate != null && endDate != null) || (startDate != "" && endDate != "")) {
+        if ((startDate == null && endDate == null) || (startDate == "" && endDate == "")) {
             startDate = LocalDate.now().minusMonths(1).toString();
             endDate = LocalDate.now().toString();
             System.out.println(startDate + " " + endDate);
