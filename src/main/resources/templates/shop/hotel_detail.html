@@ -55,33 +55,33 @@
 <br><br>
 
 <div>
-    <div class="row">
-        <div class="datebar" style="margin:10px">
-            <form id="frmChange" method="post" action="/hotel/detail">
+    <form action="/hotel/reservation" method="post">
+        <div class="row">
+            <div class="datebar" style="margin:10px">
                 <input type="hidden" name="shopid" id="shopid" th:value="${shop.getShopid()}">
                 <input type="date" name="checkin" id="checkin" th:value="${checkin}">&nbsp;
                 <input type="date" name="checkout" id="checkout" th:value="${checkout}">&nbsp;
                 인원수&nbsp;<input type="text" name="person" id="person" th:value="${person}" readonly>&nbsp;
-                <input type="submit" value="변경" id="submit">
-            </form>
-        </div>
-    </div>
-    <br>
-    <div id="rooms">
-        <div class="row" th:each="hotelroom:${hotelrooms}" style="width: 700px">
-            <img class="col-4" src="/image/poolvil.jfif" style="width: 200px; height: 100px">
-            <div class="col">
-                <span th:text="${hotelroom.getRoomname()}"></span><br>
-                <span th:text="${hotelroom.getContent()}"></span><br>
-                <span th:text="${hotelroom.getPerson()}"></span><br>
-                <span th:if="${#strings.equals(hotelroom.getAvail(), 'true')}"
-                        th:text="${hotelroom.getPrice()}"></span><br>
-                <span th:unless="${#strings.equals(hotelroom.getAvail(), 'true')}">예약 마감</span><br>
-                <input type="button" style="float: right" value="예약하기">
+                <input type="button" value="변경" id="submit">
             </div>
         </div>
-    </div>
-
+        <br>
+        <div id="rooms">
+            <div class="row" th:each="hotelroom:${hotelrooms}" style="width: 700px; height:130px">
+                <img class="col-4" src="/image/poolvil.jfif" style="width: 200px; height: 100px">
+                <div class="col">
+                        <input type="hidden" th:value="${hotelroom.getRoomid()}" name="roomid">
+                        <span th:text="${hotelroom.getRoomname()}"></span><br>
+                        <span th:text="${hotelroom.getContent()}"></span><br>
+                        <span th:text="${hotelroom.getPerson()}"></span><br>
+                        <span th:if="${#strings.equals(hotelroom.getAvail(), 'true')}"
+                                th:text="|${hotelroom.getPrice()}원|"></span>
+                        <span th:unless="${#strings.equals(hotelroom.getAvail(), 'true')}">예약 마감</span><br>
+                        <input type="submit" style="float: right" value="예약하기" id="book">
+                </div>
+            </div>
+        </div>
+    </form>
 </div>
 <br><br>
 
@@ -139,45 +139,63 @@
 <script>
 
     $(document)
-        .on('click','#submit',function (){
+        .on('click','#submit',function () {
             var today = new Date().toISOString().substring(0, 10)
 
-            if($('#checkin').val()>=$('#checkout').val()||$('#checkin').val()<today){
+            if ($('#checkin').val() >= $('#checkout').val() || $('#checkin').val() < today) {
                 alert("날짜를 확인해주세요.")
                 return false;
-            } else if($('#person').val()<=0){
+            } else if ($('#person').val() <= 0) {
                 alert("인원수를 확인해주세요.")
                 return false;
             }
 
-            var form1 = $('#frminfo').serialize();
-
             $.ajax({
                 url:"/hotel/detail",
                 type:"post",
-                data:form1,
-                success:function (data){
-                    for(i=0;i<data.size;)
-                    $('#rooms').text(
-
-                //         <div className="row" th:each="hotelroom:${hotelrooms}" style="width: 700px">
-                //             <img className="col-4" src="/image/poolvil.jfif" style="width: 200px; height: 100px">
-                //                 <div className="col">
-                //                     <span th:text="${hotelroom.getRoomname()}"></span><br>
-                //                     <span th:text="${hotelroom.getContent()}"></span><br>
-                //                     <span th:text="${hotelroom.getPerson()}"></span><br>
-                // <span th:if="${#strings.equals(hotelroom.getAvail(), 'true')}"
-                //       th:text="${hotelroom.getPrice()}"></span><br>
-                //                     <span th:unless="${#strings.equals(hotelroom.getAvail(), 'true')}">예약 마감</span><br>
-                //                     <input type="button" style="float: right" value="예약하기">
-                //                 </div>
-                //         </div>
-                    )
-
+                data: {shopid:$('#shopid').val(),checkin:$('#checkin').val(),
+                    checkout:$('#checkout').val(),person:$('#person').val()},
+                success:function (r) {
+                    var str = ""
+                    $.each(r, function(index,item){
+                        str += '<div class="row" style="width: 700px; height:130px">'
+                        str += '<img className="col-4" src="/image/poolvil.jfif" style="width: 200px; height: 100px">'
+                        str += '<div class="col">'
+                        str += '<span>'+item["roomname"]+'</span><br>'
+                        str += '<span>'+item["content"]+'</span><br>'
+                        str += '<span>'+item["person"]+'</span><br>'
+                        if(item["avail"]=="true"){
+                            str += '<span>'+item["price"]+'원</span><br>'
+                        } else{
+                            str += '<span>예약 마감</span><br>'
+                        }
+                        str += '<input type="button" style="float: right" value="예약하기">'
+                        str += '</div>'
+                        str += '</div>'
+                    })
+                    $('#rooms').html(str)
                 }
             })
 
         })
+
+        .on('click','#book',function (){
+            $.ajax({
+                url:"/checkuser",
+                type:"post",
+                async:false,
+                success:function (result){
+                    if(result==true){
+                        flag = true;
+                    } else{
+                        alert('로그인이 필요한 서비스입니다')
+                        flag = false
+                    }
+                }
+            })
+            return flag;
+        })
+
 
     var mapContainer = document.getElementById('map'), // 지도를 표시할 div
         mapOption = {

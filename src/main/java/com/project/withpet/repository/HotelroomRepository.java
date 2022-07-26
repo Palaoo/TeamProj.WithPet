@@ -11,4 +11,6 @@ public interface HotelroomRepository {
 
     Optional<Hotelroom> findTop1ByShopidOrderByPriceAsc(Long shopid);
 
+    Optional<Hotelroom> findById(Long roomid);
+
 }
