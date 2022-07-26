@@ -44,4 +44,8 @@ public class BusinessUserService {
                     throw new IllegalStateException("이미 사업자 ID가 존재합니다.");
                 });
     }
+
+    public BusinessUser findByBid(Long bid) {
+        return businessUserRepository.findById(bid).get();
+    }
 }

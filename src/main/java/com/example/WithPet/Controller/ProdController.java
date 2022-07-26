@@ -1,8 +1,6 @@
 package com.example.WithPet.Controller;
 
-import com.example.WithPet.Service.CimgService;
-import com.example.WithPet.Service.ImgService;
-import com.example.WithPet.Service.ProdService;
+import com.example.WithPet.Service.*;
 import com.example.WithPet.domain.Cimg;
 import com.example.WithPet.domain.Img;
 import com.example.WithPet.domain.Product;
@@ -18,10 +16,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
-import java.net.URI;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
 import java.util.*;
 
 
@@ -32,13 +26,17 @@ public class ProdController {
     private final ProdService prodService;
     private final ImgService imgService;
     private final CimgService cimgService;
+    private final BusinessUserService businessUserService;
+    private final LikeService likeService;
 
     @Autowired
-    public ProdController(S3Uploader s3Uploader, ProdService prodService, ImgService imgService, CimgService cimgService) {
+    public ProdController(S3Uploader s3Uploader, ProdService prodService, ImgService imgService, CimgService cimgService, BusinessUserService businessUserService, LikeService likeService) {
         this.s3Uploader = s3Uploader;
         this.prodService = prodService;
         this.imgService = imgService;
         this.cimgService = cimgService;
+        this.businessUserService = businessUserService;
+        this.likeService = likeService;
     }
 
 
@@ -53,10 +51,14 @@ public class ProdController {
         Page<Product> prods = prodService.findProds(pageable);
         System.out.printf("From prodController mallPage(), prods.getTotalElements(): %d\n", prods.getTotalElements());
         List<String> imgURLs = imgService.findImgURLs(prods);
+        String userId = req.getSession().getAttribute("userLogined").toString();
         for (int i = 0; i < prods.getTotalElements(); i++) {
             Product product = prods.toList().get(i);
             String imgURL = imgURLs.get(i);
-            ProdDTO pDTO = new ProdDTO(product, imgURL);
+            String brand = businessUserService.findByBid(product.getBid()).getBrand();
+            int likeCount = likeService.getLikeCount(product.getId());
+
+            ProdDTO pDTO = new ProdDTO(product, imgURL, brand, likeCount, likeService.isLiked(product.getId(), userId));
             pDTOs.add(pDTO);
         }
         model.addAttribute("pDTOs", pDTOs);
