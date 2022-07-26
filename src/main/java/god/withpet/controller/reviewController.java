@@ -50,6 +50,18 @@ public class reviewController {
         return "redirect:/cafeinfo?shopid="+ dto.getShopid();
     }
 
+    @PostMapping("/reviews/update")
+    public String update(reviewDto dto) {
+        log.info("수정 데이터"+dto.toString());
+        shopreview shopreview = dto.toEntity();
+        System.out.println(shopreview.getRid());
+        shopreview target = shopreviewRepository.findById(shopreview.getRid()).orElse(null);
+        if (target != null) {
+            shopreviewRepository.save(shopreview);
+        }
+        return "redirect:/cafeinfo?shopid="+ shopreview.getShopid();
+    }
+
 //    @PostMapping("reviews/delete")
 //    public String delete(@RequestParam ("rid") Long rid) {
 //        Optional<shopreview> shopreview = shopreviewRepository.findById(rid);

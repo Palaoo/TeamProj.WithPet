@@ -1,5 +1,6 @@
 package god.withpet.service;
 
+import god.withpet.dto.reviewDto;
 import god.withpet.entity.shopreview;
 import god.withpet.repository.cafeRepository;
 import god.withpet.repository.shopreviewRepository;
@@ -38,6 +39,7 @@ public class reviewService {
 
         shopreviewRepository.deleteById(rid);
     }
+
 
 
 

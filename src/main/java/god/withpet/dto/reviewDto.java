@@ -36,7 +36,7 @@ public class reviewDto {
 //    }
     public shopreview toEntity() {
 
-        return new shopreview(null, shopid, content, date, score, userid);
+        return new shopreview(rid, shopid, content, date, score, userid);
     }
 
 }

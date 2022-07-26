@@ -69,6 +69,35 @@
           font-size: 16px;
           resize: none;
         }
+        .rating{
+          color:sandybrown;
+        }
+
+        div.updatescore fieldset{
+          display: inline-block;
+          direction: rtl;
+          border:0;
+        }
+        div.updatescore fieldset legend{
+          text-align: right;
+        }
+        div.updatescore input[type=radio]{
+          display: none;
+        }
+        div.updatescore label{
+          font-size: 3em;
+          color: transparent;
+          text-shadow: 0 0 0 #f0f0f0;
+        }
+        div.updatescore label:hover{
+          text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
+        }
+        div.updatescore label:hover ~ label{
+          text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
+        }
+        div.updatescore input[type=radio]:checked ~ label{
+          text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
+        }
 
     </style>
 
@@ -181,66 +210,96 @@
       <p>n 개</p>
       <th:block th:each="review: ${shopreview}">
         <div  class="row">
-          <div class="col-sm-3"><img src="dd.JPG"><p th:text="${review.getUserid()}"></p></div>
-          <div class="col-sm-6">
-            <p th:text="${review.getScore()}"></p>
+          <div class="col-sm-2"><img src="dd.JPG"><p th:text="${review.getUserid()}"></p></div>
+          <div class="col-sm-5">
+            <th:block th:if="${review.getScore()}==5">
+              <div class="rating">★★★★★</div>
+            </th:block>
+            <th:block th:if="${review.getScore()}==4">
+              <div class="rating">★★★★</div>
+            </th:block>
+            <th:block th:if="${review.getScore()}==3">
+              <div class="rating">★★★</div>
+            </th:block>
+            <th:block th:if="${review.getScore()}==2">
+              <div class="rating">★★</div>
+            </th:block>
+            <th:block th:if="${review.getScore()}==1">
+              <div class="rating">★</div>
+            </th:block>
             <p th:text="${review.getContent()}"></p>
           </div>
           <div class="col-sm-3">
             <p th:text="${review.getDate()}"></p>
+          </div>
+          <div class="col-sm-2">
+            <form th:action="@{'/reviews/update/'}" method="post">
+<!--              <button class="btn btn-outline-primary btn-sm" name="edit">수정</button>-->
+              <button type="button"
+                      class="btn btn-outline-primary btn-sm"
+                      data-bs-toggle="modal"
+                      data-bs-target="#review-edit-Modal"
+                      data-bs-rid=""
+                      data-bs-userid=""
+                      data-bs-score=""
+                      data-bs-content=""
+                      data-bs-shopid="">수정</button>
+              <div class="modal fade" id="review-edit-Modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">리뷰 수정하기</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                      <div class="updatescore">
+                            <fieldset>
+                              <span th:text="${review.getScore()}"></span>
+                              <span class="text-bold">별점을 선택하세요</span>
+                              <input type="radio" name="score" value="5" id="rate1_"><label
+                                    for="rate1">★</label>
+                              <input type="radio" name="score" value="4" id="rate2_"><label
+                                    for="rate2">★</label>
+                              <input type="radio" name="score" value="3" id="rate3_"><label
+                                    for="rate3">★</label>
+                              <input type="radio" name="score" value="2" id="rate4_"><label
+                                    for="rate4">★</label>
+                              <input type="radio" name="score" value="1" id="rate5_"><label
+                                    for="rate5">★</label>
+                            </fieldset>
+                      </div>
+                        <div class="mb-3">
+                          <label for="message-text" class="col-form-label">내용</label>
+                          <textarea class="form-control" id="message-text" name="content" th:text="${review.getContent()}"></textarea>
+                        </div>
+                        <input type="hidden" name="shopid" th:value="${review.getShopid()}">
+                        <input type="hidden" name="rid" th:value="${review.getRid()}">
+                        <input type="hidden" name="userid" th:value="${review.getUserid()}">
+                        <input type="hidden" name="date" th:value="${review.getDate()}">
+                        <input type="hidden" name="score" th:value="${review.getScore()}">
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                      <button type="submit" class="btn btn-primary">수정</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+            <script>
+              var myModal = document.getElementById('myModal')
+              var myInput = document.getElementById('myInput')
 
-<!--            <input type="button" class="btn btn-outline-primary btn-sm" name="edit" value="수정">-->
+              myModal.addEventListener('shown.bs.modal', function () {
+                myInput.focus()
+              })
+            </script>
             <form th:action="@{'/reviews/delete/'}" method="get">
               <input type="hidden" name="shopid" th:value="${review.getShopid()}">
               <input type="hidden" name="rid" th:value="${review.getRid()}">
-              <button>삭제</button>
+              <button  class="btn btn-outline-danger btn-sm" name="delete">삭제</button>
             </form>
-<!--            <input type="button" class="btn btn-sm btn-outline-danger comment-delete-btn" name="delete" value="삭제">-->
-<!--            <button type="button"-->
-<!--                    class="btn btn-sm btn-outline-primary"-->
-<!--                    data-bs-toggle="modal"-->
-<!--                    data-bs-target="#comment-edit-modal"-->
-<!--                    th:data-bs-rid="|${review.getRid()}|"-->
-<!--                    th:data-bs-userid="|${review.getUserid()}|"-->
-<!--                    th:data-bs-content="|${review.getContent()}|"-->
-<!--                    th:data-bs-shopid="|${review.getShopid()}|">수정</button>-->
-<!--            &lt;!&ndash; 댓글 삭제 버튼&ndash;&gt;-->
-<!--            <button type="button"-->
-<!--                    class="btn btn-sm btn-outline-danger comment-delete-btn"-->
-<!--                    data-comment-id="{{id}}">삭제</button>    &lt;!&ndash;comment-delete-button 클래스 추가, 삭제할 댓글의 id를 가져옴&ndash;&gt;-->
-<!--          </div>-->
-<!--          <div class="modal fade" id="comment-edit-modal" tabindex="-1">-->
-<!--            <div class="modal-dialog">-->
-<!--              <div class="modal-content">-->
-<!--                <div class="modal-header">-->
-<!--                  <h5 class="modal-title" id="exampleModalLabel">댓글 수정</h5>-->
-<!--                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>-->
-<!--                </div>-->
-<!--                <div class="modal-body">-->
-<!--                  &lt;!&ndash; 댓글 수정 폼&ndash;&gt;-->
-<!--                  <form>-->
-<!--                    &lt;!&ndash; 닉네임 입력 &ndash;&gt;-->
-<!--                    <div class="mb-3">-->
-<!--                      <label class="form-label">닉네임</label>-->
-<!--                      <input type="text" class="form-control form-control-sm" id="edit-comment-nickname">-->
-<!--                    </div>-->
-<!--                    &lt;!&ndash; 댓글 본문 입력 &ndash;&gt;-->
-<!--                    <div class="mb-3">-->
-<!--                      <label class="form-label">댓글 내용</label>-->
-<!--                      <textarea type="text" class="form-control form-control-sm" rows="3" id="edit-comment-body"></textarea>-->
-<!--                    </div>-->
-<!--                    &lt;!&ndash; 히든 인풋 &ndash;&gt;-->
-<!--                    {{#article}}   &lt;!&ndash;댓글은 게시글에 포함되기 때문에 article의 id를 hidden input으로 가져야 함&ndash;&gt;-->
-<!--                    <input type="hidden" id="edit-comment-id">-->
-<!--                    <input type="hidden" id="edit-comment-articleId">-->
-<!--                    {{/article}}-->
-<!--                    &lt;!&ndash; 전송 버튼 &ndash;&gt;-->
-<!--                    <button type="button" class="btn btn-outline-primary btn-sm" id="comment-update-btn">수정 완료</button>-->
-<!--                  </form>-->
-<!--                </div>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--          </div>-->
+          </div>
         </div>
       </th:block>
 
@@ -271,40 +330,9 @@
   <div class="footer">footer
   </div>
 </div>
+<script src='https://code.jquery.com/jquery-3.4.1.js'></script>
 <script>
-  // 수정 완료 버튼
-  const commentUpdateBtn = document.querySelector("#comment-update-btn");
 
-  //클릭 이벤트 감지 및 처리
-  commentUpdateBtn.addEventListener("click", function() {
-    //수정 댓글 객체 생성
-    const comment = {
-      id: document.querySelector("#edit-comment-id").value,
-      nickname: document.querySelector("#edit-comment-nickname").value,
-      body: document.querySelector("#edit-comment-body").value,
-      article_id: document.querySelector("#edit-comment-articleId").value
-    };
-
-    console.log(comment);
-
-    //수정 Rest API 호출 => fetch()사용
-    const url = "/api/comments/" + comment.id;
-    fetch(url, {
-      method: "PATCH",     //patch요청
-      body: JSON.stringify(comment),     //수정된 댓글 객체를 JSON으로 전달
-      headers: {
-        "Content-Type": "application/json"  //body에 담겨진 타입이 json임을 명시
-      }
-    }).then(response => {    //==.then(response, function() {})
-      //http 응답 코드에 따른 메시지 출력
-      const msg = (response.ok) ? "댓글이 수정되었습니다." : "댓글 수정 실패..!";
-      alert(msg);
-      //현재 페이지를 새로 고침
-      window.location.reload();
-    });
-  });
-
-  }
 
 </script>
 </body>

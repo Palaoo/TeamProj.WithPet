@@ -16,4 +16,5 @@ public interface shopreviewRepository extends JpaRepository<shopreview, Long> {
 
     Optional<shopreview> findByUserid(String userid);
 
+    Optional<shopreview> findById(Long rid);
 }
