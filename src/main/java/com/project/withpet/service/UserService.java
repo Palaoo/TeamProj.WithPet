@@ -15,6 +15,10 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
+    public Optional<User> findById(String userid){
+        return userRepository.findById(userid);
+    }
+
     public Optional<User> join(User user){
         userRepository.save(user);
         return Optional.ofNullable(user);
