@@ -27,15 +27,15 @@ import java.util.Optional;
 public class BoardController {
     private final BoardService boardService;
     private final BoardimgService boardimgService;
-    private final S3Uploader s3Uploader;
+//    private final S3Uploader s3Uploader;
 
     private final ReplyService replyService;
 
     @Autowired
-    public BoardController(BoardService boardService, BoardimgService boardimgService, S3Uploader s3Uploader, ReplyService replyService) {
+    public BoardController(BoardService boardService, BoardimgService boardimgService, ReplyService replyService) {
         this.boardService = boardService;
         this.boardimgService = boardimgService;
-        this.s3Uploader = s3Uploader;
+//        this.s3Uploader = s3Uploader;
         this.replyService = replyService;
     }
 

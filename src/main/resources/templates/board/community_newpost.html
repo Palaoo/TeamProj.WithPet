@@ -9,45 +9,48 @@
     <meta name="viewport" content="width=<device-width>, initial-scale=1.0">
     <title>Document</title>
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
-    <th:block th:replace="fragments/common::style"></th:block>
+    <th:block th:replace="fragments/index::style"></th:block>
 </head>
 <style>
-body{
-    font-size: medium;
-}
-#btn_submit,#btn_cancel {
-    border: none;
-    outline: none;
-    width: 100px;
-    height: 50px;
-    background-color: #518581;
-    border-radius: 4px;
-    color:white;
-}
-#btn_submit:hover,#btn_cancel:hover{
-     background: white;
-     border: 1px solid;
-     color:  #518581;
-}
-#title {
-    border:none;
-    outline: none;
-    border-bottom: 1px solid #d0d0cf;
-    width: 1200px;
-    border-spacing:20px;
-    font-size:24px;
-    cursor:pointer;
-}
-#title:focus {
-    outline:none;
-}
-#summernote{
-    size:30px;
-}
+<!--body{-->
+<!--    font-size: medium;-->
+<!--    list-style: none;-->
+<!--    text-decoration: none;-->
+<!--    color: #000;-->
+<!--}-->
+<!--#btn_submit,#btn_cancel {-->
+<!--    border: none;-->
+<!--    outline: none;-->
+<!--    width: 100px;-->
+<!--    height: 50px;-->
+<!--    background-color: #518581;-->
+<!--    border-radius: 4px;-->
+<!--    color:white;-->
+<!--}-->
+<!--#btn_submit:hover,#btn_cancel:hover{-->
+<!--     background: white;-->
+<!--     border: 1px solid;-->
+<!--     color:  #518581;-->
+<!--}-->
+<!--#title {-->
+<!--    border:none;-->
+<!--    outline: none;-->
+<!--    border-bottom: 1px solid #d0d0cf;-->
+<!--    width: 1200px;-->
+<!--    border-spacing:20px;-->
+<!--    font-size:24px;-->
+<!--    cursor:pointer;-->
+<!--}-->
+<!--#title:focus {-->
+<!--    outline:none;-->
+<!--}-->
+<!--#summernote{-->
+<!--    size:30px;-->
+<!--}-->
 </style>
 <body>
 
-<div th:replace="fragments/common :: header"></div>
+<div th:replace="fragments/index :: header"></div>
 
 <h2>게시물 작성</h2>
 
@@ -59,7 +62,7 @@ body{
         <input type="submit" id="btn_submit" value="제출">&nbsp;<input type="button" id="btn_cancel" value="취소">
     </div>
 </form>
-<th:block th:replace="fragments/common :: footer"></th:block>
+<th:block th:replace="fragments/index :: footer"></th:block>
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
 </body>
 <script>

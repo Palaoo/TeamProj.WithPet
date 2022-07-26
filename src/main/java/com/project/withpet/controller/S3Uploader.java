@@ -14,7 +14,6 @@ import java.io.IOException;
 import java.util.Optional;
 import java.util.UUID;
 
-@Component
 public class S3Uploader {
     private final AmazonS3Client amazonS3Client;
 
