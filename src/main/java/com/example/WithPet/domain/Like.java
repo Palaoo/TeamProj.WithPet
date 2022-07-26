@@ -37,6 +37,14 @@ public class Like {
         return prodId;
     }
 
+    public Like() {
+    }
+
+    public Like(Long prodId, String userId) {
+        this.userId = userId;
+        this.prodId = prodId;
+    }
+
     public void setProdId(Long prodId) {
         this.prodId = prodId;
     }

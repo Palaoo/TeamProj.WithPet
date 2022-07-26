@@ -28,7 +28,6 @@ public class OrderController {
     private final Tools tools = new Tools();
     private final OrderService orderService;
     private final OrderprodService orderprodService;
-    @Autowired
     private final ProdService prodService;
     private final ImgService imgService;
 

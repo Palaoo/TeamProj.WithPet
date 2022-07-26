@@ -3,6 +3,7 @@ package com.example.WithPet.Controller;
 import com.example.WithPet.Service.*;
 import com.example.WithPet.domain.Cimg;
 import com.example.WithPet.domain.Img;
+import com.example.WithPet.domain.Like;
 import com.example.WithPet.domain.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -56,10 +57,12 @@ public class ProdController {
             Product product = prods.toList().get(i);
             String imgURL = imgURLs.get(i);
             String brand = businessUserService.findByBid(product.getBid()).getBrand();
-            int likeCount = likeService.getLikeCount(product.getId());
+            Long likeCount = likeService.getLikeCount(product.getId());
 
             ProdDTO pDTO = new ProdDTO(product, imgURL, brand, likeCount, likeService.isLiked(product.getId(), userId));
             pDTOs.add(pDTO);
+
+
         }
         model.addAttribute("pDTOs", pDTOs);
 
@@ -176,5 +179,21 @@ public class ProdController {
 //
 //
 //    }
+
+    @GetMapping("append_like")
+    @ResponseBody
+    public String appendLike(@RequestParam Long prodId, HttpServletRequest req) {
+        likeService.appendLike(prodId, req.getSession().getAttribute("userLogined").toString());
+
+        return "";
+    }
+
+    @GetMapping("delete_like")
+    @ResponseBody
+    public String deleteLike(@RequestParam Long prodId, HttpServletRequest req) {
+        likeService.deleteLike(prodId, req.getSession().getAttribute("userLogined").toString());
+        return "";
+    }
+
 
 }

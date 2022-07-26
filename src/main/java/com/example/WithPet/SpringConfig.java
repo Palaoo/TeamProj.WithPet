@@ -5,6 +5,7 @@ import com.example.WithPet.repository.Basket.BasketRepository;
 import com.example.WithPet.repository.BusinessUser.BusinessUserRepository;
 import com.example.WithPet.repository.Cimg.CimgRepository;
 import com.example.WithPet.repository.Img.ImgRepository;
+import com.example.WithPet.repository.Like.JpaLikeRepository;
 import com.example.WithPet.repository.Like.LikeRepository;
 import com.example.WithPet.repository.Order.OrderRepository;
 import com.example.WithPet.repository.Orderprod.OrderprodRepository;
@@ -13,6 +14,8 @@ import com.example.WithPet.repository.User.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import javax.persistence.EntityManager;
 
 @Configuration
 public class SpringConfig {
@@ -23,14 +26,14 @@ public class SpringConfig {
     private final CimgRepository cimgRepository;
     private final OrderRepository orderRepository;
     private final OrderprodRepository orderprodRepository;
+    private final EntityManager em;
     private final BasketRepository basketRepository;
-    private final LikeRepository likeRepository;
 
     @Autowired
     public SpringConfig(UserRepository userRepository, BusinessUserRepository businessUserRepository,
                         ProdRepository prodRepository, ImgRepository imgRepository, CimgRepository cimgRepository,
                         OrderRepository orderRepository, OrderprodRepository orderprodRepository,
-                        BasketRepository basketRepository, LikeRepository likeRepository) {
+                         EntityManager em, BasketRepository basketRepository) {
         this.userRepository = userRepository;
         this.businessUserRepository = businessUserRepository;
         this.prodRepository = prodRepository;
@@ -38,8 +41,8 @@ public class SpringConfig {
         this.cimgRepository = cimgRepository;
         this.orderRepository = orderRepository;
         this.orderprodRepository = orderprodRepository;
+        this.em = em;
         this.basketRepository = basketRepository;
-        this.likeRepository = likeRepository;
     }
 
     @Bean
@@ -77,13 +80,19 @@ public class SpringConfig {
         return new OrderprodService(orderprodRepository);
     }
 
-    @Bean
-    public BasketService basketService() {
-        return new BasketService(basketRepository);
-    }
 
     @Bean
     public LikeService likeService() {
-        return new LikeService(likeRepository);
+        return new LikeService(likeRepository());
+    }
+
+    @Bean
+    public LikeRepository likeRepository() {
+        return new JpaLikeRepository(em);
+    }
+
+    @Bean
+    public BasketService basketService() {
+        return new BasketService(basketRepository);
     }
 }

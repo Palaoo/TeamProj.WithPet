@@ -6,6 +6,7 @@ import com.example.WithPet.Service.ImgService;
 import com.example.WithPet.Service.ProdService;
 import com.example.WithPet.domain.Basket;
 import com.example.WithPet.domain.Product;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,7 +23,9 @@ public class BasketController {
     private final BusinessUserService businessUserService;
     private final Tools tools = new Tools();
 
-    public BasketController(BasketService basketService, ProdService prodService, ImgService imgService, BusinessUserService businessUserService) {
+    @Autowired
+    public BasketController(BasketService basketService, ProdService prodService, ImgService imgService,
+                            BusinessUserService businessUserService) {
         this.basketService = basketService;
         this.prodService = prodService;
         this.imgService = imgService;
@@ -39,9 +42,9 @@ public class BasketController {
         List<Basket> basketList = basketService.findByUserid(userId);
         ArrayList<BascketDTO> bascketDTOs = new ArrayList<>();
         for (Basket basket : basketList) {
-            Product prod = prodService.findById(basket.getProdid());
+            Product prod = prodService.findById(basket.getProdId());
             String brand = businessUserService.findByBid(prod.getBid()).getBrand();
-            bascketDTOs.add(new BascketDTO(basket.getProdid(), prod.getName(), prod.getPrice(), imgService.findByProdid(basket.getProdid()).get().getPath(), brand));
+            bascketDTOs.add(new BascketDTO(basket.getProdId(), prod.getName(), prod.getPrice(), imgService.findByProdid(basket.getProdId()).get().getPath(), brand));
         }
         model.addAttribute("BasketDTOs", bascketDTOs);
         model.addAttribute("userLogined", userId);
