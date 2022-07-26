@@ -1,0 +1,99 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=<device-width>, initial-scale=1.0">
+    <title>Title</title>
+    <th:block th:replace="fragments/common::style"></th:block>
+    <script src="https://js.tosspayments.com/v1"></script>
+</head>
+<style>
+</style>
+<body>
+
+<div th:replace="fragments/common :: header"></div>
+
+<div class="row">
+    <h2 th:text="${hotelroom.getRoomname()}" id="roomname"></h2>
+    <input type="hidden" th:value="${hotelroom.getRoomid()}" id="roomid">
+    <div class="col" style="height:320px">
+        <img src="/image/poolvil.jfif" style="height: 300px; width: 550px">
+    </div>
+    <div class="col">
+        <h4 th:text="${hotelroom.getContent()}"></h4>
+    </div>
+</div>
+<br>
+<div class="row" style="width: 700px">
+    <h2 th:text="|${checkin} / ${checkout} (${days}박)|"></h2>
+    <input type="hidden" th:value="${checkin}" id="checkin">
+    <input type="hidden" th:value="${checkout}" id="checkout">
+    <input type="text" th:value="${username}" style="width:300px; height: 30px" id="name">
+    <br><br><br>
+    <textarea placeholder="세부사항" style="height: 300px" id="detail"></textarea>
+</div>
+<br>
+<div class="row">
+    <h2>결제 정보</h2><br>
+    <div class="col">
+        <table style="width:450px">
+            <tr>
+                <td>예약 금액</td>
+                <td style="text-align:right" th:text="${total}"></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><br></td>
+            </tr>
+            <tr>
+                <td>총 결제금액(VAT 포함)</td>
+                <td style="text-align:right" th:text="${total}" id="total"></td>
+            </tr>
+        </table>
+    </div>
+    <div class="col">
+        <input type="checkbox" id="check1">&nbsp;이용규칙<br><br>
+        <input type="checkbox" id="check2">&nbsp;개인정보동의<br><br>
+        <input type="checkbox" id="check3">&nbsp;제3자 제공<br><br>
+        <input id="btnPay" type="button" value="결제하기" style="width:450px">
+    </div>
+</div>
+<br>
+
+<th:block th:replace="fragments/common :: footer"></th:block>
+
+</body>
+
+<script>
+    $(document).on('click', '#btnPay', function () {
+        if($('#name').val()!=""&&$('#detail').val()!=""){
+            if($('#check1').is(":checked")&&$('#check2').is(":checked")&&$('#check3').is(":checked")){
+                tossPayments()
+            } else {
+                alert('약관에 동의해주세요')
+            }
+        } else {
+            alert('내용을 입력해주세요')
+        }
+
+    })
+
+    function tossPayments() {
+        var clientKey = 'test_ck_D5GePWvyJnrK0W0k6q8gLzN97Eoq'
+        var tossPayments = TossPayments(clientKey)
+        tossPayments.requestPayment('카드', { // 결제 수단 파라미터
+            // 결제 정보 파라미터
+            amount: $('#total').text(),
+            orderId: '2oTYvWk-KaCQUlf786gv9',
+            orderName: $('#roomname').text(),
+            customerName: $('#username').text(),
+            successUrl: 'http://localhost:8080/hotel/booking?checkin='+$('#checkin').val()
+                +"&checkout="+$('#checkout').val()+"&detail="+$('#detail').val()
+                +"&roomid="+$('#roomid').val()+"&name="+$('#name').val(),
+            failUrl: 'http://localhost:8080/',
+        })
+    }
+</script>
+</html>

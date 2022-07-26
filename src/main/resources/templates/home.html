@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
+    <th:block th:replace="fragments/common::style"></th:block>
 </head>
 <style>
     #login,#signin,#cafename,#title{
@@ -119,22 +120,9 @@
 </style>
 <body>
 <div class="container">
-    <div class="row">
-        <div class="col-xs-1 col-sm-12">
-            <!-- <p align=left><input type="text">&nbsp;<input type="button" value="검색"></p> -->
-            <p align=right><a id="my_shop" href='#'>마이쇼핑</a>&nbsp;&nbsp;<a id="cart" href='#'>장바구니</a>
-                &nbsp;&nbsp;<a id="signin" href='signin'>회원가입</a>&nbsp;&nbsp;
-                <a id="login" href='login'>로그인</a></p>
-            <a href="home" id="title"><h1 align=center>WITH PET</h1></a>
-            <nav>
-                <a href="hotel">숙소</a>
-                <a href="cafelist">카페</a>
-                <a href="#">맛집</a>
-                <a href="#">상점</a>
-                <a href="community">게시판</a>
-            </nav>
-        </div>
-    </div>
+
+    <div th:replace="fragments/common :: header"></div>
+
     <div class="slidebox">
         <input type="radio" name="slide" id="slide01" checked>
         <input type="radio" name="slide" id="slide02">
@@ -233,6 +221,9 @@
             </div>
         </div>
     </div>
+
+    <th:block th:replace="fragments/common :: footer"></th:block>
+
 </div>
 </body>
 </html>

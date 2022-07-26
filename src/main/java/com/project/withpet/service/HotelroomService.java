@@ -22,4 +22,8 @@ public class HotelroomService {
     public Optional<Hotelroom> cheapRoom(Long shopid){
         return hotelroomRepository.findTop1ByShopidOrderByPriceAsc(shopid);
     }
+
+    public Optional<Hotelroom> findById(Long roomid){
+        return hotelroomRepository.findById(roomid);
+    }
 }
