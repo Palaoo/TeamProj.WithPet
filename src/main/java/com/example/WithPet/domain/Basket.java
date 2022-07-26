@@ -7,13 +7,13 @@ import javax.persistence.*;
 public class Basket {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "basketId")
+    @Column(name = "basket_id")
     private long basketId;
 
     @JoinColumn(name = "product_id")
     private Long prodid;
 
-        @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id")
     private String userid;
 
 
@@ -25,19 +25,19 @@ public class Basket {
         this.basketId = basketId;
     }
 
-    public Long getProdid() {
+    public Long getProdId() {
         return prodid;
     }
 
-    public void setProdid(Long prodid) {
+    public void setProdId(Long prodid) {
         this.prodid = prodid;
     }
 
-    public String getUserid() {
+    public String getUserId() {
         return userid;
     }
 
-    public void setUserid(String userid) {
+    public void setUserId(String userid) {
         this.userid = userid;
     }
 
