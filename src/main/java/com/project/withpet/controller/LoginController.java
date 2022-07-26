@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -26,6 +27,8 @@ public class LoginController {
     public String createForm() {
         return "signup";
     }
+
+
 
     @PostMapping(value = "signup")
     public String create(UserForm form){
@@ -65,6 +68,17 @@ public class LoginController {
         HttpSession session = req.getSession();
         session.removeAttribute("userid");
         return "redirect:/";
+    }
+
+    @PostMapping("checkuser")
+    @ResponseBody
+    public boolean checkuser(HttpServletRequest req, Model model){
+        HttpSession session = req.getSession();
+        if(session.getAttribute("userid")!=null){
+            return true;
+        } else {
+            return false;
+        }
     }
 
 

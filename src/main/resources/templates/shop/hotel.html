@@ -35,7 +35,7 @@
     <form action="/hotel" method="post" id="frminfo">
         <input type="date" name="checkin" id="checkin" th:value="${checkin}">&nbsp;
         <input type="date" name="checkout" id="checkout" th:value="${checkout}">&nbsp;
-        인원수&nbsp;<input type="number" th:value="2" name="person" id="person">
+        인원수&nbsp;<input type="number" th:value="${person}" name="person" id="person">
 
         <select name="order">
             <option th:selected="${#strings.equals(order, 'price')}" value="price">요금순</option>
@@ -67,7 +67,7 @@
                             <span class="card-text" th:text="${feat.getFeatname()}"></span>
                         </th:block><br><br>
                         <p class="card-text" th:if="${#strings.equals(hotelList.getAvail(), 'true')}"
-                           th:text="${hotelList.getPrice()}" style="text-align: right"></p>
+                           th:text="|최저가 ${hotelList.getPrice()}원|" style="text-align: right"></p>
                         <p class="card-text" th:unless="${#strings.equals(hotelList.getAvail(), 'true')}"
                            style="text-align: right">예약 마감</p>
                     </div>
