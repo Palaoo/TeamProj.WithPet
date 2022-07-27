@@ -35,13 +35,20 @@
     /*    margin: 100px;*/
     /*}*/
 
+    #img{
+        width:25px;
+        height:25px;
+    }
+    #board{
+       font-weight:bold;
+    }
 </style>
 <body>
 
 <div th:replace="fragments/index :: header"></div>
 
 <!-- Breadcrumb Section Begin -->
-<section class="breadcrumb-blog set-bg" data-setbg="img/breadcrumb-bg.jpg">
+<section class="breadcrumb-blog set-bg" data-setbg="img/community.jpg">
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
@@ -74,17 +81,17 @@
 <!-- Blog Section Begin -->
 <section class="blog spad">
     <div class="container">
-        게시판&nbsp<a href="community/newpost">+</a><br>
+        <a href="community/newpost"><h5 align="right" id="board">게시판&nbsp<img src="img/add.png" id="img"></h5></a><br>
         <div class="row">
             <div class="col-lg-4 col-md-6 col-sm-6" th:each="post: ${posts}">
                 <div class="blog__item">
                     <a th:href="@{/community/postdetail(boardcode=${post.boardcode})}">
-                    <div class="blog__item__pic set-bg" data-setbg="/image/catsock.jfif"></div>
-                    <div class="blog__item__text">
-                        <span><img src="img/icon/calendar.png" alt="" th:text="${post.date}"></span>
-                        <h5 th:text="${post.title}">What Curling Irons Are The Best Ones</h5>
-                        <a href="#">Read More</a>
-                    </div>
+                        <div class="blog__item__pic set-bg" data-setbg="/image/catsock.jfif"></div>
+                        <div class="blog__item__text">
+                            <span><img src="img/icon/calendar.png" alt="" th:text="${post.date}"></span>
+                            <h5 th:text="${post.title}">What Curling Irons Are The Best Ones</h5>
+                            <a href="#">Read More</a>
+                        </div>
                     </a>
                 </div>
                 <input type="hidden" th:value="${post.boardcode}">
@@ -128,7 +135,6 @@
 <!-- Blog Section End -->
 
 
-
 <th:block th:replace="fragments/index :: footer"></th:block>
 
 </body>
@@ -148,5 +154,7 @@
         $('.pagination').on('click', 'li.next', function() {
             $('li.active').removeClass('active').next().addClass('active');
         });*/
+
 </script>
+</html>
 </html>
