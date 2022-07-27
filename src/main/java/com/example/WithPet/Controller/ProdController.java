@@ -85,30 +85,35 @@ public class ProdController {
     }
 
     @PostMapping("/newProd")
-    public String newProd(@RequestParam String prodName, @RequestParam String detail, @RequestParam int price,
+    public String newProd(@RequestParam String prodName, @RequestParam int price,
                           @RequestParam int type, HttpServletRequest req, @RequestParam MultipartFile thumb,
-                          @RequestParam List<MultipartFile> cimgs) throws IOException {
-//        modelMap.addAttribute("result", HttpStatus.SC_OK);
-//
-//        product.setBid(Long.parseLong(request.getSession().getAttribute("businessId").toString()));
-//        System.out.printf("From ProdController newProd(), product .Bid: %d, Detail: %s, name: %s, price: %s, type:%s\n",
-//                product.getBid(), product.getDetail(), product.getName(), product.getPrice(), product.getType());
-//
-//
-//        prodService.save(product);
+                          @RequestParam List<MultipartFile> cimgs, @RequestParam String content) throws IOException {
 
-
-        String pathThumb = s3Uploader.uploadFiles(thumb, "thumbnail");
-        System.out.println(pathThumb);
+        content = content.replace("/summernoteImage/", "https://withpetimg.s3.ap-northeast-2.amazonaws.com/contents/");
 
         Product prod = new Product();
         prod.setName(prodName);
-        prod.setDetail(detail);
+        prod.setDetail(content);
         prod.setPrice(price);
         prod.setType(type);
         prod.setBid(Long.parseLong(req.getSession().getAttribute("businessId").toString()));
         Long prodId = prodService.save(prod);
-        System.out.printf("From ProdController newProd(), prodName:%s, setDetail:%s, prodId:%d\n", prodName, detail, prodId);
+        System.out.printf("From ProdController newProd(), prodName:%s,  prodId:%d\n", prodName, prodId);
+
+        String[] pathContent = new String[files.size()];
+        for (int i = 0; i < files.size(); i++) {
+            pathContent[i] = s3Uploader.upload(files.get(i), "contents");
+            Cimg cimg = new Cimg();
+            cimg.setPath(pathContent[i]);
+            cimg.setProdid(prodId);
+            cimg.setOrigname("생략");
+            cimg.setName(files.get(i).getName());
+            cimgService.save(cimg);
+        }
+
+        files.clear();
+
+        String pathThumb = s3Uploader.uploadFiles(thumb, "thumbnail");
 
         Img img = new Img();
 //        for (MultipartFile file : files) {
@@ -119,23 +124,19 @@ public class ProdController {
         imgService.save(img);
 //        }
 
-        for (MultipartFile file : cimgs) {
-            String pathContents = s3Uploader.uploadFiles(file, "contents");
-            System.out.println(pathContents);
-            Cimg cimg = new Cimg();
-            cimg.setOrigname(file.getOriginalFilename());
-            cimg.setName(UUID.randomUUID().toString());
-            cimg.setProdid(prodId);
-            cimg.setPath(pathContents);
-            cimgService.save(cimg);
-        }
+        System.out.println(pathThumb);
+
+
+
         return "redirect:/businessInfo";
     }
+
+    ArrayList<File> files = new ArrayList<>();
 
     @PostMapping("/newprod/img")
     @ResponseBody
     public String uploadImg(HttpServletRequest req,
-                            @RequestParam("file") MultipartFile multipartFile){
+                            @RequestParam("file") MultipartFile multipartFile) {
         String fileRoot = "C:\\summernote_image\\";
         String originalFileName = multipartFile.getOriginalFilename();
         String extension = originalFileName.substring(originalFileName.lastIndexOf("."));
@@ -155,7 +156,7 @@ public class ProdController {
             System.out.println("catch=" + jsonObject.toString());
         }
         String a = jsonObject.toString();
-
+        files.add(targetFile);
         return a;
     }
 
@@ -201,7 +202,6 @@ public class ProdController {
         model.addAttribute("img", imgService.findByProdid(prodId).get().getPath());   // 썸네일 URL
         model.addAttribute("cimgs", cimgService.findImgURLs(prodId));
 
-
         return "prod_view";
     }
 
@@ -214,7 +214,7 @@ public class ProdController {
     @GetMapping("append_like")
     @ResponseBody
     public String appendLike(@RequestParam Long prodId, HttpServletRequest req) {
-        if(likeService.appendLike(prodId, req.getSession().getAttribute("userLogined").toString()))
+        if (likeService.appendLike(prodId, req.getSession().getAttribute("userLogined").toString()))
             return "1";
 
         return "0";
