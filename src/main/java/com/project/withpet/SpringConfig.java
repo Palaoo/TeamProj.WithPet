@@ -1,10 +1,13 @@
 package com.project.withpet;
 
+import com.project.withpet.controller.BoardController;
+import com.project.withpet.controller.S3Uploader;
 import com.project.withpet.repository.*;
 import com.project.withpet.service.*;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -68,4 +71,14 @@ public class SpringConfig {
     public JPAQueryFactory jpaQueryFactory(){
         return new JPAQueryFactory(entityManager);
     }
+
+    @Bean
+    public CommonsMultipartResolver multipartResolver(){
+        CommonsMultipartResolver commonsMultipartResolver = new CommonsMultipartResolver();
+        commonsMultipartResolver.setDefaultEncoding(("UTF-8"));
+        commonsMultipartResolver.setMaxUploadSize(50*1024*1024);
+        return commonsMultipartResolver;
+    }
+
+
 }

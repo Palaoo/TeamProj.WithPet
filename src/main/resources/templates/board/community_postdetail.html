@@ -53,6 +53,10 @@
                     <div class="blog__details__text">
                         <p th:utext="${content}"></p>
                     </div>
+                    <div>
+                        <input type="button" id="modify" value="수정" th:href="@{/community/modifypost(boardcode=${boardcode})}">
+                        <input type="button" id="delete" value="삭제">
+                    </div>
 
                     <div class="blog__details__comment">
                         <h4>Leave A Comment</h4>
@@ -161,6 +165,21 @@
                 }
             })
         })
+
+        .on('click', '#delete', function (){
+            var answer = confirm('정말 삭제하시겠습니까?')
+            if(answer){
+                location.href="/community/delete?boardcode="+$('#boardcode').val()
+            } else {
+                return false;
+            }
+        })
+
+        .on('click', '#modify', function (){
+            location.href="/community/modifypost?boardcode="+$('#boardcode').val()
+        })
+
+
 
 </script>
 

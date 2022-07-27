@@ -10,6 +10,7 @@ public class Board {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long boardcode;
+    @Column(columnDefinition = "MEDIUMTEXT")
     private String content;
 
     private String date;

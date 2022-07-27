@@ -79,9 +79,9 @@
             <div class="col-lg-4 col-md-6 col-sm-6" th:each="post: ${posts}">
                 <div class="blog__item">
                     <a th:href="@{/community/postdetail(boardcode=${post.boardcode})}">
-                    <div class="blog__item__pic set-bg" data-setbg="/image/catsock.jfif"></div>
+                    <div class="blog__item__pic set-bg" data-setbg=${></div>
                     <div class="blog__item__text">
-                        <span><img src="img/icon/calendar.png" alt="" th:text="${post.date}"></span>
+                        <span><img th:src="${post.getPath()}" alt="" th:text="${post.date}"></span>
                         <h5 th:text="${post.title}">What Curling Irons Are The Best Ones</h5>
                         <a href="#">Read More</a>
                     </div>

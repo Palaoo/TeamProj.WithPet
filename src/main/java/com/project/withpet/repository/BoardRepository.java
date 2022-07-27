@@ -15,4 +15,6 @@ public interface BoardRepository {
     Page<Board> findAll(Pageable pageable);
 
     Optional<Board> findFirstByOrderByBoardcodeDesc();
+
+    void deleteById(Long boardcode);
 }
