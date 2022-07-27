@@ -21,7 +21,16 @@ public class BasketService {
         return basketRepository.findByUserid(userid);
     }
 
-    public Long appendBasket(Long prodId, String userId) {
+    public Long appendBasket(Long prodId, String userId) throws IllegalStateException {
+        validate(userId,prodId);
+
         return basketRepository.save(new Basket(prodId, userId)).getBasketId();
+    }
+
+    private void validate(String userid,Long prodid) {
+        basketRepository.findByUseridAndProdid(userid, prodid)
+                .ifPresent(b->{
+                    throw new IllegalStateException("이미 장바구니에 존재하는 상품입니다.");
+                });
     }
 }

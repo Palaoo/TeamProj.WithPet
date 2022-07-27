@@ -130,6 +130,13 @@
     }).on('click', '#btnQuantityDown', function () {
         $('#quantity').val(parseInt($('#quantity').val()) - 1);
         $('#totalPrice').text(parseInt($('#price').text()) * parseInt($('#quantity').val()))
+    }).on('click', '#bascket', function () {
+        $.ajax({
+            type: 'get', url: 'append_basket?prodId=' + $('#prodId').val(),
+            success: function () {
+                alert('장바구니에 추가되었습니다.')
+            }
+        })
     })
 
     $('#logo').on('click', function () {
