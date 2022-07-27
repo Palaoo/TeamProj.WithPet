@@ -51,8 +51,8 @@
                     <a id="logout" href="logout">로그아웃</a>
                 </div>
                 <div align="center" th:if="${#strings.isEmpty(userid)}">
-                    <a id="login" href="login">Log in</a>
-                    <a id="signup" href="signup">Sign in</a>
+                    <a id="login" href="login">로그인</a>
+                    <a id="signup" href="signup">회원가입</a>
                 </div>
 
             </div>
@@ -60,7 +60,7 @@
         <div class="offcanvas__nav__option">
             <a href="#" class="search-switch"><img src="img/icon/search.png" alt=""></a>
             <a href="#"><img src="img/icon/heart.png" alt=""></a>
-            <a href="#"><img src="img/icon/cart.png" alt=""> <span>0</span></a>
+            <a href="basket_shopping"><img src="img/icon/cart.png" alt=""> <span>0</span></a>
             <!-- <div class="price">$0.00</div> -->
         </div>
         <div id="mobile-menu-wrap"></div>
@@ -92,8 +92,8 @@
                                     <a id="logout2" href="logout">로그아웃</a>
                                 </div>
                                 <div align="center" th:if="${#strings.isEmpty(userid)}">
-                                    <a id="login2" href="login">Log in</a>
-                                    <a id="signup2" href="signup">Sign in</a>
+                                    <a id="login2" href="login">로그인</a>
+                                    <a id="signup2" href="signup">회원가입</a>
                                 </div>
                             </div>
                         </div>
@@ -112,7 +112,7 @@
                     <nav class="header__menu mobile-menu">
                         <ul>
                             <li><a href="hotel">숙소</a></li>
-                            <li><a href="#">카페</a></li>
+                            <li><a href="cafe_list">카페</a></li>
                             <li><a href="#">맛집</a></li>
                             <li><a href="mall">상점</a></li>
                             <li><a href="community">게시판</a></li>
@@ -123,7 +123,7 @@
                     <div class="header__nav__option">
                         <a href="#" class="search-switch"><img src="img/icon/search.png" alt=""></a>
                         <a href="#"><img src="img/icon/heart.png" alt=""></a>
-                        <a href="#"><img src="img/icon/cart.png" alt=""> <span>0</span></a>
+                        <a href="basket_shopping"><img src="img/icon/cart.png" alt=""> <span>0</span></a>
                         <!-- <div class="price">$0.00</div> -->
                     </div>
                 </div>
