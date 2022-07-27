@@ -9,7 +9,21 @@
     <meta name="viewport" content="width=<device-width>, initial-scale=1.0">
     <title>Document</title>
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
-    <th:block th:replace="fragments/index::style"></th:block>
+
+    <!--    <th:block th:replace="fragments/index::style"></th:block>-->
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&display=swap"
+          rel="stylesheet">
+
+    <!-- Css Styles -->
+<!--    <link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css">-->
+<!--    <link rel="stylesheet" href="/css/font-awesome.min.css" type="text/css">-->
+<!--    <link rel="stylesheet" href="/css/elegant-icons.css" type="text/css">-->
+<!--    <link rel="stylesheet" href="/css/magnific-popup.css" type="text/css">-->
+<!--    <link rel="stylesheet" href="/css/nice-select.css" type="text/css">-->
+<!--    <link rel="stylesheet" href="/css/owl.carousel.min.css" type="text/css">-->
+<!--    <link rel="stylesheet" href="/css/slicknav.min.css" type="text/css">-->
+<!--    <link rel="stylesheet" href="/css/style.css" type="text/css">-->
+
 </head>
 <style>
 <!--body{-->
@@ -18,35 +32,21 @@
 <!--    text-decoration: none;-->
 <!--    color: #000;-->
 <!--}-->
-<!--#btn_submit,#btn_cancel {-->
-<!--    border: none;-->
-<!--    outline: none;-->
-<!--    width: 100px;-->
-<!--    height: 50px;-->
-<!--    background-color: #518581;-->
-<!--    border-radius: 4px;-->
-<!--    color:white;-->
-<!--}-->
-<!--#btn_submit:hover,#btn_cancel:hover{-->
-<!--     background: white;-->
-<!--     border: 1px solid;-->
-<!--     color:  #518581;-->
-<!--}-->
-<!--#title {-->
-<!--    border:none;-->
-<!--    outline: none;-->
-<!--    border-bottom: 1px solid #d0d0cf;-->
-<!--    width: 1200px;-->
-<!--    border-spacing:20px;-->
-<!--    font-size:24px;-->
-<!--    cursor:pointer;-->
-<!--}-->
-<!--#title:focus {-->
-<!--    outline:none;-->
-<!--}-->
-<!--#summernote{-->
-<!--    size:30px;-->
-<!--}-->
+#title {
+    border:none;
+    outline: none;
+    border-bottom: 1px solid #d0d0cf;
+    width: 1200px;
+    border-spacing:20px;
+    font-size:24px;
+    cursor:pointer;
+}
+#title:focus {
+    outline:none;
+}
+#summernote{
+    size:30px;
+}
 </style>
 <body>
 
@@ -59,7 +59,7 @@
     <textarea id="summernote" name="content" style="width:500px"></textarea>
     <input type="hidden" name="boardCode" id="boardcode" th:value="${lastBoardCode} + 1">
     <div style="text-align:center; margin:10px">
-        <input type="submit" id="btn_submit" value="제출">&nbsp;<input type="button" id="btn_cancel" value="취소">
+        <input type="submit" id="btn_submit" class="site-btn" value="제출">&nbsp;<input type="button" id="btn_cancel" class="site-btn" value="취소">
     </div>
 </form>
 <th:block th:replace="fragments/index :: footer"></th:block>
