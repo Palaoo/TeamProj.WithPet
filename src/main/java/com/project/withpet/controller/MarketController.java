@@ -29,4 +29,32 @@ public class MarketController {
         return "market/myshopping";
     }
 
+    @GetMapping("/basket_shopping")
+    public String doBasket(Model model, HttpServletRequest req){
+        HttpSession session = req.getSession();
+        if(session.getAttribute("userid")==null){
+            return "redirect:/login";
+        } else {
+            model.addAttribute("userid", session.getAttribute("userid"));
+            return "market/basket_shopping";
+        }
+    }
+
+    @GetMapping("/prod_view")
+    public String doProdView(Model model, HttpServletRequest req){
+        HttpSession session = req.getSession();
+        if(session.getAttribute("userid")!=null){
+            model.addAttribute("userid", session.getAttribute("userid"));
+        }
+        return "market/prod_view";
+    }
+
+    @GetMapping("/cafe_list")
+    public String doCafeList(Model model, HttpServletRequest req){
+        HttpSession session = req.getSession();
+        if(session.getAttribute("userid")!=null){
+            model.addAttribute("userid", session.getAttribute("userid"));
+        }
+        return "cafe/cafe_list";
+    }
 }

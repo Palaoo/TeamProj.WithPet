@@ -121,6 +121,7 @@ public class BoardController {
         if (session.getAttribute("userid") == null) {
             return "redirect:/login";
         } else {
+            model.addAttribute("userid", session.getAttribute("userid"));
             return "board/community_newpost";
         }
     }
