@@ -13,6 +13,11 @@ public class Basket {
     @JoinColumn(name = "product_id")
     private Long prodid;
 
+    public Basket(Long prodid, String userid) {
+        this.prodid = prodid;
+        this.userid = userid;
+    }
+
     @JoinColumn(name = "user_id")
     private String userid;
 

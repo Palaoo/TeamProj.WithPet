@@ -40,6 +40,10 @@ public class Like {
     public Like() {
     }
 
+    public Like(Long id) {
+        this.id = id;
+    }
+
     public Like(Long prodId, String userId) {
         this.userId = userId;
         this.prodId = prodId;

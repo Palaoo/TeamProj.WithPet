@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface BasketRepository extends JpaRepository<Basket,Long> {
     List<Basket> findByUserid(String userid);
+
+    Basket save(Basket basket);
 }
