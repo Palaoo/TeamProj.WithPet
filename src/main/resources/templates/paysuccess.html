@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <header>
+        <p align=right><a id="mypage" href='#'>마이페이지</a>&nbsp;&nbsp;<a id="logout" href='#'>로그아웃</a></p>
+        <h1 align=center>WITH PET</h1>
+        <nav>
+            <a href="#">숙소</a>
+            <a href="#">카페</a>
+            <a href="#">맛집</a>
+            <a href="mallPage">상점</a>
+            <a href="#">게시판</a>
+        </nav>
+    </header>
+    <p th:text="${paymentKey}"></p>
+    <p th:text="${orderId}"></p>
+    <p th:text="${amount}"></p>
+</body>
+</html>

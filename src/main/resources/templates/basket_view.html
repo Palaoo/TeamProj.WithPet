@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    .middle-prod {
+        margin-left: 5%;
+        margin-right: 5%;
+        border-width: 1px;
+
+    }
+
+    .middle-prod-row {
+        display: flex;
+        flex-direction: row;
+    }
+</style>
+
+<body>
+    <p align=right><a id="myshopping" href='myshopping'>마이쇼핑</a>&nbsp;&nbsp;<a id="basket_shopping"
+            href='basket_view'>장바구니</a>&nbsp;&nbsp;<a th:if="${userLogined==null}" id="loginPage"
+            href='loginPage'>로그인</a><a th:if="${userLogined!=null}" th:text="${userLogined}" href="userInfoPage"></a>
+    </p>
+    <h1 align=center>WITH PET</h1>
+    <nav>
+        <a href="#">숙소</a>
+        <a href="#">카페</a>
+        <a href="#">맛집</a>
+        <a href="mallPage">상점</a>
+        <a href="#">게시판</a>
+    </nav>
+    <hr>
+
+    <div class="middle">
+        <div class="middle-prod" th:each="basketDTO:${BasketDTOs}">
+            <input type="hidden" name="prodId" id="prodId" th:value="${basketDTO.prodid}">
+            <p th:text="${basketDTO.brand}">브랜드명</p>
+            <hr>
+            <div class="middle-prod-row">
+                <div class="middle-prod-row-sep">
+                    <img th:src="${basketDTO.path}"
+                        onerror="this.src='https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbNZo14%2Fbtq17bsvo5i%2FOSV3gGWnwAKqNB0EOSQkrK%2Fimg.png'"
+                        width="200" height="200">
+                </div>
+                <div class="middle-prod-row-sep">
+                    <p th:text="${basketDTO.name}" id="prodName"></p>
+                </div>
+                <div class="middle-prod-row-sep">
+                    <span class="quantity">
+                        <input th:id="|qty${basketDTO.prodid}|" name="quantity_name" style="" value="1" type="text" />
+                        <button th:id="${basketDTO.prodid}" name="btnQuantityUp"><img
+                                src="//img.echosting.cafe24.com/skin/base_ko_KR/product/btn_count_up.gif" alt="수량증가"
+                                class="QuantityUp up" /></button>
+                        <button th:id="${basketDTO.prodid}" name="btnQuantityDown"><img
+                                src="//img.echosting.cafe24.com/skin/base_ko_KR/product/btn_count_down.gif" alt="수량감소"
+                                class="QuantityDown down" /></button>
+                    </span>
+                </div>
+                <div class="middle-prod-row-sep">
+                    <span class="quantity_price" th:id="|price${basketDTO.prodid}|" name="price"
+                        th:text="${basketDTO.price}">19800</span> <span class="mileage displaynone"><img src="" /> <span
+                            class="mileage_price"></span></span>
+                </div>
+            </div>
+            <hr>
+            <div class="middle-prod-row">
+                주문금액 <p th:id="|totalprice${basketDTO.prodid}|" name="totalPPrice"></p>
+                <button th:name="${basketDTO.prodid}" id="order">주문하기</button>
+            </div>
+        </div>
+    </div>
+    <div class="bottom">
+        총 선택상품금액: <p id="total"></p>
+        <button id="orderAll">모두 주문하기</button>
+    </div>
+
+</body>
+<script src="https://js.tosspayments.com/v1"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script th:inline="javascript">
+    $(document).ready(function () {
+        let totalprice = 0;
+        /*[# th:each="basket : ${BasketDTOs}"]*/
+        prodID =/*[[${basket.prodid}]]*/
+            price = parseInt($('#price' + prodID).text());
+        totalprice += price;
+        $('#totalprice' + prodID).text(price);
+        /*[/]*/
+        $('#total').text(totalprice);
+    }).on('click', 'button[name=btnQuantityUp]', function () {
+        inputQty = $('#qty' + $(this).attr('id'))
+        console.log(inputQty)
+        inputQty.val(parseInt(inputQty.val()) + 1)
+
+        $('#totalprice' + $(this).attr('id')).text(parseInt($('#price' + $(this).attr('id')).text()) * parseInt(inputQty.val()))
+        $('#total').text(parseInt($('#total').text()) + parseInt($('#price' + $(this).attr('id')).text()));
+    }).on('click', 'button[name=btnQuantityDown]', function () {
+        inputQty = $('#qty' + $(this).attr('id'))
+        inputQty.val(parseInt(inputQty.val()) - 1)
+
+        $('#totalprice' + $(this).attr('id')).text(parseInt($('#price' + $(this).attr('id')).text()) * parseInt(inputQty.val()))
+        $('#total').text(parseInt($('#total').text()) - parseInt($('#price' + $(this).attr('id')).text()));
+    }).on('click', '#order', function () {
+        tossPayments($(this).attr("name"))
+    }).on('click', '#orderAll', function () {
+        if ($('#total').text() != 0)
+            tossPayments2()
+    })
+
+    function tossPayments2() {
+        let prodIds = '';
+        let count = '';
+
+        /*[# th:each="basket : ${BasketDTOs}"]*/
+        prodID = /*[[${basket.prodid}]]*/;
+
+        if ($('#qty' + prodID).val() != 0) {
+            prodIds += prodID + ' ';
+            count += $('#qty' + prodID).val() + ' ';
+        }
+        /*[/]*/
+        prodIds.slice(0, -1);
+        count.slice(0, -1);
+
+
+        let clientKey = 'test_ck_mnRQoOaPz8L0knPzxY58y47BMw6v'
+        let tossPayments = TossPayments(clientKey)
+        let totalPrice = parseInt($('#total').text());
+        tossPayments.requestPayment('카드', {
+            // 결제 수단 파라미터
+            // 결제 정보 파라미터
+            amount: totalPrice,
+            orderId: 'L6o8LEvy99H1wUTR6vOT3',
+            orderName: $('#prodName').text(),
+            customerName: '박토스',
+            successUrl: 'http://localhost:8080/paysuccess'
+                + '?priceid=' + prodIds + '&count=' + count,
+            failUrl: 'http://localhost:8080/payfail',
+        })
+    }
+
+    function tossPayments(prodid) {
+        console.log(prodid)
+        let clientKey = 'test_ck_mnRQoOaPz8L0knPzxY58y47BMw6v'
+        let tossPayments = TossPayments(clientKey)
+        let totalPrice = parseInt($('#totalprice' + prodid).text());
+        console.log(totalPrice)
+        tossPayments.requestPayment('카드', {
+            // 결제 수단 파라미터
+            // 결제 정보 파라미터
+            amount: totalPrice,
+            orderId: 'L6o8LEvy99H1wUTR6vOT3',
+            orderName: $('#prodName').text(),
+            customerName: '박토스',
+            successUrl: 'http://localhost:8080/paysuccess'
+                + '?priceid=' + prodid + '&count=' + $('#qty' + prodid).val(),
+            failUrl: 'http://localhost:8080/payfail',
+        })
+    }
+</script>
+
+</html>

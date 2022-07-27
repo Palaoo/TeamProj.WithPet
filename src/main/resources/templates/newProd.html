@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="css/bootstrap.min.css" rel="stylesheet" />
+    <title>Home</title>
+</head>
+<style>
+    body {
+        margin: 0;
+    }
+
+    #mypage,
+    #logout {
+        text-decoration: none;
+        color: black;
+    }
+
+    nav a {
+        text-decoration: none;
+        color: black;
+        margin: 2em;
+    }
+
+    nav {
+        display: flex;
+        justify-content: center;
+    }
+
+    table {
+        border-spacing: 20px;
+        border-collapse: separate;
+        /* position:absolute;
+        left:500px; */
+    }
+
+    #submit {
+        border: none;
+        outline: none;
+        height: 50px;
+        width: 100%;
+        background-color: #518581;
+        color: white;
+        border-radius: 4px;
+        font-weight: bold;
+    }
+
+    #submit:hover {
+        background: white;
+        border: 1px solid;
+        color: #518581;
+    }
+
+    input[type="text"] {
+        width: 100%;
+    }
+</style>
+
+<body>
+    <header>
+        <p align=right><a id="mypage" href='#'>마이페이지</a>&nbsp;&nbsp;<a id="logout" href='#'>로그아웃</a></p>
+        <h1 align=center>WITH PET</h1>
+        <nav>
+            <a href="#">숙소</a>
+            <a href="#">카페</a>
+            <a href="#">맛집</a>
+            <a href="mallPage">상점</a>
+            <a href="#">게시판</a>
+        </nav>
+    </header>
+
+    <form name="form" method="post" action="newProd" enctype="multipart/form-data">
+        <table align="center">
+            <tr>
+                <td colspan="2">
+                    <h5 align="left">상품등록</h5>
+                </td>
+            </tr>
+            <tr>
+                <td>상품이름 </td>
+                <td><input type=text name="prodName" value="proName"></td>
+            </tr>
+            <tr>
+                <td>상품설명 </td>
+                <td class="form-floating"><textarea class="form-control" id="editorTxt" name="detail" value="detail"
+                        style="height: 100px">detail</textarea></td>
+            </tr>
+            <!--<input name="detail" value="detail"/>-->
+            <tr>
+                <td>상품가격 </td>
+                <td><input type=text name="price" value="price" /></td>
+            </tr>
+            <tr>
+                <td>타입 </td>
+                <td>
+                    <select name="type" id="type">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>썸네일 </td>
+                <td class="mb-3"><input type="file" name="thumb" multiple="multiple" class="form-control"
+                        id="formFile" /></td>
+            </tr>
+            <tr>
+                <td>상세</td>
+                <td class="mb-3"><input type="file" name="cimgs" multiple="multiple" class="form-control" /></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><input type="submit" id="submit" onclick="submitContents()" value="전송" /></td>
+            </tr>
+        </table>
+    </form>
+    <script src="js/bootstrap.bundle.min.js"></script>
+</body>
+<script>
+
+</script>
+
+</html>

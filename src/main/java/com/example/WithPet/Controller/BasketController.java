@@ -48,6 +48,8 @@ public class BasketController {
             String brand = businessUserService.findByBid(prod.getBid()).getBrand();
             bascketDTOs.add(new BascketDTO(basket.getProdId(), prod.getName(), prod.getPrice(), imgService.findByProdid(basket.getProdId()).get().getPath(), brand));
         }
+
+
         model.addAttribute("BasketDTOs", bascketDTOs);
         model.addAttribute("userLogined", userId);
         return "basket_view";
