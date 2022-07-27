@@ -17,7 +17,11 @@ public class BasketService {
         this.basketRepository = basketRepository;
     }
 
-    public List<Basket> findByUserid(String userid){
+    public List<Basket> findByUserid(String userid) {
         return basketRepository.findByUserid(userid);
+    }
+
+    public Long appendBasket(Long prodId, String userId) {
+        return basketRepository.save(new Basket(prodId, userId)).getBasketId();
     }
 }

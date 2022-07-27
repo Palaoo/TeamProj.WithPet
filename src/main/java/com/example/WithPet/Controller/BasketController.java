@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
@@ -50,4 +52,12 @@ public class BasketController {
         model.addAttribute("userLogined", userId);
         return "basket_view";
     }
+
+    @GetMapping("append_basket")
+    @ResponseBody
+    public String append_basket(@RequestParam Long prodId, HttpServletRequest req) {
+        basketService.appendBasket(prodId, req.getSession().getAttribute("userLogined").toString());
+        return "";
+    }
+
 }

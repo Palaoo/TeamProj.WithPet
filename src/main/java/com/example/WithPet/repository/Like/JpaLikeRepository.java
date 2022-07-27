@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class JpaLikeRepository implements LikeRepository {
+    @Autowired
     private final EntityManager em;
 
     public JpaLikeRepository(EntityManager em) {
@@ -23,7 +24,9 @@ public class JpaLikeRepository implements LikeRepository {
 
     @Override
     public void delete(Like like) {
-        em.remove(like);
+        Like like1 = em.find(Like.class, like.getId());
+        System.out.printf("From JpaLikeRepository delete(), like1.getId(): %d", like1.getId());
+        em.remove(like1);
     }
 
     @Override
@@ -40,6 +43,16 @@ public class JpaLikeRepository implements LikeRepository {
             return false;
         } else
             return true;
+    }
+
+
+    @Override
+    public Optional<Like> findByProdIdandUserId(Long prodId, String userId) {
+        List<Like> result = em.createQuery("select l from Like l where l.userId= :userId and l.prodId= :prodId")
+                .setParameter("userId", userId).setParameter("prodId", prodId)
+                .getResultList();
+
+        return result.stream().findAny();
     }
 
 

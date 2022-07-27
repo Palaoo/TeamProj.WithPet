@@ -7,7 +7,7 @@ public class ProdDTO {
     private String imgURL;
     private String brand;
     private Long likeCount;
-    private boolean isLiked;
+    private int isLiked;
 
     public Product getProduct() {
         return product;
@@ -25,11 +25,11 @@ public class ProdDTO {
         this.likeCount = likeCount;
     }
 
-    public boolean isLiked() {
+    public int isLiked() {
         return isLiked;
     }
 
-    public void setLiked(boolean liked) {
+    public void setLiked(int liked) {
         isLiked = liked;
     }
 
@@ -49,7 +49,7 @@ public class ProdDTO {
         this.imgURL = imgURL;
     }
 
-    public ProdDTO(Product product, String imgURL, String brand, Long likeCount, boolean isLiked) {
+    public ProdDTO(Product product, String imgURL, String brand, Long likeCount, int isLiked) {
         this.product = product;
         this.imgURL = imgURL;
         this.brand = brand;

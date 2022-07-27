@@ -183,17 +183,18 @@ public class ProdController {
     @GetMapping("append_like")
     @ResponseBody
     public String appendLike(@RequestParam Long prodId, HttpServletRequest req) {
-        likeService.appendLike(prodId, req.getSession().getAttribute("userLogined").toString());
+        if(likeService.appendLike(prodId, req.getSession().getAttribute("userLogined").toString()))
+            return "1";
 
-        return "";
+        return "0";
     }
 
-    @GetMapping("delete_like")
-    @ResponseBody
-    public String deleteLike(@RequestParam Long prodId, HttpServletRequest req) {
-        likeService.deleteLike(prodId, req.getSession().getAttribute("userLogined").toString());
-        return "";
-    }
+//    @GetMapping("delete_like")
+//    @ResponseBody
+//    public String deleteLike(@RequestParam Long prodId, HttpServletRequest req) {
+//        likeService.deleteLike(prodId, req.getSession().getAttribute("userLogined").toString());
+//        return "";
+//    }
 
 
 }

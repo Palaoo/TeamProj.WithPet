@@ -5,6 +5,7 @@ import com.example.WithPet.repository.Like.LikeRepository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Transactional
 public class LikeService {
@@ -18,15 +19,35 @@ public class LikeService {
         return likeRepository.findCountByProdId(prodId);
     }
 
-    public boolean isLiked(Long prodId, String userId) {
-        return likeRepository.isLike(prodId, userId);
+    public int isLiked(Long prodId, String userId) {
+        try {
+            validate(prodId, userId);
+            return 0;
+        } catch (IllegalStateException e) {
+            return 1;
+        }
     }
 
-    public void appendLike(Long prodId, String userId) {
-        likeRepository.save(new Like(prodId, userId));
+    public boolean appendLike(Long prodId, String userId) {
+        try {
+            validate(prodId, userId);
+            likeRepository.save(new Like(prodId, userId));
+            return true;
+        } catch (IllegalStateException e) {
+            deleteLike(likeRepository.findByProdIdandUserId(prodId, userId).get().getId());
+            return false;
+        }
+
     }
 
-    public void deleteLike(Long prodId, String userId) {
-        likeRepository.delete(new Like(prodId,userId));
+    public void deleteLike(Long id) {
+        likeRepository.delete(new Like(id));
+    }
+
+    public void validate(Long prodId, String userId) {
+        Optional<Like> result = likeRepository.findByProdIdandUserId(prodId, userId);
+        result.ifPresent(m -> {
+            throw new IllegalStateException("좋아요 눌러져있음");
+        });
     }
 }
