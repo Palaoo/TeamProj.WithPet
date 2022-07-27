@@ -46,4 +46,6 @@ public class Basket {
         this.userid = userid;
     }
 
+    public Basket() {
+    }
 }
