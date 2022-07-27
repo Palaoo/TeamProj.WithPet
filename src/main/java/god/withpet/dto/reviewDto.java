@@ -1,7 +1,6 @@
 package god.withpet.dto;
 
 import god.withpet.entity.cafe;
-import god.withpet.entity.member;
 import god.withpet.entity.shopreview;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,7 +18,7 @@ public class reviewDto {
 
     private Long rid;
     private String content;
-    private String date = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
+    private String date = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
     private Long score;
     private String userid;
     private Long shopid;

@@ -26,13 +26,17 @@
     <div class="row">
         <div class="col-xs-1 col-sm-12">
             <!-- <p align=left><input type="text">&nbsp;<input type="button" value="검색"></p> -->
-            <p align=right><a id="login" href='Login'>마이쇼핑</a>&nbsp;&nbsp;<a id="signin" href='Signin'>장바구니</a>
-                &nbsp;&nbsp;<a id="signin" href='Signin'>마이페이지</a>&nbsp;&nbsp;<a id="signin" href='Signin'>로그아웃</a></p>
+            <div th:if="${not #strings.isEmpty(userid)}">
+                <p align=right><a id="logout" href='logout'>로그아웃</a>&nbsp;&nbsp;<a id="mypage" href='mypage'>마이페이지</a></p>
+            </div>
+            <div th:if="${#strings.isEmpty(userid)}">
+                <p align=right><a id="login" href='login'>로그인</a>&nbsp;&nbsp;<a id="signup" href='signup'>회원가입</a></p>
+            </div>
             <h1 align=center>WITH PET</h1>
             <nav>
                 <a href="#">숙소</a>
-                <a href="#">카페</a>
-                <a href="#">맛집</a>
+                <a href="cafe_list">카페</a>
+                <a href="Restaurant-list">맛집</a>
                 <a href="#">상점</a>
                 <a href="#">게시판</a>
             </nav>

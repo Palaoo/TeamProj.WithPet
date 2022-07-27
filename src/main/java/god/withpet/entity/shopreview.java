@@ -33,7 +33,7 @@ public class shopreview {
     @Column
     private Long score;
 
-    @JoinColumn(name = "user_userid")
+    @JoinColumn(name = "User_userid")
     private String userid;
 
 //    @ManyToOne

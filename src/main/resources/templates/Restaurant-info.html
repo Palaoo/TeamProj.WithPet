@@ -196,11 +196,6 @@
                 position: coords
               });
 
-<!--        // 인포윈도우로 장소에 대한 설명을 표시합니다-->
-              <!--var infowindow = new kakao.maps.InfoWindow({-->
-            <!--            content: '<div style="width:150px;text-align:center;padding:6px 0;">우리회사</div>'-->
-              <!--        });-->
-              <!--        infowindow.open(map, marker);-->
 
               // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
               map.setCenter(coords);
@@ -332,8 +327,8 @@
           <input type="hidden" th:value="${cafe.shopid}" name="shopid">
           <input type="hidden" th:value="${userid}" name="userid">
           <textarea class="col-auto form-control" type="text" id="content" name="content"
-                    placeholder="후기를 남겨주세요"></textarea>
-          <button type="submit" class="btn btn-outline-primary btn-sm" id="comment-create-btn">댓글 작성</button>
+                    placeholder="후기를 남겨주세요"></textarea><br>
+          <button type="submit" class="btn btn-outline-primary btn-sm" id="comment-create-btn">작성완료</button>
         </div>
       </form>
       </div>
@@ -344,9 +339,7 @@
 </div>
 <script src='https://code.jquery.com/jquery-3.4.1.js'></script>
 <script>
-  $(document).on('click','#rate1',function (){
 
-  })
 </script>
 </body>
 </html>

@@ -1,6 +1,7 @@
 package god.withpet.controller;
 
 import god.withpet.dto.reviewDto;
+import god.withpet.entity.User;
 import god.withpet.entity.shopreview;
 import god.withpet.repository.shopreviewRepository;
 import god.withpet.service.cafeService;
@@ -14,6 +15,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,14 +34,21 @@ public class reviewController {
     private shopreviewRepository shopreviewRepository;
 
     @PostMapping("/reviews/create")  //리뷰 등록
-    public String createReview(reviewDto dto,@RequestParam ("shopid") Long shopid,Model model) {
+    public String createReview(reviewDto dto, HttpServletRequest req, @RequestParam ("shopid") Long shopid, Model model) {
+        HttpSession session = req.getSession();
+        String userid = (String) session.getAttribute("userid");
+        System.out.println("userid = "+userid);
+        if (userid != null) {
+            dto.setUserid(userid);
+        }
 
-        System.out.println(dto.toString());
+        System.out.println("테스트" + dto.toString());
         shopreview shopreview = dto.toEntity();
-        System.out.println(shopreview.toString());
+        System.out.println("테스트2" + shopreview.toString());
+
 
         shopreview saved = shopreviewRepository.save(shopreview);
-        System.out.println(saved.toString());
+        System.out.println("테스트3" + saved.toString());
         return "redirect:/cafeinfo?shopid="+ saved.getShopid();
     }
 
