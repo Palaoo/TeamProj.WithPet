@@ -5,6 +5,8 @@ import com.example.WithPet.domain.Cimg;
 import com.example.WithPet.domain.Img;
 import com.example.WithPet.domain.Like;
 import com.example.WithPet.domain.Product;
+import com.google.gson.JsonObject;
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,7 +18,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.*;
 
 
@@ -126,6 +130,33 @@ public class ProdController {
             cimgService.save(cimg);
         }
         return "redirect:/businessInfo";
+    }
+
+    @PostMapping("/newprod/img")
+    @ResponseBody
+    public String uploadImg(HttpServletRequest req,
+                            @RequestParam("file") MultipartFile multipartFile){
+        String fileRoot = "C:\\summernote_image\\";
+        String originalFileName = multipartFile.getOriginalFilename();
+        String extension = originalFileName.substring(originalFileName.lastIndexOf("."));
+        String savedFileName = UUID.randomUUID() + extension;
+        File targetFile = new File(fileRoot + savedFileName);
+        JsonObject jsonObject = new JsonObject();
+        try {
+            InputStream fileStream = multipartFile.getInputStream();
+            FileUtils.copyInputStreamToFile(fileStream, targetFile);
+            jsonObject.addProperty("url", "/summernoteImage/" + savedFileName);
+            jsonObject.addProperty("responseCode", "success");
+            System.out.println("try=" + jsonObject.toString());
+        } catch (IOException e) {
+            FileUtils.deleteQuietly(targetFile);
+            jsonObject.addProperty("responseCode", "error");
+            e.printStackTrace();
+            System.out.println("catch=" + jsonObject.toString());
+        }
+        String a = jsonObject.toString();
+
+        return a;
     }
 
 //    @RequestMapping(value = "/uploadSummernoteImageFile", produces = "application/json; charset=utf8")

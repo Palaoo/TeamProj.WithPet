@@ -14,6 +14,7 @@ import com.example.WithPet.repository.User.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
 import javax.persistence.EntityManager;
 
@@ -94,5 +95,13 @@ public class SpringConfig {
     @Bean
     public BasketService basketService() {
         return new BasketService(basketRepository);
+    }
+
+    @Bean
+    public CommonsMultipartResolver multipartResolver(){
+        CommonsMultipartResolver commonsMultipartResolver = new CommonsMultipartResolver();
+        commonsMultipartResolver.setDefaultEncoding(("UTF-8"));
+        commonsMultipartResolver.setMaxUploadSize(50*1024*1024);
+        return commonsMultipartResolver;
     }
 }
