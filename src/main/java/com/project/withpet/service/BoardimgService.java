@@ -4,8 +4,8 @@ import com.project.withpet.domain.Boardimg;
 import com.project.withpet.repository.BoardimgRepository;
 
 import javax.transaction.Transactional;
-import java.nio.file.Path;
 import java.util.List;
+import java.util.Optional;
 
 @Transactional
 public class BoardimgService {
@@ -24,5 +24,9 @@ public class BoardimgService {
 
     public List<Boardimg> findBoardimgs() {
         return boardimgRepository.findAll();
+    }
+
+    public Optional<Boardimg> findOne(Long boardcode){
+        return boardimgRepository.findTop1ByBoardcodeOrderById(boardcode);
     }
 }

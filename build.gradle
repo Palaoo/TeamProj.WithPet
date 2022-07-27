@@ -43,6 +43,8 @@ dependencies {
 	implementation "com.querydsl:querydsl-core:"
 	implementation "com.querydsl:querydsl-apt:"
 	implementation 'com.google.code.gson:gson:2.9.0'
+	implementation 'commons-io:commons-io:2.11.0'
+	implementation 'commons-fileupload:commons-fileupload:1.4'
 
 }
 

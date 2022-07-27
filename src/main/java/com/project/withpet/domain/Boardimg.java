@@ -18,6 +18,16 @@ public class Boardimg {
     @Column
     private String path;
 
+    public Boardimg() {
+    }
+
+    public Boardimg(Long boardcode, String name, String origname, String path) {
+        this.boardcode = boardcode;
+        this.name = name;
+        this.origname = origname;
+        this.path = path;
+    }
+
     public Long getId() {
         return id;
     }

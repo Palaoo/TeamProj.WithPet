@@ -14,15 +14,14 @@ import java.io.IOException;
 import java.util.Optional;
 import java.util.UUID;
 
+@Component
+@RequiredArgsConstructor
 public class S3Uploader {
     private final AmazonS3Client amazonS3Client;
 
     @Value("${cloud.aws.s3.bucket}")
     private String bucket;
 
-    public S3Uploader(AmazonS3Client amazonS3Client) {
-        this.amazonS3Client = amazonS3Client;
-    }
 
 
     public String uploadFiles(MultipartFile multipartFile, String dirName) throws IOException {
@@ -32,7 +31,7 @@ public class S3Uploader {
     }
 
     public String upload(File uploadFile, String filePath) {
-        String fileName = filePath + "/" + UUID.randomUUID() + uploadFile.getName();   // S3에 저장된 파일 이름
+        String fileName = filePath + "/" + uploadFile.getName();   // S3에 저장된 파일 이름
         String uploadImageUrl = putS3(uploadFile, fileName); // s3로 업로드
         removeNewFile(uploadFile);
         return uploadImageUrl;

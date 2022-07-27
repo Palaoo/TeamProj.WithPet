@@ -33,4 +33,8 @@ public class BoardService {
     public Long getLastBoardCode(){
         return boardRepository.findFirstByOrderByBoardcodeDesc().get().getBoardcode();
     }
+
+    public void deletePost(Long boardcode){
+        boardRepository.deleteById(boardcode);
+    }
 }
