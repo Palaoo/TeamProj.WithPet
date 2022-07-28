@@ -57,7 +57,7 @@ public class ProdController {
         System.out.printf("From prodController mallPage(), prods.getTotalElements(): %d\n", prods.getTotalElements());
         List<String> imgURLs = imgService.findImgURLs(prods);
         String userId = req.getSession().getAttribute("userLogined").toString();
-        for (int i = 0; i < prods.getTotalElements(); i++) {
+        for (int i = 0; i < prods.getNumberOfElements(); i++) {
             Product product = prods.toList().get(i);
             String imgURL = imgURLs.get(i);
             String brand = businessUserService.findByBid(product.getBid()).getBrand();
@@ -68,6 +68,20 @@ public class ProdController {
 
 
         }
+        int pageN = pageable.getPageNumber() + 1;
+        int startPage = ((int) Math.floor(pageN / 5)) * 5 + 1;
+        int totalPages = prods.getTotalPages();
+        int endPage = 0;
+        if (totalPages < startPage + 4) {
+            endPage = totalPages;
+        } else {
+            endPage = startPage + 4;
+        }
+
+
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endPage);
+        model.addAttribute("totalPage", prods.getTotalPages());
         model.addAttribute("pDTOs", pDTOs);
 
 //        model.addAttribute("img", imgService.findImgURLs(prods.getContent()));
@@ -125,7 +139,6 @@ public class ProdController {
 //        }
 
         System.out.println(pathThumb);
-
 
 
         return "redirect:/businessInfo";
