@@ -53,25 +53,7 @@
     <th:block th:text="${shop.getInfo()}"></th:block>
 </div>
 <br><br>
-
 <div>
-    <div class="row">
-        <div class="datebar" style="margin:10px">
-            <input type="date">&nbsp;<input type="date">&nbsp;<input type="text" readonly>&nbsp;
-            <input type="button" value="변경">
-        </div>
-    </div>
-    <br>
-
-    <div class="row" th:each="room:${hotelrooms}" style="width: 700px">
-        <img class="col-4" src="/image/poolvil.jfif" style="width: 200px; height: 100px">
-        <div class="col">
-            <span th:text="${room.getRoomname()}"></span><br>
-            <span th:text="${room.getContent()}"></span><br>
-            <span th:text="${room.getPrice()}"></span><br>
-            <input type="button" style="float: right" value="예약하기">
-        </div>
-    </div>
     <form action="/hotel/reservation" method="post">
         <div class="row">
             <div class="datebar" style="margin:10px">
@@ -87,14 +69,14 @@
             <div class="row" th:each="hotelroom:${hotelrooms}" style="width: 700px; height:130px">
                 <img class="col-4" src="/image/poolvil.jfif" style="width: 200px; height: 100px">
                 <div class="col">
-                        <input type="hidden" th:value="${hotelroom.getRoomid()}" name="roomid">
-                        <span th:text="${hotelroom.getRoomname()}"></span><br>
-                        <span th:text="${hotelroom.getContent()}"></span><br>
-                        <span th:text="${hotelroom.getPerson()}"></span><br>
-                        <span th:if="${#strings.equals(hotelroom.getAvail(), 'true')}"
-                                th:text="|${hotelroom.getPrice()}원|"></span>
-                        <span th:unless="${#strings.equals(hotelroom.getAvail(), 'true')}">예약 마감</span><br>
-                        <input type="submit" style="float: right" value="예약하기" id="book">
+                    <input type="hidden" th:value="${hotelroom.getRoomid()}" name="roomid">
+                    <span th:text="${hotelroom.getRoomname()}"></span><br>
+                    <span th:text="${hotelroom.getContent()}"></span><br>
+                    <span th:text="${hotelroom.getPerson()}"></span><br>
+                    <span th:if="${#strings.equals(hotelroom.getAvail(), 'true')}"
+                            th:text="|${hotelroom.getPrice()}원|"></span>
+                    <span th:unless="${#strings.equals(hotelroom.getAvail(), 'true')}">예약 마감</span><br>
+                    <input type="submit" style="float: right" value="예약하기" id="book">
                 </div>
             </div>
         </div>
@@ -104,11 +86,11 @@
 
 <div class="row">
     <h2>기본정보</h2>
-    <img src="../../static/지도.png" style="float:left">
+    <div id="map" style="width:500px;height:400px;"></div>
     <div>
         <br>
-        전화번호: <th:block th:text="${shop.getTel()}"></th:block><br>
-        주소: <th:block th:text="${shop.getAddress()}"></th:block>
+        전화번호: <span th:text="${shop.getTel()}"></span><br>
+        주소: <span th:text="${shop.getAddress()}" id="address"></span>
     </div>
 </div>
 <br><br>
@@ -149,10 +131,8 @@
     </div><br>
 </div>
 
-
-
 <th:block th:replace="fragments/index :: footer"></th:block>
-
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=55427368a7ad4ced6d2416666f61ad47&libraries=services"></script>
 </body>
 <script>
 
@@ -174,6 +154,7 @@
                 data: {shopid:$('#shopid').val(),checkin:$('#checkin').val(),
                     checkout:$('#checkout').val(),person:$('#person').val()},
                 success:function (r) {
+                    $('#rooms').empty()
                     var str = ""
                     $.each(r, function(index,item){
                         str += '<div class="row" style="width: 700px; height:130px">'
@@ -207,6 +188,7 @@
                         flag = true;
                     } else{
                         alert('로그인이 필요한 서비스입니다')
+                        location.href="/login"
                         flag = false
                     }
                 }
@@ -220,27 +202,20 @@
             center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
             level: 3 // 지도의 확대 레벨
         };
-
     // 지도를 생성합니다
     var map = new kakao.maps.Map(mapContainer, mapOption);
-
     // 주소-좌표 변환 객체를 생성합니다
     var geocoder = new kakao.maps.services.Geocoder();
-
     // 주소로 좌표를 검색합니다
     geocoder.addressSearch(document.getElementById("address").innerHTML, function(result, status) {
-
         // 정상적으로 검색이 완료됐으면
         if (status === kakao.maps.services.Status.OK) {
-
             var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-
             // 결과값으로 받은 위치를 마커로 표시합니다
             var marker = new kakao.maps.Marker({
                 map: map,
                 position: coords
             });
-
             // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
             map.setCenter(coords);
         }

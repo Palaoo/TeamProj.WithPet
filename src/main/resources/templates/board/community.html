@@ -9,31 +9,6 @@
     <th:block th:replace="fragments/index::style"></th:block>
 </head>
 <style>
-<!--    body *{-->
-<!--        list-style: none;-->
-<!--        text-decoration: none;-->
-<!--        color: #000;-->
-<!--    }-->
-<!--    body{-->
-<!--        font-size: 15px;-->
-<!--        margin: 50px;-->
-<!--    }-->
-<!--    .card{-->
-<!--        width: 25rem;-->
-
-<!--    }-->
-<!--    nav a{-->
-<!--        text-decoration:none;-->
-<!--        color:black;-->
-<!--        margin:2em;-->
-<!--    }-->
-<!--    nav{-->
-<!--        display:flex;-->
-<!--        justify-content:center;-->
-<!--    }-->
-    /*.row row-cols-1 row-cols-md-3 g-4{*/
-    /*    margin: 100px;*/
-    /*}*/
 
     #img{
         width:25px;
@@ -86,9 +61,9 @@
             <div class="col-lg-4 col-md-6 col-sm-6" th:each="post: ${posts}">
                 <div class="blog__item">
                     <a th:href="@{/community/postdetail(boardcode=${post.boardcode})}">
-                    <div class="blog__item__pic set-bg" data-setbg="/image/catsock.jfif"></div>
+                    <div class="blog__item__pic set-bg" th:attr="data-setbg=${post.getPath()}"></div>
                     <div class="blog__item__text">
-                        <span><img th:src="${post.getPath()}" alt="" th:text="${post.date}"></span>
+                        <span th:text="${post.date}"></span>
                         <h5 th:text="${post.title}">What Curling Irons Are The Best Ones</h5>
                         <a href="#">Read More</a>
                     </div>
@@ -107,7 +82,7 @@
                         <a class="page-link" th:href="@{/community(page=${previous})}">Previous</a>
                     </li>
                     <th:block th:each="post, i : ${#numbers.sequence(0,totalPage - 1)}">
-                        <li class="page-item">
+                        <li class="page-item" th:id="${i.index}">
                             <a class="page-link" th:href="@{/community(page=${i.count}-1)}" th:text="${i.count}"></a>
                         </li>
                     </th:block>
@@ -139,10 +114,26 @@
 
 </body>
 <script>
+    $(document)
+        .ready(function (){
+            var url = window.location.href
+            var pageIndex = url.split('=')
+            console.log(pageIndex[1])
+            if(pageIndex[1] == 'y'){
+                $('#0').addClass('active')
+            } else {
+                $('#'+pageIndex[1]).addClass('active')
+            }
+        })
+
     $('.pagination').on('click', 'li', function() {
         $('.pagination li').removeClass('active');
         $(this).addClass('active');
     });
+
+
+
+
 
     /*    $('.pagination').on('click', 'li:not(.prev):not(.next)', function() {
             $('.pagination li').removeClass('active');

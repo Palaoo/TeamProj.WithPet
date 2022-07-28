@@ -54,18 +54,17 @@ public class BoardController {
         Page<Board> posts = boardService.postList(pageable);
 
         List<BoardForm> postList = new ArrayList<>();
-        for(int i=0; i<posts.getSize(); i++) {
+        for(int i=0; i<posts.getNumberOfElements(); i++) {
             BoardForm boardForm = new BoardForm();
             boardForm.setBoardcode(posts.getContent().get(i).getBoardcode());
-            System.out.println("boardcode="+posts.getContent().get(i).getBoardcode());
             boardForm.setDate(posts.getContent().get(i).getDate());
             boardForm.setTitle(posts.getContent().get(i).getTitle());
             Long boardcode = posts.getContent().get(i).getBoardcode();
             Optional<Boardimg> thumbnail = boardimgService.findOne(boardcode);
             if(!thumbnail.isEmpty()) {
                 String path = thumbnail.get().getPath();
-                path = path.replace("C:\\summernote_image\\", "https://withpetimage.s3.ap-northeast-2.amazonaws.com/images/");
-                System.out.println("path="+path);
+                path = path.replace("C:\\summernote_image\\",
+                        "https://withpetimage.s3.ap-northeast-2.amazonaws.com/images/");
                 boardForm.setPath(path);
             } else {
                 String path = "https://withpetimage.s3.ap-northeast-2.amazonaws.com/images/15fe7978-b10a-45c8-9364-44a9e035304692ed0fc7-1005-4a30-a088-05ed3dfffb2f.jfif";
@@ -80,6 +79,7 @@ public class BoardController {
         model.addAttribute("hasNext", posts.hasNext());
         model.addAttribute("hasPrev", posts.hasPrevious());
         model.addAttribute("totalPage", posts.getTotalPages());
+
         HttpSession session = req.getSession();
         if (session.getAttribute("userid") != null) {
             model.addAttribute("userid", session.getAttribute("userid"));
@@ -111,7 +111,6 @@ public class BoardController {
 
         List<Reply> replies = replyService.findList(boardcode);
         return replies;
-
     }
 
 
@@ -127,56 +126,34 @@ public class BoardController {
     }
 
     @PostMapping("/community/newpost")
-    public String create(BoardForm form, HttpServletRequest req
-    ) throws IOException {
-        String content = form.getContent();
-        content = content.replace("/summernoteImage/", "https://withpetimage.s3.ap-northeast-2.amazonaws.com/images/");
-
-        System.out.println(content+"\n");
+    public String create(BoardForm form, HttpServletRequest req) {
 
         HttpSession session = req.getSession();
 
         Board board = new Board();
         board.setTitle(form.getTitle());
+
+        String content = form.getContent();
+        content = content.replace("/summernoteImage/",
+                "https://withpetimage.s3.ap-northeast-2.amazonaws.com/images/");
         board.setContent(content);
-        Object userId = session.getAttribute("userid");
-        board.setWriter(userId.toString());
+
+        String userId = (String) session.getAttribute("userid");
+        board.setWriter(userId);
         Long boardCode = boardService.newPost(board);
 
         String[] pathContent = new String[files.size()];
         for (int i = 0; i < files.size(); i++) {
             File file = files.get(i);
             s3Uploader.upload(file, "images");
-            pathContent[i]= file.getPath();
+            pathContent[i]= file.getPath().replace("C:\\summernote_image\\",
+                    "https://withpetimage.s3.ap-northeast-2.amazonaws.com/images/");
             Boardimg boardimg = new Boardimg(boardCode, file.getName(), "생략", pathContent[i]);
             boardimgService.save(boardimg);
         }
 
         files.clear();
-
-//        new Boardimg(boardCode,form.getTitle(),);
-
-        //        @RequestParam(value = "file") MultipartFile files
-//        String path = s3Uploader.uploadFiles(files, "withpetimage");
-//
-//        HttpSession session = req.getSession();
-//
-//        Long boardCode = (Long) session.getAttribute("boardCodestr");
-//        Boardimg boardimg = new Boardimg();
-//
-//        boardimg.setBoardcode(boardCode);
-//        boardimg.setName(files.getName());
-//        boardimg.setOrigname(UUID.randomUUID().toString());
-//        boardimg.setPath(path);
-//        boardimgService.save(boardimg);
         return "redirect:/community";
-    }
-
-    @GetMapping("/community/modifypost")
-    public String modifyPost(Model model, @RequestParam("boardcode") Long boardcode){
-        Optional<Board> post = boardService.findById(boardcode);
-        model.addAttribute("post", post.get());
-        return "board/community_modifypost";
     }
 
     ArrayList<File> files = new ArrayList<>();
@@ -184,36 +161,22 @@ public class BoardController {
     @PostMapping("/community/uploadimg")
     @ResponseBody
     public String uploadImg(HttpServletRequest req,
-                            @RequestParam("file") MultipartFile multipartFile) throws IOException {
-//        String URL = s3Uploader.uploadFiles(multipartFile, "images");
-//        System.out.println(" 이미지 URL !!! :" + URL);
-
-
-        System.out.println(multipartFile);
-        JsonObject jsonObject = new JsonObject();
-//        String contextRoot = new HttpServletRequestWrapper(req).getRealPath("/");
-//        String fileRoot = contextRoot + "resources/fileupload/";
+                            @RequestParam("file") MultipartFile multipartFile) {
         String fileRoot = "C:\\summernote_image\\";
         String originalFileName = multipartFile.getOriginalFilename();
         String extension = originalFileName.substring(originalFileName.lastIndexOf("."));
         String savedFileName = UUID.randomUUID() + extension;
-//            System.out.println("fileRoot="+fileRoot);
-        System.out.println("originalFileName=" + originalFileName);
-        System.out.println("extentsion=" + extension);
-        System.out.println("savedFileName=" + savedFileName);
+        JsonObject jsonObject = new JsonObject();
         File targetFile = new File(fileRoot + savedFileName);
         try {
             InputStream fileStream = multipartFile.getInputStream();
             FileUtils.copyInputStreamToFile(fileStream, targetFile);
             jsonObject.addProperty("url", "/summernoteImage/" + savedFileName);
-//            jsonObject.addProperty("url", "/summernoteimage/" + savedFileName);
             jsonObject.addProperty("responseCode", "success");
-            System.out.println("try=" + jsonObject.toString());
         } catch (IOException e) {
             FileUtils.deleteQuietly(targetFile);
             jsonObject.addProperty("responseCode", "error");
             e.printStackTrace();
-            System.out.println("catch=" + jsonObject.toString());
         }
         String a = jsonObject.toString();
         files.add(targetFile);
@@ -221,9 +184,47 @@ public class BoardController {
         return a;
     }
 
+    @GetMapping("/community/modifypost")
+    public String modifyPost(Model model, @RequestParam("boardcode") Long boardcode){
+
+        Optional<Board> post = boardService.findById(boardcode);
+        model.addAttribute("post", post.get());
+        return "board/community_modifypost";
+    }
+
+    @PostMapping("/community/modifypost")
+    public String modifySubmit(@RequestParam("title") String title, @RequestParam("content") String content,
+                               @RequestParam("boardcode") Long boardcode, HttpServletRequest req){
+
+        HttpSession session = req.getSession();
+
+        Optional<Board> boardOptional = boardService.findById(boardcode);
+        Board board = boardOptional.get();
+        board.setTitle(title);
+        content = content.replace("/summernoteImage/",
+                "https://withpetimage.s3.ap-northeast-2.amazonaws.com/images/");
+        board.setContent(content);
+        boardService.newPost(board);
+
+        String[] pathContent = new String[files.size()];
+        for (int i = 0; i < files.size(); i++) {
+            File file = files.get(i);
+            s3Uploader.upload(file, "images");
+            pathContent[i]= file.getPath().replace("C:\\summernote_image\\",
+                    "https://withpetimage.s3.ap-northeast-2.amazonaws.com/images/");
+            Boardimg boardimg = new Boardimg(boardcode, file.getName(), "생략", pathContent[i]);
+            boardimgService.save(boardimg);
+        }
+
+        files.clear();
+
+        return "redirect:/community";
+    }
+
     @GetMapping("/community/delete")
     public String deletePost(@RequestParam("boardcode") Long boardcode){
         boardService.deletePost(boardcode);
+        boardimgService.deleteImg(boardcode);
         return "redirect:/community";
     }
 
@@ -241,7 +242,5 @@ public class BoardController {
         List<Reply> replies = replyService.findList(boardcode);
         return replies;
     }
-
-
 
 }
