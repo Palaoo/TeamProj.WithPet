@@ -124,7 +124,7 @@
     <th:block th:value="${cafe.shopid}"></th:block>
     <div class="row pb-4 mb-4 border-bottom">
       <div class="col-md-12 pb-4 mb-4">
-        <img src="tamar.jpg" alt="" width="1000" height="400">
+        <img src="../static/tamar.jpg" alt="" width="1000" height="400">
       </div>
       <div class="col-md-9"><h3 th:text="${cafe.getName()}"></h3></div>
       <div class="col-md-3"><input type="button" value="저장하기"></div>
@@ -196,12 +196,6 @@
                 position: coords
               });
 
-<!--        // 인포윈도우로 장소에 대한 설명을 표시합니다-->
-              <!--var infowindow = new kakao.maps.InfoWindow({-->
-            <!--            content: '<div style="width:150px;text-align:center;padding:6px 0;">우리회사</div>'-->
-              <!--        });-->
-              <!--        infowindow.open(map, marker);-->
-
               // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
               map.setCenter(coords);
             }
@@ -213,7 +207,7 @@
     <div>
       <h5>리뷰</h5>
       <span th:text="${#lists.size(shopreview)}"></span>개
-      <th:block th:each="review: ${shopreview}">
+      <th:block th:each="review , index : ${shopreview}">
         <div  class="row">
           <div class="col-sm-2"><img src="dd.JPG"><p th:text="${review.getUserid()}"></p></div>
           <div class="col-sm-5">
@@ -232,7 +226,7 @@
             <th:block th:if="${review.getScore()==1}">
               <div class="rating">★</div>
             </th:block>
-            <p th:text="${review.getContent()}"></p>
+            <p id="content1" th:text="${review.getContent()}"></p>
           </div>
           <div class="col-sm-3">
             <p th:text="${review.getDate()}"></p>
@@ -240,16 +234,15 @@
 
           <div class="col-sm-2">
             <div th:if="${review.getUserid()==userid}">
-              <form th:action="@{'/reviews/update/'}" method="post">
-<!--              <button class="btn btn-outline-primary btn-sm" name="edit">수정</button>-->
-                <button type="button"
+              <form th:action="@{'/reviews/update'}" method="post">
+<!--                <input type="hidden" name="rid" th:value="${review.getRid()}">-->
+                <button type="button" th:id="${index}"
                       class="btn btn-outline-primary btn-sm"
                       data-bs-toggle="modal"
                       data-bs-target="#review-edit-Modal"
-                      data-bs-rid=""
+                        th:attr="data-bs-content=${review.getContent()},
+                        data-bs-score=${review.getScore()},data-bs-rid=${review.getRid()}"
                       data-bs-userid=""
-                      data-bs-score=""
-                      data-bs-content=""
                       data-bs-shopid="">수정</button>
                 <div class="modal fade" id="review-edit-Modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                   <div class="modal-dialog">
@@ -261,33 +254,34 @@
                       <div class="modal-body">
                         <div class="updatescore">
                              <fieldset>
-                                <input type="hidden" th:text="${review.getScore()}">
                                 <span class="text-bold">별점을 선택하세요</span>
                                 <input type="radio" name="score" value="5" id="rate1_"><label
-                                      for="rate1">★</label>
+                                      for="rate1_">★</label>
                                 <input type="radio" name="score" value="4" id="rate2_"><label
-                                      for="rate2">★</label>
+                                      for="rate2_">★</label>
                                 <input type="radio" name="score" value="3" id="rate3_"><label
-                                      for="rate3">★</label>
+                                      for="rate3_">★</label>
                                 <input type="radio" name="score" value="2" id="rate4_"><label
-                                      for="rate4">★</label>
+                                      for="rate4_">★</label>
                                 <input type="radio" name="score" value="1" id="rate5_"><label
-                                      for="rate5">★</label>
+                                      for="rate5_">★</label>
                               </fieldset>
                         </div>
                           <div class="mb-3">
                             <label for="message-text" class="col-form-label">내용</label>
-                            <textarea class="form-control" id="message-text" name="content" th:text="${review.getContent()}"></textarea>
+                            <textarea class="form-control" id="message-text" name="content"></textarea>
                           </div>
                           <input type="hidden" name="shopid" th:value="${review.getShopid()}">
                           <input type="hidden" name="rid" th:value="${review.getRid()}">
                           <input type="hidden" name="userid" th:value="${review.getUserid()}">
                           <input type="hidden" name="date" id="currentTime" th:value="${review.getDate()}">
-                          <input type="hidden" name="score" th:value="${review.getScore()}">
+                        <input type="hidden" name="score" id="score-value">
                       </div>
+
                       <script>
                         document.getElementById("currentTime").value=new Date(+new Date() + 3240 * 10000).toISOString().split("T")[0];
                       </script>
+
                       <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
                         <button type="submit" class="btn btn-primary">수정</button>
@@ -304,6 +298,7 @@
                   myInput.focus()
                 })
               </script>
+              <!--리뷰 삭제-->
               <form th:action="@{'/reviews/delete/'}" method="get">
                 <input type="hidden" name="shopid" th:value="${review.getShopid()}">
                 <input type="hidden" name="rid" th:value="${review.getRid()}">
@@ -313,8 +308,10 @@
           </div>
         </div>
       </th:block>
+
+      <!--후기 남기기-->
       <div th:if="${not #strings.isEmpty(userid)}">
-      <form class="mb-3" name="myform" id="myform" action="/reviews/create" method="post">
+      <form class="mb-3" name="myform" id="myform" action="/reviews/create" method="post" onsubmit="return submitCheck();">
         <fieldset>
           <span class="text-bold">별점을 선택하세요</span>
           <input type="radio" name="score" value="5" id="rate1"><label
@@ -333,7 +330,7 @@
           <input type="hidden" th:value="${userid}" name="userid">
           <textarea class="col-auto form-control" type="text" id="content" name="content"
                     placeholder="후기를 남겨주세요"></textarea>
-          <button type="submit" class="btn btn-outline-primary btn-sm" id="comment-create-btn">댓글 작성</button>
+          <button type="submit" class="btn btn-outline-primary btn-sm" id="comment-create-btn" >후기 작성</button>
         </div>
       </form>
       </div>
@@ -344,9 +341,33 @@
 </div>
 <script src='https://code.jquery.com/jquery-3.4.1.js'></script>
 <script>
-  $(document).on('click','#rate1',function (){
+  const commentEditModal = document.querySelector("#review-edit-Modal")
 
-  })
+    commentEditModal.addEventListener("show.bs.modal", function (event) {
+
+      const triggerBtn = event.relatedTarget
+
+      const content = triggerBtn.getAttribute("data-bs-content");
+      const score = triggerBtn.getAttribute("data-bs-score");
+
+      console.log(score);
+      document.querySelector("#message-text").value = content
+      document.querySelector("#score-value").value = score
+    })
 </script>
+<script>
+  $(document)
+          //별점 미선택 후기 작성시
+          .on("click","#comment-create-btn",function (){
+            if($(':radio[name="score"]:checked').length<1) {
+              alert ("별점을 선택해주세요.");
+              return false;
+            }
+          })
+
+</script>
+
+
+
 </body>
 </html>

@@ -19,9 +19,15 @@ public class reviewService {
     @Autowired
     private cafeRepository cafeRepository;
 
-    public Optional<shopreview> findByUserId(String userid) {
-        return shopreviewRepository.findByUserid(userid);
-    }
+//    public Optional<shopreview> findByUserid(String userid) {
+//        return shopreviewRepository.findByUserid(userid);
+//    }
+        public List<shopreview> findByuserid(String userid) {
+            return shopreviewRepository.findByUserid(userid);
+        }
+//    public List<shopreview> findByUserId(String userid) {
+//        return shopreviewRepository.findByUserid(userid);
+//    }
 
     public Optional<shopreview> findById(Long rid) {
         return shopreviewRepository.findById(rid);

@@ -60,7 +60,7 @@ public class reviewController {
         return "redirect:/cafeinfo?shopid="+ dto.getShopid();
     }
 
-    @PostMapping("/reviews/update")
+    @PostMapping("/reviews/update")  //리뷰 수정
     public String update(reviewDto dto) {
         log.info("수정 데이터"+dto.toString());
         shopreview shopreview = dto.toEntity();
@@ -72,28 +72,35 @@ public class reviewController {
         return "redirect:/cafeinfo?shopid="+ shopreview.getShopid();
     }
 
-//    @PostMapping("reviews/delete")
-//    public String delete(@RequestParam ("rid") Long rid) {
-//        Optional<shopreview> shopreview = shopreviewRepository.findById(rid);
-//        log.info(shopreview.toString());
-//        if(shopreview != null) {
-//            shopreviewRepository.delete();
-//
-//        }
-//
-//        return "";
-//    }
+    //리뷰 리스트 가져오기
+    @GetMapping("/mypage/review")
+    public String showReviewList(HttpServletRequest req, Model model) {
+        HttpSession session = req.getSession();
+        String userid = (String) session.getAttribute("userid");
+        model.addAttribute("userid",userid);
 
-//    @PostMapping("reviews/update")
-//    public String update(@RequestParam String userid, reviewDto dto) {
-//        log.info(dto.toString());
-//        shopreview shopreview = dto.toEntity();
-//        Optional<shopreview> target = shopreviewRepository.findByUserid(shopreview.getUserid());
-//        if (target != null) {
-//            shopreviewRepository.save(shopreview);
-//        }
-//
-//        return "";
-//    }
+        List<shopreview> shopreviewList = reviewService.findByuserid(userid);
+        model.addAttribute("shopreview",shopreviewList);
+        log.info("리뷰리스트 = "+ shopreviewList.toString());
+        return "myreview";
+    }
+
+    @GetMapping("/mypage/review/delete") //마이페이지 리뷰 삭제
+    public String deleteReview(reviewDto dto, @RequestParam("rid") Long rid, Long shopid) {
+        reviewService.deleteReview(rid);
+        shopreview shopreview = dto.toEntity();
+        return "redirect:/mypage/review";
+    }
+
+    @PostMapping("/mypage/review/update") //마이페이지 리뷰 수정
+    public String updateReview(reviewDto dto) {
+        shopreview shopreview = dto.toEntity();
+        shopreview target = shopreviewRepository.findById(shopreview.getRid()).orElse(null);
+        if (target != null) {
+            shopreviewRepository.save(shopreview);
+        }
+        return "redirect:/mypage/review";
+    }
+
 }
 

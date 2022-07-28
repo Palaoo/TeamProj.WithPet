@@ -2,10 +2,7 @@ package god.withpet.dto;
 
 import god.withpet.entity.cafe;
 import god.withpet.entity.shopreview;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -14,6 +11,8 @@ import java.time.format.DateTimeFormatter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@Getter
+@Setter
 public class reviewDto {
 
     private Long rid;

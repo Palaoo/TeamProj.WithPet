@@ -12,10 +12,18 @@ import javax.servlet.http.HttpSession;
 public class HomeController {
 
     @GetMapping("/")
-    public String viewHome(HttpServletRequest req, Model model){
+    public String viewHome(HttpServletRequest req, Model model) {
+        HttpSession session = req.getSession();
+        String userid = (String) session.getAttribute("userid");
+        model.addAttribute("userid", userid);
+        return "home";
+    }
+    @GetMapping("/mypage")
+    public String showMyPage(HttpServletRequest req, Model model) {
         HttpSession session = req.getSession();
         String userid = (String) session.getAttribute("userid");
         model.addAttribute("userid",userid);
-        return "home";
+        return "mypage";
     }
+
 }

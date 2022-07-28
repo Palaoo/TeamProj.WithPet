@@ -13,8 +13,8 @@ public interface shopreviewRepository extends JpaRepository<shopreview, Long> {
 
     List<shopreview> findByShopid(Long shopid);
 
-
-    Optional<shopreview> findByUserid(String userid);
-
+//    List<shopreview> findByUserid(String userid);
+//    Optional<shopreview> findByUserid(String userid);
+    List<shopreview> findByUserid(String userid);
     Optional<shopreview> findById(Long rid);
 }
