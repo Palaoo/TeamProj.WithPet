@@ -29,14 +29,14 @@ public class MarketController {
         return "market/myshopping";
     }
 
-    @GetMapping("/basket_shopping")
+    @GetMapping("/basket_view")
     public String doBasket(Model model, HttpServletRequest req){
         HttpSession session = req.getSession();
         if(session.getAttribute("userid")==null){
             return "redirect:/login";
         } else {
             model.addAttribute("userid", session.getAttribute("userid"));
-            return "market/basket_shopping";
+            return "market/basket_view";
         }
     }
 
