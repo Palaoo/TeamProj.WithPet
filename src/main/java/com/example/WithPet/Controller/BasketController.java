@@ -58,8 +58,13 @@ public class BasketController {
     @GetMapping("append_basket")
     @ResponseBody
     public String append_basket(@RequestParam Long prodId, HttpServletRequest req) {
-        basketService.appendBasket(prodId, req.getSession().getAttribute("userLogined").toString());
-        return "";
+        try {
+            basketService.appendBasket(prodId, req.getSession().getAttribute("userLogined").toString());
+
+        } catch (IllegalStateException e) {
+            return "0";
+        }
+        return "1";
     }
 
 }

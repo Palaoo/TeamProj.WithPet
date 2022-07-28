@@ -59,7 +59,8 @@
                     <div class="row">
                         <div class="col-lg-4 col-md-6 col-sm-6" th:each="pDTO:${pDTOs}">
                             <div class="product__item">
-                                <div class="product__item__pic set-bg" th:data-setbg="${pDTO.imgURL}"><!--th:href="|prod_view?prodId=${pDTO.product.id}|" -->
+                                <div class="product__item__pic set-bg" th:data-setbg="${pDTO.imgURL}" name="btnProd"
+                                    th:id="${pDTO.product.id}"><!--th:href="|prod_view?prodId=${pDTO.product.id}|" -->
                                     <!-- <img th:src="${pDTO.imgURL}" class="card-img-top" alt="..." height="240px" width="200px"> -->
                                     <ul class="product__hover">
                                         <li>
@@ -161,11 +162,18 @@
         $.ajax({
             type: 'get',
             url: "append_basket?prodId=" + $(this).attr("id"),
-            success: function () {
-                alert("장바구니에 추가되었습니다.")
+            success: function (data) {
+                if (data == '1')
+                    alert("장바구니에 추가되었습니다.")
+                else {
+                    alert("장바구니에 이미 추가된 상품입니다.")
+                }
             }
         })
 
+    }).on('click', 'div[name=btnProd]', function () {
+        let prodId = $(this).attr("id")
+        location = "prod_view?prodId=" + prodId
     })
 </script>
 
