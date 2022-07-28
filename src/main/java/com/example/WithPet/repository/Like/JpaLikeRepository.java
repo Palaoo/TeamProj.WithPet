@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Optional;
 
 public class JpaLikeRepository implements LikeRepository {
-    @Autowired
     private final EntityManager em;
 
     public JpaLikeRepository(EntityManager em) {

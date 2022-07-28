@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
@@ -22,6 +23,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Controller
 public class OrderController {
@@ -107,11 +109,15 @@ public class OrderController {
             for (int i = 0; i < prodIdArr.length; i++) {
                 System.out.printf("From OrderController searchMyshopping(), countArr[%d]: %s, prodIdArr[%d]: %s\n", i, countArr[i], i, prodIdArr[i]);
                 Long prodId = Long.parseLong(prodIdArr[i]);
-                prodandCounts.add(
-                        new ProdandCount(prodService.findById(prodId),
-                                Integer.parseInt(countArr[i]),
-                                imgService.findByProdid(prodId.longValue()).get().getPath())
-                );
+                try {
+                    prodandCounts.add(
+                            new ProdandCount(prodService.findById(prodId).get(),
+                                    Integer.parseInt(countArr[i]),
+                                    imgService.findByProdid(prodId.longValue()).get().getPath())
+                    );
+                } catch (NoSuchElementException e) {
+                    prodandCounts = null;
+                }
 
             }
 //            System.out.printf("From OrderController searchMyshopping(), prod.name: %s ", prodandCounts.get(0).prod.getName());

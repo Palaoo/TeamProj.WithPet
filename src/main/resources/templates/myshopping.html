@@ -171,17 +171,18 @@
     $('#btnSearch').on('click', function () {
         let startDate = $('#datePicker1').val()
         let endDate = $('#datePicker2').val()
-        $.ajax({
-            url: 'myshopping',
-            type: 'get',
-            data: {
-                'startDate': startDate,
-                'endDate': endDate
-            },
-            success: function (data) {
-                document.write(data)
-            }
-        })
+        document.location = 'myshopping?startDate=' + startDate + '&endDate=' + endDate
+        // $.ajax({
+        //     url: 'myshopping',
+        //     type: 'get',
+        //     data: {
+        //         'startDate': startDate,
+        //         'endDate': endDate
+        //     },
+        //     success: function (data) {
+        //         document.write(data)
+        //     }
+        // })
     })
 </script>
 

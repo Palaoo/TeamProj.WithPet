@@ -25,7 +25,6 @@ public class BasketController {
     private final BusinessUserService businessUserService;
     private final Tools tools = new Tools();
 
-    @Autowired
     public BasketController(BasketService basketService, ProdService prodService, ImgService imgService,
                             BusinessUserService businessUserService) {
         this.basketService = basketService;
@@ -44,7 +43,7 @@ public class BasketController {
         List<Basket> basketList = basketService.findByUserid(userId);
         ArrayList<BascketDTO> bascketDTOs = new ArrayList<>();
         for (Basket basket : basketList) {
-            Product prod = prodService.findById(basket.getProdId());
+            Product prod = prodService.findById(basket.getProdId()).get();
             String brand = businessUserService.findByBid(prod.getBid()).getBrand();
             bascketDTOs.add(new BascketDTO(basket.getProdId(), prod.getName(), prod.getPrice(), imgService.findByProdid(basket.getProdId()).get().getPath(), brand));
         }

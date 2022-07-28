@@ -198,7 +198,7 @@ public class ProdController {
     @GetMapping("prod_view")
     public String prodView(Model model, HttpServletRequest req) {
         Long prodId = Long.parseLong(req.getParameter("prodId"));
-        model.addAttribute("product", prodService.findById(prodId));   // 상품 튜플
+        model.addAttribute("product", prodService.findById(prodId).get());   // 상품 튜플
         model.addAttribute("img", imgService.findByProdid(prodId).get().getPath());   // 썸네일 URL
         model.addAttribute("cimgs", cimgService.findImgURLs(prodId));
 

@@ -28,8 +28,8 @@ public class ProdService {
     public Product findByName(String prodName) {
         return prodRepository.findByName(prodName).get();
     }
-    public Product findById(Long id) {
-        return prodRepository.findById(id).get();
+    public Optional<Product> findById(Long id) {
+        return prodRepository.findById(id);
     }
 
 }
