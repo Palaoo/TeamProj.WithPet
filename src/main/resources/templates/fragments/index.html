@@ -46,7 +46,7 @@
 
                 <div align="center" th:if="${not #strings.isEmpty(userid)}">
                     <a id="myshopping" href="myshopping">마이쇼핑</a>
-                    <a id="basket_shopping" href="basket_shopping">장바구니</a>
+                    <a id="basket_shopping" href="basket_view">장바구니</a>
                     <a id="userInfo" href="userInfo">회원정보</a>
                     <a id="logout" href="logout">로그아웃</a>
                 </div>
@@ -60,7 +60,7 @@
         <div class="offcanvas__nav__option">
             <a href="#" class="search-switch"><img src="img/icon/search.png" alt=""></a>
             <a href="#"><img src="img/icon/heart.png" alt=""></a>
-            <a href="basket_shopping"><img src="img/icon/cart.png" alt=""> <span>0</span></a>
+            <a href="basket_view"><img src="img/icon/cart.png" alt=""> <span>0</span></a>
             <!-- <div class="price">$0.00</div> -->
         </div>
         <div id="mobile-menu-wrap"></div>
@@ -87,7 +87,7 @@
                                 <a href="login">Log in</a>-->
                                 <div align="center" th:if="${not #strings.isEmpty(userid)}">
                                     <a id="myshopping2" href="myshopping">마이쇼핑</a>
-                                    <a id="basket_shopping2" href="basket_shopping">장바구니</a>
+                                    <a id="basket_shopping2" href="basket_view">장바구니</a>
                                     <a id="userInfo2" href="userInfo">회원정보</a>
                                     <a id="logout2" href="logout">로그아웃</a>
                                 </div>
@@ -123,7 +123,7 @@
                     <div class="header__nav__option">
                         <a href="#" class="search-switch"><img src="img/icon/search.png" alt=""></a>
                         <a href="#"><img src="img/icon/heart.png" alt=""></a>
-                        <a href="basket_shopping"><img src="img/icon/cart.png" alt=""> <span>0</span></a>
+                        <a href="basket_view"><img src="img/icon/cart.png" alt=""> <span>0</span></a>
                         <!-- <div class="price">$0.00</div> -->
                     </div>
                 </div>
