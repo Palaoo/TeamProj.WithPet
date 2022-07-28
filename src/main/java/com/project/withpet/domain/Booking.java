@@ -18,7 +18,12 @@ public class Booking {
 
     @JoinColumn(name = "hotelroom_roomid")
     private Long roomid;
+
     private String name;
+
+
+
+
 
     public Long getBookid() {
         return bookid;
