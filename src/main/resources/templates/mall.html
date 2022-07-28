@@ -60,7 +60,8 @@
                         <div class="col-lg-4 col-md-6 col-sm-6" th:each="pDTO:${pDTOs}">
                             <div class="product__item">
                                 <div class="product__item__pic set-bg" th:data-setbg="${pDTO.imgURL}" name="btnProd"
-                                    th:id="${pDTO.product.id}"><!--th:href="|prod_view?prodId=${pDTO.product.id}|" -->
+                                    th:id="${pDTO.product.id}">
+                                    <!--th:href="|prod_view?prodId=${pDTO.product.id}|" -->
                                     <!-- <img th:src="${pDTO.imgURL}" class="card-img-top" alt="..." height="240px" width="200px"> -->
                                     <ul class="product__hover">
                                         <li>
@@ -72,8 +73,8 @@
                                             </a>
                                         </li>
                                         <!-- <li><a href="#"><img src="img/icon/compare.png" alt=""> <span>Compare</span></a>
-                                    </li>
-                                    <li><a href="#"><img src="img/icon/search.png" alt=""></a></li> -->
+                                </li>
+                                <li><a href="#"><img src="img/icon/search.png" alt=""></a></li> -->
                                     </ul>
                                 </div>
                                 <div class="product__item__text">
@@ -106,11 +107,10 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="product__pagination">
-                                <a class="active" href="#">1</a>
-                                <a href="#">2</a>
-                                <a href="#">3</a>
-                                <span>...</span>
-                                <a href="#">21</a>
+                                <a th:if="${startPage!=1}" href="@{/mallPage(page=${startPage}-5,size=9)}">&lt;</a>
+                                <a class="active" th:each="num : ${#numbers.sequence(startPage,endPage)}"
+                                    th:href="@{/mallPage(page=${num}-1,size=9)}" th:text="${num}">1</a>
+                                <a th:if="${totalPage>endPage}" th:href="@{/mallPage(page=${endPage+1},size=9)}">></a>
                             </div>
                         </div>
                     </div>
@@ -122,16 +122,16 @@
 
     <!--origin-->
     <!--<div class="row">
-    <div class="col-lg-4 col-md-6">
-        <div class="card" style="width: 18rem;" th:each="pDTO:${pDTOs}">
-            <img th:src="${pDTO.imgURL}" class="card-img-top" alt="...">
-            <div class="card-body">
-                <h5 class="card-title" th:text="${pDTO.product.name}"></h5>
-                <p class="card-text">jh스토어<br>50000원</p>
-                <a href="#" class="btn btn-primary">Go somewhere</a>
-            </div>
+<div class="col-lg-4 col-md-6">
+    <div class="card" style="width: 18rem;" th:each="pDTO:${pDTOs}">
+        <img th:src="${pDTO.imgURL}" class="card-img-top" alt="...">
+        <div class="card-body">
+            <h5 class="card-title" th:text="${pDTO.product.name}"></h5>
+            <p class="card-text">jh스토어<br>50000원</p>
+            <a href="#" class="btn btn-primary">Go somewhere</a>
         </div>
     </div>
+</div>
 </div>-->
 
     <th:block th:replace="fragments/index :: footer"></th:block>
@@ -149,8 +149,7 @@
                     $(ID).attr("src", "img/icon/redheart.png")
                     $(ID).attr("width", "38px")
                     $(ID).attr("height", "36px")
-                }
-                else {
+                } else {
                     console.log('여기')
                     $(ID).attr("height", "36px")
                     $(ID).attr("width", "38px")
