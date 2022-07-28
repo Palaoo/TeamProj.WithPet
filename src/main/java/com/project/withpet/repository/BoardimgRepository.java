@@ -15,4 +15,6 @@ public interface BoardimgRepository {
     List<Boardimg> findAll();
 
     Optional<Boardimg> findTop1ByBoardcodeOrderById(Long boardcode);
+
+    void deleteByBoardcode(Long boardcode);
 }

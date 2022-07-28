@@ -52,7 +52,7 @@
                     <div class="blog__details__text">
                         <p th:utext="${content}"></p>
                     </div>
-                    <div>
+                    <div th:if="${#strings.equals(userid, writer)}">
                         <input type="button" id="modify" value="수정" th:href="@{/community/modifypost(boardcode=${boardcode})}">
                         <input type="button" id="delete" value="삭제">
                     </div>

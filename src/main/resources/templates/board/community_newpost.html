@@ -53,7 +53,6 @@
 #summernote{
     size:30px;
 }
->>>>>>> 8583b866a5da2510fc51866de0ce20600d2a4551
 </style>
 <body>
 
@@ -64,7 +63,7 @@
 <form action="newpost" method="post">
     <input type="text" name="title" id="title" placeholder="제목"><br><br> <!--제목&nbsp; 내용&nbsp;-->
     <textarea id="summernote" name="content" style="width:500px"></textarea>
-    <input type="hidden" name="boardCode" id="boardcode" th:value="${lastBoardCode} + 1">
+    <input type="hidden" name="boardCode" id="boardcode">
     <div style="text-align:center; margin:10px">
         <input type="submit" id="btn_submit" class="site-btn" value="제출">&nbsp;<input type="button" id="btn_cancel" class="site-btn" value="취소">
     </div>

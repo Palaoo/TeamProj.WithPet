@@ -29,4 +29,8 @@ public class BoardimgService {
     public Optional<Boardimg> findOne(Long boardcode){
         return boardimgRepository.findTop1ByBoardcodeOrderById(boardcode);
     }
+
+    public void deleteImg(Long boardcode){
+        boardimgRepository.deleteByBoardcode(boardcode);
+    }
 }
