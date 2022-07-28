@@ -9,6 +9,16 @@ public class ProdDTO {
     private Long likeCount;
     private int isLiked;
 
+    public int getIsLiked() {
+        return isLiked;
+    }
+
+    public void setIsLiked(int isLiked) {
+        this.isLiked = isLiked;
+    }
+
+
+
     public Product getProduct() {
         return product;
     }
