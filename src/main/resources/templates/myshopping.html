@@ -7,8 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="resources/css/plugin/datepicker/bootstrap-datepicker.css">
-
     <title>Document</title>
+    <th:block th:replace="fragments/index::style"></th:block>
 </head>
 <style>
     body {
@@ -162,11 +162,100 @@
         </div>
     </div>
 
-
     <p th:text="${paymentKey}"></p>
     <p th:text="${orderId}"></p>
     <p th:text="${amount}"></p>
 
+
+
+    <section class="shopping-cart spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="shopping__cart__table">
+                        <table>
+                            <thead>
+                            <tr>
+                                <th>Product</th>
+                                <th>Quantity</th>
+                                <th>Total</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="basketDTO:${BasketDTOs}">
+                                <input type="hidden" name="prodId" id="prodId" th:value="${basketDTO.prodid}">
+                                <td class="product__cart__item">
+                                    <div class="product__cart__item__pic">
+                                        <img  alt="" th:src="${basketDTO.path}"
+                                              onerror="this.src='https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbNZo14%2Fbtq17bsvo5i%2FOSV3gGWnwAKqNB0EOSQkrK%2Fimg.png'"
+                                              width="200" height="200"> <!--src="img/shopping-cart/cart-1.jpg"-->
+                                    </div>
+                                    <div class="product__cart__item__text">
+                                        <p th:text="${basketDTO.brand}">브랜드명</p>
+                                        <h6 th:text="${basketDTO.name}" id="prodName"></h6>
+                                        <h5><span class="quantity_price" th:id="|price${basketDTO.prodid}|" name="price" th:text="${basketDTO.price}">19800</span>
+                                            <span class="mileage displaynone"><img src="" /> <span class="mileage_price"></span></span>
+                                        </h5>
+                                    </div>
+                                </td>
+                                <td class="quantity__item">
+                                    <div class="quantity">
+                                        <div class="pro-qty-2">
+                                            <input th:id="|qty${basketDTO.prodid}|" name="quantity_name" style="" value="1" type="text" />
+                                            <button th:id="${basketDTO.prodid}" name="btnQuantityUp"><img
+                                                    src="//img.echosting.cafe24.com/skin/base_ko_KR/product/btn_count_up.gif" alt="수량증가"
+                                                    class="QuantityUp up" /></button>
+                                            <button th:id="${basketDTO.prodid}" name="btnQuantityDown"><img
+                                                    src="//img.echosting.cafe24.com/skin/base_ko_KR/product/btn_count_down.gif" alt="수량감소"
+                                                    class="QuantityDown down" /></button>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="cart__price">
+                                    <p th:id="|totalprice${basketDTO.prodid}|" name="totalPPrice"></p>
+                                </td>
+                                <td class="cart__close">
+                                    <button th:name="${basketDTO.prodid}" id="order" class="continue__btn">주문</button>
+                                    <i class="fa fa-close"></i>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-6">
+                            <div class="continue__btn">
+                                <a href="#">Continue Shopping</a>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6">
+                            <div class="continue__btn update__btn">
+                                <a href="#"><i class="fa fa-spinner"></i> Update cart</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="cart__discount">
+                        <h6>Discount codes</h6>
+                        <form action="#">
+                            <input type="text" placeholder="Coupon code">
+                            <button type="submit">Apply</button>
+                        </form>
+                    </div>
+                    <div class="cart__total">
+                        <h6>Cart total</h6>
+                        <ul>
+                            <li>총 선택상품금액 <span id="total"></span></li>
+                            <!--<li>Total <span>$ 169.50</span></li>-->
+                        </ul>
+                        <a href="#" class="primary-btn" id="orderAll">모두 주문하기</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
 
 
