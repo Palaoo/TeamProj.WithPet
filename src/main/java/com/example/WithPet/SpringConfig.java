@@ -10,6 +10,8 @@ import com.example.WithPet.repository.Like.LikeRepository;
 import com.example.WithPet.repository.Order.OrderRepository;
 import com.example.WithPet.repository.Orderprod.OrderprodRepository;
 import com.example.WithPet.repository.Prod.ProdRepository;
+import com.example.WithPet.repository.ProdReview.JpaProdReviewRepository;
+import com.example.WithPet.repository.ProdReview.ProdReviewRepository;
 import com.example.WithPet.repository.User.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -34,7 +36,7 @@ public class SpringConfig {
     public SpringConfig(UserRepository userRepository, BusinessUserRepository businessUserRepository,
                         ProdRepository prodRepository, ImgRepository imgRepository, CimgRepository cimgRepository,
                         OrderRepository orderRepository, OrderprodRepository orderprodRepository,
-                         EntityManager em, BasketRepository basketRepository) {
+                        EntityManager em, BasketRepository basketRepository) {
         this.userRepository = userRepository;
         this.businessUserRepository = businessUserRepository;
         this.prodRepository = prodRepository;
@@ -95,6 +97,16 @@ public class SpringConfig {
     @Bean
     public BasketService basketService() {
         return new BasketService(basketRepository);
+    }
+
+    @Bean
+    public ProdReviewService prodReviewService() {
+        return new ProdReviewService(prodReviewRepository());
+    }
+
+    @Bean
+    public ProdReviewRepository prodReviewRepository() {
+        return new JpaProdReviewRepository(em);
     }
 
     @Bean

@@ -16,7 +16,7 @@ class ProdServiceTest {
 
     @Test
     void findOne() {
-        Product product = prodService.findById(19L);
+        Product product = prodService.findById(19L).get();
         System.out.println(product.getName());
     }
 }
