@@ -41,4 +41,9 @@ public class ProdReviewController {
 
         return "redirect:prod_view?prodId=" + prodId;
     }
+
+    @GetMapping("review")
+    public String doReview(){
+        return "review";
+    }
 }
