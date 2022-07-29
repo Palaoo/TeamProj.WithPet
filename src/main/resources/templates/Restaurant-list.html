@@ -58,7 +58,7 @@
             <input type="hidden" th:value="${cafeList.getShopid()}">
             <input type="hidden" th:value="${cafeList.getShoptype().getTypeid()}">
             <div class="card h-100">
-                <a th:href="@{/cafeinfo(shopid=${cafeList.getShopid()})}"><img src="../static/tamar2.jpg" class="card-img-top" alt="" width="300" height="300"></a>
+                <a th:href="@{/cafeinfo(shopid=${cafeList.getShopid()})}"><img src="../static/image/tamar2.jpg" class="card-img-top" alt="" width="300" height="300"></a>
                 <div class="card-body">
                     <h5 class="card-title" th:text="${cafeList.name}"></h5>
                     <ul class="list-group list-group-flush">

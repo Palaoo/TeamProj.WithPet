@@ -14,16 +14,17 @@ public class HomeController {
     @GetMapping("/")
     public String viewHome(HttpServletRequest req, Model model) {
         HttpSession session = req.getSession();
-        String userid = (String) session.getAttribute("userid");
+        String userid = (String) session.getAttribute("userLogined");
         model.addAttribute("userid", userid);
         return "home";
     }
-    @GetMapping("/mypage")
-    public String showMyPage(HttpServletRequest req, Model model) {
+
+    @GetMapping("/mypage/myreserve")
+    public String showReserve(HttpServletRequest req, Model model) {
         HttpSession session = req.getSession();
-        String userid = (String) session.getAttribute("userid");
-        model.addAttribute("userid",userid);
-        return "mypage";
+        String userid = (String) session.getAttribute("userLogined");
+        model.addAttribute("userid", userid);
+        return "myreserve";
     }
 
 }

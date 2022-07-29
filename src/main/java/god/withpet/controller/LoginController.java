@@ -60,7 +60,7 @@ public class LoginController {
         log.info(userService.toString());
         if(result==true){
             HttpSession session = req.getSession();
-            session.setAttribute("userid", userid);
+            session.setAttribute("userLogined", userid);
             return "redirect:/";
         } else {
             return "redirect:/signup";
@@ -70,7 +70,7 @@ public class LoginController {
     @GetMapping("logout")
     public String logout(HttpServletRequest req){
         HttpSession session = req.getSession();
-        session.removeAttribute("userid");
+        session.removeAttribute("userLogined");
         return "redirect:/";
     }
 
