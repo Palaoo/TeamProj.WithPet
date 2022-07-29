@@ -195,81 +195,59 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr th:each=th:each="orderDTO:${orderDTOList}">
+                            <tr th:each="orderDTO:${orderDTOList}">
                                 <p th:text="${orderDTO.ordertable.orderdate}"></p>
-
-
-                                <div class="body-right-prod" th:each="prodandCount:${orderDTO.prodandCounts}">
-                                    <div class="body-right-prod-img">
-                                        <img th:src="${prodandCount.imgPath}"
-                                             onerror="this.src='https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbNZo14%2Fbtq17bsvo5i%2FOSV3gGWnwAKqNB0EOSQkrK%2Fimg.png'"
-                                             width="200" height="200">
-                                    </div>
-                                    <div class="body-right-prod-detail">
-                                        <p th:text="${prodandCount.prod.name}">상품명</p>
-                                        <p th:text="|${prodandCount.prod.price}    ${prodandCount.count}|"></p>
-                                        <p>구매가 완료되었습니다. 이용해주셔서 감사합니다.
-                                            구매확정 이후 상품의 이용방법, 반품 등에 대한 문의는 판매자에게 문의해주세요.</p>
-                                    </div>
-                                    <div class="body-right-prod-brand">
-                                        <!-- <p th:text="${}">브랜드명</p> -->
-                                        <!-- <p th:text="${}">브랜드 문의전화</p> -->
-                                        <button id="btnComplain">문의하기</button>
-                                    </div>
-                                    <div class="body-right-prod-re">
-                                        <button id="btnReOrder">재구매</button>
-                                    </div>
-                                </div>
-
-
-
                                 <td class="product__cart__item" th:each="prodandCount:${orderDTO.prodandCounts}">
                                     <div class="product__cart__item__pic">
                                         <img th:src="${prodandCount.imgPath}"
                                              onerror="this.src='https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbNZo14%2Fbtq17bsvo5i%2FOSV3gGWnwAKqNB0EOSQkrK%2Fimg.png'"
                                              width="200" height="200">
                                     </div>
+                                </td>
+                                <td class="quantity__item">
+
                                     <div class="product__cart__item__text">
                                         <p th:text="${prodandCount.prod.name}">상품명</p>
                                         <h6 th:text="|${prodandCount.prod.price}    ${prodandCount.count}|"></h6>
-                                        <h5><span class="quantity_price" th:id="|price${basketDTO.prodid}|" name="price" th:text="${basketDTO.price}">19800</span>
-                                            <span class="mileage displaynone"><img src="" /> <span class="mileage_price"></span></span>
+                                        <h5>
+                                            <p>구매가 완료되었습니다. 이용해주셔서 감사합니다.
+                                                구매확정 이후 상품의 이용방법, 반품 등에 대한 문의는 판매자에게 문의해주세요.</p>
                                         </h5>
                                     </div>
-                                </td>
-                                <td class="quantity__item">
-                                    <div class="quantity">
+
+                                    <!--<div class="quantity">
                                         <div class="pro-qty-2">
-                                            <input th:id="|qty${basketDTO.prodid}|" name="quantity_name" style="" value="1" type="text" />
-                                            <button th:id="${basketDTO.prodid}" name="btnQuantityUp"><img
-                                                    src="//img.echosting.cafe24.com/skin/base_ko_KR/product/btn_count_up.gif" alt="수량증가"
-                                                    class="QuantityUp up" /></button>
-                                            <button th:id="${basketDTO.prodid}" name="btnQuantityDown"><img
-                                                    src="//img.echosting.cafe24.com/skin/base_ko_KR/product/btn_count_down.gif" alt="수량감소"
-                                                    class="QuantityDown down" /></button>
+                                            <button id="btnComplain">문의하기</button>
                                         </div>
-                                    </div>
+                                    </div>-->
                                 </td>
                                 <td class="cart__price">
-                                    <p th:id="|totalprice${basketDTO.prodid}|" name="totalPPrice"></p>
+                                    <button id="btnComplain">문의하기</button>
                                 </td>
                                 <td class="cart__close">
-                                    <button th:name="${basketDTO.prodid}" id="order" class="continue__btn">주문</button>
-                                    <i class="fa fa-close"></i>
+                                    <button id="btnReOrder">재구매</button>
                                 </td>
                             </tr>
                             </tbody>
                         </table>
                     </div>
                     <div class="row">
-                        <div class="col-lg-6 col-md-6 col-sm-6">
+                        <div class="col-lg-4 col-md-4 col-sm-4">
                             <div class="continue__btn">
-                                <a href="#">Continue Shopping</a>
+                                <p th:text="${paymentKey}"></p>
+                                <!--<a href="#">Continue Shopping</a>-->
                             </div>
                         </div>
-                        <div class="col-lg-6 col-md-6 col-sm-6">
+                        <div class="col-lg-4 col-md-4 col-sm-4">
                             <div class="continue__btn update__btn">
-                                <a href="#"><i class="fa fa-spinner"></i> Update cart</a>
+                                <p th:text="${orderId}"></p>
+                                <!--<a href="#"><i class="fa fa-spinner"></i> Update cart</a>-->
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-4">
+                            <div class="continue__btn update__btn">
+                                <p th:text="${amount}"></p>
+                                <!--<a href="#"><i class="fa fa-spinner"></i> Update cart</a>-->
                             </div>
                         </div>
                     </div>
