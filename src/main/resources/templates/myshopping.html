@@ -180,7 +180,8 @@
                 </div>
                 <div class="col-lg-8">
                     <div class="shopping__cart__table">
-                        <table>
+                        <table th:each="orderDTO:${orderDTOList}">
+                            <p th:text="${orderDTO.ordertable.orderdate}"></p>
                             <thead>
                             <tr>
                                 <th><input type="date" id="datePicker1" class="form-control" value=""></th>
@@ -195,9 +196,8 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr th:each="orderDTO:${orderDTOList}">
-                                <p th:text="${orderDTO.ordertable.orderdate}"></p>
-                                <td class="product__cart__item" th:each="prodandCount:${orderDTO.prodandCounts}">
+                            <tr th:each="prodandCount:${orderDTO.prodandCounts}">
+                                <td class="product__cart__item">
                                     <div class="product__cart__item__pic">
                                         <img th:src="${prodandCount.imgPath}"
                                              onerror="this.src='https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbNZo14%2Fbtq17bsvo5i%2FOSV3gGWnwAKqNB0EOSQkrK%2Fimg.png'"
@@ -205,7 +205,6 @@
                                     </div>
                                 </td>
                                 <td class="quantity__item">
-
                                     <div class="product__cart__item__text">
                                         <p th:text="${prodandCount.prod.name}">상품명</p>
                                         <h6 th:text="|${prodandCount.prod.price}    ${prodandCount.count}|"></h6>
