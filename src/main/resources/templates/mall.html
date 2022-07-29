@@ -63,45 +63,43 @@
                                     th:id="${pDTO.product.id}">
                                     <!--th:href="|prod_view?prodId=${pDTO.product.id}|" -->
                                     <!-- <img th:src="${pDTO.imgURL}" class="card-img-top" alt="..." height="240px" width="200px"> -->
-                                    <ul class="product__hover">
-                                        <li>
-                                            <a href="#" id="btnLike" th:name="${pDTO.product.id}">
-                                                <img th:if="${pDTO.isLiked==1}" src="img/icon/redheart.png"
-                                                    th:id="|btnLike${pDTO.product.id}|" width="38" height="36" alt="">
-                                                <img th:if="${pDTO.isLiked==0}" src="img/icon/heart.png"
-                                                    th:id="|btnLike${pDTO.product.id}|" alt="">
-                                            </a>
-                                        </li>
-                                        <!-- <li><a href="#"><img src="img/icon/compare.png" alt=""> <span>Compare</span></a>
-                                </li>
-                                <li><a href="#"><img src="img/icon/search.png" alt=""></a></li> -->
-                                    </ul>
-                                </div>
-                                <div class="product__item__text">
-                                    <h6 th:text="${pDTO.product.name}"></h6>
-                                    <a href="#" name="addBasket" th:id="${pDTO.product.id}" class="add-cart">+ Add To
-                                        Cart</a>
-                                    <div class="rating">
-                                        <i class="fa fa-star-o"></i>
-                                        <i class="fa fa-star-o"></i>
-                                        <i class="fa fa-star-o"></i>
-                                        <i class="fa fa-star-o"></i>
-                                        <i class="fa fa-star-o"></i>
-                                    </div>
-                                    <h5 th:text="|${pDTO.product.price}원|">$67.24</h5>
-                                    <div class="product__color__select">
-                                        <label for="pc-4">
-                                            <input type="radio" id="pc-4">
-                                        </label>
-                                        <label class="active black" for="pc-5">
-                                            <input type="radio" id="pc-5">
-                                        </label>
-                                        <label class="grey" for="pc-6">
-                                            <input type="radio" id="pc-6">
-                                        </label>
-                                    </div>
+
+
+
+<!--                                    <ul class="product__hover">-->
+<!--                                        <li>-->
+
+<!--                                        </li>-->
+<!--                                        &lt;!&ndash; <li><a href="#"><img src="img/icon/compare.png" alt=""> <span>Compare</span></a>-->
+<!--                                </li>-->
+<!--                                <li><a href="#"><img src="img/icon/search.png" alt=""></a></li> &ndash;&gt;-->
+<!--                                    </ul>-->
                                 </div>
                             </div>
+                            <div class="row">
+                                <div class="col-9">
+                                    <h6 th:text="${pDTO.product.name}"></h6>
+                                    <a href="#" name="addBasket" th:id="${pDTO.product.id}" class="add-cart">
+                                        + Add To Cart</a>
+                                    <!--src="img/icon/add-to-cart.png"-->
+                                </div>
+                                <div class="col-3">
+                                    <a href="#" id="btnLike" th:name="${pDTO.product.id}">
+                                        <img th:if="${pDTO.isLiked==1}" src="img/icon/redheart.png"
+                                             th:id="|btnLike${pDTO.product.id}|" width="38" height="36" alt="">
+                                        <img th:if="${pDTO.isLiked==0}" src="img/icon/love.png"
+                                             th:id="|btnLike${pDTO.product.id}|" width="38" height="36" alt="">
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="rating">
+                                <i class="fa fa-star-o"></i>
+                                <i class="fa fa-star-o"></i>
+                                <i class="fa fa-star-o"></i>
+                                <i class="fa fa-star-o"></i>
+                                <i class="fa fa-star-o"></i>
+                            </div>
+                            <h5 th:text="|${pDTO.product.price}원|">$67.24</h5>
                         </div>
                     </div>
                     <div class="row">
@@ -153,7 +151,7 @@
                     console.log('여기')
                     $(ID).attr("height", "36px")
                     $(ID).attr("width", "38px")
-                    $(ID).attr("src", "img/icon/heart.png")
+                    $(ID).attr("src", "img/icon/love.png")
                 }
             }
         })
