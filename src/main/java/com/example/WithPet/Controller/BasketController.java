@@ -66,4 +66,10 @@ public class BasketController {
         return "1";
     }
 
+    @GetMapping("delete_basket")
+    public String delete_basket(HttpServletRequest req,@RequestParam Long prodId) {
+        basketService.deleteBasket(prodId, req.getSession().getAttribute("userLogined").toString());
+        return "redirect:/basket_view";
+    }
+
 }
