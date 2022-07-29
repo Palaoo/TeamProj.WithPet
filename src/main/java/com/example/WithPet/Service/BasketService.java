@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import java.util.List;
+import java.util.Optional;
 
 @Transactional
 public class BasketService {
@@ -22,15 +23,20 @@ public class BasketService {
     }
 
     public Long appendBasket(Long prodId, String userId) throws IllegalStateException {
-        validate(userId,prodId);
+        validate(userId, prodId);
 
         return basketRepository.save(new Basket(prodId, userId)).getBasketId();
     }
 
-    private void validate(String userid,Long prodid) {
+    private void validate(String userid, Long prodid) {
         basketRepository.findByUseridAndProdid(userid, prodid)
-                .ifPresent(b->{
+                .ifPresent(b -> {
                     throw new IllegalStateException("이미 장바구니에 존재하는 상품입니다.");
                 });
+    }
+
+    public void deleteBasket(Long prodId, String userId) {
+        Optional<Basket> result = basketRepository.findByUseridAndProdid(userId, prodId);
+        basketRepository.delete(result.get());
     }
 }
