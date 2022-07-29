@@ -51,12 +51,12 @@ public class ProdController {
         if (!tools.isUserLogined(req)) {
             return "login";
         }
-        model.addAttribute("userLogined", req.getSession().getAttribute("userLogined"));
+        model.addAttribute("userid", req.getSession().getAttribute("userid"));
         ArrayList<ProdDTO> pDTOs = new ArrayList<ProdDTO>();
         Page<Product> prods = prodService.findProds(pageable);
         System.out.printf("From prodController mallPage(), prods.getTotalElements(): %d\n", prods.getTotalElements());
         List<String> imgURLs = imgService.findImgURLs(prods);
-        String userId = req.getSession().getAttribute("userLogined").toString();
+        String userId = req.getSession().getAttribute("userid").toString();
         for (int i = 0; i < prods.getNumberOfElements(); i++) {
             Product product = prods.toList().get(i);
             String imgURL = imgURLs.get(i);
@@ -227,7 +227,7 @@ public class ProdController {
     @GetMapping("append_like")
     @ResponseBody
     public String appendLike(@RequestParam Long prodId, HttpServletRequest req) {
-        if (likeService.appendLike(prodId, req.getSession().getAttribute("userLogined").toString()))
+        if (likeService.appendLike(prodId, req.getSession().getAttribute("userid").toString()))
             return "1";
 
         return "0";
