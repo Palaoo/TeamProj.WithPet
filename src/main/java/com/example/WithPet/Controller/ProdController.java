@@ -47,7 +47,7 @@ public class ProdController {
 
     @GetMapping("/mallPage")
     public String mallPage(HttpServletRequest req, Model model,
-                           @PageableDefault(sort = "id", direction = Sort.Direction.DESC, size = 2) Pageable pageable) {
+                           @PageableDefault(sort = "id", direction = Sort.Direction.DESC, size = 9) Pageable pageable) {
         if (!tools.isUserLogined(req)) {
             return "login";
         }

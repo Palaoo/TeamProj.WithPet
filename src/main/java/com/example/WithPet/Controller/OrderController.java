@@ -61,6 +61,8 @@ public class OrderController {
         Long orderid = orderService.save(new Ordertable(req.getSession().getAttribute("userLogined").toString(), tools.getLDTnow())).getOrderid();
         orderprodService.save(new Orderprod(orderid, priceid, count));
 
+
+
         return "redirect:/myshopping";
     }
 
