@@ -16,6 +16,8 @@ import com.project.withpet.repository.ProdReview.JpaProdReviewRepository;
 import com.project.withpet.repository.ProdReview.ProdReviewRepository;
 import com.project.withpet.repository.Reply.ReplyRepository;
 import com.project.withpet.repository.Shop.ShopRepository;
+import com.project.withpet.repository.ShopLike.JpaShopLikeRepository;
+import com.project.withpet.repository.ShopLike.ShopLikeRepository;
 import com.project.withpet.repository.User.UserRepository;
 import com.project.withpet.service.*;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -165,5 +167,15 @@ public class SpringConfig {
         return new JpaProdReviewRepository(entityManager);
     }
 
+    @Bean
+    public ShopLikeService shopLikeService(){
+        return new ShopLikeService(shopLikeRepository());
+    }
+
+    @Bean
+    public ShopLikeRepository shopLikeRepository(){
+        return new JpaShopLikeRepository(entityManager);
+
+    }
 
 }
