@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="resources/css/plugin/datepicker/bootstrap-datepicker.css">
+    <title>Document</title>
+    <th:block th:replace="fragments/index::style"></th:block>
+</head>
+<style>
+    body {
+        margin: 0;
+    }
+
+    #mypage,
+    #logout {
+        text-decoration: none;
+        color: black;
+    }
+
+    nav a {
+        text-decoration: none;
+        color: black;
+        margin: 2em;
+    }
+
+    nav {
+        display: flex;
+        justify-content: center;
+    }
+
+    table {
+        border-spacing: 20px;
+        border-collapse: separate;
+        /* position:absolute;
+        left:500px; */
+    }
+
+    #submit {
+        border: none;
+        outline: none;
+        height: 50px;
+        width: 100%;
+        background-color: #518581;
+        color: white;
+        border-radius: 4px;
+        font-weight: bold;
+    }
+
+    #submit:hover {
+        background: white;
+        border: 1px solid;
+        color: #518581;
+    }
+
+    input[type="text"] {
+        width: 100%;
+    }
+
+    .up-right-up {
+        display: flex;
+        flex-direction: row;
+    }
+
+    .up {
+        display: flex;
+        flex-direction: row;
+    }
+
+
+
+    .up-right-down,
+    .body,
+    .body-right-prod {
+        display: flex;
+        flex-direction: row;
+    }
+
+</style>
+
+<body>
+    <header>
+        <p align=right><a id="myshopping" href='myshopping'>마이쇼핑</a>&nbsp;&nbsp;<a id="basket_shopping"
+                href='basket_view'>장바구니</a>&nbsp;&nbsp;<a th:if="${userLogined==null}" id="loginPage"
+                href='loginPage'>로그인</a><a th:if="${userLogined!=null}" th:text="${userLogined}"
+                href="userInfoPage"></a>
+        </p>
+        <h1 align=center>WITH PET</h1>
+        <nav>
+            <a href="#">숙소</a>
+            <a href="#">카페</a>
+            <a href="#">맛집</a>
+            <a href="mallPage">상점</a>
+            <a href="#">게시판</a>
+        </nav>
+    </header>
+    <hr>
+
+
+<!--    <div class="up">-->
+<!--        <div class="up-left">-->
+<!--            <img src=""-->
+<!--                onerror="this.src='https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbNZo14%2Fbtq17bsvo5i%2FOSV3gGWnwAKqNB0EOSQkrK%2Fimg.png'"-->
+<!--                width="200" height="200">-->
+<!--            &lt;!&ndash; <p th:text="|${user.name} 님|"></p> &ndash;&gt;-->
+<!--        </div>-->
+<!--        <div class="up-right">-->
+<!--            <div class="up-right-up">-->
+<!--                <div>-->
+<!--                    <p>배송중</p>-->
+<!--                    &lt;!&ndash; <p th:text="${shipping}">0</p> &ndash;&gt;-->
+<!--                </div>-->
+<!--                <div>-->
+<!--                    <p>배송완료</p>-->
+<!--                    &lt;!&ndash; <p th:text="${shiped}">0</p> &ndash;&gt;-->
+<!--                </div>-->
+<!--                <div>-->
+<!--                    <p>취소/반품</p>-->
+<!--                    &lt;!&ndash; <p th:text="${cancel}">0</p> &ndash;&gt;-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="up-right-down">-->
+<!--                <input type="date" id="datePicker1" class="form-control" value="">~-->
+<!--                <input type="date" id="datePicker2" class="form-control" value="">-->
+<!--                <button id="btnSearch">조회</button>-->
+<!--            </div>-->
+<!--            <div class="body">-->
+<!--                <div class="body-left">-->
+
+<!--                </div>-->
+<!--                <div class="body-right">-->
+<!--                    &lt;!&ndash; <h4 th:text="${}">해당 년월</h4>  &ndash;&gt;-->
+<!--                    <div th:each="orderDTO:${orderDTOList}">-->
+<!--                        <p th:text="${orderDTO.ordertable.orderdate}"></p>-->
+<!--                        &lt;!&ndash; th:each 들어갈 곳 &ndash;&gt;-->
+<!--                        <div class="body-right-prod" th:each="prodandCount:${orderDTO.prodandCounts}">-->
+<!--                            <div class="body-right-prod-img">-->
+<!--                                <img th:src="${prodandCount.imgPath}"-->
+<!--                                    onerror="this.src='https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbNZo14%2Fbtq17bsvo5i%2FOSV3gGWnwAKqNB0EOSQkrK%2Fimg.png'"-->
+<!--                                    width="200" height="200">-->
+<!--                            </div>-->
+<!--                            <div class="body-right-prod-detail">-->
+<!--                                <p th:text="${prodandCount.prod.name}">상품명</p>-->
+<!--                                <p th:text="|${prodandCount.prod.price}    ${prodandCount.count}|"></p>-->
+<!--                                <p>구매가 완료되었습니다. 이용해주셔서 감사합니다.-->
+<!--                                    구매확정 이후 상품의 이용방법, 반품 등에 대한 문의는 판매자에게 문의해주세요.</p>-->
+<!--                            </div>-->
+<!--                            <div class="body-right-prod-brand">-->
+<!--                                &lt;!&ndash; <p th:text="${}">브랜드명</p> &ndash;&gt;-->
+<!--                                &lt;!&ndash; <p th:text="${}">브랜드 문의전화</p> &ndash;&gt;-->
+<!--                                <button id="btnComplain">문의하기</button>-->
+<!--                            </div>-->
+<!--                            <div class="body-right-prod-re">-->
+<!--                                <button id="btnReOrder">재구매</button>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+
+<!--    <p th:text="${paymentKey}"></p>-->
+<!--    <p th:text="${orderId}"></p>-->
+<!--    <p th:text="${amount}"></p>-->
+
+
+
+    <section class="shopping-cart spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4">
+                    <img src=""
+                         onerror="this.src='https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbNZo14%2Fbtq17bsvo5i%2FOSV3gGWnwAKqNB0EOSQkrK%2Fimg.png'"
+                         width="200" height="200">
+                    <!-- <p th:text="|${user.name} 님|"></p> -->
+                </div>
+                <div class="col-lg-8">
+                    <div class="shopping__cart__table">
+                        <table th:each="orderDTO:${orderDTOList}">
+                            <p th:text="${orderDTO.ordertable.orderdate}"></p>
+                            <thead>
+                            <tr>
+                                <th><input type="date" id="datePicker1" class="form-control" value=""></th>
+                                <th>~</th>
+                                <th><input type="date" id="datePicker2" class="form-control" value=""></th>
+                                <th>
+                                    <div class="continue__btn update__btn" id="btnSearch">
+                                        <a href="#">조회</a>
+                                    </div>
+<!--                                <button id="btnSearch">조회</button>-->
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="prodandCount:${orderDTO.prodandCounts}">
+                                <td class="product__cart__item">
+                                    <div class="product__cart__item__pic">
+                                        <img th:src="${prodandCount.imgPath}"
+                                             onerror="this.src='https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbNZo14%2Fbtq17bsvo5i%2FOSV3gGWnwAKqNB0EOSQkrK%2Fimg.png'"
+                                             width="200" height="200">
+                                    </div>
+                                </td>
+                                <td class="quantity__item">
+                                    <div class="product__cart__item__text">
+                                        <p th:text="${prodandCount.prod.name}">상품명</p>
+                                        <h6 th:text="|${prodandCount.prod.price}    ${prodandCount.count}|"></h6>
+                                        <h5>
+                                            <p>구매가 완료되었습니다. 이용해주셔서 감사합니다.
+                                                구매확정 이후 상품의 이용방법, 반품 등에 대한 문의는 판매자에게 문의해주세요.</p>
+                                        </h5>
+                                    </div>
+
+                                    <!--<div class="quantity">
+                                        <div class="pro-qty-2">
+                                            <button id="btnComplain">문의하기</button>
+                                        </div>
+                                    </div>-->
+                                </td>
+                                <td class="cart__price">
+                                    <button id="btnComplain">문의하기</button>
+                                </td>
+                                <td class="cart__close">
+                                    <button id="btnReOrder">재구매</button>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-4 col-md-4 col-sm-4">
+                            <div class="continue__btn">
+                                <p th:text="${paymentKey}"></p>
+                                <!--<a href="#">Continue Shopping</a>-->
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-4">
+                            <div class="continue__btn update__btn">
+                                <p th:text="${orderId}"></p>
+                                <!--<a href="#"><i class="fa fa-spinner"></i> Update cart</a>-->
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-4">
+                            <div class="continue__btn update__btn">
+                                <p th:text="${amount}"></p>
+                                <!--<a href="#"><i class="fa fa-spinner"></i> Update cart</a>-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+</body>
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<script src="resources/js/plugin/datepicker/bootstrap-datepicker.js"></script>
+<script>
+    $('#btnSearch').on('click', function () {
+        let startDate = $('#datePicker1').val()
+        let endDate = $('#datePicker2').val()
+        document.location = 'myshopping?startDate=' + startDate + '&endDate=' + endDate
+        // $.ajax({
+        //     url: 'myshopping',
+        //     type: 'get',
+        //     data: {
+        //         'startDate': startDate,
+        //         'endDate': endDate
+        //     },
+        //     success: function (data) {
+        //         document.write(data)
+        //     }
+        // })
+    })
+</script>
+
+</html>
