@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MY review</title>
+    <th:block th:replace="fragments/index::style"></th:block>
+</head>
+<body>
+<style>
+</style>
+
+<div class="container">
+
+    <div th:replace="fragments/index :: header"></div>
+
+    <div class="top">
+        <img src="dd.JPG">OOO님&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;포인트
+    </div>
+
+    <div class="contents">
+        <div class="row">
+            <div th:replace="fragments/mypage :: menubar"></div>
+
+            <div class="col-sm-8">
+                <div class="card mb-3" style="max-width: 540px;" th:each="book, i:${bookList}">
+                    <div class="card-body">
+                        <h5 class="card-text" th:text="|${book.getHotelname()} / ${book.getRoomname}|"></h5><br>
+                        <h5 class="card-text" th:text="|${book.getCheckin()} ~ ${book.getCheckout()} (${book.getName()})|"></h5><br>
+                        <p class="card-text" th:text="${book.getMobile()}"></p>
+                        <p class="card-text" th:text="${book.getDetail()}"></p>
+<!--                            <p class="card-text" th:text="|${book.getTotal()}원|"></p>-->
+<!--                        <a th:href="@{/mypage/booking/delete(bookid=${book.getBookid()})}">-->
+<!--                            <button style="float:right;" id="btnDelete">예약 취소</button>-->
+<!--                        </a>-->
+                        <a th:href="@{/mypage/booking/change(bookid=${book.getBookid()})}">
+                            <button style="float:right;">예약 변경</button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+    </div>
+
+    <th:block th:replace="fragments/index :: footer"></th:block>
+</div>
+
+</body>
+<script>
+    $(document)
+    .on('click','#btnDelete',function (){
+        alert('정말 예약을 취소하시겠습니까?')
+    })
+</script>
+</html>

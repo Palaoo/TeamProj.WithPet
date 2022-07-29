@@ -1,4 +1,4 @@
-package com.project.withpet.controller;
+package com.project.withpet.controller.form;
 
 import com.project.withpet.domain.Feat;
 import com.project.withpet.domain.Region;

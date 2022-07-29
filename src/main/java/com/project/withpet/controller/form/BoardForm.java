@@ -1,4 +1,4 @@
-package com.project.withpet.controller;
+package com.project.withpet.controller.form;
 
 public class BoardForm {
     private Long boardcode;

@@ -1,6 +1,7 @@
 package com.project.withpet.controller;
 
 import com.google.gson.JsonObject;
+import com.project.withpet.controller.form.BoardForm;
 import com.project.withpet.domain.Board;
 import com.project.withpet.domain.Boardimg;
 import com.project.withpet.domain.Reply;

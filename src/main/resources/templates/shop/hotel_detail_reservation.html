@@ -9,8 +9,6 @@
     <th:block th:replace="fragments/common::style"></th:block>
     <script src="https://js.tosspayments.com/v1"></script>
 </head>
-<style>
-</style>
 <body>
 
 <div th:replace="fragments/common :: header"></div>
@@ -31,6 +29,7 @@
     <input type="hidden" th:value="${checkin}" id="checkin">
     <input type="hidden" th:value="${checkout}" id="checkout">
     <input type="text" th:value="${username}" style="width:300px; height: 30px" id="name">
+    <input type="text" th:value="${usermobile}" style="width:300px; height: 30px" id="mobile">
     <br><br><br>
     <textarea placeholder="세부사항" style="height: 300px" id="detail"></textarea>
 </div>
