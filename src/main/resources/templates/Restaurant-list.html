@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurant list</title>
+</head>
+<body>
+<style>
+    div.container{}
+    div.header div.footer{clear:left}
+    div.left{float:left;}
+    .header{height: 200px;}
+    .top{height: 70px;
+        margin: auto;}
+    .footer{height: 30px;}
+    .left{height: 500px; width:200px;}
+    .contents{height: 500px;}
+    #login,#signin,#cafename{
+            text-decoration:none;
+            color:black;
+        }
+        nav a{
+            text-decoration:none;
+            color:black;
+            margin:2em;
+        }
+        nav{
+            display:flex;
+            justify-content:center;
+        }
+</style>
+
+<div class="container">
+    <div class="header">
+        <div th:if="${not #strings.isEmpty(userid)}">
+            <p align=right><a id="logout" href='logout'>로그아웃</a>&nbsp;&nbsp;<a id="mypage" href='mypage'>마이페이지</a></p>
+        </div>
+        <div th:if="${#strings.isEmpty(userid)}">
+            <p align=right><a id="login" href='login'>로그인</a>&nbsp;&nbsp;<a id="signup" href='signup'>회원가입</a></p>
+        </div>
+        <h1 align=center><a href="/static">WITH PET</a></h1>
+        <nav>
+            <a href="#">숙소</a>
+            <a href="cafe_list">카페</a>
+            <a href="Restaurant-list">맛집</a>
+            <a href="#">기타</a>
+            <a href="#">상점</a>
+            <a href="#">게시판</a>
+        </nav>
+    </div>
+
+    <div  class="row row-cols-1 row-cols-md-3 g-4">
+        <div class="col" th:each="cafeList: ${cafeList}">
+            <input type="hidden" th:value="${cafeList.getShopid()}">
+            <input type="hidden" th:value="${cafeList.getShoptype().getTypeid()}">
+            <div class="card h-100">
+                <a th:href="@{/cafeinfo(shopid=${cafeList.getShopid()})}"><img src="../static/tamar2.jpg" class="card-img-top" alt="" width="300" height="300"></a>
+                <div class="card-body">
+                    <h5 class="card-title" th:text="${cafeList.name}"></h5>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item" th:text="${cafeList.getRegion().getRegname()}"></li>
+                        <li class="list-group-item" th:text="${cafeList.getShoptype().getTypename()}" ></li>
+                        <li class="list-group-item" >
+                        <span th:each="feat: ${cafeList.getShopFeats()}" th:text="${feat.getFeatname()}+' '" ></span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer">footer
+    </div>
+</div>
+
+</body>
+</html>
