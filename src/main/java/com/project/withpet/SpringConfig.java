@@ -139,7 +139,6 @@ public class SpringConfig {
         return new OrderprodService(orderprodRepository);
     }
 
-
     @Bean
     public LikeService likeService() {
         return new LikeService(likeRepository());

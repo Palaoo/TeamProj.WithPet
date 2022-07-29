@@ -39,7 +39,7 @@ public class BasketController {
             return "login";
         }
 
-        String userId = req.getSession().getAttribute("userLogined").toString();
+        String userId = req.getSession().getAttribute("userid").toString();
         List<Basket> basketList = basketService.findByUserid(userId);
         ArrayList<BascketDTO> bascketDTOs = new ArrayList<>();
         for (Basket basket : basketList) {
@@ -58,7 +58,7 @@ public class BasketController {
     @ResponseBody
     public String append_basket(@RequestParam Long prodId, HttpServletRequest req) {
         try {
-            basketService.appendBasket(prodId, req.getSession().getAttribute("userLogined").toString());
+            basketService.appendBasket(prodId, req.getSession().getAttribute("userid").toString());
 
         } catch (IllegalStateException e) {
             return "0";
@@ -68,7 +68,7 @@ public class BasketController {
 
     @GetMapping("delete_basket")
     public String delete_basket(HttpServletRequest req,@RequestParam Long prodId) {
-        basketService.deleteBasket(prodId, req.getSession().getAttribute("userLogined").toString());
+        basketService.deleteBasket(prodId, req.getSession().getAttribute("userid").toString());
         return "redirect:/mall/basket_view";
     }
 

@@ -23,7 +23,7 @@ public class ProdReviewController {
             return "login";
         }
 
-        String userId = req.getSession().getAttribute("userLogined").toString();
+        String userId = req.getSession().getAttribute("userid").toString();
 
         prodReviewService.saveProdReview(prodId, userId, text, star);
 
@@ -37,7 +37,7 @@ public class ProdReviewController {
             return "login";
         }
 
-        prodReviewService.deleteProdReview(prodId, req.getSession().getAttribute("userLogined").toString());
+        prodReviewService.deleteProdReview(prodId, req.getSession().getAttribute("userid").toString());
 
         return "redirect:prod_view?prodId=" + prodId;
     }
