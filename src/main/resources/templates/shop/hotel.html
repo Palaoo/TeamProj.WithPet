@@ -1,0 +1,99 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=<device-width>, initial-scale=1.0">
+    <title>Document</title>
+    <th:block th:replace="fragments/index::style"></th:block>
+</head>
+<style>
+<!--    body{-->
+<!--        margin-left: 50px;-->
+<!--    }-->
+<!--    #login,#signin,#cafename{-->
+<!--        text-decoration:none;-->
+<!--        color:black;-->
+<!--    }-->
+<!--    nav a{-->
+<!--        text-decoration:none;-->
+<!--        color:black;-->
+<!--        margin:2em;-->
+<!--    }-->
+<!--    nav{-->
+<!--        display:flex;-->
+<!--        justify-content:center;-->
+<!--    }-->
+</style>
+<body>
+
+<div th:replace="fragments/index :: header"></div>
+
+<h2>호텔 찾기</h2>
+<div>
+    <form action="/hotel" method="post" id="frminfo">
+        <input type="date" name="checkin" id="checkin" th:value="${checkin}">&nbsp;
+        <input type="date" name="checkout" id="checkout" th:value="${checkout}">&nbsp;
+        인원수&nbsp;<input type="number" th:value="${person}" name="person" id="person">
+
+        <select name="order">
+            <option th:selected="${#strings.equals(order, 'price')}" value="price">요금순</option>
+            <option th:selected="${#strings.equals(order, 'score')}" value="score">평점순</option>
+        </select>&nbsp;
+        <select name="size">
+            <option th:selected="${#strings.equals(size, '4')}" value="4">모든견종</option>
+            <option th:selected="${#strings.equals(size, '1')}" value="1">소형견</option>
+            <option th:selected="${#strings.equals(size, '2')}" value="2">중형견</option>
+            <option th:selected="${#strings.equals(size, '3')}" value="3">대형견</option>
+        </select>
+
+        <input type="submit" th:value="조회" id="submit">
+    </form>
+</div><br>
+
+<div>
+    <div class="card mb-3" th:each="hotelList : ${hotelList}" style="max-width: 540px;">
+        <a th:href="@{/hotel/detail(shopid=${hotelList.getShopid()})}" class="detail">
+            <div class="row g-0" >
+                <div class="col-md-4">
+                    <img src="/image/poolvil.jfif" style="height: 150px" class="img-fluid rounded-start">
+                </div>
+                <div class="col-md-8" >
+                    <div class="card-body">
+                        <h3 class="card-title" th:text="${hotelList.getName()}"></h3><br>
+                        별점(댓글수)<br>
+                        <th:block th:each="feat:${hotelList.getShopFeats()}">
+                            <span class="card-text" th:text="${feat.getFeatname()}"></span>
+                        </th:block><br><br>
+                        <p class="card-text" th:if="${#strings.equals(hotelList.getAvail(), 'true')}"
+                           th:text="|최저가 ${hotelList.getPrice()}원|" style="text-align: right"></p>
+                        <p class="card-text" th:unless="${#strings.equals(hotelList.getAvail(), 'true')}"
+                           style="text-align: right">예약 마감</p>
+                    </div>
+                </div>
+            </div>
+        </a>
+    </div>
+</div>
+
+
+<th:block th:replace="fragments/index :: footer"></th:block>
+
+</body>
+<script>
+$(document)
+    .on('click','#submit',function (){
+        var today = new Date().toISOString().substring(0, 10)
+
+        if($('#checkin').val()>=$('#checkout').val()||$('#checkin').val()<today){
+            alert("날짜를 확인해주세요.")
+            return false;
+        } else if($('#person').val()<=0){
+            alert("인원수를 확인해주세요.")
+            return false;
+        }
+    })
+
+</script>
+</html>

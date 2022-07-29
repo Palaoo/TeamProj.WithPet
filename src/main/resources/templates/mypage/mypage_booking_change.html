@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=<device-width>, initial-scale=1.0">
+    <title>Title</title>
+    <th:block th:replace="fragments/index::style"></th:block>
+</head>
+<body>
+
+<div th:replace="fragments/index :: header"></div>
+
+    <form method="post" action="/mypage/booking/change">
+        <input type="hidden" name="bookid" th:value="${booking.getBookid()}">
+        <h2 th:text="|${booking.getCheckin()} / ${booking.getCheckout()} (${days}박)|"></h2>
+        예약자명:&nbsp;<br>
+        <input type="text" th:value="${booking.getName()}" style="width:300px; height: 30px" id="name" name="name">
+        <br><br>
+        전화번호: <br>
+        <input type="text" th:value="${booking.getMobile()}" style="width:300px; height: 30px" id="mobile" name="mobile">
+        <br><br>
+        세부사항:&nbsp;<br>
+        <input type="hidden" th:value="${booking.getBookid()}">
+        <textarea th:text="${booking.getDetail()}" style="height: 300px; width: 500px" id="detail" name="detail"></textarea><br>
+        <input type="submit" value="제출"><input type="button" value="취소" id="btnCancel">
+    </form><br><br>
+
+    <th:block th:replace="fragments/index :: footer"></th:block>
+</body>
+<script>
+    $(document)
+    .on('click', '#btnCancel', function (){
+        location.href = "/mypage/booking"
+    })
+
+</script>
+</html>
