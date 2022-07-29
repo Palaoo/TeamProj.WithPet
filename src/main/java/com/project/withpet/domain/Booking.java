@@ -21,9 +21,15 @@ public class Booking {
 
     private String name;
 
+    private String mobile;
 
+    public String getMobile() {
+        return mobile;
+    }
 
-
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
+    }
 
     public Long getBookid() {
         return bookid;

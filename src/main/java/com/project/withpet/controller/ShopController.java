@@ -1,5 +1,7 @@
 package com.project.withpet.controller;
 
+import com.project.withpet.controller.form.HotelForm;
+import com.project.withpet.controller.form.HotelroomForm;
 import com.project.withpet.domain.*;
 import com.project.withpet.repository.BookingRepository;
 import com.project.withpet.repository.HotelroomRepository;
@@ -265,7 +267,34 @@ public class ShopController {
 
     }
 
-    @PostMapping("/hotel/reservation")
+    @GetMapping("/hotel/booking")
+    public String newbook(HttpServletRequest req,
+                          @RequestParam("paymentKey") String paymentKey,
+                          @RequestParam("orderId") String orderID,
+                          @RequestParam("amount") Long amount,
+                          @RequestParam("checkin") String checkin,
+                          @RequestParam("checkout") String checkout,
+                          @RequestParam("roomid") Long roomid,
+                          @RequestParam("name") String name,
+                          @RequestParam("detail") String detail,
+                          @RequestParam("mobile") String mobile){
+        HttpSession session = req.getSession();
+        Booking booking = new Booking();
+        booking.setCheckin(checkin);
+        booking.setCheckout(checkout);
+        booking.setTotal(amount);
+        booking.setUserid((String) session.getAttribute("userid"));
+        booking.setDetail(detail);
+        booking.setRoomid(roomid);
+        booking.setName(name);
+        booking.setMobile(mobile);
+        bookingRepository.save(booking);
+
+        return "redirect:/";
+
+    }
+
+    @PostMapping("/hotel/booking")
     public String reservation(HttpServletRequest req,
                               Model model,
                               @RequestParam("roomid") Long roomid,
@@ -277,6 +306,7 @@ public class ShopController {
         String userid = (String) session.getAttribute("userid");
         Optional<User> user = userService.findById(userid);
         model.addAttribute("username", user.get().getName());
+        model.addAttribute("usermobile", user.get().getMobile());
 
         Optional<Hotelroom> hotelroom = hotelroomService.findById(roomid);
         model.addAttribute("hotelroom", hotelroom.get());
@@ -291,36 +321,13 @@ public class ShopController {
 
         model.addAttribute("days", diffDays);
 
-        long total = hotelroom.get().getPrice() * diffDays;
+        Long total = hotelroom.get().getPrice() * diffDays;
         model.addAttribute("total", total);
 
         return "shop/hotel_detail_reservation";
     }
 
-    @GetMapping("/hotel/booking")
-    public String newbook(HttpServletRequest req,
-                          @RequestParam("paymentKey") String paymentKey,
-                          @RequestParam("orderId") String orderID,
-                          @RequestParam("amount") Long amount,
-                          @RequestParam("checkin") String checkin,
-                          @RequestParam("checkout") String checkout,
-                          @RequestParam("roomid") Long roomid,
-                          @RequestParam("name") String name,
-                          @RequestParam("detail") String detail){
-        HttpSession session = req.getSession();
-        Booking booking = new Booking();
-        booking.setCheckin(checkin);
-        booking.setCheckout(checkout);
-        booking.setTotal(amount);
-        booking.setUserid((String) session.getAttribute("userid"));
-        booking.setDetail(detail);
-        booking.setRoomid(roomid);
-        booking.setName(name);
-        bookingRepository.save(booking);
 
-        return "redirect:/";
-
-    }
 
     private void addHotelForm(List<Shop> availShop, List<Shop> hotelList, List<HotelForm> hotelForms, int i) {
         HotelForm hotelForm = new HotelForm();
