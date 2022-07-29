@@ -1,7 +1,7 @@
 package com.project.withpet.service;
 
 import com.project.withpet.domain.Board;
-import com.project.withpet.repository.BoardRepository;
+import com.project.withpet.repository.Board.BoardRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

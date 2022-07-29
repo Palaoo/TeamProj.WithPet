@@ -1,7 +1,7 @@
 package com.project.withpet.service;
 
 import com.project.withpet.domain.Shop;
-import com.project.withpet.repository.ShopRepository;
+import com.project.withpet.repository.Shop.ShopRepository;
 
 import javax.transaction.Transactional;
 import java.util.List;

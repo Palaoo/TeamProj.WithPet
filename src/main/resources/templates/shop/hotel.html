@@ -9,22 +9,6 @@
     <th:block th:replace="fragments/index::style"></th:block>
 </head>
 <style>
-<!--    body{-->
-<!--        margin-left: 50px;-->
-<!--    }-->
-<!--    #login,#signin,#cafename{-->
-<!--        text-decoration:none;-->
-<!--        color:black;-->
-<!--    }-->
-<!--    nav a{-->
-<!--        text-decoration:none;-->
-<!--        color:black;-->
-<!--        margin:2em;-->
-<!--    }-->
-<!--    nav{-->
-<!--        display:flex;-->
-<!--        justify-content:center;-->
-<!--    }-->
 </style>
 <body>
 
@@ -41,6 +25,7 @@
             <option th:selected="${#strings.equals(order, 'price')}" value="price">요금순</option>
             <option th:selected="${#strings.equals(order, 'score')}" value="score">평점순</option>
         </select>&nbsp;
+
         <select name="size">
             <option th:selected="${#strings.equals(size, '4')}" value="4">모든견종</option>
             <option th:selected="${#strings.equals(size, '1')}" value="1">소형견</option>
@@ -76,7 +61,7 @@
         </a>
     </div>
 </div>
-
+<br><br><br>
 
 <th:block th:replace="fragments/index :: footer"></th:block>
 

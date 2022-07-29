@@ -1,8 +1,9 @@
 package com.project.withpet.controller;
 
-import com.project.withpet.controller.form.UserForm;
 import com.project.withpet.domain.User;
+import com.project.withpet.dto.UserForm;
 import com.project.withpet.service.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 @Controller
+@Slf4j
 public class LoginController {
 
     private final UserService userService;
@@ -24,17 +26,25 @@ public class LoginController {
         this.userService = userService;
     }
 
+    @GetMapping("/")
+    public String home(Model model, HttpServletRequest req){
+        HttpSession session = req.getSession();
+        if(session.getAttribute("userid")!=null){
+            model.addAttribute("userid", session.getAttribute("userid"));
+        }
+        return "home";
+    }
+
     @GetMapping(value = "signup")
     public String createForm() {
         return "signup";
     }
 
 
-
     @PostMapping(value = "signup")
     public String create(UserForm form){
         User user = new User();
-        user.setUserId(form.getUserId());
+        user.setUserId(form.getUserid());
         user.setMobile(form.getMobile());
         user.setName(form.getName());
         user.setPassword(form.getPassword());

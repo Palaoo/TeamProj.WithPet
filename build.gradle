@@ -1,13 +1,9 @@
-<<<<<<< HEAD
 buildscript {
 	dependencies {
 		classpath("gradle.plugin.com.ewerk.gradle.plugins:querydsl-plugin:1.0.10")
 	}
 }
 
-
-=======
->>>>>>> 7a142d9b5aaf840cfad6a118e582cd2bd734515b
 plugins {
 	id 'org.springframework.boot' version '2.7.1'
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
@@ -46,7 +42,7 @@ dependencies {
 	implementation "com.querydsl:querydsl-apt:"
 	implementation 'com.google.code.gson:gson:2.9.0'
 	implementation 'commons-io:commons-io:2.11.0'
-	implementation 'commons-fileupload:commons-fileupload'
+	implementation 'commons-fileupload:commons-fileupload:1.4'
 	implementation group: 'org.javassist', name: 'javassist', version: '3.15.0-GA'
 	implementation('nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect')
 
