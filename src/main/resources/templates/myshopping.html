@@ -79,6 +79,42 @@
         flex-direction: row;
     }
 
+     <!--review-->
+    .star-rating {
+      display: flex;
+      flex-direction: row-reverse;
+      font-size: 2.25rem;
+      line-height: 2.5rem;
+      justify-content: space-around;
+      padding: 0 0.2em;
+      text-align: center;
+      width: 5em;
+    }
+
+    .star-rating input {
+      display: none;
+    }
+
+    .star-rating label {
+      -webkit-text-fill-color: transparent; /* Will override color (regardless of order) */
+      -webkit-text-stroke-width: 2.3px;
+      -webkit-text-stroke-color: #2b2a29;
+      cursor: pointer;
+    }
+
+    .star-rating :checked ~ label {
+      -webkit-text-fill-color: gold;
+    }
+
+    .star-rating label:hover,
+    .star-rating label:hover ~ label {
+      -webkit-text-fill-color: #fff58c;
+    }
+
+    textarea{
+        width:80%;
+    }
+
 </style>
 
 <body>
@@ -224,6 +260,8 @@
                                     <button id="btnComplain">문의하기</button>
                                 </td>
                                 <td class="cart__close">
+                                    <input type="button" value="사용리뷰쓰기" onclick="new_window();">
+                                    <!--<button id="review">사용리뷰쓰기</button>-->
                                     <button id="btnReOrder">재구매</button>
                                 </td>
                             </tr>
@@ -254,9 +292,37 @@
             </div>
         </div>
     </section>
-
-
-
+   <!-- <section class="contact spad">
+        <div class="container">
+            <form action="#">
+                <input type="button" value="사용리뷰쓰기" onclick="new_window();">
+                <div class="row" align="center">
+                    <div class="col-lg-3">
+                        <input type="hidden" id="id">
+                        <div class="star-rating space-x-4 mx-auto">
+                            <input type="radio" id="5-stars" name="rating" value="5" v-model="ratings"/>
+                            <label for="5-stars" class="star pr-4">★</label>
+                            <input type="radio" id="4-stars" name="rating" value="4" v-model="ratings"/>
+                            <label for="4-stars" class="star">★</label>
+                            <input type="radio" id="3-stars" name="rating" value="3" v-model="ratings"/>
+                            <label for="3-stars" class="star">★</label>
+                            <input type="radio" id="2-stars" name="rating" value="2" v-model="ratings"/>
+                            <label for="2-stars" class="star">★</label>
+                            <input type="radio" id="1-star" name="rating" value="1" v-model="ratings" />
+                            <label for="1-star" class="star">★</label>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <textarea placeholder="후기를 남겨주세요."></textarea>
+                    </div>
+                    <div class="col-lg-3">
+                        <button type="cancel" class="site-btn">취소</button>
+                        <button type="submit" class="site-btn">등록</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>-->
 </body>
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <script src="resources/js/plugin/datepicker/bootstrap-datepicker.js"></script>
@@ -277,6 +343,13 @@
         //     }
         // })
     })
+     function new_window() {
+        window.open(
+          "review",
+          "Review",
+          "width=400, height=300, top=50, left=50"
+        );
+      }
 </script>
 
 </html>
