@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 buildscript {
 	dependencies {
 		classpath("gradle.plugin.com.ewerk.gradle.plugins:querydsl-plugin:1.0.10")
@@ -5,6 +6,8 @@ buildscript {
 }
 
 
+=======
+>>>>>>> 7a142d9b5aaf840cfad6a118e582cd2bd734515b
 plugins {
 	id 'org.springframework.boot' version '2.7.1'
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
@@ -29,7 +32,7 @@ repositories {
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation 'org.projectlombok:lombok'
+	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation('org.springframework.boot:spring-boot-starter-test')
 	implementation 'org.springframework.boot:spring-boot-starter'
@@ -43,7 +46,9 @@ dependencies {
 	implementation "com.querydsl:querydsl-apt:"
 	implementation 'com.google.code.gson:gson:2.9.0'
 	implementation 'commons-io:commons-io:2.11.0'
-	implementation 'commons-fileupload:commons-fileupload:1.4'
+	implementation 'commons-fileupload:commons-fileupload'
+	implementation group: 'org.javassist', name: 'javassist', version: '3.15.0-GA'
+	implementation('nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect')
 
 }
 
