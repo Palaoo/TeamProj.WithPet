@@ -1,8 +1,22 @@
 package com.project.withpet;
 
-import com.project.withpet.controller.BoardController;
-import com.project.withpet.controller.S3Uploader;
-import com.project.withpet.repository.*;
+import com.project.withpet.repository.Basket.BasketRepository;
+import com.project.withpet.repository.Board.BoardRepository;
+import com.project.withpet.repository.Boardimg.BoardimgRepository;
+import com.project.withpet.repository.BusinessUser.BusinessUserRepository;
+import com.project.withpet.repository.Cimg.CimgRepository;
+import com.project.withpet.repository.Hotelroom.HotelroomRepository;
+import com.project.withpet.repository.Img.ImgRepository;
+import com.project.withpet.repository.Like.JpaLikeRepository;
+import com.project.withpet.repository.Like.LikeRepository;
+import com.project.withpet.repository.Order.OrderRepository;
+import com.project.withpet.repository.Orderprod.OrderprodRepository;
+import com.project.withpet.repository.Prod.ProdRepository;
+import com.project.withpet.repository.ProdReview.JpaProdReviewRepository;
+import com.project.withpet.repository.ProdReview.ProdReviewRepository;
+import com.project.withpet.repository.Reply.ReplyRepository;
+import com.project.withpet.repository.Shop.ShopRepository;
+import com.project.withpet.repository.User.UserRepository;
 import com.project.withpet.service.*;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.context.annotation.Bean;
@@ -23,11 +37,19 @@ public class SpringConfig {
 
     private final HotelroomRepository hotelroomRepository;
 
+    private final BusinessUserRepository businessUserRepository;
+    private final ProdRepository prodRepository;
+    private final ImgRepository imgRepository;
+    private final CimgRepository cimgRepository;
+    private final OrderRepository orderRepository;
+    private final OrderprodRepository orderprodRepository;
+    private final BasketRepository basketRepository;
+
     @PersistenceContext
     private EntityManager entityManager;
 
     public SpringConfig(UserRepository userRepository, BoardRepository boardRepository,
-                        BoardimgRepository boardimgRepository, ReplyRepository replyRepository, ShopRepository shopRepository, HotelroomRepository hotelroomRepository) {
+                        BoardimgRepository boardimgRepository, ReplyRepository replyRepository, ShopRepository shopRepository, HotelroomRepository hotelroomRepository, BusinessUserRepository businessUserRepository, ProdRepository prodRepository, ImgRepository imgRepository, CimgRepository cimgRepository, OrderRepository orderRepository, OrderprodRepository orderprodRepository, BasketRepository basketRepository) {
 
         this.userRepository = userRepository;
         this.boardRepository = boardRepository;
@@ -35,6 +57,13 @@ public class SpringConfig {
         this.replyRepository = replyRepository;
         this.shopRepository = shopRepository;
         this.hotelroomRepository = hotelroomRepository;
+        this.businessUserRepository = businessUserRepository;
+        this.prodRepository = prodRepository;
+        this.imgRepository = imgRepository;
+        this.cimgRepository = cimgRepository;
+        this.orderRepository = orderRepository;
+        this.orderprodRepository = orderprodRepository;
+        this.basketRepository = basketRepository;
     }
 
     @Bean
@@ -78,6 +107,62 @@ public class SpringConfig {
         commonsMultipartResolver.setDefaultEncoding(("UTF-8"));
         commonsMultipartResolver.setMaxUploadSize(50*1024*1024);
         return commonsMultipartResolver;
+    }
+
+    @Bean
+    public BusinessUserService businessUserService() {
+        return new BusinessUserService(businessUserRepository);
+    }
+
+    @Bean
+    public ProdService prodService() {
+        return new ProdService(prodRepository);
+    }
+
+    @Bean
+    public ImgService imgService() {
+        return new ImgService(imgRepository);
+    }
+
+    @Bean
+    public CimgService cimgService() {
+        return new CimgService(cimgRepository);
+    }
+
+    @Bean
+    public OrderService orderService() {
+        return new OrderService(orderRepository);
+    }
+
+    @Bean
+    public OrderprodService orderprodService() {
+        return new OrderprodService(orderprodRepository);
+    }
+
+
+    @Bean
+    public LikeService likeService() {
+        return new LikeService(likeRepository());
+    }
+
+    @Bean
+    public LikeRepository likeRepository() {
+        return new JpaLikeRepository(entityManager);
+    }
+
+    @Bean
+    public BasketService basketService() {
+        return new BasketService(basketRepository);
+    }
+
+    @Bean
+    public ProdReviewService prodReviewService() {
+        return new ProdReviewService(prodReviewRepository());
+    }
+
+    @Bean
+    public ProdReviewRepository prodReviewRepository() {
+        return new JpaProdReviewRepository(entityManager);
     }
 
 

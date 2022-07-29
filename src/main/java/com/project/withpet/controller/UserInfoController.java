@@ -1,10 +1,10 @@
 package com.project.withpet.controller;
 
-import com.project.withpet.controller.form.BookingForm;
+import com.project.withpet.dto.BookingForm;
 import com.project.withpet.domain.Booking;
 import com.project.withpet.domain.Hotelroom;
 import com.project.withpet.domain.Shop;
-import com.project.withpet.repository.BookingRepository;
+import com.project.withpet.repository.Booking.BookingRepository;
 import com.project.withpet.service.HotelroomService;
 import com.project.withpet.service.ShopService;
 import lombok.extern.slf4j.Slf4j;

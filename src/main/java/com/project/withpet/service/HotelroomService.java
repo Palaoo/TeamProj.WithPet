@@ -1,7 +1,7 @@
 package com.project.withpet.service;
 
 import com.project.withpet.domain.Hotelroom;
-import com.project.withpet.repository.HotelroomRepository;
+import com.project.withpet.repository.Hotelroom.HotelroomRepository;
 
 import javax.transaction.Transactional;
 import java.util.List;

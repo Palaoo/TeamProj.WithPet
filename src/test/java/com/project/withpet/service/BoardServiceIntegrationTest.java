@@ -1,8 +1,7 @@
 package com.project.withpet.service;
 
 import com.project.withpet.domain.Board;
-import com.project.withpet.repository.BoardRepository;
-import org.junit.jupiter.api.Assertions;
+import com.project.withpet.repository.Board.BoardRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

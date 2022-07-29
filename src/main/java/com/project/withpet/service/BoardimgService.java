@@ -1,7 +1,7 @@
 package com.project.withpet.service;
 
 import com.project.withpet.domain.Boardimg;
-import com.project.withpet.repository.BoardimgRepository;
+import com.project.withpet.repository.Boardimg.BoardimgRepository;
 
 import javax.transaction.Transactional;
 import java.util.List;

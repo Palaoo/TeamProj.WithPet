@@ -1,12 +1,12 @@
 package com.project.withpet.controller;
 
-import com.project.withpet.controller.form.HotelForm;
-import com.project.withpet.controller.form.HotelroomForm;
+import com.project.withpet.dto.HotelForm;
+import com.project.withpet.dto.HotelroomForm;
 import com.project.withpet.domain.*;
-import com.project.withpet.repository.BookingRepository;
-import com.project.withpet.repository.HotelroomRepository;
-import com.project.withpet.repository.ShopQueryRepository;
-import com.project.withpet.repository.ShopRepository;
+import com.project.withpet.repository.Booking.BookingRepository;
+import com.project.withpet.repository.Hotelroom.HotelroomRepository;
+import com.project.withpet.repository.Shop.ShopQueryRepository;
+import com.project.withpet.repository.Shop.ShopRepository;
 import com.project.withpet.service.HotelroomService;
 import com.project.withpet.service.ShopService;
 import com.project.withpet.service.UserService;

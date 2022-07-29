@@ -1,7 +1,7 @@
 package com.project.withpet.service;
 
 import com.project.withpet.domain.Reply;
-import com.project.withpet.repository.ReplyRepository;
+import com.project.withpet.repository.Reply.ReplyRepository;
 
 import javax.transaction.Transactional;
 import java.util.List;

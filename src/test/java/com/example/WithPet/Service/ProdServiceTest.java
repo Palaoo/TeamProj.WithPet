@@ -1,12 +1,11 @@
 package com.example.WithPet.Service;
 
-import com.example.WithPet.domain.Product;
+import com.project.withpet.domain.Product;
+import com.project.withpet.service.ProdService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Transactional
