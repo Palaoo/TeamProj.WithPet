@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=<device-width>, initial-scale=1.0">
+    <title>Document</title>
+    <th:block th:replace="fragments/index::style"></th:block>
+</head>
+<style>
+
+    #img{
+        width:25px;
+        height:25px;
+    }
+    #board{
+       font-weight:bold;
+    }
+</style>
+<body>
+
+<div th:replace="fragments/index :: header"></div>
+
+<!-- Breadcrumb Section Begin -->
+<section class="breadcrumb-blog set-bg" data-setbg="img/community.jpg">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h2>Our Community</h2>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Breadcrumb Section End -->
+
+<!--<div class="row row-cols-1 row-cols-md-3 g-4">-->
+<!--    <div class="col" th:each="post: ${posts}">-->
+<!--        <div class="card border-secondary mb-3">-->
+<!--            <a th:href="@{/community/postdetail(boardcode=${post.boardcode})}">-->
+<!--                <img class="card-img-top" src="/image/catsock.jfif" alt="" width="200" height="200">-->
+<!--                <div class="card-body">-->
+<!--                    <h5 class="card-title" th:text="${post.title}"></h5>-->
+<!--                    <p class="card-text" id=postContent th:utext="${post.content}"></p>-->
+<!--                    <ul class="list-group list-group-flush">-->
+<!--                        <li class="list-group-item" th:text="${post.writer}"></li>-->
+<!--                        <li class="list-group-item" th:text="${post.date}">&nbsp;조회수&nbsp;좋아요&nbsp;댓글</li>-->
+<!--                    </ul>-->
+<!--                </div>-->
+<!--            </a>-->
+<!--        </div>-->
+<!--        <input type="hidden" th:value="${post.boardcode}">-->
+<!--    </div>-->
+<!--</div>-->
+
+<!-- Blog Section Begin -->
+<section class="blog spad">
+    <div class="container">
+        <a href="community/newpost"><h5 align="right" id="board">게시판&nbsp<img src="img/add.png" id="img"></h5></a><br>
+        <div class="row">
+            <div class="col-lg-4 col-md-6 col-sm-6" th:each="post: ${posts}">
+                <div class="blog__item">
+                    <a th:href="@{/community/postdetail(boardcode=${post.boardcode})}">
+                    <div class="blog__item__pic set-bg" th:attr="data-setbg=${post.getPath()}"></div>
+                    <div class="blog__item__text">
+                        <span th:text="${post.date}"></span>
+                        <h5 th:text="${post.title}">What Curling Irons Are The Best Ones</h5>
+                        <a href="#">Read More</a>
+                    </div>
+                    </a>
+                </div>
+                <input type="hidden" th:value="${post.boardcode}">
+            </div>
+        </div>
+        <div>
+            <nav aria-label="..." id="pagebar">
+                <ul class="pagination justify-content-center pagination-sm">
+                    <li th:if="${hasPrev}" class="page-item">
+                        <a class="page-link" th:href="@{/community(page=${previous})}">Previous</a>
+                    </li>
+                    <li th:unless="${hasPrev}" class="page-item disabled">
+                        <a class="page-link" th:href="@{/community(page=${previous})}">Previous</a>
+                    </li>
+                    <th:block th:each="post, i : ${#numbers.sequence(0,totalPage - 1)}">
+                        <li class="page-item" th:id="${i.index}">
+                            <a class="page-link" th:href="@{/community(page=${i.count}-1)}" th:text="${i.count}"></a>
+                        </li>
+                    </th:block>
+                    <li th:if="${hasNext}" class="page-item">
+                        <a class="page-link" th:href="@{/community(page=${next})}">Next</a>
+                    </li>
+                    <li th:unless="${hasNext}" class="page-item disabled">
+                        <a class="page-link" th:href="@{/community(page=${next})}">Next</a>
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="searchpost" style="text-align: center;">
+                <select>
+                    <option>제목</option>
+                    <option>작성자</option>
+                </select>
+                <input type=text id="searchpost" name="searchpost">
+                <input type="button" value="검색">
+            </div>
+        </div>
+
+    </div>
+</section>
+<!-- Blog Section End -->
+
+
+<th:block th:replace="fragments/index :: footer"></th:block>
+
+</body>
+<script>
+    $(document)
+        .ready(function (){
+            var url = window.location.href
+            var pageIndex = url.split('=')
+            console.log(pageIndex[1])
+            if(pageIndex[1] == 'y'){
+                $('#0').addClass('active')
+            } else {
+                $('#'+pageIndex[1]).addClass('active')
+            }
+        })
+
+    $('.pagination').on('click', 'li', function() {
+        $('.pagination li').removeClass('active');
+        $(this).addClass('active');
+    });
+
+
+
+
+
+    /*    $('.pagination').on('click', 'li:not(.prev):not(.next)', function() {
+            $('.pagination li').removeClass('active');
+            $(this).not('.prev,.next').addClass('active');
+        });
+        $('.pagination').on('click', 'li.prev', function() {
+            $('li.active').removeClass('active').prev().addClass('active');
+        });
+        $('.pagination').on('click', 'li.next', function() {
+            $('li.active').removeClass('active').next().addClass('active');
+        });*/
+
+</script>
+</html>
+</html>
