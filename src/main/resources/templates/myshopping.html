@@ -78,6 +78,7 @@
         display: flex;
         flex-direction: row;
     }
+
 </style>
 
 <body>
@@ -99,101 +100,138 @@
     <hr>
 
 
-    <div class="up">
-        <div class="up-left">
-            <img src=""
-                onerror="this.src='https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbNZo14%2Fbtq17bsvo5i%2FOSV3gGWnwAKqNB0EOSQkrK%2Fimg.png'"
-                width="200" height="200">
-            <!-- <p th:text="|${user.name} 님|"></p> -->
-        </div>
-        <div class="up-right">
-            <div class="up-right-up">
-                <div>
-                    <p>배송중</p>
-                    <!-- <p th:text="${shipping}">0</p> -->
-                </div>
-                <div>
-                    <p>배송완료</p>
-                    <!-- <p th:text="${shiped}">0</p> -->
-                </div>
-                <div>
-                    <p>취소/반품</p>
-                    <!-- <p th:text="${cancel}">0</p> -->
-                </div>
-            </div>
-            <div class="up-right-down">
-                <input type="date" id="datePicker1" class="form-control" value="">~
-                <input type="date" id="datePicker2" class="form-control" value="">
-                <button id="btnSearch">조회</button>
-            </div>
-            <div class="body">
-                <div class="body-left">
+<!--    <div class="up">-->
+<!--        <div class="up-left">-->
+<!--            <img src=""-->
+<!--                onerror="this.src='https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbNZo14%2Fbtq17bsvo5i%2FOSV3gGWnwAKqNB0EOSQkrK%2Fimg.png'"-->
+<!--                width="200" height="200">-->
+<!--            &lt;!&ndash; <p th:text="|${user.name} 님|"></p> &ndash;&gt;-->
+<!--        </div>-->
+<!--        <div class="up-right">-->
+<!--            <div class="up-right-up">-->
+<!--                <div>-->
+<!--                    <p>배송중</p>-->
+<!--                    &lt;!&ndash; <p th:text="${shipping}">0</p> &ndash;&gt;-->
+<!--                </div>-->
+<!--                <div>-->
+<!--                    <p>배송완료</p>-->
+<!--                    &lt;!&ndash; <p th:text="${shiped}">0</p> &ndash;&gt;-->
+<!--                </div>-->
+<!--                <div>-->
+<!--                    <p>취소/반품</p>-->
+<!--                    &lt;!&ndash; <p th:text="${cancel}">0</p> &ndash;&gt;-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="up-right-down">-->
+<!--                <input type="date" id="datePicker1" class="form-control" value="">~-->
+<!--                <input type="date" id="datePicker2" class="form-control" value="">-->
+<!--                <button id="btnSearch">조회</button>-->
+<!--            </div>-->
+<!--            <div class="body">-->
+<!--                <div class="body-left">-->
 
-                </div>
-                <div class="body-right">
-                    <!-- <h4 th:text="${}">해당 년월</h4>  -->
-                    <div th:each="orderDTO:${orderDTOList}">
-                        <p th:text="${orderDTO.ordertable.orderdate}"></p>
-                        <!-- th:each 들어갈 곳 -->
-                        <div class="body-right-prod" th:each="prodandCount:${orderDTO.prodandCounts}">
-                            <div class="body-right-prod-img">
-                                <img th:src="${prodandCount.imgPath}"
-                                    onerror="this.src='https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbNZo14%2Fbtq17bsvo5i%2FOSV3gGWnwAKqNB0EOSQkrK%2Fimg.png'"
-                                    width="200" height="200">
-                            </div>
-                            <div class="body-right-prod-detail">
-                                <p th:text="${prodandCount.prod.name}">상품명</p>
-                                <p th:text="|${prodandCount.prod.price}    ${prodandCount.count}|"></p>
-                                <p>구매가 완료되었습니다. 이용해주셔서 감사합니다.
-                                    구매확정 이후 상품의 이용방법, 반품 등에 대한 문의는 판매자에게 문의해주세요.</p>
-                            </div>
-                            <div class="body-right-prod-brand">
-                                <!-- <p th:text="${}">브랜드명</p> -->
-                                <!-- <p th:text="${}">브랜드 문의전화</p> -->
-                                <button id="btnComplain">문의하기</button>
-                            </div>
-                            <div class="body-right-prod-re">
-                                <button id="btnReOrder">재구매</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+<!--                </div>-->
+<!--                <div class="body-right">-->
+<!--                    &lt;!&ndash; <h4 th:text="${}">해당 년월</h4>  &ndash;&gt;-->
+<!--                    <div th:each="orderDTO:${orderDTOList}">-->
+<!--                        <p th:text="${orderDTO.ordertable.orderdate}"></p>-->
+<!--                        &lt;!&ndash; th:each 들어갈 곳 &ndash;&gt;-->
+<!--                        <div class="body-right-prod" th:each="prodandCount:${orderDTO.prodandCounts}">-->
+<!--                            <div class="body-right-prod-img">-->
+<!--                                <img th:src="${prodandCount.imgPath}"-->
+<!--                                    onerror="this.src='https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbNZo14%2Fbtq17bsvo5i%2FOSV3gGWnwAKqNB0EOSQkrK%2Fimg.png'"-->
+<!--                                    width="200" height="200">-->
+<!--                            </div>-->
+<!--                            <div class="body-right-prod-detail">-->
+<!--                                <p th:text="${prodandCount.prod.name}">상품명</p>-->
+<!--                                <p th:text="|${prodandCount.prod.price}    ${prodandCount.count}|"></p>-->
+<!--                                <p>구매가 완료되었습니다. 이용해주셔서 감사합니다.-->
+<!--                                    구매확정 이후 상품의 이용방법, 반품 등에 대한 문의는 판매자에게 문의해주세요.</p>-->
+<!--                            </div>-->
+<!--                            <div class="body-right-prod-brand">-->
+<!--                                &lt;!&ndash; <p th:text="${}">브랜드명</p> &ndash;&gt;-->
+<!--                                &lt;!&ndash; <p th:text="${}">브랜드 문의전화</p> &ndash;&gt;-->
+<!--                                <button id="btnComplain">문의하기</button>-->
+<!--                            </div>-->
+<!--                            <div class="body-right-prod-re">-->
+<!--                                <button id="btnReOrder">재구매</button>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
 
-    <p th:text="${paymentKey}"></p>
-    <p th:text="${orderId}"></p>
-    <p th:text="${amount}"></p>
+<!--    <p th:text="${paymentKey}"></p>-->
+<!--    <p th:text="${orderId}"></p>-->
+<!--    <p th:text="${amount}"></p>-->
 
 
 
     <section class="shopping-cart spad">
         <div class="container">
             <div class="row">
+                <div class="col-lg-4">
+                    <img src=""
+                         onerror="this.src='https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbNZo14%2Fbtq17bsvo5i%2FOSV3gGWnwAKqNB0EOSQkrK%2Fimg.png'"
+                         width="200" height="200">
+                    <!-- <p th:text="|${user.name} 님|"></p> -->
+                </div>
                 <div class="col-lg-8">
                     <div class="shopping__cart__table">
                         <table>
                             <thead>
                             <tr>
-                                <th>Product</th>
-                                <th>Quantity</th>
-                                <th>Total</th>
-                                <th></th>
+                                <th><input type="date" id="datePicker1" class="form-control" value=""></th>
+                                <th>~</th>
+                                <th><input type="date" id="datePicker2" class="form-control" value=""></th>
+                                <th>
+                                    <div class="continue__btn update__btn" id="btnSearch">
+                                        <a href="#">조회</a>
+                                    </div>
+<!--                                <button id="btnSearch">조회</button>-->
+                                </th>
                             </tr>
                             </thead>
                             <tbody>
-                            <tr th:each="basketDTO:${BasketDTOs}">
-                                <input type="hidden" name="prodId" id="prodId" th:value="${basketDTO.prodid}">
-                                <td class="product__cart__item">
+                            <tr th:each=th:each="orderDTO:${orderDTOList}">
+                                <p th:text="${orderDTO.ordertable.orderdate}"></p>
+
+
+                                <div class="body-right-prod" th:each="prodandCount:${orderDTO.prodandCounts}">
+                                    <div class="body-right-prod-img">
+                                        <img th:src="${prodandCount.imgPath}"
+                                             onerror="this.src='https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbNZo14%2Fbtq17bsvo5i%2FOSV3gGWnwAKqNB0EOSQkrK%2Fimg.png'"
+                                             width="200" height="200">
+                                    </div>
+                                    <div class="body-right-prod-detail">
+                                        <p th:text="${prodandCount.prod.name}">상품명</p>
+                                        <p th:text="|${prodandCount.prod.price}    ${prodandCount.count}|"></p>
+                                        <p>구매가 완료되었습니다. 이용해주셔서 감사합니다.
+                                            구매확정 이후 상품의 이용방법, 반품 등에 대한 문의는 판매자에게 문의해주세요.</p>
+                                    </div>
+                                    <div class="body-right-prod-brand">
+                                        <!-- <p th:text="${}">브랜드명</p> -->
+                                        <!-- <p th:text="${}">브랜드 문의전화</p> -->
+                                        <button id="btnComplain">문의하기</button>
+                                    </div>
+                                    <div class="body-right-prod-re">
+                                        <button id="btnReOrder">재구매</button>
+                                    </div>
+                                </div>
+
+
+
+                                <td class="product__cart__item" th:each="prodandCount:${orderDTO.prodandCounts}">
                                     <div class="product__cart__item__pic">
-                                        <img  alt="" th:src="${basketDTO.path}"
-                                              onerror="this.src='https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbNZo14%2Fbtq17bsvo5i%2FOSV3gGWnwAKqNB0EOSQkrK%2Fimg.png'"
-                                              width="200" height="200"> <!--src="img/shopping-cart/cart-1.jpg"-->
+                                        <img th:src="${prodandCount.imgPath}"
+                                             onerror="this.src='https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbNZo14%2Fbtq17bsvo5i%2FOSV3gGWnwAKqNB0EOSQkrK%2Fimg.png'"
+                                             width="200" height="200">
                                     </div>
                                     <div class="product__cart__item__text">
-                                        <p th:text="${basketDTO.brand}">브랜드명</p>
-                                        <h6 th:text="${basketDTO.name}" id="prodName"></h6>
+                                        <p th:text="${prodandCount.prod.name}">상품명</p>
+                                        <h6 th:text="|${prodandCount.prod.price}    ${prodandCount.count}|"></h6>
                                         <h5><span class="quantity_price" th:id="|price${basketDTO.prodid}|" name="price" th:text="${basketDTO.price}">19800</span>
                                             <span class="mileage displaynone"><img src="" /> <span class="mileage_price"></span></span>
                                         </h5>
@@ -234,23 +272,6 @@
                                 <a href="#"><i class="fa fa-spinner"></i> Update cart</a>
                             </div>
                         </div>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="cart__discount">
-                        <h6>Discount codes</h6>
-                        <form action="#">
-                            <input type="text" placeholder="Coupon code">
-                            <button type="submit">Apply</button>
-                        </form>
-                    </div>
-                    <div class="cart__total">
-                        <h6>Cart total</h6>
-                        <ul>
-                            <li>총 선택상품금액 <span id="total"></span></li>
-                            <!--<li>Total <span>$ 169.50</span></li>-->
-                        </ul>
-                        <a href="#" class="primary-btn" id="orderAll">모두 주문하기</a>
                     </div>
                 </div>
             </div>
