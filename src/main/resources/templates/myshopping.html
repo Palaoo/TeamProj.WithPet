@@ -224,6 +224,7 @@
                                     <button id="btnComplain">문의하기</button>
                                 </td>
                                 <td class="cart__close">
+                                    <input type="button" value="사용리뷰쓰기" onclick="new_window();">
                                     <button id="btnReOrder">재구매</button>
                                 </td>
                             </tr>
@@ -277,6 +278,14 @@
         //     }
         // })
     })
+
+    function new_window() {
+        window.open(
+          "review",
+          "Review",
+          "width=400, height=300, top=50, left=50"
+        );
+      }
 </script>
 
 </html>
