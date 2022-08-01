@@ -6,9 +6,11 @@ import com.project.withpet.repository.Boardimg.BoardimgRepository;
 import com.project.withpet.repository.BusinessUser.BusinessUserRepository;
 import com.project.withpet.repository.Cimg.CimgRepository;
 import com.project.withpet.repository.Hotelroom.HotelroomRepository;
-import com.project.withpet.repository.Img.ImgRepository;
+import com.project.withpet.repository.Hotelroom.Img.ImgRepository;
 import com.project.withpet.repository.Like.JpaLikeRepository;
 import com.project.withpet.repository.Like.LikeRepository;
+import com.project.withpet.repository.LikeHotel.JpaLikeHotelRepository;
+import com.project.withpet.repository.LikeHotel.LikeHotelRepository;
 import com.project.withpet.repository.Order.OrderRepository;
 import com.project.withpet.repository.Orderprod.OrderprodRepository;
 import com.project.withpet.repository.Prod.ProdRepository;
@@ -49,7 +51,11 @@ public class SpringConfig {
     private EntityManager entityManager;
 
     public SpringConfig(UserRepository userRepository, BoardRepository boardRepository,
-                        BoardimgRepository boardimgRepository, ReplyRepository replyRepository, ShopRepository shopRepository, HotelroomRepository hotelroomRepository, BusinessUserRepository businessUserRepository, ProdRepository prodRepository, ImgRepository imgRepository, CimgRepository cimgRepository, OrderRepository orderRepository, OrderprodRepository orderprodRepository, BasketRepository basketRepository) {
+                        BoardimgRepository boardimgRepository, ReplyRepository replyRepository,
+                        ShopRepository shopRepository, HotelroomRepository hotelroomRepository,
+                        BusinessUserRepository businessUserRepository, ProdRepository prodRepository,
+                        ImgRepository imgRepository, CimgRepository cimgRepository, OrderRepository orderRepository,
+                        OrderprodRepository orderprodRepository, BasketRepository basketRepository) {
 
         this.userRepository = userRepository;
         this.boardRepository = boardRepository;
@@ -67,12 +73,12 @@ public class SpringConfig {
     }
 
     @Bean
-    public UserService userService(){
+    public UserService userService() {
         return new UserService(userRepository);
     }
 
     @Bean
-    public BoardService boardService(){
+    public BoardService boardService() {
         return new BoardService(boardRepository);
     }
 
@@ -82,30 +88,30 @@ public class SpringConfig {
     }
 
     @Bean
-    public ReplyService replyService(){
+    public ReplyService replyService() {
         return new ReplyService(replyRepository);
     }
 
     @Bean
-    public ShopService shopService(){
+    public ShopService shopService() {
         return new ShopService(shopRepository);
     }
 
     @Bean
-    public HotelroomService hotelroomService(){
+    public HotelroomService hotelroomService() {
         return new HotelroomService(hotelroomRepository);
     }
 
     @Bean
-    public JPAQueryFactory jpaQueryFactory(){
+    public JPAQueryFactory jpaQueryFactory() {
         return new JPAQueryFactory(entityManager);
     }
 
     @Bean
-    public CommonsMultipartResolver multipartResolver(){
+    public CommonsMultipartResolver multipartResolver() {
         CommonsMultipartResolver commonsMultipartResolver = new CommonsMultipartResolver();
         commonsMultipartResolver.setDefaultEncoding(("UTF-8"));
-        commonsMultipartResolver.setMaxUploadSize(50*1024*1024);
+        commonsMultipartResolver.setMaxUploadSize(50 * 1024 * 1024);
         return commonsMultipartResolver;
     }
 
@@ -144,7 +150,7 @@ public class SpringConfig {
         return new LikeService(likeRepository());
     }
 
-    @Bean
+
     public LikeRepository likeRepository() {
         return new JpaLikeRepository(entityManager);
     }
@@ -159,10 +165,18 @@ public class SpringConfig {
         return new ProdReviewService(prodReviewRepository());
     }
 
-    @Bean
+
     public ProdReviewRepository prodReviewRepository() {
         return new JpaProdReviewRepository(entityManager);
     }
 
+    @Bean
+    LikeHotelService likeHotelService() {
+        return new LikeHotelService(likeHotelRepository());
+    }
+
+    public LikeHotelRepository likeHotelRepository() {
+        return new JpaLikeHotelRepository(entityManager);
+    }
 
 }

@@ -2,9 +2,11 @@ package com.project.withpet.service;
 
 import com.project.withpet.domain.ProdReview;
 import com.project.withpet.repository.ProdReview.ProdReviewRepository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+@Transactional
 public class ProdReviewService {
     private final ProdReviewRepository prodReviewRepository;
 
