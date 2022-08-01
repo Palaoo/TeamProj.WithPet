@@ -2,6 +2,7 @@ package com.project.withpet.controller;
 
 import com.project.withpet.domain.Cimg;
 import com.project.withpet.domain.Img;
+import com.project.withpet.domain.ProdReview;
 import com.project.withpet.domain.Product;
 import com.google.gson.JsonObject;
 import com.project.withpet.dto.ProdDTO;
@@ -33,15 +34,17 @@ public class ProdController {
     private final CimgService cimgService;
     private final BusinessUserService businessUserService;
     private final LikeService likeService;
+    private final ProdReviewService prodReviewService;
 
     @Autowired
-    public ProdController(S3Uploader s3Uploader, ProdService prodService, ImgService imgService, CimgService cimgService, BusinessUserService businessUserService, LikeService likeService) {
+    public ProdController(S3Uploader s3Uploader, ProdService prodService, ImgService imgService, CimgService cimgService, BusinessUserService businessUserService, LikeService likeService, ProdReviewService prodReviewService) {
         this.s3Uploader = s3Uploader;
         this.prodService = prodService;
         this.imgService = imgService;
         this.cimgService = cimgService;
         this.businessUserService = businessUserService;
         this.likeService = likeService;
+        this.prodReviewService = prodReviewService;
     }
 
 
@@ -214,6 +217,8 @@ public class ProdController {
         model.addAttribute("product", prodService.findById(prodId).get());   // 상품 튜플
         model.addAttribute("img", imgService.findByProdid(prodId).get().getPath());   // 썸네일 URL
         model.addAttribute("cimgs", cimgService.findImgURLs(prodId));
+        List<ProdReview> pReviewList = prodReviewService.findByProdId(prodId);
+        model.addAttribute("pReviewList", pReviewList);
 
         return "prod_view";
     }
