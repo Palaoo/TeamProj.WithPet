@@ -1,6 +1,7 @@
 package com.project.withpet.repository.Shop;
 
-import com.project.withpet.domain.*;
+import com.project.withpet.domain.Hotelroom;
+import com.project.withpet.domain.Shop;
 import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.stereotype.Repository;

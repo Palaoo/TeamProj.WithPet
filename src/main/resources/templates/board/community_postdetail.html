@@ -6,7 +6,11 @@
     <title>Title</title>
     <th:block th:replace="fragments/index::style"></th:block>
 </head>
-
+<style>
+#content{
+    width:300px;
+}
+</style>
 <body>
 <div th:replace="fragments/index :: header"></div>
 
@@ -67,7 +71,7 @@
 
                                     <div th:if="${not #strings.isEmpty(userid)}">
                                         <form action="newreply" method="post">
-                                            <table id="rtable2">
+                                            <table id="rtable2" align="center">
                                                 <tr><td id="writer"><th:block th:text="${userid}" name="writer" class="col-lg-2 col-md-2"></th:block></td>
                                                     <td class="col-lg-8 col-md-8"><textarea name="content" id="content" placeholder="댓글 달기"></textarea></td>
                                                     <input type="hidden" name="boardcode" th:value="${boardcode}" id="boardcode">
@@ -142,8 +146,8 @@
                 data:{boardcode:$('#boardcode').val()},
                 success:function(data){
                     $(data).each(function(){
-                        $('#rtable').append('<tr><td>'+this.writer+'</td><td>'+this.content
-                            +'</td><td>'+this.date+'</td></tr>')
+                        $('#rtable').append('<tr><td class="col-lg-2 col-md-2">'+this.writer+'</td><td class="col-lg-8 col-md-8" align="left">'+this.content
+                            +'</td><td class="col-lg-2 col-md-2">'+this.date+'</td></tr>')
                     })
                 }
             })
