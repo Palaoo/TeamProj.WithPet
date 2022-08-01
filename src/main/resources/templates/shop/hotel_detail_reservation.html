@@ -6,18 +6,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=<device-width>, initial-scale=1.0">
     <title>Title</title>
-    <th:block th:replace="fragments/common::style"></th:block>
+    <th:block th:replace="fragments/index::style"></th:block>
     <script src="https://js.tosspayments.com/v1"></script>
 </head>
 <body>
 
-<div th:replace="fragments/common :: header"></div>
+<div th:replace="fragments/index :: header"></div>
 
 <div class="row">
     <h2 th:text="${hotelroom.getRoomname()}" id="roomname"></h2>
     <input type="hidden" th:value="${hotelroom.getRoomid()}" id="roomid">
     <div class="col" style="height:320px">
-        <img src="/image/poolvil.jfif" style="height: 300px; width: 550px">
+        <img th:src="${hotelroomimg}" style="height: 300px; width: 550px">
     </div>
     <div class="col">
         <h4 th:text="${hotelroom.getContent()}"></h4>
@@ -26,7 +26,7 @@
 <br>
 <div class="row" style="width: 700px">
     <h2 th:text="|${checkin} / ${checkout} (${days}박)|"></h2>
-    <input type="hidden" th:value="${checkin}" id="checkin">
+    <input type="hidden" th:value="${checkin}" id="checkin" >
     <input type="hidden" th:value="${checkout}" id="checkout">
     <input type="text" th:value="${username}" style="width:300px; height: 30px" id="name">
     <input type="text" th:value="${usermobile}" style="width:300px; height: 30px" id="mobile">
@@ -61,7 +61,7 @@
 </div>
 <br>
 
-<th:block th:replace="fragments/common :: footer"></th:block>
+<th:block th:replace="fragments/index :: footer"></th:block>
 
 </body>
 
@@ -90,7 +90,7 @@
             customerName: $('#username').text(),
             successUrl: 'http://localhost:8080/hotel/booking?checkin='+$('#checkin').val()
                 +"&checkout="+$('#checkout').val()+"&detail="+$('#detail').val()
-                +"&roomid="+$('#roomid').val()+"&name="+$('#name').val(),
+                +"&roomid="+$('#roomid').val()+"&name="+$('#name').val()+"&mobile="+$('#mobile').val(),
             failUrl: 'http://localhost:8080/',
         })
     }

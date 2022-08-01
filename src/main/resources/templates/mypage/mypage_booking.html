@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -16,7 +17,7 @@
     <div th:replace="fragments/index :: header"></div>
 
     <div class="top">
-        <img src="dd.JPG">OOO님&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;포인트
+        <span th:text="|${userid}님|"></span>
     </div>
 
     <div class="contents">

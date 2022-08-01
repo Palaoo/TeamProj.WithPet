@@ -95,14 +95,14 @@
                 </ul>
             </nav>
 
-            <div class="searchpost" style="text-align: center;">
-                <select>
-                    <option>제목</option>
-                    <option>작성자</option>
-                </select>
-                <input type=text id="searchpost" name="searchpost">
-                <input type="button" value="검색">
-            </div>
+<!--            <div class="searchpost" style="text-align: center;">-->
+<!--                <select>-->
+<!--                    <option>제목</option>-->
+<!--                    <option>작성자</option>-->
+<!--                </select>-->
+<!--                <input type=text id="searchpost" name="searchpost">-->
+<!--                <input type="button" value="검색">-->
+<!--            </div>-->
         </div>
 
     </div>
@@ -119,7 +119,8 @@
             var url = window.location.href
             var pageIndex = url.split('=')
             console.log(pageIndex[1])
-            if(pageIndex[1] == 'y'){
+            console.log(pageIndex[0])
+            if(typeof pageIndex[1] == "undefined"){
                 $('#0').addClass('active')
             } else {
                 $('#'+pageIndex[1]).addClass('active')
