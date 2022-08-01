@@ -10,6 +10,16 @@ public class HotelroomForm {
     private String content;
     private String avail;
 
+    private String path;
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
+    }
+
     public Long getRoomid() {
         return roomid;
     }

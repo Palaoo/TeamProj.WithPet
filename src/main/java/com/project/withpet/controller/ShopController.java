@@ -3,14 +3,18 @@ package com.project.withpet.controller;
 import com.project.withpet.dto.HotelForm;
 import com.project.withpet.dto.HotelroomForm;
 import com.project.withpet.domain.*;
+import com.project.withpet.dto.reviewDto;
 import com.project.withpet.repository.Booking.BookingRepository;
 import com.project.withpet.repository.HotelimgRepository;
 import com.project.withpet.repository.Hotelroom.HotelroomRepository;
+import com.project.withpet.repository.HotelroomimgRepository;
 import com.project.withpet.repository.Shop.ShopQueryRepository;
 import com.project.withpet.repository.Shop.ShopRepository;
+import com.project.withpet.repository.shopreviewRepository;
 import com.project.withpet.service.HotelroomService;
 import com.project.withpet.service.ShopService;
 import com.project.withpet.service.UserService;
+import com.project.withpet.service.reviewService;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -47,21 +51,29 @@ public class ShopController {
     private final BookingRepository bookingRepository;
 
     private final HotelimgRepository hotelimgRepository;
+
+    private final HotelroomimgRepository hotelroomimgRepository;
+    private final reviewService reviewService;
+    private final shopreviewRepository shopreviewRepository;
+
     @Autowired
-    public ShopController(ShopService shopService, HotelroomService hotelroomService, ShopQueryRepository shopQueryRepository, ShopRepository shopRepository, HotelroomRepository hotelroomRepository, UserService userService, BookingRepository bookingRepository, HotelimgRepository hotelimgRepository) {
+    public ShopController(ShopService shopService, HotelroomService hotelroomService, ShopQueryRepository shopQueryRepository, ShopRepository shopRepository, HotelroomRepository hotelroomRepository, UserService userService, BookingRepository bookingRepository, HotelimgRepository hotelimgRepository, HotelroomimgRepository hotelroomimgRepository, com.project.withpet.service.reviewService reviewService, com.project.withpet.repository.shopreviewRepository shopreviewRepository) {
         this.shopService = shopService;
         this.hotelroomService = hotelroomService;
         this.shopQueryRepository = shopQueryRepository;
         this.userService = userService;
         this.bookingRepository = bookingRepository;
         this.hotelimgRepository = hotelimgRepository;
+        this.hotelroomimgRepository = hotelroomimgRepository;
+        this.reviewService = reviewService;
+        this.shopreviewRepository = shopreviewRepository;
     }
 
     @GetMapping("/hotel")
-    public String hotelList(Model model, HttpServletRequest req){
+    public String hotelList(Model model, HttpServletRequest req) {
 
         HttpSession session = req.getSession();
-        if(session.getAttribute("userid")!=null){
+        if (session.getAttribute("userid") != null) {
             model.addAttribute("userid", session.getAttribute("userid"));
         }
 
@@ -79,8 +91,8 @@ public class ShopController {
 
         int week = now.getDayOfWeek().getValue();
 
-        if( week == 0 || week == 1 || week == 2 || week == 3 || week == 4 || week == 5 ){
-            switch (week){
+        if (week == 0 || week == 1 || week == 2 || week == 3 || week == 4 || week == 5) {
+            switch (week) {
                 case 0:
                     cal.add(Calendar.DATE, 6);
                     break;
@@ -115,7 +127,7 @@ public class ShopController {
 
         List<HotelForm> hotelForms = new ArrayList<>();
 
-        for(int i=0; i<hotelList.size();i++){
+        for (int i = 0; i < hotelList.size(); i++) {
             addHotelForm(availShop, hotelList, hotelForms, i);
         }
 
@@ -136,10 +148,10 @@ public class ShopController {
                             @RequestParam("checkin") String checkin,
                             @RequestParam("checkout") String checkout,
                             @RequestParam("order") String order,
-                            @RequestParam("size") Long size){
+                            @RequestParam("size") Long size) {
 
         HttpSession session = req.getSession();
-        if(session.getAttribute("userid")!=null){
+        if (session.getAttribute("userid") != null) {
             model.addAttribute("userid", session.getAttribute("userid"));
         }
 
@@ -157,21 +169,21 @@ public class ShopController {
 
         List<HotelForm> hotelForms = new ArrayList<>();
 
-        for(int i=0; i<hotelList.size();i++) {
+        for (int i = 0; i < hotelList.size(); i++) {
             List<Feat> shopFeats = hotelList.get(i).getShopFeats();
-            if(size==4){
+            if (size == 4) {
                 addHotelForm(availShop, hotelList, hotelForms, i);
             } else {
-                for(int j=0;j< shopFeats.size();j++) {
+                for (int j = 0; j < shopFeats.size(); j++) {
                     Long featid = shopFeats.get(j).getFeatid();
-                    if(featid==size) {
+                    if (featid == size) {
                         addHotelForm(availShop, hotelList, hotelForms, i);
                     }
                 }
             }
         }
 
-        if(order.equals("price")) {
+        if (order.equals("price")) {
             Collections.sort(hotelForms, (a, b) -> (int) (b.getPrice() - a.getPrice()));
         } else {
 //            Collections.sort(hotelForms, (a, b) -> (int) (b.getPrice() - a.getPrice()));
@@ -185,11 +197,11 @@ public class ShopController {
     @GetMapping("/hotel/detail")
     public String hotelDetail(Model model, HttpServletRequest req,
                               @RequestParam("shopid") Long shopid
-                              )
+    )
             throws ParseException {
 
         HttpSession session = req.getSession();
-        if(session.getAttribute("userid")!=null){
+        if (session.getAttribute("userid") != null) {
             model.addAttribute("userid", session.getAttribute("userid"));
         }
 
@@ -200,9 +212,13 @@ public class ShopController {
         model.addAttribute("checkout", checkout);
         model.addAttribute("person", person);
 
+        List<shopreview> shopreviewList = reviewService.findByshopid(shopid);
+        model.addAttribute("shopreview", shopreviewList);
 
         Optional<Shop> shop = shopService.findById(shopid);
         model.addAttribute("shop", shop.get());
+        Optional<Hotelimg> hotelimg = hotelimgRepository.findByShopid(shopid);
+        model.addAttribute("shopimg", hotelimg.get().getPath());
 
         List<Feat> shopFeats = shop.get().getShopFeats();
         model.addAttribute("feats", shopFeats);
@@ -212,7 +228,7 @@ public class ShopController {
 
         List<HotelroomForm> hotelroomForms = new ArrayList<>();
 
-        for(int i=0; i<hotelrooms.size();i++){
+        for (int i = 0; i < hotelrooms.size(); i++) {
             addHotelRoomForm(hotelrooms, availRooms, hotelroomForms, i);
         }
 
@@ -227,7 +243,7 @@ public class ShopController {
         try {
             text = URLEncoder.encode(shop.get().getName(), "UTF-8");
         } catch (UnsupportedEncodingException e) {
-            throw new RuntimeException("검색어 인코딩 실패",e);
+            throw new RuntimeException("검색어 인코딩 실패", e);
         }
 
         String apiURL = "https://openapi.naver.com/v1/search/blog?query=" + text;
@@ -235,7 +251,7 @@ public class ShopController {
         Map<String, String> requestHeaders = new HashMap<>();
         requestHeaders.put("X-Naver-Client-Id", clientId);
         requestHeaders.put("X-Naver-Client-Secret", clientSecret);
-        String responseBody = get(apiURL,requestHeaders);
+        String responseBody = get(apiURL, requestHeaders);
 
         JSONParser parser = new JSONParser();
         JSONObject jsonObject = (JSONObject) parser.parse(responseBody);
@@ -243,6 +259,38 @@ public class ShopController {
 
         return "shop/hotel_detail";
 
+    }
+
+    @PostMapping("/reviews/createhotel")  //리뷰 등록
+    public String createReview(reviewDto dto, HttpServletRequest req, @RequestParam("shopid") Long shopid, Model model) {
+        HttpSession session = req.getSession();
+        String userid = (String) session.getAttribute("userLogined");
+        if (userid != null) {
+            dto.setUserid(userid);
+        }
+
+        shopreview shopreview = dto.toEntity();
+
+        shopreview saved = shopreviewRepository.save(shopreview);
+        return "redirect:/hotel/detail?shopid=" + saved.getShopid();
+    }
+
+    @GetMapping("/reviews/deletehotel") //리뷰 삭제
+    public String delete(reviewDto dto, @RequestParam("rid") Long rid, Long shopid) {
+        reviewService.deleteReview(rid);
+        shopreview shopreview = dto.toEntity();
+        return "redirect:/hotel/detail?shopid=" + dto.getShopid();
+    }
+
+    @PostMapping("/reviews/updatehotel")  //리뷰 수정
+    public String update(reviewDto dto) {
+        shopreview shopreview = dto.toEntity();
+        System.out.println(shopreview.getRid());
+        shopreview target = shopreviewRepository.findById(shopreview.getRid()).orElse(null);
+        if (target != null) {
+            shopreviewRepository.save(shopreview);
+        }
+        return "redirect:/hotel/detail?shopid=" + shopreview.getShopid();
     }
 
     @PostMapping("/hotel/detail")
@@ -255,7 +303,7 @@ public class ShopController {
                                            @RequestParam("person") Long person) {
 
         HttpSession session = req.getSession();
-        if(session.getAttribute("userid")!=null){
+        if (session.getAttribute("userid") != null) {
             model.addAttribute("userid", session.getAttribute("userid"));
         }
 
@@ -264,7 +312,7 @@ public class ShopController {
 
         List<HotelroomForm> hotelroomForms = new ArrayList<>();
 
-        for(int i=0; i<hotelrooms.size();i++){
+        for (int i = 0; i < hotelrooms.size(); i++) {
             addHotelRoomForm(hotelrooms, availRooms, hotelroomForms, i);
         }
 
@@ -282,7 +330,7 @@ public class ShopController {
                           @RequestParam("roomid") Long roomid,
                           @RequestParam("name") String name,
                           @RequestParam("detail") String detail,
-                          @RequestParam("mobile") String mobile){
+                          @RequestParam("mobile") String mobile) {
         HttpSession session = req.getSession();
         Booking booking = new Booking();
         booking.setCheckin(checkin);
@@ -316,13 +364,16 @@ public class ShopController {
         Optional<Hotelroom> hotelroom = hotelroomService.findById(roomid);
         model.addAttribute("hotelroom", hotelroom.get());
 
+        Optional<Hotelroomimg> hotelroomimg = hotelroomimgRepository.findByShopid(roomid);
+        model.addAttribute("hotelroomimg", hotelroomimg.get().getPath());
+
         model.addAttribute("checkin", checkin);
         model.addAttribute("checkout", checkout);
 
         Date checkinDate = new SimpleDateFormat("yyyy-MM-dd").parse(checkin);
         Date checkoutDate = new SimpleDateFormat("yyyy-MM-dd").parse(checkout);
         Long diffSec = (checkoutDate.getTime() - checkinDate.getTime()) / 1000;
-        Long diffDays = diffSec / (24*60*60);
+        Long diffDays = diffSec / (24 * 60 * 60);
 
         model.addAttribute("days", diffDays);
 
@@ -331,7 +382,6 @@ public class ShopController {
 
         return "shop/hotel_detail_reservation";
     }
-
 
 
     private void addHotelForm(List<Shop> availShop, List<Shop> hotelList, List<HotelForm> hotelForms, int i) {
@@ -370,22 +420,24 @@ public class ShopController {
         hotelroomForm.setPrice(hotelrooms.get(i).getPrice());
         hotelroomForm.setPerson(hotelrooms.get(i).getPerson());
         hotelroomForm.setContent(hotelrooms.get(i).getContent());
-        for(int j = 0; j< availRooms.size(); j++){
-            if(hotelrooms.get(i).getRoomid()== availRooms.get(j).getRoomid()){
+        for (int j = 0; j < availRooms.size(); j++) {
+            if (hotelrooms.get(i).getRoomid() == availRooms.get(j).getRoomid()) {
                 hotelroomForm.setAvail("true");
                 break;
             } else {
                 hotelroomForm.setAvail("false");
             }
         }
+        Optional<Hotelroomimg> hotelroomImg = hotelroomimgRepository.findByShopid(hotelrooms.get(i).getRoomid());
+        hotelroomForm.setPath(hotelroomImg.get().getPath());
         hotelroomForms.add(hotelroomForm);
     }
 
-    private static String get(String apiUrl, Map<String, String> requestHeaders){
+    private static String get(String apiUrl, Map<String, String> requestHeaders) {
         HttpURLConnection con = connect(apiUrl);
         try {
             con.setRequestMethod("GET");
-            for(Map.Entry<String, String> header :requestHeaders.entrySet()) {
+            for (Map.Entry<String, String> header : requestHeaders.entrySet()) {
                 con.setRequestProperty(header.getKey(), header.getValue());
             }
 
@@ -403,10 +455,10 @@ public class ShopController {
         }
     }
 
-    private static HttpURLConnection connect(String apiUrl){
+    private static HttpURLConnection connect(String apiUrl) {
         try {
             URL url = new URL(apiUrl);
-            return (HttpURLConnection)url.openConnection();
+            return (HttpURLConnection) url.openConnection();
         } catch (MalformedURLException e) {
             throw new RuntimeException("API URL이 잘못되었습니다. : " + apiUrl, e);
         } catch (IOException e) {
@@ -415,7 +467,7 @@ public class ShopController {
     }
 
 
-    private static String readBody(InputStream body){
+    private static String readBody(InputStream body) {
         InputStreamReader streamReader = new InputStreamReader(body);
 
 

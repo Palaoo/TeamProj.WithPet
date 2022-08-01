@@ -67,6 +67,7 @@ public class LoginController {
         boolean result = userService.checkUser(userid, password);
         if(result==true){
             HttpSession session = req.getSession();
+            session.setAttribute("userid", userid);
             session.setAttribute("userLogined", userid);
             return "redirect:/";
         } else {

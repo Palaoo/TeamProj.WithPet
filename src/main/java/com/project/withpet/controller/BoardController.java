@@ -74,12 +74,24 @@ public class BoardController {
             postList.add(boardForm);
         }
 
+        int pageN = pageable.getPageNumber();
+        int startPage = ((int) Math.floor(pageN / 5)) * 5+1;
+        int totalPage = posts.getTotalPages();
+        int endpage = 0;
+        if(totalPage < startPage + 4) {
+            endpage = totalPage;
+        } else {
+            endpage = startPage + 4;
+        }
+
         model.addAttribute("posts", postList);
         model.addAttribute("previous", pageable.previousOrFirst().getPageNumber());
         model.addAttribute("next", pageable.next().getPageNumber());
         model.addAttribute("hasNext", posts.hasNext());
         model.addAttribute("hasPrev", posts.hasPrevious());
         model.addAttribute("totalPage", posts.getTotalPages());
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endpage);
 
         HttpSession session = req.getSession();
         if (session.getAttribute("userid") != null) {

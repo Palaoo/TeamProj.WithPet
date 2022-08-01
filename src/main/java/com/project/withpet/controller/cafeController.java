@@ -1,7 +1,9 @@
 package com.project.withpet.controller;
 
+import com.project.withpet.domain.Hotelimg;
 import com.project.withpet.domain.cafe;
 import com.project.withpet.domain.shopreview;
+import com.project.withpet.repository.HotelimgRepository;
 import com.project.withpet.repository.cafeRepository;
 import com.project.withpet.repository.shopreviewRepository;
 import com.project.withpet.service.ShopLikeService;
@@ -36,9 +38,11 @@ public class cafeController {
     private shopreviewRepository shopreviewRepository;
 
     private final ShopLikeService shopLikeService;
+    private final HotelimgRepository hotelimgRepository;
 
-    public cafeController(ShopLikeService shopLikeService) {
+    public cafeController(ShopLikeService shopLikeService, HotelimgRepository hotelimgRepository) {
         this.shopLikeService = shopLikeService;
+        this.hotelimgRepository = hotelimgRepository;
     }
 
 
@@ -53,7 +57,9 @@ public class cafeController {
         List<CafeDTOList> cafeDTOLists = new ArrayList<>();
         for (cafe cafe : cafeList) {
             boolean shopLike = shopLikeService.islike(cafe.getShopid(),userid);
-            cafeDTOLists.add(new CafeDTOList(cafe,shopLike));
+            Optional<Hotelimg> hotelimg = hotelimgRepository.findByShopid(cafe.getShopid());
+            String path = hotelimg.get().getPath();
+            cafeDTOLists.add(new CafeDTOList(cafe,shopLike,path));
         }
 
         model.addAttribute("cafeDTOLists", cafeDTOLists);
@@ -76,6 +82,11 @@ public class cafeController {
         List<shopreview> shopreviewList = reviewService.findByshopid(shopid);
         model.addAttribute("shopreview", shopreviewList);
         log.info(shopreviewList.toString());
+
+        Optional<Hotelimg> hotelimg = hotelimgRepository.findByShopid(shopid);
+        String path = hotelimg.get().getPath();
+        model.addAttribute("shopimg", path);
+
         return "cafeinfo";
 
     }
@@ -87,7 +98,14 @@ public class cafeController {
         model.addAttribute("userid", userid);
 
         List<cafe> cafeList = cafeService.findByshoptype(3L);
-        model.addAttribute("cafeList", cafeList);
+        List<CafeDTOList> cafeDTOLists = new ArrayList<>();
+        for (cafe cafe : cafeList) {
+            boolean shopLike = shopLikeService.islike(cafe.getShopid(),userid);
+            Optional<Hotelimg> hotelimg = hotelimgRepository.findByShopid(cafe.getShopid());
+            String path = hotelimg.get().getPath();
+            cafeDTOLists.add(new CafeDTOList(cafe,shopLike,path));
+        }
+        model.addAttribute("cafeList", cafeDTOLists);
         return "Restaurant-list";
     }
 
@@ -106,6 +124,10 @@ public class cafeController {
         List<shopreview> shopreviewList = reviewService.findByshopid(shopid);
         model.addAttribute("shopreview", shopreviewList);
         log.info(shopreviewList.toString());
+
+        Optional<Hotelimg> hotelimg = hotelimgRepository.findByShopid(shopid);
+        String path = hotelimg.get().getPath();
+        model.addAttribute("shopimg", path);
         return "restaurant-info";
 
     }
