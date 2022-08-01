@@ -198,7 +198,7 @@
                                             <div class="product__details__tab__content">
                                                 <th:block th:text="${shop.getInfo()}"></th:block>
 
-                                                <form action="/hotel/reservation" method="post">
+                                                <form action="/hotel/booking" method="post">
                                                     <div class="row">
                                                         <div class="datebar" style="margin:10px">
                                                             <input type="hidden" name="shopid" id="shopid" th:value="${shop.getShopid()}">
@@ -228,7 +228,22 @@
                                             </div>
                                         </div>
 
-                                        <div class="tab-pane" id="tabs-2" role="tabpanel">
+                                        <ul class="nav nav-tabs" role="tablist">
+                                            <li class="nav-item">
+                                                <a class="nav-link" data-toggle="tab" href="#tabs-1" role="tab">이용안내</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link active" data-toggle="tab" href="#tabs-2" role="tab">기본정보</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" data-toggle="tab" href="#tabs-3" role="tab">사용자후기</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" data-toggle="tab" href="#tabs-4" role="tab">블로그후기</a>
+                                            </li>
+                                        </ul>
+
+                                        <div class="tab-pane active" id="tabs-2" role="tabpanel">
                                             <div class="product__details__tab__content">
                                                 <div class="product__details__tab__content__item" >
                                                     <div id="map" style="width:500px;height:400px;"></div>
@@ -242,7 +257,22 @@
                                             </div>
                                         </div>
 
-                                        <div class="tab-pane" id="tabs-3" role="tabpanel">
+                                        <ul class="nav nav-tabs" role="tablist">
+                                            <li class="nav-item">
+                                                <a class="nav-link" data-toggle="tab" href="#tabs-1" role="tab">이용안내</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" data-toggle="tab" href="#tabs-2" role="tab">기본정보</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link active" data-toggle="tab" href="#tabs-3" role="tab">사용자후기</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" data-toggle="tab" href="#tabs-4" role="tab">블로그후기</a>
+                                            </li>
+                                        </ul>
+
+                                        <div class="tab-pane active" id="tabs-3" role="tabpanel">
                                             <div class="product__details__tab__content">
                                                 <div class="product__details__tab__content__item" >
 
@@ -287,7 +317,22 @@
                                             </div>
                                         </div>
 
-                                        <div class="tab-pane" id="tabs-4" role="tabpanel">
+                                        <ul class="nav nav-tabs" role="tablist">
+                                            <li class="nav-item">
+                                                <a class="nav-link" data-toggle="tab" href="#tabs-1" role="tab">이용안내</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" data-toggle="tab" href="#tabs-2" role="tab">기본정보</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" data-toggle="tab" href="#tabs-3" role="tab">사용자후기</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link active" data-toggle="tab" href="#tabs-4" role="tab">블로그후기</a>
+                                            </li>
+                                        </ul>
+
+                                        <div class="tab-pane active" id="tabs-4" role="tabpanel">
                                             <div class="product__details__tab__content">
                                                 <div class="product__details__tab__content__item" >
                                                     <div class="card mb-3" th:each="item:${review.items}" style="width: 700px">
