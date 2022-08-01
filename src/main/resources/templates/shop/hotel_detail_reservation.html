@@ -6,14 +6,28 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=<device-width>, initial-scale=1.0">
     <title>Title</title>
-    <th:block th:replace="fragments/common::style"></th:block>
+    <th:block th:replace="fragments/index::style"></th:block>
     <script src="https://js.tosspayments.com/v1"></script>
 </head>
+<style>
+    #img{
+        background-size:cover;
+        width:100%;
+        height:300px;
+    }
+    #detail{
+        width:100%;
+        margin-top:10px;
+        height:50px;
+        resize:none;
+    }
+
+</style>
 <body>
 
-<div th:replace="fragments/common :: header"></div>
+<div th:replace="fragments/index :: header"></div>
 
-<div class="row">
+<!--<div class="row">
     <h2 th:text="${hotelroom.getRoomname()}" id="roomname"></h2>
     <input type="hidden" th:value="${hotelroom.getRoomid()}" id="roomid">
     <div class="col" style="height:320px">
@@ -59,9 +73,98 @@
         <input id="btnPay" type="button" value="결제하기" style="width:450px">
     </div>
 </div>
-<br>
+<br>-->
 
-<th:block th:replace="fragments/common :: footer"></th:block>
+<section class="breadcrumb-option">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="breadcrumb__text">
+                    <h4>Check Out</h4>
+                    <div class="breadcrumb__links">
+                        <a href="./index.html">Home</a>
+                        <a href="./shop.html">Hotel</a>
+                        <span>Reservation</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="checkout spad">
+    <div class="container">
+        <div class="checkout__form">
+            <form action="#">
+                <div class="row">
+                    <div class="col-lg-8 col-md-6">
+
+                        <h6 class="coupon__code"><span class="icon_tag_alt"></span> Have a coupon? <a href="#">Click
+                            here</a> to enter your code</h6>
+                        <h6 class="checkout__title">Hotel Reservation</h6>
+                        <div class="checkout__input">
+                            <h6><p th:text="${hotelroom.getRoomname()}" id="roomname"></p></h6>
+                            <input type="hidden" th:value="${hotelroom.getRoomid()}" id="roomid">
+                            <img src="/image/poolvil.jfif" style="height: 300px; width: 550px" id="img">
+                        </div>
+                        <div class="checkout__input">
+                            <p th:text="${hotelroom.getContent()}"></p>
+                        </div>
+                        <div class="checkout__input">
+                            <h6><p th:text="|${checkin} / ${checkout} (${days}박)|"></p></h6>
+                            <input type="hidden" th:value="${checkin}" id="checkin">
+                            <input type="hidden" th:value="${checkout}" id="checkout">
+                            <input type="text" th:value="${username}" id="name">
+                        </div>
+                        <div class="checkout__input">
+                            <textarea placeholder="세부사항" style="height: 300px" id="detail"></textarea>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6">
+                        <div class="checkout__order">
+                            <h4 class="order__title">결제 정보</h4>
+                            <div class="checkout__order__products">Product <span>Total</span></div>
+                            <ul class="checkout__total__products">
+                                <li>01. Vanilla salted caramel <span>$ 300.0</span></li>
+                                <li>02. German chocolate <span>$ 170.0</span></li>
+                                <li>03. Sweet autumn <span>$ 170.0</span></li>
+                                <li>04. Cluten free mini dozen <span>$ 110.0</span></li>
+                            </ul>
+                            <ul class="checkout__total__all">
+                                <li>예약 금액 <span th:text="${total}">$750.99</span></li>
+                                <li>총 결제금액(VAT 포함) <span th:text="${total}" id="total">$750.99</span></li>
+                            </ul>
+                            <div class="checkout__input__checkbox">
+                                <label for="check1">
+                                    이용규칙
+                                    <input type="checkbox" id="check1">
+                                    <span class="checkmark"></span>
+                                </label>
+                            </div>
+                            <div class="checkout__input__checkbox">
+                                <label for="check2">
+                                    개인정보동의
+                                    <input type="checkbox" id="check2">
+                                    <span class="checkmark"></span>
+                                </label>
+                            </div>
+                            <div class="checkout__input__checkbox">
+                                <label for="check3">
+                                    제3자 제공
+                                    <input type="checkbox" id="check3">
+                                    <span class="checkmark"></span>
+                                </label>
+                            </div>
+                            <button id="btnPay" type="submit" class="site-btn">결제하기</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+
+<th:block th:replace="fragments/index :: footer"></th:block>
 
 </body>
 
