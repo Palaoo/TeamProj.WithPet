@@ -18,6 +18,13 @@ public class cafe {
     @Column(name = "shopid")
     private Long shopid;
 
+//    @ManyToMany
+//    @JoinTable(name = "shopreview",
+//            joinColumns = @JoinColumn(name = "shopid"),
+//            inverseJoinColumns = @JoinColumn(name = "shopid")
+//    )
+//    private List<shopreview> shopreview = new ArrayList<shopreview>();
+
     @Column(name = "name")
     private String name;
 

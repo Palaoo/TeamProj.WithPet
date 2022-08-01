@@ -64,14 +64,14 @@
                 <a th:href="@{/cafeinfo(shopid=${cafeList.cafe.getShopid()})}"><img src="image/tamar2.jpg" class="card-img-top" alt="" width="300" height="300"></a>
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-sm-9">
+                        <div class="col-sm-10">
                             <h5 class="card-title" th:text="${cafeList.cafe.name}"></h5>
                         </div>
-                        <div calss="col-sm-3">
+                        <div class="col-sm-2">
                             <a href="#" id="btnLike" th:name="${cafeList.cafe.getShopid()}">
-                                <img th:if="${cafeList.islike}" src="image/icon/redheart.png"
+                                <img th:if="${cafeList.islike}" src="image/redheart.png"
                                      th:id="|btnLike${cafeList.cafe.shopid}|" width="25" height="25" alt="">
-                                <img th:if="${!cafeList.islike}" src="image/icon/heart.png"
+                                <img th:if="${!cafeList.islike}" src="image/heart.png"
                                      th:id="|btnLike${cafeList.cafe.shopid}|" width="25" height="25" alt="">
                             </a>
                         </div>
@@ -91,12 +91,10 @@
 
 </div>
 <th:block th:replace="fragments/index :: footer"></th:block>
-
 <script src='https://code.jquery.com/jquery-3.4.1.js'></script>
 <script>
     $(document)
         .on('click', '#btnLike', function () {
-
             shopid = $(this).attr('name')
             $.ajax({
                 type: 'get',
@@ -104,14 +102,15 @@
                 success: function (data) {
                     ID = '#btnLike' + shopid
                     if (data == '1') {
-                        $(ID).attr("src", "image/icon/redheart.png")
+                        $(ID).attr("src", "image/redheart.png")
                         $(ID).attr("width", "25px")
                         $(ID).attr("height", "25px")
                     } else {
                         console.log('여기')
                         $(ID).attr("height", "25px")
                         $(ID).attr("width", "25px")
-                        $(ID).attr("src", "image/icon/heart.png")
+                        $(ID).attr("src", "image/heart.png")
+
                     }
                 }
             })
