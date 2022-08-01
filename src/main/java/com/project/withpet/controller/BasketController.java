@@ -51,7 +51,7 @@ public class BasketController {
 
         model.addAttribute("BasketDTOs", bascketDTOs);
         model.addAttribute("userLogined", userId);
-        return "mall/basket_view";
+        return "basket_view";
     }
 
     @GetMapping("append_basket")
@@ -69,7 +69,7 @@ public class BasketController {
     @GetMapping("delete_basket")
     public String delete_basket(HttpServletRequest req,@RequestParam Long prodId) {
         basketService.deleteBasket(prodId, req.getSession().getAttribute("userid").toString());
-        return "redirect:/mall/basket_view";
+        return "redirect:basket_view";
     }
 
 }

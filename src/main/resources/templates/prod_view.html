@@ -422,8 +422,12 @@
     }).on('click', '#bascket', function () {
         $.ajax({
             type: 'get', url: 'append_basket?prodId=' + $('#prodId').val(),
-            success: function () {
-                alert('장바구니에 추가되었습니다.')
+            success: function (data) {
+                if (data == '1')
+                    alert("장바구니에 추가되었습니다.")
+                else {
+                    alert("장바구니에 이미 추가된 상품입니다.")
+                }
             }
         })
     })
