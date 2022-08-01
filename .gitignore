@@ -39,3 +39,4 @@ out/
 ### critical information ###
 *.properties
 S3Config.java
+application.properties
