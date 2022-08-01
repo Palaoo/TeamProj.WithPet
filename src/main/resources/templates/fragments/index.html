@@ -33,7 +33,6 @@
     <div id="preloder">
         <div class="loader"></div>
     </div>
-
     <!-- Header Section Begin -->
     <header class="header">
         <div class="header__top">
@@ -51,8 +50,8 @@
                                 <a href="login">Log in</a>-->
                                 <div align="center" th:if="${not #strings.isEmpty(userid)}">
                                     <a id="myshopping2" href="/myshopping">마이쇼핑</a>
-                                    <a id="basket_shopping2" href="/basket_shopping">장바구니</a>
-                                    <a id="userInfo2" href="/mypage/booking">회원정보</a>
+                                    <a id="basket_shopping2" href="/basket_view">장바구니</a>
+                                    <a id="userInfo2" href="/mypage">회원정보</a>
                                     <a id="logout2" href="/logout">로그아웃</a>
                                 </div>
                                 <div align="center" th:if="${#strings.isEmpty(userid)}">

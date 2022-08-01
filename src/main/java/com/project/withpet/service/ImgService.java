@@ -2,7 +2,7 @@ package com.project.withpet.service;
 
 import com.project.withpet.domain.Img;
 import com.project.withpet.domain.Product;
-import com.project.withpet.repository.Img.ImgRepository;
+import com.project.withpet.repository.Hotelroom.Img.ImgRepository;
 import org.springframework.data.domain.Page;
 
 import java.util.ArrayList;

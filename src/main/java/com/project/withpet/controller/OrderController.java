@@ -60,7 +60,7 @@ public class OrderController {
         HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
         System.out.println(response.body());
 
-        Long orderid = orderService.save(new Ordertable(req.getSession().getAttribute("userLogined").toString(), tools.getLDTnow())).getOrderid();
+        Long orderid = orderService.save(new Ordertable(req.getSession().getAttribute("userid").toString(), tools.getLDTnow())).getOrderid();
         orderprodService.save(new Orderprod(orderid, priceid, count));
 
 
@@ -97,7 +97,7 @@ public class OrderController {
         LocalDateTime start = localDateTimes.get(0);
         LocalDateTime end = localDateTimes.get(1);
 
-        String userId = req.getSession().getAttribute("userLogined").toString();
+        String userId = req.getSession().getAttribute("userid").toString();
         List<Ordertable> findOrderList = orderService.findByDate(userId, start, end, paging);
 
         ArrayList<String> orderdates = new ArrayList<>();

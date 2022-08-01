@@ -8,7 +8,10 @@
 </head>
 <style>
 #content{
-    width:300px;
+    width:100%;
+}
+#addReply{
+    text-align:center;
 }
 </style>
 <body>
@@ -65,14 +68,14 @@
                         <!--<h4>Leave A Comment</h4>-->
                         <form action="#">
                             <div class="row">
-                                <div class="col-lg-12 text-center">
+                                <div class="col-lg-12">
                                    <!-- <textarea placeholder="Comment"></textarea>
                                     <button type="submit" class="site-btn">Post Comment</button>-->
 
                                     <div th:if="${not #strings.isEmpty(userid)}">
                                         <form action="newreply" method="post">
-                                            <table id="rtable2" align="center">
-                                                <tr><td id="writer"><th:block th:text="${userid}" name="writer" class="col-lg-2 col-md-2"></th:block></td>
+                                            <table id="rtable2">
+                                                <tr><td class="col-lg-2 col-md-2" id="writer"><th:block th:text="${userid}" name="writer" ></th:block></td>
                                                     <td class="col-lg-8 col-md-8"><textarea name="content" id="content" placeholder="댓글 달기"></textarea></td>
                                                     <input type="hidden" name="boardcode" th:value="${boardcode}" id="boardcode">
                                                     <td class="col-lg-2 col-md-2"><input type="submit" class="site-btn" value="작성" id="addReply"></td></tr>

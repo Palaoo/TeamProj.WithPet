@@ -2,6 +2,7 @@ package com.project.withpet.controller;
 
 import com.project.withpet.service.ProdReviewService;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -17,13 +18,16 @@ public class ProdReviewController {
     }
 
     @GetMapping("save_prodReview")
-    public String saveProdReview(@RequestParam Long prodId, @RequestParam String text, @RequestParam int star,
+    public String saveProdReview(@RequestParam(name = "content") String text, @RequestParam(name = "prodId") Long prodId,
+                                 @RequestParam(name = "rating") int star,
                                  HttpServletRequest req) {
         if (!tools.isUserLogined(req)) {
             return "login";
         }
 
-        String userId = req.getSession().getAttribute("userLogined").toString();
+        System.out.printf("ProdReviewController saveProdReview(), star: %d", star);
+
+        String userId = req.getSession().getAttribute("userid").toString();
 
         prodReviewService.saveProdReview(prodId, userId, text, star);
 
@@ -37,13 +41,15 @@ public class ProdReviewController {
             return "login";
         }
 
-        prodReviewService.deleteProdReview(prodId, req.getSession().getAttribute("userLogined").toString());
+        prodReviewService.deleteProdReview(prodId, req.getSession().getAttribute("userid").toString());
 
         return "redirect:prod_view?prodId=" + prodId;
     }
 
     @GetMapping("review")
-    public String doReview(){
+
+    public String doReview(@RequestParam Long prodId, Model model) {
+        model.addAttribute("prodId", prodId);
         return "review";
     }
 }
