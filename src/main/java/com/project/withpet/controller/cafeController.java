@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -40,11 +41,17 @@ public class cafeController {
     public String viewList(Model model, HttpServletRequest req) {
 
         HttpSession session = req.getSession();
-        String userid = (String) session.getAttribute("userid");
+        String userid = (String) session.getAttribute("userLogined");
         model.addAttribute("userid",userid);
 
         List<cafe> cafeList = cafeService.findByshoptype(2L);
-        model.addAttribute("cafeList", cafeList);
+        List<CafeDTOList> cafeDTOLists = new ArrayList<>();
+        for (cafe cafe : cafeList) {
+            boolean shopLike = shopLikeService.islike(cafe.getShopid(),userid);
+            cafeDTOLists.add(new CafeDTOList(cafe,shopLike));
+        }
+
+        model.addAttribute("cafeDTOLists", cafeDTOLists);
         return "cafe_list";
     }
 
@@ -59,7 +66,7 @@ public class cafeController {
         log.info(cafe.toString());
 
         HttpSession session = req.getSession();
-        String userid = (String) session.getAttribute("userid");
+        String userid = (String) session.getAttribute("userLogined");
         model.addAttribute("userid",userid);
         //리뷰 리스트
         List<shopreview> shopreviewList = reviewService.findByshopid(shopid);
@@ -72,7 +79,7 @@ public class cafeController {
     @GetMapping("Restaurant-list")
     public String viewRestList(Model model, HttpServletRequest req) {
         HttpSession session = req.getSession();
-        String userid = (String) session.getAttribute("userid");
+        String userid = (String) session.getAttribute("userLogined");
         model.addAttribute("userid",userid);
 
         List<cafe> cafeList = cafeService.findByshoptype(3L);
@@ -89,7 +96,7 @@ public class cafeController {
         log.info(cafe.toString());
 
         HttpSession session = req.getSession();
-        String userid = (String) session.getAttribute("userid");
+        String userid = (String) session.getAttribute("userLogined");
         model.addAttribute("userid",userid);
         //리뷰 리스트
         List<shopreview> shopreviewList = reviewService.findByshopid(shopid);
