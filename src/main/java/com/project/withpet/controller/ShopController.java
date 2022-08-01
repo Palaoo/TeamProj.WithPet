@@ -8,6 +8,7 @@ import com.project.withpet.repository.Hotelroom.HotelroomRepository;
 import com.project.withpet.repository.Shop.ShopQueryRepository;
 import com.project.withpet.repository.Shop.ShopRepository;
 import com.project.withpet.service.HotelroomService;
+import com.project.withpet.service.LikeHotelService;
 import com.project.withpet.service.ShopService;
 import com.project.withpet.service.UserService;
 import org.json.simple.JSONObject;
@@ -44,13 +45,15 @@ public class ShopController {
 
     private final UserService userService;
     private final BookingRepository bookingRepository;
+    private final LikeHotelService likeHotelService;
     @Autowired
-    public ShopController(ShopService shopService, HotelroomService hotelroomService, ShopQueryRepository shopQueryRepository, ShopRepository shopRepository, HotelroomRepository hotelroomRepository, UserService userService, BookingRepository bookingRepository) {
+    public ShopController(ShopService shopService, HotelroomService hotelroomService, ShopQueryRepository shopQueryRepository, ShopRepository shopRepository, HotelroomRepository hotelroomRepository, UserService userService, BookingRepository bookingRepository, LikeHotelService likeHotelService) {
         this.shopService = shopService;
         this.hotelroomService = hotelroomService;
         this.shopQueryRepository = shopQueryRepository;
         this.userService = userService;
         this.bookingRepository = bookingRepository;
+        this.likeHotelService = likeHotelService;
     }
 
     @GetMapping("/hotel")
@@ -113,6 +116,9 @@ public class ShopController {
         for(int i=0; i<hotelList.size();i++){
             addHotelForm(availShop, hotelList, hotelForms, i);
         }
+
+
+
 
         model.addAttribute("hotelList", hotelForms);
         model.addAttribute("person", 2);
@@ -344,6 +350,8 @@ public class ShopController {
         hotelForm.setShopFeats(hotelList.get(i).getShopFeats());
         Optional<Hotelroom> cheapRoom = hotelroomService.cheapRoom(shopid);
         hotelForm.setPrice(cheapRoom.get().getPrice());
+        hotelForm.setIsLiked();
+        hotelForm.setLikeCount();
         for (int k = 0; k < availShop.size(); k++) {
             if (hotelList.get(i).getShopid() == availShop.get(k).getShopid()) {
                 hotelForm.setAvail("true");
