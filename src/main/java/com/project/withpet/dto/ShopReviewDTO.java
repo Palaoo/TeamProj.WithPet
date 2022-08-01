@@ -8,26 +8,29 @@ public class ShopReviewDTO {
     shopreview shopreview;
     cafe cafe;
 
-    public com.project.withpet.domain.shopreview getShopreview() {
+
+    public shopreview getShopreview() {
         return shopreview;
     }
 
-    public void setShopreview(com.project.withpet.domain.shopreview shopreview) {
+    public void setShopreview(shopreview shopreview) {
         this.shopreview = shopreview;
     }
 
-    public com.project.withpet.domain.cafe getCafe() {
+    public cafe getCafe() {
         return cafe;
     }
 
-    public void setCafe(com.project.withpet.domain.cafe cafe) {
+    public void setCafe(cafe cafe) {
         this.cafe = cafe;
     }
 
     public ShopReviewDTO() {
     }
 
-    public ShopReviewDTO(com.project.withpet.domain.shopreview shopreview, com.project.withpet.domain.cafe cafe) {
+
+
+    public ShopReviewDTO(shopreview shopreview, cafe cafe) {
         this.shopreview = shopreview;
         this.cafe = cafe;
     }

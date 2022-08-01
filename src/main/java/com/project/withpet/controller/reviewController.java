@@ -1,5 +1,7 @@
 package com.project.withpet.controller;
 
+import com.project.withpet.domain.cafe;
+import com.project.withpet.dto.ShopReviewDTO;
 import com.project.withpet.dto.reviewDto;
 import com.project.withpet.domain.shopreview;
 import com.project.withpet.repository.shopreviewRepository;
@@ -13,7 +15,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Controller
@@ -31,7 +35,7 @@ public class reviewController {
     @PostMapping("/reviews/create")  //리뷰 등록
     public String createReview(reviewDto dto, HttpServletRequest req, @RequestParam ("shopid") Long shopid, Model model) {
         HttpSession session = req.getSession();
-        String userid = (String) session.getAttribute("userid");
+        String userid = (String) session.getAttribute("userLogined");
         System.out.println("userid = "+userid);
         if (userid != null) {
             dto.setUserid(userid);
@@ -71,11 +75,18 @@ public class reviewController {
     @GetMapping("/mypage/review")
     public String showReviewList(HttpServletRequest req, Model model) {
         HttpSession session = req.getSession();
-        String userid = (String) session.getAttribute("userid");
-        model.addAttribute("userid",userid);
+        String userid = (String) session.getAttribute("userLogined");
+        model.addAttribute("userLogined",userid);
 
         List<shopreview> shopreviewList = reviewService.findByuserid(userid);
-        model.addAttribute("shopreview",shopreviewList);
+        List<ShopReviewDTO> shopReviewDTOList = new ArrayList<>();
+        for (int i = 0; i < shopreviewList.size(); i++) {
+            shopreview shopreview = shopreviewList.get(i);
+            Optional<cafe> cafe = cafeService.findById(shopreview.getShopid());
+            shopReviewDTOList.add(new ShopReviewDTO(shopreview, cafe.get()));
+        }
+
+        model.addAttribute("shopReviewDTOList",shopReviewDTOList);
         log.info("리뷰리스트 = "+ shopreviewList.toString());
         return "myreview";
     }
@@ -90,6 +101,7 @@ public class reviewController {
     @PostMapping("/mypage/review/update") //마이페이지 리뷰 수정
     public String updateReview(reviewDto dto) {
         shopreview shopreview = dto.toEntity();
+        log.info("마이페이지 리뷰 수정 "+ dto.toString());
         shopreview target = shopreviewRepository.findById(shopreview.getRid()).orElse(null);
         if (target != null) {
             shopreviewRepository.save(shopreview);

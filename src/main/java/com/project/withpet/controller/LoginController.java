@@ -67,7 +67,7 @@ public class LoginController {
         boolean result = userService.checkUser(userid, password);
         if(result==true){
             HttpSession session = req.getSession();
-            session.setAttribute("userid", userid);
+            session.setAttribute("userLogined", userid);
             return "redirect:/";
         } else {
             return "redirect:/login";
@@ -77,7 +77,7 @@ public class LoginController {
     @GetMapping("logout")
     public String logout(HttpServletRequest req){
         HttpSession session = req.getSession();
-        session.removeAttribute("userid");
+        session.removeAttribute("userLogined");
         return "redirect:/";
     }
 

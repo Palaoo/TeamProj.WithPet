@@ -4,6 +4,7 @@ import com.project.withpet.domain.cafe;
 import com.project.withpet.domain.shopreview;
 import com.project.withpet.repository.cafeRepository;
 import com.project.withpet.repository.shopreviewRepository;
+import com.project.withpet.service.ShopLikeService;
 import com.project.withpet.service.cafeService;
 import com.project.withpet.service.reviewService;
 import lombok.extern.slf4j.Slf4j;
@@ -34,7 +35,11 @@ public class cafeController {
     @Autowired
     private shopreviewRepository shopreviewRepository;
 
+    private final ShopLikeService shopLikeService;
 
+    public cafeController(ShopLikeService shopLikeService) {
+        this.shopLikeService = shopLikeService;
+    }
 
 
     @GetMapping("cafe_list")   //카페 목록 가져오기
@@ -43,6 +48,7 @@ public class cafeController {
         HttpSession session = req.getSession();
         String userid = (String) session.getAttribute("userLogined");
         model.addAttribute("userid",userid);
+
 
         List<cafe> cafeList = cafeService.findByshoptype(2L);
         List<CafeDTOList> cafeDTOLists = new ArrayList<>();
@@ -54,7 +60,6 @@ public class cafeController {
         model.addAttribute("cafeDTOLists", cafeDTOLists);
         return "cafe_list";
     }
-
 
 
     @GetMapping("cafeinfo") //카페 상세정보
@@ -70,7 +75,7 @@ public class cafeController {
         model.addAttribute("userid",userid);
         //리뷰 리스트
         List<shopreview> shopreviewList = reviewService.findByshopid(shopid);
-        model.addAttribute("shopreview",shopreviewList);
+        model.addAttribute("shopreview", shopreviewList);
         log.info(shopreviewList.toString());
         return "cafeinfo";
 
@@ -83,7 +88,12 @@ public class cafeController {
         model.addAttribute("userid",userid);
 
         List<cafe> cafeList = cafeService.findByshoptype(3L);
-        model.addAttribute("cafeList", cafeList);
+        List<CafeDTOList> cafeDTOLists = new ArrayList<>();
+        for (cafe cafe : cafeList) {
+            boolean shopLike = shopLikeService.islike(cafe.getShopid(),userid);
+            cafeDTOLists.add(new CafeDTOList(cafe,shopLike));
+        }
+        model.addAttribute("cafeDTOLists", cafeDTOLists);
         return "Restaurant-list";
     }
 
@@ -100,14 +110,11 @@ public class cafeController {
         model.addAttribute("userid",userid);
         //리뷰 리스트
         List<shopreview> shopreviewList = reviewService.findByshopid(shopid);
-        model.addAttribute("shopreview",shopreviewList);
+        model.addAttribute("shopreview", shopreviewList);
         log.info(shopreviewList.toString());
         return "restaurant-info";
 
     }
-
-
-
 
 
 }
