@@ -4,6 +4,7 @@ import com.project.withpet.dto.HotelForm;
 import com.project.withpet.dto.HotelroomForm;
 import com.project.withpet.domain.*;
 import com.project.withpet.repository.Booking.BookingRepository;
+import com.project.withpet.repository.HotelimgRepository;
 import com.project.withpet.repository.Hotelroom.HotelroomRepository;
 import com.project.withpet.repository.Shop.ShopQueryRepository;
 import com.project.withpet.repository.Shop.ShopRepository;
@@ -44,13 +45,16 @@ public class ShopController {
 
     private final UserService userService;
     private final BookingRepository bookingRepository;
+
+    private final HotelimgRepository hotelimgRepository;
     @Autowired
-    public ShopController(ShopService shopService, HotelroomService hotelroomService, ShopQueryRepository shopQueryRepository, ShopRepository shopRepository, HotelroomRepository hotelroomRepository, UserService userService, BookingRepository bookingRepository) {
+    public ShopController(ShopService shopService, HotelroomService hotelroomService, ShopQueryRepository shopQueryRepository, ShopRepository shopRepository, HotelroomRepository hotelroomRepository, UserService userService, BookingRepository bookingRepository, HotelimgRepository hotelimgRepository) {
         this.shopService = shopService;
         this.hotelroomService = hotelroomService;
         this.shopQueryRepository = shopQueryRepository;
         this.userService = userService;
         this.bookingRepository = bookingRepository;
+        this.hotelimgRepository = hotelimgRepository;
     }
 
     @GetMapping("/hotel")
@@ -107,6 +111,7 @@ public class ShopController {
 
         List<Shop> availShop = shopQueryRepository.findAvailHotel(checkin, checkout, 2L);
         List<Shop> hotelList = shopService.hotelList(1L);
+
 
         List<HotelForm> hotelForms = new ArrayList<>();
 
@@ -352,6 +357,8 @@ public class ShopController {
                 hotelForm.setAvail("false");
             }
         }
+        Optional<Hotelimg> hotelimg = hotelimgRepository.findByShopid(hotelList.get(i).getShopid());
+        hotelForm.setPath(hotelimg.get().getPath());
         hotelForms.add(hotelForm);
     }
 

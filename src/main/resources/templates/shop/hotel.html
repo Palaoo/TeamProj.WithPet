@@ -42,7 +42,7 @@
         <a th:href="@{/hotel/detail(shopid=${hotelList.getShopid()})}" class="detail">
             <div class="row g-0" >
                 <div class="col-md-4">
-                    <img src="/image/poolvil.jfif" style="height: 150px" class="img-fluid rounded-start">
+                    <img th:src="${hotelList.getPath()}" style="height: 150px" class="img-fluid rounded-start">
                 </div>
                 <div class="col-md-8" >
                     <div class="card-body">
