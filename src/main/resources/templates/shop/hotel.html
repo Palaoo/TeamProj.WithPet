@@ -9,8 +9,8 @@
     <th:block th:replace="fragments/index::style"></th:block>
 </head>
 <style>
-    #top{
-        margin-bottom:10%;
+    #top {
+        margin-bottom: 10%;
     }
 </style>
 <body>
@@ -83,8 +83,8 @@
     </div>
 </section>
 <section class="shopping-cart spad">
-    <div class="container" >
-        <div class="row" >
+    <div class="container">
+        <div class="row">
             <div class="col-lg-12">
                 <div id="top">
                     <form action="/hotel" method="post" id="frminfo">
@@ -93,16 +93,19 @@
                                 <td><select name="order">
                                     <option th:selected="${#strings.equals(order, 'price')}" value="price">요금순</option>
                                     <option th:selected="${#strings.equals(order, 'score')}" value="score">평점순</option>
-                                </select>&nbsp;</td>
+                                </select>&nbsp;
+                                </td>
                                 <td><select name="size">
                                     <option th:selected="${#strings.equals(size, '4')}" value="4">모든견종</option>
                                     <option th:selected="${#strings.equals(size, '1')}" value="1">소형견</option>
                                     <option th:selected="${#strings.equals(size, '2')}" value="2">중형견</option>
                                     <option th:selected="${#strings.equals(size, '3')}" value="3">대형견</option>
                                 </select></td>
-                                <td> <input type="date" name="checkin" id="checkin" th:value="${checkin}">&nbsp;
-                                    <input type="date" name="checkout" id="checkout" th:value="${checkout}">&nbsp;</td>
-                                <td>인원수&nbsp;<input type="number" th:value="${person}" name="person" id="person" min="1"></td>
+                                <td><input type="date" name="checkin" id="checkin" th:value="${checkin}">&nbsp;
+                                    <input type="date" name="checkout" id="checkout" th:value="${checkout}">&nbsp;
+                                </td>
+                                <td>인원수&nbsp;<input type="number" th:value="${person}" name="person" id="person"
+                                                    min="1"></td>
                                 <td><input type="submit" th:value="조회" id="submit"></td>
                             </tr>
                         </table>
@@ -110,22 +113,28 @@
                 </div>
 
                 <div class="container">
-                    <div  class="row row-cols-1 row-cols-md-3 g-4">
+                    <div class="row row-cols-1 row-cols-md-3 g-4">
                         <div class="col" th:each="hotelList : ${hotelList}">
                             <div class="card h-100">
-                                <a th:href="@{/hotel/detail(shopid=${hotelList.getShopid()})}" class="detail"><img src="/image/poolvil.jfif" class="card-img-top" alt="" width="300" height="300"></a>
+                                <a th:href="@{/hotel/detail(shopid=${hotelList.getShopid()})}" class="detail"><img
+                                        src="/image/poolvil.jfif" class="card-img-top" alt="" width="300" height="300"></a>
                                 <div class="card-body">
                                     <h5 class="card-title" th:text="${hotelList.getName()}"></h5>
-                                    <img th:if="${pDTO.isLiked==1}" src="img/icon/redheart.png"
-                                         th:id="|btnLike${pDTO.product.id}|" width="38" height="36" alt="">
-                                    <img th:if="${pDTO.isLiked==0}" src="img/icon/heart.png"
-                                         th:id="|btnLike${pDTO.product.id}|" alt="">
+                                    <a href="#" id="btnLike" th:name="${hotelList.shopid}">
+                                        <img th:if="${hotelList.isLiked==1}" src="img/icon/redheart.png"
+                                             th:id="|btnLike${hotelList.shopid}|" width="38" height="36" alt="">
+                                        <img th:if="${hotelList.isLiked==0}" src="img/icon/heart.png"
+                                             th:id="|btnLike${hotelList.shopid}|" alt="">
+                                    </a>
                                     <ul class="list-group list-group-flush">
                                         <li class="list-group-item">별점(댓글수)</li>
-                                        <li class="list-group-item" th:if="${#strings.equals(hotelList.getAvail(), 'true')}"
+                                        <li class="list-group-item"
+                                            th:if="${#strings.equals(hotelList.getAvail(), 'true')}"
                                             th:text="|최저가 ${hotelList.getPrice()}원|"></li>
-                                        <li class="list-group-item" th:unless="${#strings.equals(hotelList.getAvail(), 'true')}">예약 마감</li>
-                                        <li class="list-group-item" >
+                                        <li class="list-group-item"
+                                            th:unless="${#strings.equals(hotelList.getAvail(), 'true')}">예약 마감
+                                        </li>
+                                        <li class="list-group-item">
                                             <th:block th:each="feat:${hotelList.getShopFeats()}">
                                                 <span class="card-text" th:text="${feat.getFeatname()}"></span>
                                             </th:block>
@@ -145,17 +154,39 @@
 
 </body>
 <script>
-$(document)
-    .on('click','#submit',function (){
-        var today = new Date().toISOString().substring(0, 10)
+    $(document)
+        .on('click', '#submit', function () {
+            var today = new Date().toISOString().substring(0, 10)
 
-        if($('#checkin').val()>=$('#checkout').val()||$('#checkin').val()<today){
-            alert("날짜를 확인해주세요.")
-            return false;
-        } else if($('#person').val()<=0){
-            alert("인원수를 확인해주세요.")
-            return false;
-        }
+            if ($('#checkin').val() >= $('#checkout').val() || $('#checkin').val() < today) {
+                alert("날짜를 확인해주세요.")
+                return false;
+            } else if ($('#person').val() <= 0) {
+                alert("인원수를 확인해주세요.")
+                return false;
+            }
+        }).on('click', '#btnLike', function () {
+        shopId = $(this).attr('name')
+        console.log(shopId)
+        $.ajax({
+            type: 'get',
+            url: 'append_likehotel?shopId=' + shopId,
+            success: function (data) {
+                ID = '#btnLike' + shopId
+                if (data == '1') {
+                    $(ID).attr("src", "img/icon/redheart.png")
+                    $(ID).attr("width", "38px")
+                    $(ID).attr("height", "36px")
+                    $('#likeCount' + shopId).text(parseInt($('#likeCount' + shopId).text()) + 1)
+                } else {
+                    console.log('여기')
+                    $(ID).attr("height", "36px")
+                    $(ID).attr("width", "38px")
+                    $(ID).attr("src", "img/icon/love.png")
+                    $('#likeCount' + shopId).text(parseInt($('#likeCount' + shopId).text()) - 1)
+                }
+            }
+        })
     })
 
 </script>
