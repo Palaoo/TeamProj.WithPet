@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-@Entity
+@Entity(name = "board")
 public class Board {
 
     @Id
