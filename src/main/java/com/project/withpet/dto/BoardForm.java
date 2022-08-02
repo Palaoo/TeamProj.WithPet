@@ -1,5 +1,8 @@
 package com.project.withpet.dto;
 
+import com.project.withpet.domain.Board;
+import lombok.AllArgsConstructor;
+
 public class BoardForm {
     private Long boardcode;
     private String content;
@@ -8,6 +11,24 @@ public class BoardForm {
     private String title;
 
     private String path;
+
+    private Board board;
+
+    public BoardForm() {
+    }
+
+    public BoardForm(String path, Board board) {
+        this.path = path;
+        this.board = board;
+    }
+
+    public Board getBoard() {
+        return board;
+    }
+
+    public void setBoard(Board board) {
+        this.board = board;
+    }
 
     public String getPath() {
         return path;

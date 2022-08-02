@@ -56,10 +56,8 @@ public class ShopController {
     private final HotelroomimgRepository hotelroomimgRepository;
     private final reviewService reviewService;
     private final shopreviewRepository shopreviewRepository;
-
-    private final LikeHotelService likeHotelService;
     @Autowired
-    public ShopController(ShopService shopService, HotelroomService hotelroomService, ShopQueryRepository shopQueryRepository, ShopRepository shopRepository, HotelroomRepository hotelroomRepository, UserService userService, BookingRepository bookingRepository, HotelimgRepository hotelimgRepository, HotelroomimgRepository hotelroomimgRepository, com.project.withpet.service.reviewService reviewService, com.project.withpet.repository.shopreviewRepository shopreviewRepository, LikeHotelService likeHotelService) {
+    public ShopController(ShopService shopService, HotelroomService hotelroomService, ShopQueryRepository shopQueryRepository, ShopRepository shopRepository, HotelroomRepository hotelroomRepository, UserService userService, BookingRepository bookingRepository, HotelimgRepository hotelimgRepository, HotelroomimgRepository hotelroomimgRepository, com.project.withpet.service.reviewService reviewService, com.project.withpet.repository.shopreviewRepository shopreviewRepository) {
         this.shopService = shopService;
         this.hotelroomService = hotelroomService;
         this.shopQueryRepository = shopQueryRepository;
@@ -69,7 +67,6 @@ public class ShopController {
         this.hotelroomimgRepository = hotelroomimgRepository;
         this.reviewService = reviewService;
         this.shopreviewRepository = shopreviewRepository;
-        this.likeHotelService = likeHotelService;
     }
 
     @GetMapping("/hotel")
@@ -133,9 +130,6 @@ public class ShopController {
         for (int i = 0; i < hotelList.size(); i++) {
             addHotelForm(availShop, hotelList, hotelForms, i);
         }
-
-
-
 
         model.addAttribute("hotelList", hotelForms);
         model.addAttribute("person", 2);
