@@ -1,3 +1,4 @@
+package com.project.withpet.controller;
 
 import com.project.withpet.service.ShopLikeService;
 import org.springframework.stereotype.Controller;

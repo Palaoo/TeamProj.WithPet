@@ -75,12 +75,12 @@ public class LoginController {
         }
     }
 
-    @GetMapping("logout")
-    public String logout(HttpServletRequest req){
-        HttpSession session = req.getSession();
-        session.removeAttribute("userLogined");
-        return "redirect:/";
-    }
+//    @GetMapping("logout")
+//    public String logout(HttpServletRequest req){
+//        HttpSession session = req.getSession();
+//        session.removeAttribute("userLogined");
+//        return "redirect:/";
+//    }
 
     @PostMapping("checkuser")
     @ResponseBody

@@ -95,11 +95,11 @@ public class UserController {
 //        return "login";
 //    }
 
-//    @GetMapping("logout")
-//    public String logout(HttpServletRequest req) {
-//        req.getSession().invalidate();
-//        return "redirect:/";
-//    }
+    @GetMapping("logout")
+    public String logout(HttpServletRequest req) {
+        req.getSession().invalidate();
+        return "redirect:/";
+    }
 
     @GetMapping("mypage")
     public String myPage(Model model,HttpServletRequest req) {

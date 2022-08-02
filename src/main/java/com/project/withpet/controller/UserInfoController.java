@@ -1,10 +1,12 @@
 package com.project.withpet.controller;
 
+import com.project.withpet.domain.*;
+import com.project.withpet.dto.BoardForm;
 import com.project.withpet.dto.BookingForm;
-import com.project.withpet.domain.Booking;
-import com.project.withpet.domain.Hotelroom;
-import com.project.withpet.domain.Shop;
 import com.project.withpet.repository.Booking.BookingRepository;
+import com.project.withpet.repository.HotelimgRepository;
+import com.project.withpet.service.BoardService;
+import com.project.withpet.service.BoardimgService;
 import com.project.withpet.service.HotelroomService;
 import com.project.withpet.service.ShopService;
 import lombok.extern.slf4j.Slf4j;
@@ -31,12 +33,16 @@ public class UserInfoController {
     private final BookingRepository bookingRepository;
     private final HotelroomService hotelroomService;
     private final ShopService shopService;
+    private final BoardService boardService;
+    private final BoardimgService boardimgService;
 
     @Autowired
-    public UserInfoController(BookingRepository bookingRepository, HotelroomService hotelroomService, ShopService shopService) {
+    public UserInfoController(BookingRepository bookingRepository, HotelroomService hotelroomService, ShopService shopService, BoardService boardService, HotelimgRepository hotelimgRepository, BoardimgService boardimgService) {
         this.bookingRepository = bookingRepository;
         this.hotelroomService = hotelroomService;
         this.shopService = shopService;
+        this.boardService = boardService;
+        this.boardimgService = boardimgService;
     }
 
     @GetMapping("/mypage/booking")
@@ -69,7 +75,7 @@ public class UserInfoController {
             }
 
             model.addAttribute("bookList", bookingList);
-            return "mypage_booking";
+            return "mypage/mypage_booking";
         }
 
     }
@@ -127,15 +133,35 @@ public class UserInfoController {
         return "redirect:/mypage/booking";
     }
 
-    @GetMapping("/mypage/manager")
-    public String register(HttpServletRequest req, Model model){
+//    @GetMapping("/mypage/manager")
+//    public String register(HttpServletRequest req, Model model){
+//
+//        HttpSession session = req.getSession();
+//        if (session.getAttribute("userid") == null) {
+//            return "redirect:/login";
+//        } else {
+//            model.addAttribute("userid", session.getAttribute("userid"));
+//            return "mypage/mypage_manager";
+//        }
+//    }
 
+    @GetMapping("/mypage/post")
+    public String mypost(HttpServletRequest req, Model model){
         HttpSession session = req.getSession();
-        if (session.getAttribute("userid") == null) {
+        if(session.getAttribute("userid") == null){
             return "redirect:/login";
         } else {
-            model.addAttribute("userid", session.getAttribute("userid"));
-            return "mypage/mypage_manager";
+            String userid = (String) session.getAttribute("userid");
+            model.addAttribute("userid", userid);
+            List<Board> boardList = boardService.findByUserid(userid);
+            List<BoardForm> boardFormList = new ArrayList<>();
+            for(Board board : boardList){
+                Optional<Boardimg> boardimg = boardimgService.findOne(board.getBoardcode());
+                String path = boardimg.get().getPath();
+                boardFormList.add(new BoardForm(path, board));
+            }
+            model.addAttribute("postList", boardFormList);
+            return  "mypage/mypage_post";
         }
     }
 

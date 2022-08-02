@@ -1,10 +1,235 @@
 <!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
 <html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="Male_Fashion Template">
+    <meta name="keywords" content="Male_Fashion, unica, creative, html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>MY review</title>
+
+    <th:block th:replace="fragments/index::style"></th:block>
 </head>
 <body>
-$END$
+<style>
+    .profile_user{
+        width:100px;
+        height:100px;
+        border-radius: 70%;
+        overflow: hidden;
+        background-color:pink;
+    }
+    #img_profile{
+    <!--  width:100px;
+    height:100px;-->
+        width:100%;
+        height:100%;
+        object-fit:cover;
+    }
+    #leftbar{
+        margin-left:15%;
+    }
+    #lefttab{
+        margin-left:-5%;
+    }
+</style>
+<div th:replace="fragments/index :: header"></div>
+
+<!--<div class="container">
+    <div class="top">
+        <span th:text="|${userid}님|"></span>
+    </div>
+    <div class="contents">
+        <div class="row">
+            <div th:replace="fragments/mypage :: menubar"></div>
+
+            <div class="col-sm-8">
+                <div class="card mb-3" style="max-width: 540px;" th:each="book, i:${bookList}">
+                    <div class="card-body">
+                        <h5 class="card-text" th:text="|${book.getHotelname()} / ${book.getRoomname}|"></h5><br>
+                        <h5 class="card-text" th:text="|${book.getCheckin()} ~ ${book.getCheckout()} (${book.getName()})|"></h5><br>
+                        <p class="card-text" th:text="${book.getMobile()}"></p>
+                        <p class="card-text" th:text="${book.getDetail()}"></p>
+&lt;!&ndash;                            <p class="card-text" th:text="|${book.getTotal()}원|"></p>&ndash;&gt;
+&lt;!&ndash;                        <a th:href="@{/mypage/booking/delete(bookid=${book.getBookid()})}">&ndash;&gt;
+&lt;!&ndash;                            <button style="float:right;" id="btnDelete">예약 취소</button>&ndash;&gt;
+&lt;!&ndash;                        </a>&ndash;&gt;
+                        <a th:href="@{/mypage/booking/change(bookid=${book.getBookid()})}">
+                            <button style="float:right;">예약 변경</button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>-->
+
+
+
+<section class="breadcrumb-option">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="breadcrumb__text">
+                    <h4>회원정보</h4>
+                    <div class="breadcrumb__links">
+                        <a href="./index.html">Home</a>
+                        <span>Info</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="shop spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3" id="leftbar">
+                <div class="shop__sidebar">
+                    <div class="profile_user">
+                        <img id="img_profile" src="/img/blog/blog-1.jpg"/>
+
+                    </div>
+                    <p>OOO님&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;포인트</p>
+                    <div class="shop__sidebar__accordion">
+                        <div class="accordion" id="accordionExample">
+                            <div class="card">
+                                <!--  <div class="card-heading">
+                                      <a href="/mypage/booking">예약내역</a>
+                                  </div>-->
+
+                                <div id="collapseOne" class="collapse show" data-parent="#accordionExample">
+                                    <div class="card-body">
+                                        <div class="shop__sidebar__categories" id="lefttab">
+                                            <!--    <ul class="nice-scroll">
+                                                    <li><a href="/mypage/booking">예약내역</a></li>
+                                                    <li><a href="#">저장목록</a></li>
+                                                    <li><a href="#">내 후기</a></li>
+                                                    <li><a href="#">내가 남긴 글</a></li>
+                                                    <li><a href="/mypage/manager">관리자 등록</a></li>
+                                                    <li><a href="/businessPage">사업자</a></li>
+                                                </ul>-->
+
+                                            <ul class="nav flex-column" id="myTab" role="tablist">
+                                                <li class="nav-item" role="presentation">
+                                                    <a class="nav-link active" id="reservation-tab" data-bs-toggle="tab" data-bs-target="#reservation" type="button" role="tab" aria-controls="reservation" aria-selected="true" aria-current="page" href="/mypage/booking">예약내역</a>
+                                                </li>
+                                                <li class="nav-item" role="presentation">
+                                                    <a class="nav-link" id="save-tab" data-bs-toggle="tab" data-bs-target="#save" type="button" role="tab" aria-controls="save" aria-selected="false" href="#">저장목록</a>
+                                                </li>
+                                                <li class="nav-item" role="presentation">
+                                                    <a class="nav-link" id="review-tab" data-bs-toggle="tab" data-bs-target="#review" type="button" role="tab" aria-controls="review" aria-selected="false" href="#">내 후기</a>
+                                                </li>
+                                                <li class="nav-item" role="presentation">
+                                                    <a class="nav-link" id="mywriting-tab" data-bs-toggle="tab" data-bs-target="#mywriting" type="button" role="tab" aria-controls="mywriting" aria-selected="false" href="#">내가 남긴 글</a>
+                                                </li>
+
+                                            </ul>
+                                            <ul class="nav flex-column" id="myTab2" role="tablist">
+                                                <li class="nav-item" role="presentation">
+                                                    <a class="nav-link" id="manager-tab" data-bs-toggle="tab" data-bs-target="#manager" type="button" role="tab" aria-controls="manager" aria-selected="false" href="/mypage/manager">관리자 등록</a>
+                                                </li>
+                                                <li class="nav-item" role="presentation">
+                                                    <a class="nav-link" id="business-tab" data-bs-toggle="tab" data-bs-target="#business" type="button" role="tab" aria-controls="business" aria-selected="false" href="/businessPage">사업자</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <!-- <div class="card">
+                                 <div class="card-heading">
+                                     <a href="#">저장목록</a>
+                                 </div>
+                             </div>
+                             <div class="card">
+                                 <div class="card-heading">
+                                     <a href="#">내 후기</a>
+                                 </div>
+                             </div>
+                             <div class="card">
+                                 <div class="card-heading">
+                                     <a href="#">내가 남긴 글</a>
+                                 </div>
+                             </div>
+                             <div class="card">
+                                 <div class="card-heading">
+                                     <a href="/mypage/manager">관리자 등록</a>
+                                 </div>
+                             </div>-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-9">
+                <div class="row">
+                    <!--<div class="col-lg-4 col-md-6 col-sm-6">
+                        <div class="product__item">
+                            <div class="card mb-3" style="max-width: 540px;" th:each="book, i:${bookList}">
+                                <div class="card-body">
+                                    <h5 class="card-text" th:text="|${book.getHotelname()} / ${book.getRoomname}|"></h5><br>
+                                    <h5 class="card-text" th:text="|${book.getCheckin()} ~ ${book.getCheckout()} (${book.getName()})|"></h5><br>
+                                    <p class="card-text" th:text="${book.getMobile()}"></p>
+                                    <p class="card-text" th:text="${book.getDetail()}"></p>
+                                    <a th:href="@{/mypage/booking/change(bookid=${book.getBookid()})}">
+                                        <button style="float:right;">예약 변경</button>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>-->
+
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="reservation" role="tabpanel" aria-labelledby="reservation-tab" th:each="post:${postList}">
+                            <a th:href="@{/community/postdetail(boardcode=${post.board.getBoardcode()})}">
+                                <div class="card-body">
+                                    <div class="row g-0">
+                                        <div class="col-md-4">
+                                            <img th:src="${post.path}" class="img-fluid rounded-start" alt="...">
+                                        </div>
+                                        <div class="col-md-8">
+                                            <div class="card-body">
+                                                <h5 class="card-text" th:text="${post.board.getTitle()}"></h5>
+                                                <p class="card-text"><small class="text-muted" th:text="${post.board.getDate()}">Last updated 3 mins ago</small></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+
+                        <div class="tab-pane" id="save" role="tabpanel" aria-labelledby="save-tab">
+
+                        </div>
+
+                        <div class="tab-pane" id="review" role="tabpanel" aria-labelledby="review-tab">
+
+                        </div>
+
+                        <div class="tab-pane" id="mywriting" role="tabpanel" aria-labelledby="mywriting-tab">
+
+                        </div>
+
+                        <div class="tab-pane" id="manager" role="tabpanel" aria-labelledby="manager-tab">
+
+                        </div>
+
+                        <div class="tab-pane" id="business" role="tabpanel" aria-labelledby="business-tab">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<th:block th:replace="fragments/index :: footer"></th:block>
 </body>
+<script>
+</script>
 </html>
