@@ -25,9 +25,9 @@
 <!--    ]-->
 </style>
 <body>
-    <!--<div th:replace="fragments/index :: header"></div>-->
+    <div th:replace="fragments/index :: header"></div>
 
-    <p align=right><a id="myshopping" href='myshopping'>마이쇼핑</a>&nbsp;&nbsp;<a id="basket_shopping"
+    <!--<p align=right><a id="myshopping" href='myshopping'>마이쇼핑</a>&nbsp;&nbsp;<a id="basket_shopping"
             href='basket_view'>장바구니</a>&nbsp;&nbsp;<a th:if="${userLogined==null}" id="loginPage"
             href='loginPage'>로그인</a><a th:if="${userLogined!=null}" th:text="${userLogined}" href="userInfoPage"></a>
     </p>
@@ -39,7 +39,7 @@
         <a href="mallPage">상점</a>
         <a href="#">게시판</a>
     </nav>
-    <hr>
+    <hr>-->
 
     <!--<div class="middle">
         <div class="middle-prod" th:each="basketDTO:${BasketDTOs}">
@@ -193,8 +193,6 @@
         </div>
     </section>
     <!-- Shopping Cart Section End -->
-
-
     <th:block th:replace="fragments/index :: footer"></th:block>
 </body>
 <script src="https://js.tosspayments.com/v1"></script>

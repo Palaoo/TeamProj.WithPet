@@ -33,8 +33,11 @@
     <div id="preloder">
         <div class="loader"></div>
     </div>
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 7f6e54812f72dacb0b22d631246a32530cca678f
     <!-- Header Section Begin -->
     <header class="header">
         <div class="header__top">
@@ -51,9 +54,10 @@
                                 <!--<a href="signup">Sign in</a>
                                 <a href="login">Log in</a>-->
                                 <div align="center" th:if="${not #strings.isEmpty(userid)}">
+                                    <a th:if="${userLogined!=null}" th:text="${userLogined}" href="userInfoPage"></a>
                                     <a id="myshopping2" href="/myshopping">마이쇼핑</a>
                                     <a id="basket_shopping2" href="/basket_view">장바구니</a>
-                                    <a id="userInfo2" href="/mypage">회원정보</a>
+                                    <a id="userInfo2" href="/mypage/booking">회원정보</a>
                                     <a id="logout2" href="/logout">로그아웃</a>
                                 </div>
                                 <div align="center" th:if="${#strings.isEmpty(userid)}">
@@ -70,7 +74,7 @@
             <div class="row">
                 <div class="col-lg-3 col-md-3">
                     <div class="header__logo">
-                        <a href="/"><img th:src="@{/img/logo.png}"/></a>
+                        <a href="/"><img th:src="@{/img/logo.jpg}"/></a>
                     </div>
                 </div>
                 <div class="col-lg-6 col-md-6">
@@ -1029,7 +1033,7 @@
                 <div class="col-lg-3 col-md-6 col-sm-6">
                     <div class="footer__about">
                         <div class="footer__logo">
-                            <a href="#"><img th:src="@{/img/footer-logo.png}"/></a>
+                            <a href="#"><img th:src="@{/img/footer_logo.png}"/></a>
                         </div>
                         <p>The customer is at the heart of our unique business model, which includes design.</p>
                         <a href="#"><img src="img/payment.png" alt=""></a>
@@ -1037,24 +1041,14 @@
                 </div>
                 <div class="col-lg-2 offset-lg-1 col-md-3 col-sm-6">
                     <div class="footer__widget">
-                        <h6>Shopping</h6>
-                        <ul>
-                            <li><a href="#">Clothing Store</a></li>
-                            <li><a href="#">Trending Shoes</a></li>
-                            <li><a href="#">Accessories</a></li>
-                            <li><a href="#">Sale</a></li>
-                        </ul>
+                        <h6><a href="/hotel">HOTEL</a></h6>
+                        <h6><a href="/mallPage">SHOPPING</a></h6>
                     </div>
                 </div>
                 <div class="col-lg-2 col-md-3 col-sm-6">
                     <div class="footer__widget">
-                        <h6>Shopping</h6>
-                        <ul>
-                            <li><a href="#">Contact Us</a></li>
-                            <li><a href="#">Payment Methods</a></li>
-                            <li><a href="#">Delivary</a></li>
-                            <li><a href="#">Return & Exchanges</a></li>
-                        </ul>
+                        <h6><a href="/cafe_list">CAFE</a></h6>
+                        <h6><a href="/Restaurant-list">RESTAURANT</a></h6>
                     </div>
                 </div>
                 <div class="col-lg-3 offset-lg-1 col-md-6 col-sm-6">

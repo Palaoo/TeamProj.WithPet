@@ -47,6 +47,10 @@ public class ProdReviewController {
     }
 
     @GetMapping("review")
+<<<<<<< HEAD
+=======
+
+>>>>>>> 7f6e54812f72dacb0b22d631246a32530cca678f
     public String doReview(@RequestParam Long prodId, Model model) {
         model.addAttribute("prodId", prodId);
         return "review";

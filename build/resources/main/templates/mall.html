@@ -10,7 +10,10 @@
     <title>Title</title>
     <th:block th:replace="fragments/index::style"></th:block>
 </head>
-
+<style>
+#product{margin-bottom:30px;}
+#btnLike,#heart_img{text-align:center;}
+</style>
 <body>
 <div th:replace="fragments/index :: header"></div>
 
@@ -57,7 +60,11 @@
                     </div>
                 </div>
                 <div class="row">
+<<<<<<< HEAD
                     <div class="col-lg-4 col-md-6 col-sm-6" th:each="pDTO:${pDTOs}">
+=======
+                    <div class="col-lg-4 col-md-6 col-sm-6" th:each="pDTO:${pDTOs}" id="product">
+>>>>>>> 7f6e54812f72dacb0b22d631246a32530cca678f
                         <div class="product__item">
                             <div class="product__item__pic set-bg" th:data-setbg="${pDTO.imgURL}" name="btnProd"
                                  th:id="${pDTO.product.id}">
@@ -76,6 +83,7 @@
                             </div>
                         </div>
                         <div class="row">
+<<<<<<< HEAD
                             <div class="col-9">
                                 <h6 th:text="${pDTO.product.name}"></h6>
                                 <a href="#" name="addBasket" th:id="${pDTO.product.id}" class="add-cart">
@@ -83,12 +91,31 @@
                                 <!--src="img/icon/add-to-cart.png"-->
                             </div>
                             <div class="col-3">
+=======
+                            <div class="col-9" id="pd_txt">
+                                <h6 th:text="${pDTO.product.name}"></h6>
+                                <h5 th:text="|${pDTO.product.price}원|">$67.24</h5>
+                                <a href="#" name="addBasket" th:id="${pDTO.product.id}" class="add-cart">
+                                    + Add To Cart</a>
+                                <!--src="img/icon/add-to-cart.png"-->
+                           <!--     <div class="rating">
+                                    <i class="fa fa-star-o"></i>
+                                    <i class="fa fa-star-o"></i>
+                                    <i class="fa fa-star-o"></i>
+                                    <i class="fa fa-star-o"></i>
+                                    <i class="fa fa-star-o"></i>
+                                </div>-->
+
+                            </div>
+                            <div class="col-3" id="heart_img">
+>>>>>>> 7f6e54812f72dacb0b22d631246a32530cca678f
                                 <a href="#" id="btnLike" th:name="${pDTO.product.id}">
                                     <img th:if="${pDTO.isLiked==1}" src="img/icon/redheart.png"
                                          th:id="|btnLike${pDTO.product.id}|" width="38" height="36" alt="">
                                     <img th:if="${pDTO.isLiked==0}" src="img/icon/love.png"
                                          th:id="|btnLike${pDTO.product.id}|" width="38" height="36" alt="">
                                     <p th:text="${pDTO.likeCount}" th:id="|likeCount${pDTO.product.id}|"
+<<<<<<< HEAD
                                        name="likeCount"></p>
                                 </a>
                             </div>
@@ -101,6 +128,13 @@
                             <i class="fa fa-star-o"></i>
                         </div>
                         <h5 th:text="|${pDTO.product.price}원|">$67.24</h5>
+=======
+                                       name="likeCount" id="cnt"></p>
+                                </a>
+                            </div>
+                        </div>
+
+>>>>>>> 7f6e54812f72dacb0b22d631246a32530cca678f
                     </div>
                 </div>
                 <div class="row">

@@ -11,34 +11,12 @@
     <th:block th:replace="fragments/index::style"></th:block>
 </head>
 <style>
-    body {
-        margin: 0;
-    }
-
-    #mypage,
-    #logout {
-        text-decoration: none;
-        color: black;
-    }
-
-    nav a {
-        text-decoration: none;
-        color: black;
-        margin: 2em;
-    }
-
-    nav {
-        display: flex;
-        justify-content: center;
-    }
-
     table {
         border-spacing: 20px;
         border-collapse: separate;
         /* position:absolute;
         left:500px; */
     }
-
     #submit {
         border: none;
         outline: none;
@@ -49,37 +27,29 @@
         border-radius: 4px;
         font-weight: bold;
     }
-
     #submit:hover {
         background: white;
         border: 1px solid;
         color: #518581;
     }
-
     input[type="text"] {
         width: 100%;
     }
-
     .up-right-up {
         display: flex;
         flex-direction: row;
     }
-
     .up {
         display: flex;
         flex-direction: row;
     }
-
-
     .up-right-down,
     .body,
     .body-right-prod {
         display: flex;
         flex-direction: row;
     }
-
-    <!--
-    review-- >
+    <!--review-- >
     .star-rating {
         display: flex;
         flex-direction: row-reverse;
@@ -90,35 +60,29 @@
         text-align: center;
         width: 5em;
     }
-
     .star-rating input {
         display: none;
     }
-
     .star-rating label {
         -webkit-text-fill-color: transparent; /* Will override color (regardless of order) */
         -webkit-text-stroke-width: 2.3px;
         -webkit-text-stroke-color: #2b2a29;
         cursor: pointer;
     }
-
     .star-rating :checked ~ label {
         -webkit-text-fill-color: gold;
     }
-
     .star-rating label:hover,
     .star-rating label:hover ~ label {
         -webkit-text-fill-color: #fff58c;
     }
-
     textarea {
         width: 80%;
     }
-
 </style>
-
 <body>
-<header>
+<div th:replace="fragments/index :: header"></div>
+<!--<header>
     <p align=right><a id="myshopping" href='myshopping'>마이쇼핑</a>&nbsp;&nbsp;<a id="basket_shopping"
                                                                                href='basket_view'>장바구니</a>&nbsp;&nbsp;<a
             th:if="${userLogined==null}" id="loginPage"
@@ -134,8 +98,7 @@
         <a href="#">게시판</a>
     </nav>
 </header>
-<hr>
-
+<hr>-->
 
 <!--    <div class="up">-->
 <!--        <div class="up-left">-->
@@ -217,7 +180,10 @@
             <div class="col-lg-8">
                 <div class="shopping__cart__table">
                     <div class="body-right-prod">
+<<<<<<< HEAD
 
+=======
+>>>>>>> 7f6e54812f72dacb0b22d631246a32530cca678f
                         <tr>
                             <th><input type="date" id="datePicker1" class="form-control" value=""></th>
                             <th> ~</th>
@@ -326,7 +292,8 @@
          </form>
      </div>
  </section>-->
-<input type="button" value="사용리뷰쓰기" onclick="new_window();">
+<!--<input type="button" value="사용리뷰쓰기" onclick="new_window();">-->
+<th:block th:replace="fragments/index :: footer"></th:block>
 </body>
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <script src="resources/js/plugin/datepicker/bootstrap-datepicker.js"></script>
@@ -348,7 +315,7 @@
         // })
     })
 
-<<<<<<< HEAD
+
     function new_window(prodId) {
         var openWin = window.open(
             "review?prodId=" + prodId,
@@ -359,15 +326,6 @@
 
     }
 
-=======
-    function new_window() {
-        window.open(
-          "review",
-          "Review",
-          "width=400, height=300, top=50, left=50"
-        );
-      }
->>>>>>> 9b57d9d8cf91f3e9eb2a8298001da78bea7e33c9
 </script>
 
 </html>
