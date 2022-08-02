@@ -32,20 +32,32 @@
     /*    nav{*/
     /*        display:flex;*/
     /*        justify-content:center;*/
-        }
+    /*    }
 </style>
 
 <div th:replace="fragments/index :: header"></div>
 
 <div class="container">
     <div  class="row row-cols-1 row-cols-md-3 g-4">
-        <div class="col" th:each="cafeList: ${cafeList}">
+        <div class="col" th:each="cafeList: ${cafeDTOLists}">
             <input type="hidden" th:value="${cafeList.cafe.getShopid()}">
             <input type="hidden" th:value="${cafeList.cafe.getShoptype().getTypeid()}">
             <div class="card h-100">
-                <a th:href="@{/cafeinfo(shopid=${cafeList.cafe.getShopid()})}"><img th:src="${cafeList.getPath()}" class="card-img-top" alt="" width="300" height="300"></a>
+                <a th:href="@{/cafeinfo(shopid=${cafeList.cafe.getShopid()})}"><img src="cafe3.jpg" class="card-img-top" alt="" width="300" height="300"></a>
                 <div class="card-body">
-                    <h5 class="card-title" th:text="${cafeList.cafe.name}"></h5>
+                    <div class="row">
+                        <div class="col-sm-10">
+                            <h5 class="card-title" th:text="${cafeList.cafe.name}"></h5>
+                        </div>
+                        <div class="col-sm-2">
+                            <a href="#" id="btnLike" th:name="${cafeList.cafe.getShopid()}">
+                                <img th:if="${cafeList.islike}" src="image/redheart.png"
+                                     th:id="|btnLike${cafeList.cafe.shopid}|" width="25" height="25" alt="">
+                                <img th:if="${!cafeList.islike}" src="image/heart.png"
+                                     th:id="|btnLike${cafeList.cafe.shopid}|" width="25" height="25" alt="">
+                            </a>
+                        </div>
+                    </div>
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item" th:text="${cafeList.cafe.getRegion().getRegname()}"></li>
                         <li class="list-group-item" th:text="${cafeList.cafe.getShoptype().getTypename()}" ></li>
@@ -57,8 +69,32 @@
         </div>
     </div>
 
-    <th:block th:replace="fragments/index :: footer"></th:block>
 </div>
+<th:block th:replace="fragments/index :: footer"></th:block>
+<script src='https://code.jquery.com/jquery-3.4.1.js'></script>
+<script>
+    $(document)
+        .on('click', '#btnLike', function () {
+            shopid = $(this).attr('name')
+            $.ajax({
+                type: 'get',
+                url: 'append_shoplike?shopId=' + shopid,
+                success: function (data) {
+                    ID = '#btnLike' + shopid
+                    if (data == '1') {
+                        $(ID).attr("src", "image/redheart.png")
+                        $(ID).attr("width", "25px")
+                        $(ID).attr("height", "25px")
+                    } else {
+                        console.log('여기')
+                        $(ID).attr("height", "25px")
+                        $(ID).attr("width", "25px")
+                        $(ID).attr("src", "image/heart.png")
 
+                    }
+                }
+            })
+        })
+</script>
 </body>
 </html>

@@ -7,6 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MY review</title>
+    <th:block th:replace="fragments/index::style"></th:block>
 </head>
 <body>
 <style>
@@ -63,22 +64,23 @@
     }
 </style>
 
+<div th:replace="fragments/index :: header"></div>
 <div class="container">
     
-    <div class="header">
-        <p align=right><a id="login" href='/static'>로그아웃</a>&nbsp;&nbsp;<a id="mypage" href=''>마이페이지</a></p>
-        <h1 align=center><a href="/static">WITH PET</a></h1>
-        <nav>
-           <a href="#">숙소</a>
-           <a href="cafe_list">카페</a>
-           <a href="Restaurant-list">맛집</a>
-           <a href="#">상점</a>
-           <a href="#">게시판</a>
-        </nav>
-    </div>
+<!--    <div class="header">-->
+<!--        <p align=right><a id="login" href='/static'>로그아웃</a>&nbsp;&nbsp;<a id="mypage" href=''>마이페이지</a></p>-->
+<!--        <h1 align=center><a href="/static">WITH PET</a></h1>-->
+<!--        <nav>-->
+<!--           <a href="#">숙소</a>-->
+<!--           <a href="cafe_list">카페</a>-->
+<!--           <a href="Restaurant-list">맛집</a>-->
+<!--           <a href="#">상점</a>-->
+<!--           <a href="#">게시판</a>-->
+<!--        </nav>-->
+<!--    </div>-->
 
     <div class="top">
-        <img src="dd.JPG"><span th:text="${userid}"></span>님
+        <img src="dd.JPG"><span th:text="${userLogined}"></span>님
     </div>
 
     <div class="contents">
@@ -121,7 +123,7 @@
                             <div class="row">
                                 <div class="col-sm-9" th:text="${shopReviewDTO.shopreview.getContent()}">
                                 </div>
-                                <div class="col-sm-3" th:if="${shopReviewDTO.shopreview.getUserid()==userid}">
+                                <div class="col-sm-3" th:if="${shopReviewDTO.shopreview.getUserid()==userLogined}">
                                     <!--수정 모달-->
                                     <form th:action="@{'/mypage/review/update'}" method="post">
                                         <button type="button" th:id="${index}"
@@ -200,9 +202,8 @@
             </div>
         </div>
     </div>
-    <div class="footer">footer
-    </div>
 </div>
+<th:block th:replace="fragments/index :: footer"></th:block>
 <script src='https://code.jquery.com/jquery-3.4.1.js'></script>
 <script>
     const commentEditModal = document.querySelector("#review-edit-Modal")

@@ -9,7 +9,6 @@ import com.project.withpet.repository.Hotelroom.HotelroomRepository;
 import com.project.withpet.repository.Hotelroom.Img.ImgRepository;
 import com.project.withpet.repository.Like.JpaLikeRepository;
 import com.project.withpet.repository.Like.LikeRepository;
-import com.project.withpet.repository.LikeHotel.JpaLikeHotelRepository;
 import com.project.withpet.repository.LikeHotel.LikeHotelRepository;
 import com.project.withpet.repository.Order.OrderRepository;
 import com.project.withpet.repository.Orderprod.OrderprodRepository;
@@ -49,7 +48,7 @@ public class SpringConfig {
     private final OrderprodRepository orderprodRepository;
     private final BasketRepository basketRepository;
 
-//    private final LikeHotelRepository likeHotelRepository;
+    private final LikeHotelRepository likeHotelRepository;
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -59,7 +58,7 @@ public class SpringConfig {
                         ShopRepository shopRepository, HotelroomRepository hotelroomRepository,
                         BusinessUserRepository businessUserRepository, ProdRepository prodRepository,
                         ImgRepository imgRepository, CimgRepository cimgRepository, OrderRepository orderRepository,
-                        OrderprodRepository orderprodRepository, BasketRepository basketRepository) {
+                        OrderprodRepository orderprodRepository, BasketRepository basketRepository, LikeHotelRepository likeHotelRepository) {
 
         this.userRepository = userRepository;
         this.boardRepository = boardRepository;
@@ -74,6 +73,7 @@ public class SpringConfig {
         this.orderRepository = orderRepository;
         this.orderprodRepository = orderprodRepository;
         this.basketRepository = basketRepository;
+        this.likeHotelRepository = likeHotelRepository;
     }
 
     @Bean
