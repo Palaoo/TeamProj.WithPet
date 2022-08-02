@@ -180,21 +180,69 @@
             <div class="col-lg-8">
                 <div class="shopping__cart__table">
                     <div class="body-right-prod">
-<<<<<<< HEAD
 
-=======
->>>>>>> 7f6e54812f72dacb0b22d631246a32530cca678f
-                        <tr>
-                            <th><input type="date" id="datePicker1" class="form-control" value=""></th>
-                            <th> ~</th>
-                            <th><input type="date" id="datePicker2" class="form-control" value=""></th>
-                            <th>
-                                <div class="continue__btn update__btn" id="btnSearch">
-                                    <a href="#">조회</a>
-                                </div>
-                                <!--                                <button id="btnSearch">조회</button>-->
-                            </th>
-                        </tr>
+    <section class="shopping-cart spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4">
+                    <img src=""
+                         onerror="this.src='https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbNZo14%2Fbtq17bsvo5i%2FOSV3gGWnwAKqNB0EOSQkrK%2Fimg.png'"
+                         width="200" height="200">
+                    <!-- <p th:text="|${user.name} 님|"></p> -->
+                </div>
+                <div class="col-lg-8">
+                    <div class="shopping__cart__table">
+                        <table th:each="orderDTO:${orderDTOList}">
+                            <p th:text="${orderDTO.ordertable.orderdate}"></p>
+                            <thead>
+                            <tr>
+                                <th><input type="date" id="datePicker1" class="form-control" value=""></th>
+                                <th>~</th>
+                                <th><input type="date" id="datePicker2" class="form-control" value=""></th>
+                                <th>
+                                    <div class="continue__btn update__btn" id="btnSearch">
+                                        <a href="#">조회</a>
+                                    </div>
+<!--                                <button id="btnSearch">조회</button>-->
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="prodandCount:${orderDTO.prodandCounts}">
+                                <td class="product__cart__item">
+                                    <div class="product__cart__item__pic">
+                                        <img th:src="${prodandCount.imgPath}"
+                                             onerror="this.src='https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbNZo14%2Fbtq17bsvo5i%2FOSV3gGWnwAKqNB0EOSQkrK%2Fimg.png'"
+                                             width="200" height="200">
+                                    </div>
+                                </td>
+                                <td class="quantity__item">
+                                    <div class="product__cart__item__text">
+                                        <p th:text="${prodandCount.prod.name}">상품명</p>
+                                        <h6 th:text="|${prodandCount.prod.price}    ${prodandCount.count}|"></h6>
+                                        <h5>
+                                            <p>구매가 완료되었습니다. 이용해주셔서 감사합니다.
+                                                구매확정 이후 상품의 이용방법, 반품 등에 대한 문의는 판매자에게 문의해주세요.</p>
+                                        </h5>
+                                    </div>
+
+                                    <!--<div class="quantity">
+                                        <div class="pro-qty-2">
+                                            <button id="btnComplain">문의하기</button>
+                                        </div>
+                                    </div>-->
+                                </td>
+                                <td class="cart__price">
+                                    <button id="btnComplain">문의하기</button>
+                                </td>
+                                <td class="cart__close">
+                                    <input type="button" value="사용리뷰쓰기" onclick="new_window();">
+                                    <button id="btnReOrder">재구매</button>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+>>>>>>> daf2a199058fa641ca6344372010d876e4ab331e
                     </div>
                     <table th:each="orderDTO:${orderDTOList}">
                         <p th:text="${orderDTO.ordertable.orderdate}"></p>
@@ -315,7 +363,6 @@
         // })
     })
 
-
     function new_window(prodId) {
         var openWin = window.open(
             "review?prodId=" + prodId,
@@ -326,6 +373,13 @@
 
     }
 
+    function new_window() {
+        window.open(
+          "review",
+          "Review",
+          "width=400, height=300, top=50, left=50"
+        );
+      }
 </script>
 
 </html>

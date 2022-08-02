@@ -18,6 +18,8 @@ import com.project.withpet.repository.ProdReview.JpaProdReviewRepository;
 import com.project.withpet.repository.ProdReview.ProdReviewRepository;
 import com.project.withpet.repository.Reply.ReplyRepository;
 import com.project.withpet.repository.Shop.ShopRepository;
+import com.project.withpet.repository.ShopLike.JpaShopLikeRepository;
+import com.project.withpet.repository.ShopLike.ShopLikeRepository;
 import com.project.withpet.repository.User.UserRepository;
 import com.project.withpet.service.*;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -46,6 +48,7 @@ public class SpringConfig {
     private final OrderRepository orderRepository;
     private final OrderprodRepository orderprodRepository;
     private final BasketRepository basketRepository;
+
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -81,6 +84,7 @@ public class SpringConfig {
     public BoardService boardService() {
         return new BoardService(boardRepository);
     }
+
 
     @Bean
     public BoardimgService boardimgService() {
@@ -171,12 +175,26 @@ public class SpringConfig {
     }
 
     @Bean
-    LikeHotelService likeHotelService() {
+    public ShopLikeService shopLikeService(){
+        return new ShopLikeService(shopLikeRepository());
+    }
+
+    @Bean
+    public ShopLikeRepository shopLikeRepository() {
+        return new JpaShopLikeRepository(entityManager);
+
+    }
+
+    @Bean
+    public LikeHotelService likeHotelService() {
         return new LikeHotelService(likeHotelRepository());
     }
 
+    @Bean
     public LikeHotelRepository likeHotelRepository() {
         return new JpaLikeHotelRepository(entityManager);
     }
+
+
 
 }

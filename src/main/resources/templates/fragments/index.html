@@ -33,11 +33,7 @@
     <div id="preloder">
         <div class="loader"></div>
     </div>
-<<<<<<< HEAD
 
-
-=======
->>>>>>> 7f6e54812f72dacb0b22d631246a32530cca678f
     <!-- Header Section Begin -->
     <header class="header">
         <div class="header__top">
@@ -53,14 +49,15 @@
                             <div class="header__top__links">
                                 <!--<a href="signup">Sign in</a>
                                 <a href="login">Log in</a>-->
+                                <div align="center" th:if="${not #strings.isEmpty(userid)} or ${not #strings.isEmpty(userLogined)}">
+                                     <a th:if="${userLogined!=null}" th:text="${userLogined}" href="userInfoPage"></a>
                                 <div align="center" th:if="${not #strings.isEmpty(userid)}">
-                                    <a th:if="${userLogined!=null}" th:text="${userLogined}" href="userInfoPage"></a>
                                     <a id="myshopping2" href="/myshopping">마이쇼핑</a>
                                     <a id="basket_shopping2" href="/basket_view">장바구니</a>
                                     <a id="userInfo2" href="/mypage/booking">회원정보</a>
                                     <a id="logout2" href="/logout">로그아웃</a>
                                 </div>
-                                <div align="center" th:if="${#strings.isEmpty(userid)}">
+                                <div align="center" th:if="${#strings.isEmpty(userid)} and ${#strings.isEmpty(userLogined)}">
                                     <a id="login2" href="/login">로그인</a>
                                     <a id="signup2" href="/signup">회원가입</a>
                                 </div>

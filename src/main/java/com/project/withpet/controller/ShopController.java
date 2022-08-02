@@ -3,17 +3,21 @@ package com.project.withpet.controller;
 import com.project.withpet.dto.HotelForm;
 import com.project.withpet.dto.HotelroomForm;
 import com.project.withpet.domain.*;
+import com.project.withpet.dto.reviewDto;
 import com.project.withpet.repository.Booking.BookingRepository;
+import com.project.withpet.repository.HotelimgRepository;
 import com.project.withpet.repository.Hotelroom.HotelroomRepository;
+import com.project.withpet.repository.HotelroomimgRepository;
 import com.project.withpet.repository.Shop.ShopQueryRepository;
 import com.project.withpet.repository.Shop.ShopRepository;
+import com.project.withpet.repository.shopreviewRepository;
 import com.project.withpet.service.HotelroomService;
 import com.project.withpet.service.LikeHotelService;
 import com.project.withpet.service.ShopService;
 import com.project.withpet.service.UserService;
+import com.project.withpet.service.reviewService;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,6 +34,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.*;
@@ -45,15 +50,23 @@ public class ShopController {
 
     private final UserService userService;
     private final BookingRepository bookingRepository;
+    private final HotelimgRepository hotelimgRepository;
+    private final HotelroomimgRepository hotelroomimgRepository;
+    private final reviewService reviewService;
+    private final shopreviewRepository shopreviewRepository;
     private final LikeHotelService likeHotelService;
 
     @Autowired
-    public ShopController(ShopService shopService, HotelroomService hotelroomService, ShopQueryRepository shopQueryRepository, ShopRepository shopRepository, HotelroomRepository hotelroomRepository, UserService userService, BookingRepository bookingRepository, LikeHotelService likeHotelService) {
+    public ShopController(ShopService shopService, HotelroomService hotelroomService, ShopQueryRepository shopQueryRepository, ShopRepository shopRepository, HotelroomRepository hotelroomRepository, UserService userService, BookingRepository bookingRepository, HotelimgRepository hotelimgRepository, HotelroomimgRepository hotelroomimgRepository, com.project.withpet.service.reviewService reviewService, com.project.withpet.repository.shopreviewRepository shopreviewRepository, LikeHotelService likeHotelService) {
         this.shopService = shopService;
         this.hotelroomService = hotelroomService;
         this.shopQueryRepository = shopQueryRepository;
         this.userService = userService;
         this.bookingRepository = bookingRepository;
+        this.hotelimgRepository = hotelimgRepository;
+        this.hotelroomimgRepository = hotelroomimgRepository;
+        this.reviewService = reviewService;
+        this.shopreviewRepository = shopreviewRepository;
         this.likeHotelService = likeHotelService;
     }
 
@@ -112,6 +125,7 @@ public class ShopController {
         List<Shop> availShop = shopQueryRepository.findAvailHotel(checkin, checkout, 2L);
         List<Shop> hotelList = shopService.hotelList(1L);
 
+
         List<HotelForm> hotelForms = new ArrayList<>();
 
         String userId = req.getSession().getAttribute("userid").toString();
@@ -122,8 +136,6 @@ public class ShopController {
 
             addHotelForm(availShop, hotelList, hotelForms, i, likeCount, liked);
         }
-
-
         model.addAttribute("hotelList", hotelForms);
         model.addAttribute("person", 2);
 
@@ -195,7 +207,7 @@ public class ShopController {
     public String hotelDetail(Model model, HttpServletRequest req,
                               @RequestParam("shopid") Long shopid
     )
-            throws ParseException {
+            throws ParseException, org.json.simple.parser.ParseException {
 
         HttpSession session = req.getSession();
         if (session.getAttribute("userid") != null) {
@@ -209,9 +221,13 @@ public class ShopController {
         model.addAttribute("checkout", checkout);
         model.addAttribute("person", person);
 
+        List<shopreview> shopreviewList = reviewService.findByshopid(shopid);
+        model.addAttribute("shopreview", shopreviewList);
 
         Optional<Shop> shop = shopService.findById(shopid);
         model.addAttribute("shop", shop.get());
+        Optional<Hotelimg> hotelimg = hotelimgRepository.findByShopid(shopid);
+        model.addAttribute("shopimg", hotelimg.get().getPath());
 
         List<Feat> shopFeats = shop.get().getShopFeats();
         model.addAttribute("feats", shopFeats);
@@ -252,6 +268,38 @@ public class ShopController {
 
         return "shop/hotel_detail";
 
+    }
+
+    @PostMapping("/reviews/createhotel")  //리뷰 등록
+    public String createReview(reviewDto dto, HttpServletRequest req, @RequestParam("shopid") Long shopid, Model model) {
+        HttpSession session = req.getSession();
+        String userid = (String) session.getAttribute("userLogined");
+        if (userid != null) {
+            dto.setUserid(userid);
+        }
+
+        shopreview shopreview = dto.toEntity();
+
+        shopreview saved = shopreviewRepository.save(shopreview);
+        return "redirect:/hotel/detail?shopid=" + saved.getShopid();
+    }
+
+    @GetMapping("/reviews/deletehotel") //리뷰 삭제
+    public String delete(reviewDto dto, @RequestParam("rid") Long rid, Long shopid) {
+        reviewService.deleteReview(rid);
+        shopreview shopreview = dto.toEntity();
+        return "redirect:/hotel/detail?shopid=" + dto.getShopid();
+    }
+
+    @PostMapping("/reviews/updatehotel")  //리뷰 수정
+    public String update(reviewDto dto) {
+        shopreview shopreview = dto.toEntity();
+        System.out.println(shopreview.getRid());
+        shopreview target = shopreviewRepository.findById(shopreview.getRid()).orElse(null);
+        if (target != null) {
+            shopreviewRepository.save(shopreview);
+        }
+        return "redirect:/hotel/detail?shopid=" + shopreview.getShopid();
     }
 
     @PostMapping("/hotel/detail")
@@ -325,6 +373,9 @@ public class ShopController {
         Optional<Hotelroom> hotelroom = hotelroomService.findById(roomid);
         model.addAttribute("hotelroom", hotelroom.get());
 
+        Optional<Hotelroomimg> hotelroomimg = hotelroomimgRepository.findByShopid(roomid);
+        model.addAttribute("hotelroomimg", hotelroomimg.get().getPath());
+
         model.addAttribute("checkin", checkin);
         model.addAttribute("checkout", checkout);
 
@@ -377,6 +428,14 @@ public class ShopController {
                 hotelForm.setAvail("false");
             }
         }
+        Optional<Hotelimg> hotelimg = hotelimgRepository.findByShopid(hotelList.get(i).getShopid());
+        String path = "";
+        if(hotelimg.isPresent()) {
+            path = hotelimg.get().getPath();
+        } else {
+            path = "https://withpetimg.s3.ap-northeast-2.amazonaws.com/images/hoteldefault.jpg";
+        }
+        hotelForm.setPath(path);
         hotelForms.add(hotelForm);
     }
 
@@ -396,6 +455,8 @@ public class ShopController {
                 hotelroomForm.setAvail("false");
             }
         }
+        Optional<Hotelroomimg> hotelroomImg = hotelroomimgRepository.findByShopid(hotelrooms.get(i).getRoomid());
+        hotelroomForm.setPath(hotelroomImg.get().getPath());
         hotelroomForms.add(hotelroomForm);
     }
 

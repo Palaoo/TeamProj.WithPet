@@ -124,7 +124,7 @@
     <th:block th:value="${cafe.shopid}"></th:block>
     <div class="row pb-4 mb-4 border-bottom">
       <div class="col-md-12 pb-4 mb-4">
-        <img src="../static/tamar.jpg" alt="" width="1000" height="400">
+        <img th:src="${shopimg}" alt="" width="1000" height="400">
       </div>
       <div class="col-md-9"><h3 th:text="${cafe.getName()}"></h3></div>
       <div class="col-md-3"><input type="button" value="저장하기"></div>
@@ -209,7 +209,7 @@
       <span th:text="${#lists.size(shopreview)}"></span>개
       <th:block th:each="review , index : ${shopreview}">
         <div  class="row">
-          <div class="col-sm-2"><img src="dd.JPG"><p th:text="${review.getUserid()}"></p></div>
+          <div class="col-sm-2"><p th:text="${review.getUserid()}"></p></div>
           <div class="col-sm-5">
             <th:block th:if="${review.getScore()==5}">
               <div class="rating">★★★★★</div>
@@ -270,9 +270,10 @@
                           <div class="mb-3">
                             <label for="message-text" class="col-form-label">내용</label>
                             <textarea class="form-control" id="message-text" name="content"></textarea>
+                            <input type="hidden" name="rid" id="review-id">
                           </div>
                           <input type="hidden" name="shopid" th:value="${review.getShopid()}">
-                          <input type="hidden" name="rid" th:value="${review.getRid()}">
+<!--                          <input type="hidden" name="rid" th:value="${review.getRid()}">-->
                           <input type="hidden" name="userid" th:value="${review.getUserid()}">
                           <input type="hidden" name="date" id="currentTime" th:value="${review.getDate()}">
                         <input type="hidden" name="score" id="score-value">
@@ -349,10 +350,12 @@
 
       const content = triggerBtn.getAttribute("data-bs-content");
       const score = triggerBtn.getAttribute("data-bs-score");
+      const rid = triggerBtn.getAttribute("data-bs-rid");
 
-      console.log(score);
+      console.log(rid);
       document.querySelector("#message-text").value = content
       document.querySelector("#score-value").value = score
+      document.querySelector("#review-id").value = rid
     })
 </script>
 <script>
