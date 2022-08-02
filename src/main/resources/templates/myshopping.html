@@ -71,7 +71,6 @@
     }
 
 
-
     .up-right-down,
     .body,
     .body-right-prod {
@@ -79,25 +78,63 @@
         flex-direction: row;
     }
 
+    <!--
+    review-- >
+    .star-rating {
+        display: flex;
+        flex-direction: row-reverse;
+        font-size: 2.25rem;
+        line-height: 2.5rem;
+        justify-content: space-around;
+        padding: 0 0.2em;
+        text-align: center;
+        width: 5em;
+    }
+
+    .star-rating input {
+        display: none;
+    }
+
+    .star-rating label {
+        -webkit-text-fill-color: transparent; /* Will override color (regardless of order) */
+        -webkit-text-stroke-width: 2.3px;
+        -webkit-text-stroke-color: #2b2a29;
+        cursor: pointer;
+    }
+
+    .star-rating :checked ~ label {
+        -webkit-text-fill-color: gold;
+    }
+
+    .star-rating label:hover,
+    .star-rating label:hover ~ label {
+        -webkit-text-fill-color: #fff58c;
+    }
+
+    textarea {
+        width: 80%;
+    }
+
 </style>
 
 <body>
-    <header>
-        <p align=right><a id="myshopping" href='myshopping'>마이쇼핑</a>&nbsp;&nbsp;<a id="basket_shopping"
-                href='basket_view'>장바구니</a>&nbsp;&nbsp;<a th:if="${userLogined==null}" id="loginPage"
-                href='loginPage'>로그인</a><a th:if="${userLogined!=null}" th:text="${userLogined}"
-                href="userInfoPage"></a>
-        </p>
-        <h1 align=center>WITH PET</h1>
-        <nav>
-            <a href="#">숙소</a>
-            <a href="#">카페</a>
-            <a href="#">맛집</a>
-            <a href="mallPage">상점</a>
-            <a href="#">게시판</a>
-        </nav>
-    </header>
-    <hr>
+<header>
+    <p align=right><a id="myshopping" href='myshopping'>마이쇼핑</a>&nbsp;&nbsp;<a id="basket_shopping"
+                                                                               href='basket_view'>장바구니</a>&nbsp;&nbsp;<a
+            th:if="${userLogined==null}" id="loginPage"
+            href='loginPage'>로그인</a><a th:if="${userLogined!=null}" th:text="${userLogined}"
+                                       href="userInfoPage"></a>
+    </p>
+    <h1 align=center>WITH PET</h1>
+    <nav>
+        <a href="#">숙소</a>
+        <a href="#">카페</a>
+        <a href="#">맛집</a>
+        <a href="mallPage">상점</a>
+        <a href="#">게시판</a>
+    </nav>
+</header>
+<hr>
 
 
 <!--    <div class="up">-->
@@ -168,7 +205,32 @@
 <!--    <p th:text="${amount}"></p>-->
 
 
+<section class="shopping-cart spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4">
+                <img src=""
+                     onerror="this.src='https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbNZo14%2Fbtq17bsvo5i%2FOSV3gGWnwAKqNB0EOSQkrK%2Fimg.png'"
+                     width="200" height="200">
+                <!-- <p th:text="|${user.name} 님|"></p> -->
+            </div>
+            <div class="col-lg-8">
+                <div class="shopping__cart__table">
+                    <div class="body-right-prod">
 
+<<<<<<< HEAD
+                        <tr>
+                            <th><input type="date" id="datePicker1" class="form-control" value=""></th>
+                            <th> ~</th>
+                            <th><input type="date" id="datePicker2" class="form-control" value=""></th>
+                            <th>
+                                <div class="continue__btn update__btn" id="btnSearch">
+                                    <a href="#">조회</a>
+                                </div>
+                                <!--                                <button id="btnSearch">조회</button>-->
+                            </th>
+                        </tr>
+=======
     <section class="shopping-cart spad">
         <div class="container">
             <div class="row">
@@ -224,39 +286,111 @@
                                     <button id="btnComplain">문의하기</button>
                                 </td>
                                 <td class="cart__close">
+                                    <input type="button" value="사용리뷰쓰기" onclick="new_window();">
                                     <button id="btnReOrder">재구매</button>
                                 </td>
                             </tr>
                             </tbody>
                         </table>
+>>>>>>> 9b57d9d8cf91f3e9eb2a8298001da78bea7e33c9
                     </div>
-                    <div class="row">
-                        <div class="col-lg-4 col-md-4 col-sm-4">
-                            <div class="continue__btn">
-                                <p th:text="${paymentKey}"></p>
-                                <!--<a href="#">Continue Shopping</a>-->
-                            </div>
+                    <table th:each="orderDTO:${orderDTOList}">
+                        <p th:text="${orderDTO.ordertable.orderdate}"></p>
+
+                        <tbody>
+                        <tr th:each="prodandCount:${orderDTO.prodandCounts}">
+                            <td class="product__cart__item">
+                                <div class="product__cart__item__pic">
+                                    <img th:src="${prodandCount.imgPath}"
+                                         onerror="this.src='https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbNZo14%2Fbtq17bsvo5i%2FOSV3gGWnwAKqNB0EOSQkrK%2Fimg.png'"
+                                         width="200" height="200">
+                                </div>
+                            </td>
+                            <td class="quantity__item">
+                                <div class="product__cart__item__text">
+                                    <p th:text="${prodandCount.prod.name}">상품명</p>
+                                    <h6 th:text="|${prodandCount.prod.price}    ${prodandCount.count}|"></h6>
+                                    <h5>
+                                        <p>구매가 완료되었습니다. 이용해주셔서 감사합니다.
+                                            구매확정 이후 상품의 이용방법, 반품 등에 대한 문의는 판매자에게 문의해주세요.</p>
+                                    </h5>
+                                </div>
+
+                                <!--<div class="quantity">
+                                    <div class="pro-qty-2">
+                                        <button id="btnComplain">문의하기</button>
+                                    </div>
+                                </div>-->
+                            </td>
+                            <td class="cart__price">
+                                <button id="btnComplain">문의하기</button>
+                            </td>
+                            <td class="cart__close">
+                                <input type="button" value="사용리뷰쓰기" th:name="${prodandCount.prod.id}"
+                                       onclick="new_window(this.getAttribute('name'))">
+                                <!--<button id="review">사용리뷰쓰기</button>-->
+                                <button id="btnReOrder">재구매</button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="row">
+                    <div class="col-lg-4 col-md-4 col-sm-4">
+                        <div class="continue__btn">
+                            <p th:text="${paymentKey}"></p>
+                            <!--<a href="#">Continue Shopping</a>-->
                         </div>
-                        <div class="col-lg-4 col-md-4 col-sm-4">
-                            <div class="continue__btn update__btn">
-                                <p th:text="${orderId}"></p>
-                                <!--<a href="#"><i class="fa fa-spinner"></i> Update cart</a>-->
-                            </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4">
+                        <div class="continue__btn update__btn">
+                            <p th:text="${orderId}"></p>
+                            <!--<a href="#"><i class="fa fa-spinner"></i> Update cart</a>-->
                         </div>
-                        <div class="col-lg-4 col-md-4 col-sm-4">
-                            <div class="continue__btn update__btn">
-                                <p th:text="${amount}"></p>
-                                <!--<a href="#"><i class="fa fa-spinner"></i> Update cart</a>-->
-                            </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4">
+                        <div class="continue__btn update__btn">
+                            <p th:text="${amount}"></p>
+                            <!--<a href="#"><i class="fa fa-spinner"></i> Update cart</a>-->
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
-
-
-
+    </div>
+</section>
+<!-- <section class="contact spad">
+     <div class="container">
+         <form action="#">
+             <input type="button" value="사용리뷰쓰기" onclick="new_window();">
+             <div class="row" align="center">
+                 <div class="col-lg-3">
+                     <input type="hidden" id="id">
+                     <div class="star-rating space-x-4 mx-auto">
+                         <input type="radio" id="5-stars" name="rating" value="5" v-model="ratings"/>
+                         <label for="5-stars" class="star pr-4">★</label>
+                         <input type="radio" id="4-stars" name="rating" value="4" v-model="ratings"/>
+                         <label for="4-stars" class="star">★</label>
+                         <input type="radio" id="3-stars" name="rating" value="3" v-model="ratings"/>
+                         <label for="3-stars" class="star">★</label>
+                         <input type="radio" id="2-stars" name="rating" value="2" v-model="ratings"/>
+                         <label for="2-stars" class="star">★</label>
+                         <input type="radio" id="1-star" name="rating" value="1" v-model="ratings" />
+                         <label for="1-star" class="star">★</label>
+                     </div>
+                 </div>
+                 <div class="col-lg-6">
+                     <textarea placeholder="후기를 남겨주세요."></textarea>
+                 </div>
+                 <div class="col-lg-3">
+                     <button type="cancel" class="site-btn">취소</button>
+                     <button type="submit" class="site-btn">등록</button>
+                 </div>
+             </div>
+         </form>
+     </div>
+ </section>-->
+<input type="button" value="사용리뷰쓰기" onclick="new_window();">
 </body>
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <script src="resources/js/plugin/datepicker/bootstrap-datepicker.js"></script>
@@ -277,6 +411,27 @@
         //     }
         // })
     })
+
+<<<<<<< HEAD
+    function new_window(prodId) {
+        var openWin = window.open(
+            "review?prodId=" + prodId,
+            "Review",
+            "width=400, height=300, top=50, left=50"
+        );
+
+
+    }
+
+=======
+    function new_window() {
+        window.open(
+          "review",
+          "Review",
+          "width=400, height=300, top=50, left=50"
+        );
+      }
+>>>>>>> 9b57d9d8cf91f3e9eb2a8298001da78bea7e33c9
 </script>
 
 </html>

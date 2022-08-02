@@ -17,7 +17,7 @@ import java.util.TimeZone;
 public class Tools {
     public boolean isUserLogined(HttpServletRequest req) {
         HttpSession session = req.getSession();
-        if (session.getAttribute("userLogined") != null)
+        if (session.getAttribute("userid") != null)
             return true;
         return false;
     }

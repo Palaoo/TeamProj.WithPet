@@ -69,7 +69,7 @@ public class UserInfoController {
             }
 
             model.addAttribute("bookList", bookingList);
-            return "mypage/mypage_booking";
+            return "mypage_booking";
         }
 
     }

@@ -25,11 +25,7 @@
     </th:block>
 </head>
 <style>
-    <!--body {
-        list-style: none;
-        text-decoration: none;
-        border-collapse: collapse;
-    }-->
+    a{text-decoration: none;}
 </style>
 <body>
 <th:block th:fragment="header">
@@ -38,65 +34,11 @@
         <div class="loader"></div>
     </div>
 
-    <!-- Offcanvas Menu Begin -->
-<!--    <div class="offcanvas-menu-overlay"></div>-->
-<!--    <div class="offcanvas-menu-wrapper">-->
-<!--        <div class="offcanvas__option">-->
-<!--            <div class="offcanvas__links">-->
+<<<<<<< HEAD
 
 
-<!--    <div align="center" th:if="${not #strings.isEmpty(userid)}">-->
-<!--        <a id="myshopping" href="myshopping">마이쇼핑</a>-->
-<!--        <a id="basket_shopping" href="basket_view">장바구니</a>-->
-<!--        <a id="userInfo" href="userInfo">회원정보</a>-->
-<!--        <a id="logout" href="logout">로그아웃</a>-->
-<!--    </div>-->
-<!--    <div align="center" th:if="${#strings.isEmpty(userid)}">-->
-<!--        <a id="login" href="login">Log in</a>-->
-<!--        <a id="signup" href="signup">Sign in</a>-->
-<!--    </div>-->
-
-<!--            </div>-->
-<!--        </div>-->
-<!--        <div class="offcanvas__nav__option">-->
-<!--            <a href="#" class="search-switch"><img src="img/icon/search.png" alt=""></a>-->
-<!--            <a href="#"><img src="img/icon/heart.png" alt=""></a>-->
-<!--            <a href="basket_view"><img src="img/icon/cart.png" alt=""> <span>0</span></a>-->
-
-<!--            &lt;!&ndash; <div class="price">$0.00</div> &ndash;&gt;-->
-<!--        </div>-->
-        <div id="mobile-menu-wrap"></div>
-        <div class="offcanvas__text"></div>
-            <!-- <p>Free shipping, 30-day return or refund guarantee.</p> -->
-<!--        </div>-->
-<!--    </div>-->
-
-<!--                <div align="center" th:if="${not #strings.isEmpty(userid)}">-->
-<!--                    <a id="myshopping" href="/myshopping">마이쇼핑</a>-->
-<!--                    <a id="basket_shopping" href="/basket_shopping">장바구니</a>-->
-<!--                    <a id="userInfo" href="/userInfo">회원정보</a>-->
-<!--                    <a id="logout" href="/logout">로그아웃</a>-->
-<!--                </div>-->
-<!--                <div align="center" th:if="${#strings.isEmpty(userid)}">-->
-<!--                    <a id="login" href="/login">로그인</a>-->
-<!--                    <a id="signup" href="/signup">회원가입</a>-->
-<!--                </div>-->
-
-<!--            </div>-->
-<!--        </div>-->
-<!--        <div class="offcanvas__nav__option">-->
-<!--            <a href="#" class="search-switch"><img src="img/icon/search.png" alt=""></a>-->
-<!--            <a href="#"><img src="img/icon/heart.png" alt=""></a>-->
-<!--            <a href="basket_shopping"><img src="img/icon/cart.png" alt=""> <span>0</span></a>-->
-<!--            &lt;!&ndash; <div class="price">$0.00</div> &ndash;&gt;-->
-<!--        </div>-->
-<!--        <div id="mobile-menu-wrap"></div>-->
-<!--        <div class="offcanvas__text">-->
-<!--            &lt;!&ndash; <p>Free shipping, 30-day return or refund guarantee.</p> &ndash;&gt;-->
-<!--        </div>-->
-<!--    </div>-->
-    <!-- Offcanvas Menu End -->
-
+=======
+>>>>>>> 9b57d9d8cf91f3e9eb2a8298001da78bea7e33c9
     <!-- Header Section Begin -->
     <header class="header">
         <div class="header__top">
@@ -114,8 +56,8 @@
                                 <a href="login">Log in</a>-->
                                 <div align="center" th:if="${not #strings.isEmpty(userid)} or ${not #strings.isEmpty(userLogined)}">
                                     <a id="myshopping2" href="/myshopping">마이쇼핑</a>
-                                    <a id="basket_shopping2" href="/basket_shopping">장바구니</a>
-                                    <a id="userInfo2" href="/mypage/booking">회원정보</a>
+                                    <a id="basket_shopping2" href="/basket_view">장바구니</a>
+                                    <a id="userInfo2" href="/mypage">회원정보</a>
                                     <a id="logout2" href="/logout">로그아웃</a>
                                 </div>
                                 <div align="center" th:if="${#strings.isEmpty(userid)} and ${#strings.isEmpty(userLogined)}">
@@ -132,7 +74,7 @@
             <div class="row">
                 <div class="col-lg-3 col-md-3">
                     <div class="header__logo">
-                        <a href="/"><img src="img/logo.png" alt=""></a>
+                        <a href="/"><img th:src="@{/img/logo.png}"/></a>
                     </div>
                 </div>
                 <div class="col-lg-6 col-md-6">
@@ -149,9 +91,9 @@
                 </div>
                 <div class="col-lg-3 col-md-3">
                     <div class="header__nav__option">
-                        <a href="#" class="search-switch"><img src="img/icon/search.png" alt=""></a>
-                        <a href="#"><img src="img/icon/heart.png" alt=""></a>
-                        <a href="basket_view"><img src="img/icon/cart.png" alt=""> <span>0</span></a>
+                        <a href="#" class="search-switch"><img th:src="@{/img/icon/search.png}"/></a>
+                        <a href="#"><img th:src="@{/img/icon/heart.png}"/></a>
+                        <a href="basket_view"><img th:src="@{/img/icon/cart.png}"/> <span>0</span></a>
 
                         <!-- <div class="price">$0.00</div> -->
                     </div>
@@ -176,7 +118,7 @@
                             <h2>Fall - Winter Collections 2030</h2>
                             <p>A specialist label creating luxury essentials. Ethically crafted with an unwavering
                                 commitment to exceptional quality.</p>
-                            <a href="#" class="primary-btn">Shop now <span class="arrow_right"></span></a>
+                            <a href="#" class="primary-btn">Go now <span class="arrow_right"></span></a>
                             <div class="hero__social">
                                 <a href="#"><i class="fa fa-facebook"></i></a>
                                 <a href="#"><i class="fa fa-twitter"></i></a>
@@ -197,7 +139,7 @@
                             <h2>Fall - Winter Collections 2030</h2>
                             <p>A specialist label creating luxury essentials. Ethically crafted with an unwavering
                                 commitment to exceptional quality.</p>
-                            <a href="#" class="primary-btn">Shop now <span class="arrow_right"></span></a>
+                            <a href="#" class="primary-btn">Go now <span class="arrow_right"></span></a>
                             <div class="hero__social">
                                 <a href="#"><i class="fa fa-facebook"></i></a>
                                 <a href="#"><i class="fa fa-twitter"></i></a>
@@ -1091,7 +1033,7 @@
                 <div class="col-lg-3 col-md-6 col-sm-6">
                     <div class="footer__about">
                         <div class="footer__logo">
-                            <a href="#"><img src="img/footer-logo.png" alt=""></a>
+                            <a href="#"><img th:src="@{/img/footer-logo.png}"/></a>
                         </div>
                         <p>The customer is at the heart of our unique business model, which includes design.</p>
                         <a href="#"><img src="img/payment.png" alt=""></a>
