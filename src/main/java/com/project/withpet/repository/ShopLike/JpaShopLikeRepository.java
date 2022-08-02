@@ -2,6 +2,7 @@ package com.project.withpet.repository.ShopLike;
 
 import com.project.withpet.domain.shoplike;
 
+
 import javax.persistence.EntityManager;
 import java.util.List;
 import java.util.Optional;

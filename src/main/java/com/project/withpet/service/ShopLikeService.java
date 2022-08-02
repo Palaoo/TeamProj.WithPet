@@ -2,13 +2,12 @@ package com.project.withpet.service;
 
 import com.project.withpet.domain.shoplike;
 import com.project.withpet.repository.ShopLike.ShopLikeRepository;
-
 import javax.transaction.Transactional;
 import java.util.List;
 
 @Transactional
 public class ShopLikeService {
-    private final ShopLikeRepository shopLikeRepository;
+    private  final ShopLikeRepository shopLikeRepository;
 
     public ShopLikeService(ShopLikeRepository shopLikeRepository) {
         this.shopLikeRepository = shopLikeRepository;
@@ -35,6 +34,8 @@ public class ShopLikeService {
     public List<shoplike> findByShopId(Long shopId) {
         return shopLikeRepository.findByShopid(shopId);
     }
+
+
 
     public boolean islike(Long shopId, String userId) {
         return !shopLikeRepository.findByUseridAndShopid(userId, shopId).isEmpty();

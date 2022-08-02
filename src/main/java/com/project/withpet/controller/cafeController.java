@@ -51,7 +51,8 @@ public class cafeController {
 
         HttpSession session = req.getSession();
         String userid = (String) session.getAttribute("userLogined");
-        model.addAttribute("userid", userid);
+        model.addAttribute("userid",userid);
+
 
         List<cafe> cafeList = cafeService.findByshoptype(2L);
         List<CafeDTOList> cafeDTOLists = new ArrayList<>();
@@ -77,7 +78,7 @@ public class cafeController {
 
         HttpSession session = req.getSession();
         String userid = (String) session.getAttribute("userLogined");
-        model.addAttribute("userid", userid);
+        model.addAttribute("userid",userid);
         //리뷰 리스트
         List<shopreview> shopreviewList = reviewService.findByshopid(shopid);
         model.addAttribute("shopreview", shopreviewList);
@@ -95,7 +96,7 @@ public class cafeController {
     public String viewRestList(Model model, HttpServletRequest req) {
         HttpSession session = req.getSession();
         String userid = (String) session.getAttribute("userLogined");
-        model.addAttribute("userid", userid);
+        model.addAttribute("userid",userid);
 
         List<cafe> cafeList = cafeService.findByshoptype(3L);
         List<CafeDTOList> cafeDTOLists = new ArrayList<>();
@@ -119,7 +120,7 @@ public class cafeController {
 
         HttpSession session = req.getSession();
         String userid = (String) session.getAttribute("userLogined");
-        model.addAttribute("userid", userid);
+        model.addAttribute("userid",userid);
         //리뷰 리스트
         List<shopreview> shopreviewList = reviewService.findByshopid(shopid);
         model.addAttribute("shopreview", shopreviewList);

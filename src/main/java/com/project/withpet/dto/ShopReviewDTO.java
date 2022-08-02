@@ -3,9 +3,11 @@ package com.project.withpet.dto;
 import com.project.withpet.domain.cafe;
 import com.project.withpet.domain.shopreview;
 
+
 public class ShopReviewDTO {
     shopreview shopreview;
     cafe cafe;
+
 
     public shopreview getShopreview() {
         return shopreview;
@@ -25,6 +27,8 @@ public class ShopReviewDTO {
 
     public ShopReviewDTO() {
     }
+
+
 
     public ShopReviewDTO(shopreview shopreview, cafe cafe) {
         this.shopreview = shopreview;
