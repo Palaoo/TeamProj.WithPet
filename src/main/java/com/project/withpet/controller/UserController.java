@@ -110,4 +110,10 @@ public class UserController {
 //        return "redirect:/";
 //    }
 
+    @GetMapping("mypage")
+    public String myPage(Model model,HttpServletRequest req) {
+        model.addAttribute("userid", req.getSession().getAttribute("userid").toString());
+        return "mypage";
+    }
+
 }
