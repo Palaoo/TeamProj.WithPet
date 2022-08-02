@@ -50,7 +50,7 @@
                                 <!--<a href="signup">Sign in</a>
                                 <a href="login">Log in</a>-->
                                 <div align="center" th:if="${not #strings.isEmpty(userid)} or ${not #strings.isEmpty(userLogined)}">
-                                     <a th:if="${userLogined!=null}" th:text="${userLogined}" href="userInfoPage"></a>
+                                    <a th:if="${userLogined!=null}" th:text="${userLogined}" href="userInfoPage"></a></div>
                                 <div align="center" th:if="${not #strings.isEmpty(userid)}">
                                     <a id="myshopping2" href="/myshopping">마이쇼핑</a>
                                     <a id="basket_shopping2" href="/basket_view">장바구니</a>
