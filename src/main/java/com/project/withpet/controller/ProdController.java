@@ -72,7 +72,7 @@ public class ProdController {
 
         }
         int pageN = pageable.getPageNumber();
-        int startPage = ((int) Math.floor(pageN / 5)) * 5+1;
+        int startPage = ((int) Math.floor(pageN / 5)) * 5 + 1;
         int totalPages = prods.getTotalPages();
         int endPage = 0;
         if (totalPages < startPage + 4) {
@@ -219,6 +219,7 @@ public class ProdController {
         model.addAttribute("cimgs", cimgService.findImgURLs(prodId));
         List<ProdReview> pReviewList = prodReviewService.findByProdId(prodId);
         model.addAttribute("pReviewList", pReviewList);
+        System.out.printf("ProdController prodView(), cimg url : %s", model.getAttribute("cimgs").toString());
 
         return "prod_view";
     }
