@@ -125,6 +125,7 @@ public class OrderController {
                                     imgService.findByProdid(prodId.longValue()).get().getPath())
                     );
                 } catch (NoSuchElementException e) {
+                    e.printStackTrace();
                     prodandCounts = null;
                 }
 
