@@ -3,6 +3,7 @@ package com.project.withpet.controller;
 import com.project.withpet.dto.HotelForm;
 import com.project.withpet.dto.HotelroomForm;
 import com.project.withpet.domain.*;
+import com.project.withpet.dto.reviewDto;
 import com.project.withpet.repository.Booking.BookingRepository;
 import com.project.withpet.repository.HotelimgRepository;
 import com.project.withpet.repository.Hotelroom.HotelroomRepository;
@@ -33,6 +34,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.*;
@@ -205,7 +207,7 @@ public class ShopController {
     public String hotelDetail(Model model, HttpServletRequest req,
                               @RequestParam("shopid") Long shopid
     )
-            throws ParseException {
+            throws ParseException, org.json.simple.parser.ParseException {
 
         HttpSession session = req.getSession();
         if (session.getAttribute("userid") != null) {
@@ -427,7 +429,13 @@ public class ShopController {
             }
         }
         Optional<Hotelimg> hotelimg = hotelimgRepository.findByShopid(hotelList.get(i).getShopid());
-        hotelForm.setPath(hotelimg.get().getPath());
+        String path = "";
+        if(hotelimg.isPresent()) {
+            path = hotelimg.get().getPath();
+        } else {
+            path = "https://withpetimg.s3.ap-northeast-2.amazonaws.com/images/hoteldefault.jpg";
+        }
+        hotelForm.setPath(path);
         hotelForms.add(hotelForm);
     }
 

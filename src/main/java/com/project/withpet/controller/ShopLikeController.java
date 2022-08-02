@@ -1,8 +1,5 @@
 package com.project.withpet.controller;
 
-package com.project.withpet.controller;
-
-
 import com.project.withpet.domain.cafe;
 import com.project.withpet.domain.shoplike;
 import com.project.withpet.dto.LikeshopDTO;

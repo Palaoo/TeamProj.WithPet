@@ -59,7 +59,12 @@ public class cafeController {
         for (cafe cafe : cafeList) {
             boolean shopLike = shopLikeService.islike(cafe.getShopid(),userid);
             Optional<Hotelimg> hotelimg = hotelimgRepository.findByShopid(cafe.getShopid());
-            String path = hotelimg.get().getPath();
+            String path = "";
+            if(hotelimg.isPresent()) {
+                path = hotelimg.get().getPath();
+            } else {
+                path = "https://withpetimg.s3.ap-northeast-2.amazonaws.com/images/hoteldefault.jpg";
+            }
             cafeDTOLists.add(new CafeDTOList(cafe,shopLike,path));
         }
 
@@ -103,7 +108,12 @@ public class cafeController {
         for (cafe cafe : cafeList) {
             boolean shopLike = shopLikeService.islike(cafe.getShopid(),userid);
             Optional<Hotelimg> hotelimg = hotelimgRepository.findByShopid(cafe.getShopid());
-            String path = hotelimg.get().getPath();
+            String path = "";
+            if(hotelimg.isPresent()) {
+                path = hotelimg.get().getPath();
+            } else {
+                path = "https://withpetimg.s3.ap-northeast-2.amazonaws.com/images/hoteldefault.jpg";
+            }
             cafeDTOLists.add(new CafeDTOList(cafe,shopLike,path));
         }
         model.addAttribute("cafeList", cafeDTOLists);
