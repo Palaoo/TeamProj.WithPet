@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,6 +36,11 @@ public class BasketController {
 
     @GetMapping("basket_view")
     public String basket_view(HttpServletRequest req, Model model) {
+        HttpSession session = req.getSession();
+        if(session.getAttribute("userid")!=null){
+            model.addAttribute("userid", session.getAttribute("userid"));
+        }
+
         if (!tools.isUserLogined(req)) {
             return "login";
         }

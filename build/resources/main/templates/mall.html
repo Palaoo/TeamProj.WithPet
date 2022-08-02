@@ -13,7 +13,6 @@
 <style>
 #product{margin-bottom:30px;}
 #btnLike,#heart_img{text-align:center;}
-
 </style>
 <body>
 <div th:replace="fragments/index :: header"></div>
@@ -80,7 +79,7 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-9">
+                            <div class="col-9" id="pd_txt">
                                 <h6 th:text="${pDTO.product.name}"></h6>
                                 <h5 th:text="|${pDTO.product.price}원|">$67.24</h5>
                                 <a href="#" name="addBasket" th:id="${pDTO.product.id}" class="add-cart">

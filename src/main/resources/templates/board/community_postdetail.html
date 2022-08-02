@@ -8,10 +8,16 @@
 </head>
 <style>
 #content{
-    width:100%;
+    width:504px;
+    height:40px;
 }
 #addReply{
     text-align:center;
+    height:40px;
+}
+#writer{
+    vertical-align:Text-top;
+    margin-top:5px;
 }
 </style>
 <body>
@@ -75,10 +81,13 @@
                                     <div th:if="${not #strings.isEmpty(userid)}">
                                         <form action="newreply" method="post">
                                             <table id="rtable2">
-                                                <tr><td class="col-lg-2 col-md-2" id="writer"><th:block th:text="${userid}" name="writer" ></th:block></td>
-                                                    <td class="col-lg-8 col-md-8"><textarea name="content" id="content" placeholder="댓글 달기"></textarea></td>
-                                                    <input type="hidden" name="boardcode" th:value="${boardcode}" id="boardcode">
-                                                    <td class="col-lg-2 col-md-2"><input type="submit" class="site-btn" value="작성" id="addReply"></td></tr>
+                                                <tr>
+                                                    <td class="col-lg-2 col-md-2" id="writer"><th:block th:text="${userid}" name="writer" ></th:block></td>
+                                                    <td class="col-lg-8 col-md-8"><textarea name="content" id="content" placeholder="댓글 달기"></textarea>
+                                                        <input type="hidden" name="boardcode" th:value="${boardcode}" id="boardcode">
+                                                    </td>
+                                                    <td class="col-lg-2 col-md-2" align="center"><input type="submit" class="site-btn" value="작성" id="addReply"></td>
+                                                </tr>
                                             </table>
                                             <table id="rtable" align="center">
                                             </table>
