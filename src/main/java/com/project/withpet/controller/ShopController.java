@@ -9,7 +9,7 @@ import com.project.withpet.repository.Hotelroom.HotelroomRepository;
 import com.project.withpet.repository.Shop.ShopQueryRepository;
 import com.project.withpet.repository.Shop.ShopRepository;
 import com.project.withpet.service.HotelroomService;
-import com.project.withpet.service.LikeHotelService;
+//import com.project.withpet.service.LikeHotelService;
 import com.project.withpet.service.ShopService;
 import com.project.withpet.service.UserService;
 import org.json.simple.JSONObject;
@@ -49,16 +49,16 @@ public class ShopController {
 
     private final HotelimgRepository hotelimgRepository;
 
-    private final LikeHotelService likeHotelService;
+//    private final LikeHotelService likeHotelService;
     @Autowired
-    public ShopController(ShopService shopService, HotelroomService hotelroomService, ShopQueryRepository shopQueryRepository, ShopRepository shopRepository, HotelroomRepository hotelroomRepository, UserService userService, BookingRepository bookingRepository, HotelimgRepository hotelimgRepository, LikeHotelService likeHotelService) {
+    public ShopController(ShopService shopService, HotelroomService hotelroomService, ShopQueryRepository shopQueryRepository, ShopRepository shopRepository, HotelroomRepository hotelroomRepository, UserService userService, BookingRepository bookingRepository, HotelimgRepository hotelimgRepository) {
         this.shopService = shopService;
         this.hotelroomService = hotelroomService;
         this.shopQueryRepository = shopQueryRepository;
         this.userService = userService;
         this.bookingRepository = bookingRepository;
         this.hotelimgRepository = hotelimgRepository;
-        this.likeHotelService = likeHotelService;
+//        this.likeHotelService = likeHotelService;
     }
 
     @GetMapping("/hotel")
