@@ -3,7 +3,6 @@ package com.project.withpet.controller;
 import com.project.withpet.dto.HotelForm;
 import com.project.withpet.dto.HotelroomForm;
 import com.project.withpet.domain.*;
-import com.project.withpet.dto.reviewDto;
 import com.project.withpet.repository.Booking.BookingRepository;
 import com.project.withpet.repository.HotelimgRepository;
 import com.project.withpet.repository.Hotelroom.HotelroomRepository;
@@ -18,7 +17,6 @@ import com.project.withpet.service.UserService;
 import com.project.withpet.service.reviewService;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -50,14 +48,14 @@ public class ShopController {
 
     private final UserService userService;
     private final BookingRepository bookingRepository;
-
     private final HotelimgRepository hotelimgRepository;
-
     private final HotelroomimgRepository hotelroomimgRepository;
     private final reviewService reviewService;
     private final shopreviewRepository shopreviewRepository;
+    private final LikeHotelService likeHotelService;
+
     @Autowired
-    public ShopController(ShopService shopService, HotelroomService hotelroomService, ShopQueryRepository shopQueryRepository, ShopRepository shopRepository, HotelroomRepository hotelroomRepository, UserService userService, BookingRepository bookingRepository, HotelimgRepository hotelimgRepository, HotelroomimgRepository hotelroomimgRepository, com.project.withpet.service.reviewService reviewService, com.project.withpet.repository.shopreviewRepository shopreviewRepository) {
+    public ShopController(ShopService shopService, HotelroomService hotelroomService, ShopQueryRepository shopQueryRepository, ShopRepository shopRepository, HotelroomRepository hotelroomRepository, UserService userService, BookingRepository bookingRepository, HotelimgRepository hotelimgRepository, HotelroomimgRepository hotelroomimgRepository, com.project.withpet.service.reviewService reviewService, com.project.withpet.repository.shopreviewRepository shopreviewRepository, LikeHotelService likeHotelService) {
         this.shopService = shopService;
         this.hotelroomService = hotelroomService;
         this.shopQueryRepository = shopQueryRepository;
@@ -67,6 +65,7 @@ public class ShopController {
         this.hotelroomimgRepository = hotelroomimgRepository;
         this.reviewService = reviewService;
         this.shopreviewRepository = shopreviewRepository;
+        this.likeHotelService = likeHotelService;
     }
 
     @GetMapping("/hotel")
@@ -127,10 +126,14 @@ public class ShopController {
 
         List<HotelForm> hotelForms = new ArrayList<>();
 
-        for (int i = 0; i < hotelList.size(); i++) {
-            addHotelForm(availShop, hotelList, hotelForms, i);
-        }
+        String userId = req.getSession().getAttribute("userid").toString();
 
+        for (int i = 0; i < hotelList.size(); i++) {
+            int liked = likeHotelService.isLiked(hotelList.get(i).getShopid(), userId);
+            Long likeCount = likeHotelService.getLikeCount(hotelList.get(i).getShopid());
+
+            addHotelForm(availShop, hotelList, hotelForms, i, likeCount, liked);
+        }
         model.addAttribute("hotelList", hotelForms);
         model.addAttribute("person", 2);
 
@@ -169,15 +172,19 @@ public class ShopController {
 
         List<HotelForm> hotelForms = new ArrayList<>();
 
+        String userId = req.getSession().getAttribute("userid").toString();
+
         for (int i = 0; i < hotelList.size(); i++) {
             List<Feat> shopFeats = hotelList.get(i).getShopFeats();
+            int liked = likeHotelService.isLiked(hotelList.get(i).getShopid(), userId);
+            Long likeCount = likeHotelService.getLikeCount(hotelList.get(i).getShopid());
             if (size == 4) {
-                addHotelForm(availShop, hotelList, hotelForms, i);
+                addHotelForm(availShop, hotelList, hotelForms, i, likeCount, liked);
             } else {
                 for (int j = 0; j < shopFeats.size(); j++) {
                     Long featid = shopFeats.get(j).getFeatid();
                     if (featid == size) {
-                        addHotelForm(availShop, hotelList, hotelForms, i);
+                        addHotelForm(availShop, hotelList, hotelForms, i, likeCount, liked);
                     }
                 }
             }
@@ -383,8 +390,18 @@ public class ShopController {
         return "shop/hotel_detail_reservation";
     }
 
+    @GetMapping("append_likehotel")
+    @ResponseBody
+    public String appendLikeHotel(@RequestParam Long shopId, HttpServletRequest req) {
+        if (likeHotelService.appendLike(shopId, req.getSession().getAttribute("userid").toString()))
+            return "1";
 
-    private void addHotelForm(List<Shop> availShop, List<Shop> hotelList, List<HotelForm> hotelForms, int i) {
+        return "0";
+    }
+
+
+    private void addHotelForm(List<Shop> availShop, List<Shop> hotelList, List<HotelForm> hotelForms, int i,
+                              Long likeCount, int liked) {
         HotelForm hotelForm = new HotelForm();
         hotelForm.setShopid(hotelList.get(i).getShopid());
         hotelForm.setName(hotelList.get(i).getName());
@@ -399,6 +416,8 @@ public class ShopController {
         hotelForm.setShopFeats(hotelList.get(i).getShopFeats());
         Optional<Hotelroom> cheapRoom = hotelroomService.cheapRoom(shopid);
         hotelForm.setPrice(cheapRoom.get().getPrice());
+        hotelForm.setLikeCount(likeCount);
+        hotelForm.setIsLiked(liked);
         for (int k = 0; k < availShop.size(); k++) {
             if (hotelList.get(i).getShopid() == availShop.get(k).getShopid()) {
                 hotelForm.setAvail("true");
