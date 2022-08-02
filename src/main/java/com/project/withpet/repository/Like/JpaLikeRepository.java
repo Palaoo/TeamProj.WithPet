@@ -37,7 +37,8 @@ public class JpaLikeRepository implements LikeRepository {
     @Override
     public boolean isLike(Long prodId, String userId) {
         String query = "select l from Like l where l.prodId=:prodId and l.userId=:userId";
-        if (em.createQuery(query, Like.class).setParameter("prodId", prodId).setParameter("userId", userId).getResultList() == null) {
+        if (em.createQuery(query, Like.class).setParameter("prodId", prodId).setParameter("userId", userId)
+                .getResultList() == null) {
             return false;
         } else
             return true;

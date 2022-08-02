@@ -16,11 +16,40 @@ public class HotelForm {
     private String address;
     private String tel;
     private Region region;
+
+    public Long getLikeCount() {
+        return likeCount;
+    }
+
+    public void setLikeCount(Long likeCount) {
+        this.likeCount = likeCount;
+    }
+
+    public int getIsLiked() {
+        return isLiked;
+    }
+
+    public void setIsLiked(int isLiked) {
+        this.isLiked = isLiked;
+    }
+
     private Shoptype shoptype;
     private Long price;
     private String avail;
+    private Long likeCount;
+    private int isLiked;
 
     private List<Feat> shopFeats;
+
+    private String path;
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
+    }
 
     public List<Feat> getShopFeats() {
         return shopFeats;
