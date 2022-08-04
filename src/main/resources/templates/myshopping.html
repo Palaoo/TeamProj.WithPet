@@ -14,6 +14,7 @@
     table {
         border-spacing: 20px;
         border-collapse: separate;
+
         /* position:absolute;
         left:500px; */
     }
@@ -55,7 +56,9 @@
         display: flex;
         flex-direction: row;
     }
-
+    textarea {
+        width: 80%;
+    }
     <!--
     review-- > .star-rating {
         display: flex;
@@ -89,9 +92,7 @@
         -webkit-text-fill-color: #fff58c;
     }
 
-    textarea {
-        width: 80%;
-    }
+
 </style>
 
 <body>
@@ -192,17 +193,18 @@
 <!--                &lt;!&ndash; <p th:text="|${user.name} 님|"></p> &ndash;&gt;-->
 <!--            </div>-->
 
-            <div class="col-lg-8">
+            <div class="col-lg-12" align="center">
                 <div class="up-right-up">
-                    <th><input type="date" id="datePicker1" class="form-control" value=""></th>
-                    <th>~</th>
-                    <th><input type="date" id="datePicker2" class="form-control" value=""></th>
-                    <th>
-                        <div class="continue__btn update__btn" id="btnSearch">
-                            <a href="#">조회</a>
-                        </div>
-                        <!--                                <button id="btnSearch">조회</button>-->
-
+                    <div class="col-lg-4">
+                        <input type="date" id="datePicker1" class="form-control" value="">
+                    </div>
+                    <div class="col-lg-1" align="center"><h6>~</h6></div>
+                    <div class="col-lg-4">
+                        <input type="date" id="datePicker2" class="form-control" value="">
+                    </div>
+                    <div class="col-lg-3">
+                        <a href="#" class="primary-btn" id="btnSearch">조회</a>
+                        <!--<button class="continue__btn update__btn" id="btnSearch">조회</button>--></div>
                 </div>
             </div>
 <!--            <div>-->
@@ -245,8 +247,9 @@
 <!--                    </tbody>-->
 <!--                </table>-->
 <!--            </div>-->
-            <table th:each="orderDTO:${orderDTOList}">
-                <p th:text="${orderDTO.ordertable.orderdate}"></p>
+            <div>
+            <table th:each="orderDTO:${orderDTOList}" >
+                <p id="date" th:text="${orderDTO.ordertable.orderdate}"></p>
 
                 <tbody>
                 <tr th:each="prodandCount:${orderDTO.prodandCounts}">
@@ -259,10 +262,10 @@
                     </td>
                     <td class="quantity__item">
                         <div class="product__cart__item__text">
-                            <p th:text="${prodandCount.prod.name}">상품명</p>
-                            <h6 th:text="|${prodandCount.prod.price}    ${prodandCount.count}|"></h6>
+                            <h4><b th:text="${prodandCount.prod.name}">상품명</b></h4><br><br>
+                            <h6 th:text="|${prodandCount.prod.price}원    ${prodandCount.count}개|"></h6><br><br>
                             <h5>
-                                <p>구매가 완료되었습니다. 이용해주셔서 감사합니다.
+                                <p>구매가 완료되었습니다. 이용해주셔서 감사합니다. <br>
                                     구매확정 이후 상품의 이용방법, 반품 등에 대한 문의는 판매자에게 문의해주세요.</p>
                             </h5>
                         </div>
@@ -274,17 +277,23 @@
                     </div>-->
                     </td>
                     <td class="cart__price">
-                        <button id="btnComplain">문의하기</button>
+                        <a href="#" class="primary-btn" th:name="${prodandCount.prod.id}"
+                           onclick="new_window(this.getAttribute('name'))">리뷰쓰기</a>
+                        <!--<button id="btnComplain">문의하기</button>-->
                     </td>
-                    <td class="cart__close">
-                        <input type="button" value="사용리뷰쓰기" th:name="${prodandCount.prod.id}"
-                               onclick="new_window(this.getAttribute('name'))">
-                        <!--<button id="review">사용리뷰쓰기</button>-->
-                        <button id="btnReOrder">재구매</button>
-                    </td>
+<!--                    <td class="cart__close">-->
+<!--                        <a href="#" class="primary-btn" th:name="${prodandCount.prod.id}"-->
+<!--                           onclick="new_window(this.getAttribute('name'))">리뷰쓰기</a>-->
+
+<!--                        &lt;!&ndash;<input type="button" value="사용리뷰쓰기" th:name="${prodandCount.prod.id}"-->
+<!--                               onclick="new_window(this.getAttribute('name'))">&ndash;&gt;-->
+<!--                        &lt;!&ndash;<button id="review">사용리뷰쓰기</button>&ndash;&gt;-->
+<!--                        &lt;!&ndash;<button id="btnReOrder">재구매</button>&ndash;&gt;-->
+<!--                    </td>-->
                 </tr>
                 </tbody>
             </table>
+            </div>
         </div>
         <div class="row">
             <div class="col-lg-4 col-md-4 col-sm-4">

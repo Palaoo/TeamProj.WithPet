@@ -13,11 +13,17 @@
 }
 #addReply{
     text-align:center;
+    widhth:100px;
     height:40px;
 }
+/*#writer{
+    text-align: left;
+    vertical-align:middle;
+    color: #000;
+    border: 0;
+}*/
 #writer{
-    vertical-align:Text-top;
-    margin-top:5px;
+    vertical-align: text-top;
 }
 </style>
 <body>
@@ -31,9 +37,17 @@
                 <div class="blog__hero__text">
                     <h2 th:text="${title}"> Are you one of the thousands of Iphone owners who has no idea</h2>
                     <ul>
+                        <!--<div th:if="${#strings.equals(userid, writer)}">
+                            <input type="button" class="site-btn" id="modify" value="수정" th:href="@{/community/modifypost(boardcode=${boardcode})}">
+                            <input type="button" class="site-btn" id="delete" value="삭제">
+                        </div>-->
                         <li th:text="${writer}">By Deercreative</li>
                         <li th:text="${date}">February 21, 2019</li>
                        <!-- <li>8 Comments</li>-->
+                        <li th:if="${#strings.equals(userid, writer)}">
+                            <a id="modify"  th:href="@{/community/modifypost(boardcode=${boardcode})}">수정</a>&nbsp;&nbsp;
+                            <a href="#" id="delete" >삭제</a>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -65,10 +79,10 @@
                     <div class="blog__details__text">
                         <p th:utext="${content}"></p>
                     </div>
-                    <div th:if="${#strings.equals(userid, writer)}">
-                        <input type="button" id="modify" value="수정" th:href="@{/community/modifypost(boardcode=${boardcode})}">
-                        <input type="button" id="delete" value="삭제">
-                    </div>
+                    <!--<div th:if="${#strings.equals(userid, writer)}">
+                        <input type="button" class="site-btn" id="modify" value="수정" th:href="@{/community/modifypost(boardcode=${boardcode})}">
+                        <input type="button" class="site-btn" id="delete" value="삭제">
+                    </div>-->
 
                     <div class="blog__details__comment">
                         <!--<h4>Leave A Comment</h4>-->
@@ -82,11 +96,16 @@
                                         <form action="newreply" method="post">
                                             <table id="rtable2">
                                                 <tr>
-                                                    <td class="col-lg-2 col-md-2" id="writer"><th:block th:text="${userid}" name="writer" ></th:block></td>
+                                                    <td class="col-lg-2 col-md-2" id="writer">
+                                                        <!--<input type="text" th:value="${userid}" name="writer" id="writer">-->
+                                                        <th:block th:text="${userid}" name="writer"></th:block>
+                                                    </td>
                                                     <td class="col-lg-8 col-md-8"><textarea name="content" id="content" placeholder="댓글 달기"></textarea>
                                                         <input type="hidden" name="boardcode" th:value="${boardcode}" id="boardcode">
                                                     </td>
-                                                    <td class="col-lg-2 col-md-2" align="center"><input type="submit" class="site-btn" value="작성" id="addReply"></td>
+                                                    <td class="col-lg-2 col-md-2">
+                                                        <input type="submit" id="addReply" class="site-btn" value="  작성">
+                                                    </td>
                                                 </tr>
                                             </table>
                                             <table id="rtable" align="center">
