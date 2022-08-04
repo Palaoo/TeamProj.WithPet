@@ -56,7 +56,8 @@
     resize: none;
   }
   .rating{
-    color:sandybrown;
+      color:transparent;
+      text-shadow: 0 0 0 gold;
   }
 
   div.updatescore fieldset{
@@ -113,7 +114,7 @@
         <img th:src="${shopimg}" alt="" width="1000" height="400">
       </div>
       <div class="col-md-9"><h3 th:text="${cafe.getName()}"></h3></div>
-      <div class="col-md-3"><input type="button" value="저장하기"></div>
+      <div class="col-md-3" th:text="|${scoreAvg} / 5|"></div>
     </div>
 
     <div class="row mb-1">
@@ -200,19 +201,19 @@
           <div class="col-sm-2"><p th:text="${review.getUserid()}"></p></div>
           <div class="col-sm-5">
             <th:block th:if="${review.getScore()==5}">
-              <div class="rating">★★★★★</div>
+              <div class="rating">⭐⭐⭐⭐⭐</div>
             </th:block>
             <th:block th:if="${review.getScore()==4}">
-              <div class="rating">★★★★</div>
+              <div class="rating">⭐⭐⭐⭐</div>
             </th:block>
             <th:block th:if="${review.getScore()==3}">
-              <div class="rating">★★★</div>
+              <div class="rating">⭐⭐⭐</div>
             </th:block>
             <th:block th:if="${review.getScore()==2}">
-              <div class="rating">★★</div>
+              <div class="rating">⭐⭐</div>
             </th:block>
             <th:block th:if="${review.getScore()==1}">
-              <div class="rating">★</div>
+              <div class="rating">⭐</div>
             </th:block>
             <p th:text="${review.getContent()}"></p>
           </div>
