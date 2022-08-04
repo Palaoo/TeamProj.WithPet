@@ -9,26 +9,38 @@
     <th:block th:replace="fragments/index::style"></th:block>
 </head>
 <style>
-<!--    .middle-prod {-->
-<!--        margin-left: 5%;-->
-<!--        margin-right: 5%;-->
-<!--        border-width: 1px;-->
+    <!--
+    .middle-prod {
+    --> <!-- margin-left: 5 %;
+    --> <!-- margin-right: 5 %;
+    --> <!-- border-width: 1 px;
+    --> <!--
+    }
 
-<!--    }-->
+    -->
 
-<!--    .middle-prod-row {-->
-<!--        display: flex;-->
-<!--        flex-direction: row;-->
-<!--    }-->
-<!--    #order{-->
-<!--        font-size:14px;-->
-<!--    ]-->
+    <!--
+    .middle-prod-row {
+    --> <!-- display: flex;
+    --> <!-- flex-direction: row;
+    --> <!--
+    }
 
-#order{
-    font-size:8px;
-    width:100%;
-    height:30px;
-}
+    -->
+    <!--
+    #order {
+    --> <!-- font-size: 14 px;
+
+    -->
+    <!--
+    ]
+    -->
+
+    #order {
+        font-size: 8px;
+        width: 100%;
+        height: 30px;
+    }
 </style>
 <body>
 <div th:replace="fragments/index :: header"></div>
@@ -128,14 +140,17 @@
                         <tr th:each="basketDTO:${BasketDTOs}">
                             <input type="hidden" name="prodId" id="prodId" th:value="${basketDTO.prodid}">
                             <td class="product__cart__item">
-                                <div class="product__cart__item__pic">
+                                <div class="product__cart__item__pic" style="cursor:pointer;"
+                                     th:onclick="|location.href='prod_view?prodId=${basketDTO.prodid}'|">
                                     <img alt="" th:src="${basketDTO.path}"
                                          onerror="this.src='https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbNZo14%2Fbtq17bsvo5i%2FOSV3gGWnwAKqNB0EOSQkrK%2Fimg.png'"
                                          width="200" height="200"> <!--src="img/shopping-cart/cart-1.jpg"-->
                                 </div>
                                 <div class="product__cart__item__text">
-                                    <p th:text="${basketDTO.brand}">브랜드명</p>
-                                    <h6 th:text="${basketDTO.name}" id="prodName"></h6>
+                                    <p th:text="${basketDTO.brand}" style="cursor:pointer;"
+                                       th:onclick="|location.href='prod_view?prodId=${basketDTO.prodid}'|">브랜드명</p>
+                                    <h6 th:text="${basketDTO.name}" id="prodName" style="cursor:pointer;"
+                                        th:onclick="|location.href='prod_view?prodId=${basketDTO.prodid}'|"></h6>
                                     <h5><span class="quantity_price" th:id="|price${basketDTO.prodid}|" name="price"
                                               th:text="${basketDTO.price}">19800</span>
                                         <span class="mileage displaynone"><img src=""/> <span
@@ -167,7 +182,8 @@
                                                     class="QuantityDown down"/></span>
                                         </div>
                                         <div align="center">
-                                            <input th:id="|qty${basketDTO.prodid}|" name="quantity_name" style="" value="1" type="text"/>
+                                            <input th:id="|qty${basketDTO.prodid}|" name="quantity_name" style=""
+                                                   value="1" type="text"/>
                                         </div>
                                         <div align="center">
                                             <span th:id="${basketDTO.prodid}" name="btnQuantityDown"><img
@@ -183,7 +199,8 @@
                             </td>
                             <td class="cart__close">
                                 <button th:name="${basketDTO.prodid}" id="order" class="continue__btn">주문</button>
-                                <i class="fa fa-close" th:href="|delete_basket?prodId=${basketDTO.prodid}|"></i>
+                                <i class="fa fa-close" style="cursor: pointer"
+                                   th:onclick="|location.href='delete_basket?prodId=${basketDTO.prodid}'|"></i>
                             </td>
                         </tr>
                         </tbody>
@@ -245,12 +262,13 @@
         $('#totalprice' + $(this).attr('id')).text(parseInt($('#price' + $(this).attr('id')).text()) * parseInt(inputQty.val()))
         $('#total').text(parseInt($('#total').text()) + parseInt($('#price' + $(this).attr('id')).text()));
     }).on('click', 'span[name=btnQuantityDown]', function () {
-    if(parseInt($('#quantity').val())>1)
-        inputQty = $('#qty' + $(this).attr('id'))
-        inputQty.val(parseInt(inputQty.val()) - 1)
+        if (parseInt($('#qty'+$(this).attr('id')).val()) > 1) {
+            inputQty = $('#qty' + $(this).attr('id'))
+            inputQty.val(parseInt(inputQty.val()) - 1)
 
-        $('#totalprice' + $(this).attr('id')).text(parseInt($('#price' + $(this).attr('id')).text()) * parseInt(inputQty.val()))
-        $('#total').text(parseInt($('#total').text()) - parseInt($('#price' + $(this).attr('id')).text()));
+            $('#totalprice' + $(this).attr('id')).text(parseInt($('#price' + $(this).attr('id')).text()) * parseInt(inputQty.val()))
+            $('#total').text(parseInt($('#total').text()) - parseInt($('#price' + $(this).attr('id')).text()));
+        } else console.log(parseInt($('#quantity').val()))
     }).on('click', '#order', function () {
         tossPayments($(this).attr("name"))
     }).on('click', '#orderAll', function () {
@@ -308,7 +326,6 @@
             failUrl: 'http://localhost:8080/payfail',
         })
     }
-
 
 
 </script>

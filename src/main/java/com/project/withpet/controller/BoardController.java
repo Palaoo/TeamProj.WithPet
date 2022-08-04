@@ -207,9 +207,7 @@ public class BoardController {
 
     @PostMapping("/community/modifypost")
     public String modifySubmit(@RequestParam("title") String title, @RequestParam("content") String content,
-                               @RequestParam("boardcode") Long boardcode, HttpServletRequest req){
-
-        HttpSession session = req.getSession();
+                               @RequestParam("boardCode") Long boardcode){
 
         Optional<Board> boardOptional = boardService.findById(boardcode);
         Board board = boardOptional.get();
@@ -236,8 +234,8 @@ public class BoardController {
 
     @GetMapping("/community/delete")
     public String deletePost(@RequestParam("boardcode") Long boardcode){
-        boardService.deletePost(boardcode);
         boardimgService.deleteImg(boardcode);
+        boardService.deletePost(boardcode);
         return "redirect:/community";
     }
 
