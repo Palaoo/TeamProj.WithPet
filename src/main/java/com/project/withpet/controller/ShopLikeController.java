@@ -1,8 +1,10 @@
 package com.project.withpet.controller;
 
+import com.project.withpet.domain.Hotelimg;
 import com.project.withpet.domain.cafe;
 import com.project.withpet.domain.shoplike;
 import com.project.withpet.dto.LikeshopDTO;
+import com.project.withpet.repository.HotelimgRepository;
 import com.project.withpet.repository.ShopLike.LikeShopRepository;
 import com.project.withpet.service.ShopLikeService;
 import com.project.withpet.service.cafeService;
@@ -27,10 +29,13 @@ public class ShopLikeController {
 
     private final LikeShopRepository likeshopRepository;
 
-    public ShopLikeController(ShopLikeService shopLikeService, com.project.withpet.service.cafeService cafeService, LikeShopRepository likeshopRepository) {
+    private final HotelimgRepository hotelimgRepository;
+
+    public ShopLikeController(ShopLikeService shopLikeService, com.project.withpet.service.cafeService cafeService, LikeShopRepository likeshopRepository, HotelimgRepository hotelimgRepository) {
         this.shopLikeService = shopLikeService;
         this.cafeService = cafeService;
         this.likeshopRepository = likeshopRepository;
+        this.hotelimgRepository = hotelimgRepository;
     }
 
     @GetMapping("/mypage/myshop")  //마이페이지 좋아요 리스트
@@ -45,7 +50,9 @@ public class ShopLikeController {
             shoplike shoplike = shoplikeList.get(i);
             log.info("shoplikelist = " + shoplike.toString());
             Optional<cafe> cafe = cafeService.findById(shoplike.getShopid());
-            likeshopDTOList.add(new LikeshopDTO(shoplike, cafe.get()));
+            Optional<Hotelimg> shopimg = hotelimgRepository.findByShopid(shoplike.getShopid());
+            String path = shopimg.get().getPath();
+            likeshopDTOList.add(new LikeshopDTO(shoplike, cafe.get(), path));
         }
 
         model.addAttribute("likeshopDTOList",likeshopDTOList);

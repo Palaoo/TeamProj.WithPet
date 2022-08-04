@@ -12,8 +12,15 @@ public class LikeshopDTO {
     cafe cafe;
 
     boolean islike;
+    private String path;
 
+    public String getPath() {
+        return path;
+    }
 
+    public void setPath(String path) {
+        this.path = path;
+    }
 
     public shoplike getShoplike(){
         return shoplike;
@@ -37,9 +44,10 @@ public class LikeshopDTO {
         this.islike = islike;
     }
 
-    public LikeshopDTO(shoplike shoplike, cafe cafe) {
+    public LikeshopDTO(shoplike shoplike, cafe cafe, String path) {
         this.shoplike = shoplike;
         this.cafe = cafe;
+        this.path = path;
 
     }
 

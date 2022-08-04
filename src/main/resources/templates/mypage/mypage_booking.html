@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <html lang="en">
-<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="description" content="Male_Fashion Template">
@@ -11,151 +10,18 @@
     <title>MY review</title>
 
     <th:block th:replace="fragments/index::style"></th:block>
+
 </head>
 <body>
 
 <style>
-    .profile_user{
-        width:100px;
-        height:100px;
-        border-radius: 70%;
-        overflow: hidden;
-        background-color:pink;
-    }
-    #img_profile{
-    <!--  width:100px;
-        height:100px;-->
-        width:100%;
-        height:100%;
-        object-fit:cover;
-    }
-    #main{
+
+    #main {
         margin-top: 15px;
     }
-/*    div.container{}
-    div.header div.footer{clear:left}
-    div.left{float:left;}
-    .header{height: 200px;}
-    .top{height: 70px;
-        margin: auto;}
-    .footer{height: 30px;}
-    .left{height: 500px; width:200px;}
-    .contents{height: 500px;}
-    div.updatescore fieldset{
-        display: inline-block;
-        direction: rtl;
-        border:0;
-    }
-    div.updatescore fieldset legend{
-        text-align: right;
-    }
-    div.updatescore input[type=radio]{
-        display: none;
-    }
-    div.updatescore label{
-        font-size: 3em;
-        color: transparent;
-        text-shadow: 0 0 0 #f0f0f0;
-    }
-    div.updatescore label:hover{
-        text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
-    }
-    div.updatescore label:hover ~ label{
-        text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
-    }
-    div.updatescore input[type=radio]:checked ~ label{
-        text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
-    }
-    .rating{
-        color:sandybrown;
-    }*/
+
 </style>
 <div th:replace="fragments/index :: header"></div>
-
-<!--<div class="container">
-    <div class="top">
-        <span th:text="|${userid}님|"></span>
-    </div>
-    <div class="contents">
-        <div class="row">
-            <div th:replace="fragments/mypage :: menubar"></div>
-
-            <div class="col-sm-8">
-                <div class="card mb-3" style="max-width: 540px;" th:each="book, i:${bookList}">
-                    <div class="card-body">
-                        <h5 class="card-text" th:text="|${book.getHotelname()} / ${book.getRoomname}|"></h5><br>
-                        <h5 class="card-text" th:text="|${book.getCheckin()} ~ ${book.getCheckout()} (${book.getName()})|"></h5><br>
-                        <p class="card-text" th:text="${book.getMobile()}"></p>
-                        <p class="card-text" th:text="${book.getDetail()}"></p>
-&lt;!&ndash;                            <p class="card-text" th:text="|${book.getTotal()}원|"></p>&ndash;&gt;
-&lt;!&ndash;                        <a th:href="@{/mypage/booking/delete(bookid=${book.getBookid()})}">&ndash;&gt;
-&lt;!&ndash;                            <button style="float:right;" id="btnDelete">예약 취소</button>&ndash;&gt;
-&lt;!&ndash;                        </a>&ndash;&gt;
-                        <a th:href="@{/mypage/booking/change(bookid=${book.getBookid()})}">
-                            <button style="float:right;">예약 변경</button>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>-->
-
-<!--<section class="shop spad">-->
-<!--    <div class="container">-->
-<!--        <div class="top">-->
-<!--            <img id="img_profile" src="/img/blog/blog-1.jpg"/>-->
-<!--            <p th:text="|${userid}님|"></p>-->
-<!--        </div>-->
-<!--        <div class="row">-->
-<!--           <div class="col-3">-->
-<!--                <ul class="nav flex-column" id="myTab" role="tablist" th:align="left">-->
-<!--                    <li class="nav-item" role="presentation">-->
-<!--                        <a class="nav-link active" id="reservation-tab" data-bs-toggle="tab" data-bs-target="#reservation" type="button" role="tab" aria-controls="reservation" aria-selected="true" aria-current="page" href="/mypage/booking">예약내역</a>-->
-<!--                    </li>-->
-<!--                    <li class="nav-item" role="presentation">-->
-<!--                        <a class="nav-link" id="save-tab" data-bs-toggle="tab" data-bs-target="#save" type="button" role="tab" aria-controls="save" aria-selected="false" href="/mypage/myshop">저장목록</a>-->
-<!--                    </li>-->
-<!--                    <li class="nav-item" role="presentation">-->
-<!--                        <a class="nav-link" id="review-tab" data-bs-toggle="tab" data-bs-target="#review" type="button" role="tab" aria-controls="review" aria-selected="false" href="/mypage/review">내 후기</a>-->
-<!--                    </li>-->
-<!--                    <li class="nav-item" role="presentation">-->
-<!--                        <a class="nav-link" id="mywriting-tab" data-bs-toggle="tab" data-bs-target="#mywriting" type="button" role="tab" aria-controls="mywriting" aria-selected="false" href="/mypage/post">내가 남긴 글</a>-->
-<!--                    </li>-->
-<!--                    <li class="nav-item" role="presentation">-->
-<!--                        <a class="nav-link" id="manager-tab" data-bs-toggle="tab" data-bs-target="#manager" type="button" role="tab" aria-controls="manager" aria-selected="false" href="/mypage/manager">관리자 등록</a>-->
-<!--                    </li>-->
-<!--                    <li class="nav-item" role="presentation">-->
-<!--                        <a class="nav-link" id="business-tab" data-bs-toggle="tab" data-bs-target="#business" type="button" role="tab" aria-controls="business" aria-selected="false" href="/businessPage">사업자</a>-->
-<!--                    </li>-->
-<!--                </ul>-->
-<!--           </div>-->
-<!--            <div class="col-9">-->
-<!--                <div class="tab-content">-->
-<!--                    <div class="tab-pane active" id="reservation" role="tabpanel" aria-labelledby="reservation-tab" th:each="book, i:${bookList}">-->
-<!--                        <div class="card-body">-->
-<!--                            <h5 class="card-text" th:text="|${book.getHotelname()} / ${book.getRoomname}|"></h5><br>-->
-<!--                            <h5 class="card-text" th:text="|${book.getCheckin()} ~ ${book.getCheckout()} (${book.getName()})|"></h5><br>-->
-<!--                            <p class="card-text" th:text="${book.getMobile()}"></p>-->
-<!--                            <p class="card-text" th:text="${book.getDetail()}"></p>-->
-<!--                            <a th:href="@{/mypage/booking/change(bookid=${book.getBookid()})}">-->
-<!--                                <button style="float:right;">예약 변경</button>-->
-<!--                            </a>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                    <div class="tab-pane" id="save" role="tabpanel" aria-labelledby="save-tab">-->
-
-<!--                    </div>-->
-<!--                    <div class="tab-pane" id="review" role="tabpanel" aria-labelledby="review-tab"></div>-->
-<!--                    <div class="tab-pane" id="mywriting" role="tabpanel" aria-labelledby="mywriting-tab"></div>-->
-<!--                    <div class="tab-pane" id="manager" role="tabpanel" aria-labelledby="manager-tab"></div>-->
-<!--                    <div class="tab-pane" id="business" role="tabpanel" aria-labelledby="business-tab"></div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--</section>-->
-
 
 
 <section class="breadcrumb-option">
@@ -177,21 +43,11 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-2">
-            <div class="profile_user" >
-                <img id="img_profile" src="/img/blog/blog-1.jpg" style="vertical-align: middle;">
-
-            </div>
-        </div>
-        <div class="col-10">
-            <br>
-            <br>
-            <h5 th:text="|${userid}님|"></h5>
-        </div>
-    </div>
-
-    <div class="row">
         <div class="col-3">
+            <div class="col-12">
+                <br><br>
+                <h5 th:text="|${userid}님|"></h5>
+            </div>
             <div class="shop__sidebar">
                 <div class="shop__sidebar__accordion">
                     <div class="accordion" id="accordionExample">
@@ -202,7 +58,8 @@
 
                                         <ul class="nav flex-column">
                                             <li class="nav-item">
-                                                <a class="nav-link active" id="reservation-tab" aria-current="page" href="/mypage/booking">예약내역</a>
+                                                <a class="nav-link active" id="reservation-tab" aria-current="page"
+                                                   href="/mypage/booking">예약내역</a>
                                             </li>
                                             <li class="nav-item">
                                                 <a class="nav-link" id="save-tab" href="/mypage/myshop">저장목록</a>
@@ -236,159 +93,68 @@
         <div class="col-9" id="main">
             <div class="row">
                 <div class="tab-content">
-                    <div class="tab-pane active" id="reservation" role="tabpanel" aria-labelledby="reservation-tab" th:each="book, i:${bookList}">
-                        <div class="card-body">
-                            <h5 class="card-text" th:text="|${book.getHotelname()} / ${book.getRoomname}|"></h5><br>
-                            <h5 class="card-text" th:text="|${book.getCheckin()} ~ ${book.getCheckout()} (${book.getName()})|"></h5><br>
-                            <p class="card-text" th:text="${book.getMobile()}"></p>
-                            <p class="card-text" th:text="${book.getDetail()}"></p>
-                            <a th:href="@{/mypage/booking/change(bookid=${book.getBookid()})}">
-                                <button style="float:right;">예약 변경</button>
-                            </a>
+                    <br><br><br>
+                    <div class="tab-pane active" id="reservation" role="tabpanel" aria-labelledby="reservation-tab"
+                         th:each="book, i:${bookList}">
+                        <div class="card mb-2" style="max-width: 700px;">
+                            <div class="row g-0">
+                                <div class="col-md-4">
+                                    <img th:src="${book.path}" class="img-fluid rounded-start"
+                                         style="object-fit: cover; width: 100%; height: 15vw">
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="card-body">
+                                        <h5 class="card-text"
+                                            th:text="|${book.getHotelname()} / ${book.getRoomname}|"></h5>
+                                        <p class="card-text"
+                                           th:text="|${book.getCheckin()} ~ ${book.getCheckout()} (${book.getName()})|"></p>
+                                        <p class="card-text" th:text="${book.getMobile()}"></p>
+                                        <p class="card-text" th:text="${book.getDetail()}"></p>
+                                    </div>
+                                </div>
+                                <div class="col-md-2" style="margin: auto" align="center">
+                                    <a th:href="@{/mypage/booking/change(bookid=${book.getBookid()})}">
+                                        <button class="btn btn-outline-primary btn-sm">예약변경</button>
+                                    </a>
+                                </div>
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="tab-pane" id="save" role="tabpanel" aria-labelledby="save-tab">
+                        <div class="tab-pane" id="save" role="tabpanel" aria-labelledby="save-tab">
 
-                    </div>
+                        </div>
 
-                    <div class="tab-pane" id="review" role="tabpanel" aria-labelledby="review-tab">
-<!--                        <th:block th:each="shopReviewDTO, index : ${shopReviewDTOList}">-->
-<!--                            <div class="card border-secondary mb-3">&lt;!&ndash;card w-90&ndash;&gt;-->
-<!--                                <div class="card-body">-->
-<!--                                    <div class="row">-->
-<!--                                        <div class="col-sm-4">-->
-<!--                                            <h5 class="card-title" th:text="${shopReviewDTO.cafe.name}"></h5>-->
-<!--                                        </div>-->
-<!--                                        <div class="col-sm-8">-->
-<!--                                            <div class="card-score">-->
-<!--                                                <th:block th:if="${shopReviewDTO.shopreview.getScore()==5}">-->
-<!--                                                    <div class="rating">★★★★★</div>-->
-<!--                                                </th:block>-->
-<!--                                                <th:block th:if="${shopReviewDTO.shopreview.getScore()==4}">-->
-<!--                                                    <div class="rating">★★★★</div>-->
-<!--                                                </th:block>-->
-<!--                                                <th:block th:if="${shopReviewDTO.shopreview.getScore()==3}">-->
-<!--                                                    <div class="rating">★★★</div>-->
-<!--                                                </th:block>-->
-<!--                                                <th:block th:if="${shopReviewDTO.shopreview.getScore()==2}">-->
-<!--                                                    <div class="rating">★★</div>-->
-<!--                                                </th:block>-->
-<!--                                                <th:block th:if="${shopReviewDTO.shopreview.getScore()==1}">-->
-<!--                                                    <div class="rating">★</div>-->
-<!--                                                </th:block>-->
-<!--                                            </div>-->
-<!--                                        </div>-->
-<!--                                    </div>-->
-<!--                                    <div class="row">-->
-<!--                                        <div class="col-sm-9" th:text="${shopReviewDTO.shopreview.getContent()}">-->
-<!--                                        </div>-->
-<!--                                        <div class="col-sm-3" th:if="${shopReviewDTO.shopreview.getUserid()==userLogined}">-->
-<!--                                            &lt;!&ndash;수정 모달&ndash;&gt;-->
-<!--                                            <form th:action="@{'/mypage/review/update'}" method="post">-->
-<!--                                                <button type="button" th:id="${index}"-->
-<!--                                                        class="btn btn-outline-primary btn-sm"-->
-<!--                                                        data-bs-toggle="modal"-->
-<!--                                                        data-bs-target="#review-edit-Modal"-->
-<!--                                                        th:attr="data-bs-content=${shopReviewDTO.shopreview.getContent()},-->
-<!--                                            data-bs-score=${shopReviewDTO.shopreview.getScore()},data-bs-rid=${shopReviewDTO.shopreview.getRid()}"-->
-<!--                                                        data-bs-userid=""-->
-<!--                                                        data-bs-shopid="">수정</button>-->
-<!--                                                <div class="modal fade" id="review-edit-Modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">-->
-<!--                                                    <div class="modal-dialog">-->
-<!--                                                        <div class="modal-content">-->
-<!--                                                            <div class="modal-header">-->
-<!--                                                                <h5 class="modal-title" id="exampleModalLabel">리뷰 수정하기</h5>-->
-<!--                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>-->
-<!--                                                            </div>-->
-<!--                                                            <div class="modal-body">-->
-<!--                                                                <div class="updatescore">-->
-<!--                                                                    <fieldset>-->
-<!--                                                                        <span class="text-bold">별점을 선택하세요</span>-->
-<!--                                                                        <input type="radio" name="score" value="5" id="rate1_"><label-->
-<!--                                                                            for="rate1_">★</label>-->
-<!--                                                                        <input type="radio" name="score" value="4" id="rate2_"><label-->
-<!--                                                                            for="rate2_">★</label>-->
-<!--                                                                        <input type="radio" name="score" value="3" id="rate3_"><label-->
-<!--                                                                            for="rate3_">★</label>-->
-<!--                                                                        <input type="radio" name="score" value="2" id="rate4_"><label-->
-<!--                                                                            for="rate4_">★</label>-->
-<!--                                                                        <input type="radio" name="score" value="1" id="rate5_"><label-->
-<!--                                                                            for="rate5_">★</label>-->
-<!--                                                                    </fieldset>-->
-<!--                                                                </div>-->
-<!--                                                                <div class="mb-3">-->
-<!--                                                                    <label for="message-text" class="col-form-label">내용</label>-->
-<!--                                                                    <textarea class="form-control" id="message-text" name="content"></textarea>-->
-<!--                                                                    <input type = "hidden" id="review-id" name="rid">-->
-<!--                                                                </div>-->
-<!--                                                                <input type="hidden" name="shopid" th:value="${shopReviewDTO.shopreview.getShopid()}">-->
-<!--                                                                &lt;!&ndash;                                                        <input type="hidden" name="rid" th:value="${review.getRid()}">&ndash;&gt;-->
-<!--                                                                <input type="hidden" name="userid" th:value="${shopReviewDTO.shopreview.getUserid()}">-->
-<!--                                                                <input type="hidden" name="date" id="currentTime" th:value="${shopReviewDTO.shopreview.getDate()}">-->
-<!--                                                                <input type="hidden" name="score" id="score-value">-->
-<!--                                                            </div>-->
+                        <div class="tab-pane" id="review" role="tabpanel" aria-labelledby="review-tab">
 
-<!--                                                            <script>-->
-<!--                                                                document.getElementById("currentTime").value=new Date(+new Date() + 3240 * 10000).toISOString().split("T")[0];-->
-<!--                                                            </script>-->
+                        </div>
 
-<!--                                                            <div class="modal-footer">-->
-<!--                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>-->
-<!--                                                                <button type="submit" class="btn btn-primary">수정</button>-->
-<!--                                                            </div>-->
-<!--                                                        </div>-->
-<!--                                                    </div>-->
-<!--                                                </div>-->
-<!--                                            </form>-->
-<!--                                            <script>-->
-<!--                                                var myModal = document.getElementById('myModal')-->
-<!--                                                var myInput = document.getElementById('myInput')-->
+                        <div class="tab-pane" id="mywriting" role="tabpanel" aria-labelledby="mywriting-tab">
 
-<!--                                                myModal.addEventListener('shown.bs.modal', function () {-->
-<!--                                                    myInput.focus()-->
-<!--                                                })-->
-<!--                                            </script>-->
-<!--                                            <form th:action="@{'/mypage/review/delete'}" method="get">-->
-<!--                                                <input type="hidden" name="shopid" th:value="${shopReviewDTO.shopreview.getShopid()}">-->
-<!--                                                <input type="hidden" name="rid" th:value="${shopReviewDTO.shopreview.getRid()}">-->
-<!--                                                <button  class="btn btn-outline-danger btn-sm" name="delete">삭제</button>-->
-<!--                                            </form>-->
-<!--                                        </div>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </th:block>-->
-                    </div>
+                        </div>
 
-                    <div class="tab-pane" id="mywriting" role="tabpanel" aria-labelledby="mywriting-tab">
+                        <div class="tab-pane" id="manager" role="tabpanel" aria-labelledby="manager-tab">
 
-                    </div>
+                        </div>
 
-                    <div class="tab-pane" id="manager" role="tabpanel" aria-labelledby="manager-tab">
-<!--                        <form method="get" action="/mypage/manager">-->
-<!--                            사업자 번호:&nbsp;<input type="text" name="bnumber">-->
-<!--                            <input type="submit" value="번호 확인">-->
-<!--                        </form>-->
-                    </div>
+                        <div class="tab-pane" id="business" role="tabpanel" aria-labelledby="business-tab">
 
-                    <div class="tab-pane" id="business" role="tabpanel" aria-labelledby="business-tab">
-
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+<br><br><br><br>
 
 
 <th:block th:replace="fragments/index :: footer"></th:block>
 </body>
 <script>
     $(document)
-    .on('click','#btnDelete',function (){
-        alert('정말 예약을 취소하시겠습니까?')
-    })
+        .on('click', '#btnDelete', function () {
+            alert('정말 예약을 취소하시겠습니까?')
+        })
     //별점 미선택 후기 작성시
     // .on("click","#comment-create-btn",function (){
     //     if($(':radio[name="score"]:checked').length<1) {

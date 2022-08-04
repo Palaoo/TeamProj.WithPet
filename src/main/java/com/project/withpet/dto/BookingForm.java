@@ -19,4 +19,5 @@ public class BookingForm {
     private String name;
     private Long shopid;
     private String mobile;
+    private String path;
 }

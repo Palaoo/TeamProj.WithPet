@@ -35,14 +35,16 @@ public class UserInfoController {
     private final ShopService shopService;
     private final BoardService boardService;
     private final BoardimgService boardimgService;
+    private final HotelimgRepository hotelimgRepository;
 
     @Autowired
-    public UserInfoController(BookingRepository bookingRepository, HotelroomService hotelroomService, ShopService shopService, BoardService boardService, HotelimgRepository hotelimgRepository, BoardimgService boardimgService) {
+    public UserInfoController(BookingRepository bookingRepository, HotelroomService hotelroomService, ShopService shopService, BoardService boardService, HotelimgRepository hotelimgRepository, BoardimgService boardimgService, HotelimgRepository hotelimgRepository1) {
         this.bookingRepository = bookingRepository;
         this.hotelroomService = hotelroomService;
         this.shopService = shopService;
         this.boardService = boardService;
         this.boardimgService = boardimgService;
+        this.hotelimgRepository = hotelimgRepository1;
     }
 
     @GetMapping("/mypage/booking")
@@ -71,6 +73,8 @@ public class UserInfoController {
                 Optional<Shop> shopOptional = shopService.findById(shopid);
                 bookingForm.setRoomname(hotelroomOptional.get().getRoomname());
                 bookingForm.setHotelname(shopOptional.get().getName());
+                Optional<Hotelimg> hotelimg = hotelimgRepository.findByShopid(shopOptional.get().getShopid());
+                bookingForm.setPath(hotelimg.get().getPath());
                 bookingList.add(bookingForm);
             }
 
@@ -161,7 +165,7 @@ public class UserInfoController {
                 if(boardimg.isPresent()) {
                     path = boardimg.get().getPath();
                 } else {
-                    path = "https://withpetimg.s3.ap-northeast-2.amazonaws.com/images/hoteldefault.jpg";
+                    path = "/image/catbg.jpg";
                 }
                 boardFormList.add(new BoardForm(path, board));
             }
