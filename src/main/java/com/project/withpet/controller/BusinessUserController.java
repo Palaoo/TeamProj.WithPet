@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 @Controller
 public class BusinessUserController {
@@ -20,6 +21,11 @@ public class BusinessUserController {
 
     @GetMapping("/businessPage")
     public String businessPage(HttpServletRequest req, Model model) {
+        HttpSession session = req.getSession();
+        if (session.getAttribute("userid") != null) {
+            model.addAttribute("userid", session.getAttribute("userid"));
+        }
+
         if (!tools.isUserLogined(req)) {
             return "login";
         }
@@ -40,6 +46,11 @@ public class BusinessUserController {
 
     @GetMapping("/businessInfo")
     public String businessInfo(HttpServletRequest req, Model model) {
+        HttpSession session = req.getSession();
+        if (session.getAttribute("userid") != null) {
+            model.addAttribute("userid", session.getAttribute("userid"));
+        }
+
         if (!tools.isUserLogined(req)) {
             return "login";
         }

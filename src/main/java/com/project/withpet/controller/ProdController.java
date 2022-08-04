@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -213,6 +214,11 @@ public class ProdController {
 
     @GetMapping("prod_view")
     public String prodView(Model model, HttpServletRequest req) {
+        HttpSession session = req.getSession();
+        if (session.getAttribute("userid") != null) {
+            model.addAttribute("userid", session.getAttribute("userid"));
+        }
+
         Long prodId = Long.parseLong(req.getParameter("prodId"));
         model.addAttribute("product", prodService.findById(prodId).get());   // 상품 튜플
         model.addAttribute("img", imgService.findByProdid(prodId).get().getPath());   // 썸네일 URL
