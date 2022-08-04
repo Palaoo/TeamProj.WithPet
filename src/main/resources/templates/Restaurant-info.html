@@ -8,6 +8,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Restaurant info</title>
+  <th:block th:replace="fragments/index::style"></th:block>
 </head>
 <body>
 <style>
@@ -103,23 +104,8 @@
 
 <div class="container">
 
-  <div class="header">
-    <div th:if="${not #strings.isEmpty(userid)}">
-      <p align=right><a id="logout" href='logout'>로그아웃</a>&nbsp;&nbsp;<a id="mypage" href='mypage'>마이페이지</a></p>
-    </div>
-    <div th:if="${#strings.isEmpty(userid)}">
-      <p align=right><a id="login" href='login'>로그인</a>&nbsp;&nbsp;<a id="signup" href='signup'>회원가입</a></p>
-    </div>
-    <h1 align=center><a href="/static">WITH PET</a></h1>
-    <nav>
-      <a href="#">숙소</a>
-      <a href="cafe_list">카페</a>
-      <a href="Restaurant-list">맛집</a>
-      <a href="#">기타</a>
-      <a href="#">상점</a>
-      <a href="#">게시판</a>
-    </nav>
-  </div>
+  <div th:replace="fragments/index :: header"></div>
+
   <div class="content">
     <th:block th:value="${cafe.shopid}"></th:block>
     <div class="row pb-4 mb-4 border-bottom">
@@ -339,6 +325,7 @@
   </div>
 </div>
 <script src='https://code.jquery.com/jquery-3.4.1.js'></script>
+<th:block th:replace="fragments/index :: footer"></th:block>
 <script>
   const commentEditModal = document.querySelector("#review-edit-Modal")
 

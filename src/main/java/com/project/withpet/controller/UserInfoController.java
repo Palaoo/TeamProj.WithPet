@@ -157,7 +157,12 @@ public class UserInfoController {
             List<BoardForm> boardFormList = new ArrayList<>();
             for(Board board : boardList){
                 Optional<Boardimg> boardimg = boardimgService.findOne(board.getBoardcode());
-                String path = boardimg.get().getPath();
+                String path = "";
+                if(boardimg.isPresent()) {
+                    path = boardimg.get().getPath();
+                } else {
+                    path = "https://withpetimg.s3.ap-northeast-2.amazonaws.com/images/hoteldefault.jpg";
+                }
                 boardFormList.add(new BoardForm(path, board));
             }
             model.addAttribute("postList", boardFormList);

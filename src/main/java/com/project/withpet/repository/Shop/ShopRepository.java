@@ -16,5 +16,5 @@ public interface ShopRepository {
     Optional<Shop> findById(Long id);
 
 
-
+    List<Shop> findByAddressContainingAndShoptypeTypeid(String keyword, Long typeid);
 }

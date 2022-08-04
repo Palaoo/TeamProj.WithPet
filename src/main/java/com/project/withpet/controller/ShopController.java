@@ -16,6 +16,7 @@ import com.project.withpet.service.LikeHotelService;
 import com.project.withpet.service.ShopService;
 import com.project.withpet.service.UserService;
 import com.project.withpet.service.reviewService;
+import lombok.extern.slf4j.Slf4j;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +43,7 @@ import java.util.*;
 import static org.apache.el.util.MessageFactory.get;
 
 @Controller
+@Slf4j
 public class ShopController {
 
     private final ShopService shopService;
@@ -74,9 +76,11 @@ public class ShopController {
     public String hotelList(Model model, HttpServletRequest req) {
 
         HttpSession session = req.getSession();
-        if (session.getAttribute("userid") != null) {
-            model.addAttribute("userid", session.getAttribute("userid"));
-        }
+//        if (session.getAttribute("userid") == null) {
+//            return "login";
+//        }
+        String userId = (String) req.getSession().getAttribute("userLogined");
+        model.addAttribute("userid", userId);
 
         LocalDate now = LocalDate.now();
         Calendar cal = Calendar.getInstance();
@@ -128,7 +132,7 @@ public class ShopController {
 
         List<HotelForm> hotelForms = new ArrayList<>();
 
-        String userId = req.getSession().getAttribute("userid").toString();
+
 
         for (int i = 0; i < hotelList.size(); i++) {
             int liked = likeHotelService.isLiked(hotelList.get(i).getShopid(), userId);
@@ -513,4 +517,82 @@ public class ShopController {
             throw new RuntimeException("API 응답을 읽는데 실패했습니다.", e);
         }
     }
+
+    @GetMapping("/hotel/search")  //지역검색
+    public String searchHotel(@RequestParam("keyword") String keyword, Model model,HttpServletRequest req){
+        HttpSession session = req.getSession();
+        if (session.getAttribute("userid") == null) {
+            return "login";
+        }
+        String userId = req.getSession().getAttribute("userid").toString();
+        model.addAttribute("userid", userId);
+
+        LocalDate now = LocalDate.now();
+        Calendar cal = Calendar.getInstance();
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = null;
+        try {
+            date = df.parse(now.toString());
+        } catch (java.text.ParseException e) {
+            throw new RuntimeException(e);
+        }
+
+        cal.setTime(date);
+
+        int week = now.getDayOfWeek().getValue();
+
+        if (week == 0 || week == 1 || week == 2 || week == 3 || week == 4 || week == 5) {
+            switch (week) {
+                case 0:
+                    cal.add(Calendar.DATE, 6);
+                    break;
+                case 1:
+                    cal.add(Calendar.DATE, 5);
+                    break;
+                case 2:
+                    cal.add(Calendar.DATE, 4);
+                    break;
+                case 3:
+                    cal.add(Calendar.DATE, 3);
+                    break;
+                case 4:
+                    cal.add(Calendar.DATE, 2);
+                    break;
+                case 5:
+                    cal.add(Calendar.DATE, 1);
+                    break;
+            }
+        }
+
+        String checkin = df.format(cal.getTime());
+        model.addAttribute("checkin", checkin);
+
+        cal.add(Calendar.DATE, 1);
+        String checkout = df.format(cal.getTime());
+        model.addAttribute("checkout", checkout);
+
+        List<Shop> availShop = shopQueryRepository.findAvailHotel(checkin, checkout, 2L);
+
+        List<Shop> hotelList = shopService.search(keyword, 1L);
+        log.info("지역리스트 = "+ shopService.toString());
+        List<HotelForm> hotelForms = new ArrayList<>();
+
+
+        for (int i = 0; i < hotelList.size(); i++) {
+            int liked = likeHotelService.isLiked(hotelList.get(i).getShopid(), userId);
+            Long likeCount = likeHotelService.getLikeCount(hotelList.get(i).getShopid());
+
+            addHotelForm(availShop, hotelList, hotelForms, i, likeCount, liked);
+        }
+        model.addAttribute("hotelList", hotelForms);
+        model.addAttribute("hotelList", hotelForms);
+        model.addAttribute("person", 2);
+
+        session.setAttribute("person", 2);
+        session.setAttribute("checkin", checkin);
+        session.setAttribute("checkout", checkout);
+
+        return "shop/hotel";
+    }
+
 }

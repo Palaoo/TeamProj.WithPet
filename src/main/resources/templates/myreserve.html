@@ -7,6 +7,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MY review</title>
+
+    <th:block th:replace="fragments/index::style"></th:block>
 </head>
 <body>
 <style>
@@ -34,6 +36,8 @@
         }
 </style>
 
+<div th:replace="fragments/index :: header"></div>
+
 <div class="container">
     
     <div class="header">
@@ -55,10 +59,10 @@
     <div class="contents">
         <div class="row">
             <div class="col-sm-4">
-                <div style="height:120px"><a href="/mypage">예약내역</a></div>
+                <div style="height:120px"><a href="/mypage/booking">예약내역</a></div>
                 <div style="height:120px"><a href="/mypage/myshop">저장목록</a></div><br><br>
                 <div style="height:120px"><a href="/mypage/review">내 후기</a></div><br><br>
-                <div style="height:120px"><a href>내가 남긴 글</a></div>
+                <div style="height:120px"><a href="/mypage/post">내가 남긴 글</a></div>
             </div>
 
             <div class="col-sm-8">
@@ -84,8 +88,7 @@
 
         </div>
     </div>
-    <div class="footer">footer
-    </div>
+    <th:block th:replace="fragments/index :: footer"></th:block>
 </div>
 
 </body>

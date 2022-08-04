@@ -33,10 +33,25 @@
     /*        display:flex;*/
     /*        justify-content:center;*/
     /*    }*/
+
+    .profile_user{
+        width:100px;
+        height:100px;
+        border-radius: 70%;
+        overflow: hidden;
+        background-color:pink;
+    }
+    #img_profile{
+    <!--  width:100px;
+    height:100px;-->
+        width:100%;
+        height:100%;
+        object-fit:cover;
+    }
 </style>
 
 <div th:replace="fragments/index :: header"></div>
-<div class="container">
+
 <!--    -->
 <!--    <div class="header">-->
 <!--        <p align=right><a id="logout" href='/'>로그아웃</a>&nbsp;&nbsp;<a id="mypage" href='mypage'>마이페이지</a></p>-->
@@ -50,6 +65,7 @@
 <!--        </nav>-->
 <!--    </div>-->
 
+<!--<div class="container">
     <div class="top">
         <img src="dd.JPG"><span th:text="${userLogined}"></span>님
     </div>
@@ -94,7 +110,133 @@
             </div>
         </div>
     </div>
+</div>-->
+
+<section class="breadcrumb-option">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="breadcrumb__text">
+                    <h4>회원정보</h4>
+                    <div class="breadcrumb__links">
+                        <a href="./index.html">Home</a>
+                        <span>Info</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-2">
+            <div class="profile_user" >
+                <img id="img_profile" src="/img/blog/blog-1.jpg" style="vertical-align: middle;">
+
+            </div>
+        </div>
+        <div class="col-10">
+            <br>
+            <br>
+            <h5 th:text="|${userLogined}님|"></h5>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-3" id="leftbar">
+            <div class="shop__sidebar">
+                <div class="shop__sidebar__accordion">
+                    <div class="accordion" id="accordionExample">
+                        <div class="card">
+                            <div id="collapseOne" class="collapse show" data-parent="#accordionExample">
+                                <div class="card-body">
+                                    <div class="shop__sidebar__categories" id="lefttab">
+                                        <ul class="nav flex-column">
+                                            <li class="nav-item">
+                                                <a class="nav-link" id="reservation-tab" href="/mypage/booking">예약내역</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link active" id="save-tab" aria-current="page" href="/mypage/myshop">저장목록</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" id="review-tab" href="/mypage/review">내 후기</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" id="mywriting-tab" href="/mypage/post">내가 남긴 글</a>
+                                            </li>
+                                        </ul>
+                                        <ul class="nav flex-column">
+                                            <li class="nav-item">
+                                                <a class="nav-link" id="manager-tab" href="/mypage/manager">관리자 등록</a>
+                                            </li>
+                                            <li class="nav-item" role="presentation">
+                                                <a class="nav-link" id="business-tab" href="/businessPage">사업자</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-9">
+            <div class="row">
+                <div class="tab-content">
+                    <div class="tab-pane" id="reservation" role="tabpanel" aria-labelledby="reservation-tab">
+                    </div>
+
+                    <div class="tab-pane active" id="save" role="tabpanel" aria-labelledby="save-tab">
+                        <th:block th:each="LikeDTO, index : ${likeshopDTOList}">
+                            <div class="card mb-3" style="max-width: 540px;">
+                                <div class="row g-0">
+                                    <div class="col-md-4">
+                                        <img src="..." class="img-fluid rounded-start" alt="..." width="300" height="300">
+                                    </div>
+
+                                    <div class="col-md-5">
+                                        <div class="card-body">
+                                            <p th:text="${LikeDTO.cafe.getShoptype().getTypename()}">shoptype name</p>
+                                            <p th:text="${LikeDTO.cafe.getRegion().getRegname()}">region name</p>
+                                            <div class="row">
+                                                <h5 class="card-title" th:text="${LikeDTO.cafe.name}"></h5>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <form th:action="${'/mypage/myshop/delete'}" method="get">
+                                            <input type="hidden" name="likeid" th:value="${LikeDTO.shoplike.getLikeid()}">
+                                            <input type="hidden" name="shopid" th:value="${LikeDTO.shoplike.getShopid()}">
+                                            <button  class="btn btn-outline-danger btn-sm" name="delete">삭제</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </th:block>
+                    </div>
+
+                    <div class="tab-pane" id="review" role="tabpanel" aria-labelledby="review-tab">
+                    </div>
+
+                    <div class="tab-pane" id="mywriting" role="tabpanel" aria-labelledby="mywriting-tab">
+                    </div>
+
+                    <div class="tab-pane" id="manager" role="tabpanel" aria-labelledby="manager-tab">
+                    </div>
+
+                    <div class="tab-pane" id="business" role="tabpanel" aria-labelledby="business-tab">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
 <th:block th:replace="fragments/index :: footer"></th:block>
 </body>
 <script src='https://code.jquery.com/jquery-3.4.1.js'></script>

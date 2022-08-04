@@ -1,6 +1,7 @@
 package com.project.withpet.service;
 
 import com.project.withpet.domain.Shop;
+import com.project.withpet.domain.cafe;
 import com.project.withpet.repository.Shop.ShopRepository;
 
 import javax.transaction.Transactional;
@@ -25,6 +26,10 @@ public class ShopService {
 
     public List<Shop> hotelList(Long typeid){
         return shopRepository.findAllByshoptypeTypeid(typeid);
+    }
+
+    public List<Shop> search(String keyword, Long typeid) {
+        return shopRepository.findByAddressContainingAndShoptypeTypeid(keyword,typeid);
     }
 
 }

@@ -20,19 +20,6 @@
     .footer{height: 30px;}
     .left{height: 500px; width:200px;}
     .contents{height: 500px;}
-    #login,#signin,#cafename{
-            text-decoration:none;
-            color:black;
-        }
-        nav a{
-            text-decoration:none;
-            color:black;
-            margin:2em;
-        }
-        nav{
-            display:flex;
-            justify-content:center;
-        }
 </style>
 
 <div th:replace="fragments/index :: header"></div>
@@ -55,6 +42,12 @@
 <!--            <a href="#">게시판</a>-->
 <!--        </nav>-->
 <!--    </div>-->
+    <form action="/cafe_list/search" method="GET">
+        <div class="search">
+            <input name="keyword" id="search" type="text" placeholder="지역을 입력해주세요">
+            <button class="btn btn-success">검색</button>
+        </div>
+    </form>
 
     <div  class="row row-cols-1 row-cols-md-3 g-4">
         <div class="col" th:each="cafeList: ${cafeDTOLists}">
@@ -68,7 +61,7 @@
                             <h5 class="card-title" th:text="${cafeList.cafe.name}"></h5>
                         </div>
                         <div class="col-sm-2">
-                            <a href="#" id="btnLike" th:name="${cafeList.cafe.getShopid()}">
+                            <a href="" id="btnLike" th:name="${cafeList.cafe.getShopid()}">
                                 <img th:if="${cafeList.islike}" src="image/redheart.png"
                                      th:id="|btnLike${cafeList.cafe.shopid}|" width="25" height="25" alt="">
                                 <img th:if="${!cafeList.islike}" src="image/heart.png"
