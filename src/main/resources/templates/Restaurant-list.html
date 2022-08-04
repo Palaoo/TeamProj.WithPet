@@ -20,21 +20,52 @@
     /*.footer{height: 30px;}*/
     /*.left{height: 500px; width:200px;}*/
     /*.contents{height: 500px;}*/
+    #top{
+        margin-bottom: 5%;
+    }
+    #search ,#list {
+        margin-bottom: 5%;
+    }
+    #submit, #btn_search{
+        background-color: #000;
+        color: white;
+    }
+    #submit:hover, #btn_search:hover{
+        background: white;
+        border: 1px solid;
+        color:  #518581;
+    }
 </style>
 
 <div th:replace="fragments/index :: header"></div>
-
+<section class="breadcrumb-option">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="breadcrumb__text">
+                    <h4>Restaurant</h4>
+                    <div class="breadcrumb__links">
+                        <a href="/">Home</a>
+                        <a href="/Restaurant-list">Restaurant</a>
+                        <span>List</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<div id="top"></div>
 <div class="container">
 
     <form action="/Restaurant-list/search" method="GET">
-        <div class="search">
+        <div class="search" align="center">
             <input name="keyword" id="search" type="text" placeholder="지역을 입력해주세요">
-            <button class="btn btn-success">검색</button>
+            <input type="submit" th:value="검색" id="btn_search">
         </div>
     </form>
 
     <div  class="row row-cols-1 row-cols-md-3 g-4">
-        <div class="col" th:each="cafeList: ${cafeList}">
+        <div class="col" id="list" th:each="cafeList: ${cafeList}">
             <input type="hidden" th:value="${cafeList.cafe.getShopid()}">
             <input type="hidden" th:value="${cafeList.cafe.getShoptype().getTypeid()}">
             <div class="card h-100">
@@ -63,9 +94,9 @@
             </div>
         </div>
     </div>
-
 </div>
 <th:block th:replace="fragments/index :: footer"></th:block>
+</body>
 <script src='https://code.jquery.com/jquery-3.4.1.js'></script>
 <script>
     $(document)
@@ -91,5 +122,4 @@
             })
         })
 </script>
-</body>
 </html>
