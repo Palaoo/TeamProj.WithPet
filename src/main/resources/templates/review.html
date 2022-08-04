@@ -5,8 +5,6 @@
     <title>Review</title>
 </head>
 <style>
-    <!--
-    review-- >
     .star-rating {
         display: flex;
         flex-direction: row-reverse;
@@ -87,13 +85,13 @@
 
     $(document).on('click', '#submit', function () {
         console.log("snfma")
-        console.log($('input[name=rating]').val())
+        console.log($('input[name=rating]:checked').val())
         console.log($('textarea[name=content]').val())
         console.log($('#prodId').val())
         $.ajax({
             type: 'get', url: 'save_prodReview',
             data: {
-                rating: $('input[name=rating]').val(),
+                rating: $('input[name=rating]:checked').val(),
                 content: $('textarea[name=content]').val(),
                 prodId: $('#prodId').val()
             }, datatype: 'text',

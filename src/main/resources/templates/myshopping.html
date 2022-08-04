@@ -249,20 +249,20 @@
 <!--            </div>-->
             <div>
             <table th:each="orderDTO:${orderDTOList}" >
-                <p id="date" th:text="${orderDTO.ordertable.orderdate}"></p>
+                <p id="date" th:text="${#strings.substring(orderDTO.ordertable.orderdate,0,10)}"></p>
 
                 <tbody>
                 <tr th:each="prodandCount:${orderDTO.prodandCounts}">
                     <td class="product__cart__item">
                         <div class="product__cart__item__pic">
-                            <img th:src="${prodandCount.imgPath}"
+                            <img th:src="${prodandCount.imgPath}" style="cursor:pointer;" th:onclick="|location.href='prod_view?prodId=${prodandCount.prod.id}'|"
                                  onerror="this.src='https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbNZo14%2Fbtq17bsvo5i%2FOSV3gGWnwAKqNB0EOSQkrK%2Fimg.png'"
                                  width="200" height="200">
                         </div>
                     </td>
                     <td class="quantity__item">
                         <div class="product__cart__item__text">
-                            <h4><b th:text="${prodandCount.prod.name}">상품명</b></h4><br><br>
+                            <h4><b th:text="${prodandCount.prod.name}" style="cursor:pointer;" th:onclick="|location.href='prod_view?prodId=${prodandCount.prod.id}'|">상품명</b></h4><br><br>
                             <h6 th:text="|${prodandCount.prod.price}원    ${prodandCount.count}개|"></h6><br><br>
                             <h5>
                                 <p>구매가 완료되었습니다. 이용해주셔서 감사합니다. <br>
