@@ -47,7 +47,6 @@ public class ProdReviewController {
     }
 
     @GetMapping("review")
-
     public String doReview(@RequestParam Long prodId, Model model) {
         model.addAttribute("prodId", prodId);
         return "review";

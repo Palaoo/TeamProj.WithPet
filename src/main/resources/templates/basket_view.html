@@ -24,15 +24,11 @@
 <!--        font-size:14px;-->
 <!--    ]-->
 
-#btnQuantityDown,btnQuantityUp{
-
+#order{
+    font-size:12px;
+    width:100%;
+    height:30px;
 }
-
-<!--input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}-->
 </style>
 <body>
 <div th:replace="fragments/index :: header"></div>
@@ -150,17 +146,35 @@ input::-webkit-inner-spin-button {
                             <td class="quantity__item">
                                 <div class="quantity">
                                     <div class="pro-qty-2">
-                                        <span th:id="${basketDTO.prodid}" name="btnQuantityDown"><img
-                                                     src="//img.echosting.cafe24.com/skin/base_ko_KR/product/btn_count_down.gif"
-                                                     alt="수량감소"
-                                                     class="fa fa-angle-right inc qtybtn"/></span>
-                                        <input th:id="|qty${basketDTO.prodid}|" name="quantity_name" style="" value="1"
-                                               type="text"/>
-                                        <span th:id="${basketDTO.prodid}" name="btnQuantityUp"><img
-                                                src="//img.echosting.cafe24.com/skin/base_ko_KR/product/btn_count_up.gif"
-                                                alt="수량증가"
-                                                class="fa fa-angle-left dec qtybtn"/></span>
+                                        <!--<div align="center" style="float:left; margin-right:10px;">
+                                            <input th:id="|qty${basketDTO.prodid}|" name="quantity_name" style="" value="1" type="text"/>
+                                        </div>
+                                        <div align="center" style="float:left;">
+                                             <div><button th:id="${basketDTO.prodid}" name="btnQuantityUp"><img
+                                                     src="//img.echosting.cafe24.com/skin/base_ko_KR/product/btn_count_up.gif"
+                                                     alt="수량증가"
+                                                     class="QuantityDown down"/></button></div>
+                                            <div><button th:id="${basketDTO.prodid}" name="btnQuantityDown"><img
+                                                    src="//img.echosting.cafe24.com/skin/base_ko_KR/product/btn_count_down.gif"
+                                                    alt="수량감소"
+                                                    class="QuantityUp up"/></button></div>
+                                        </div>-->
 
+                                        <div align="center">
+                                            <span th:id="${basketDTO.prodid}" name="btnQuantityUp"><img
+                                                    src="//img.echosting.cafe24.com/skin/base_ko_KR/product/btn_count_up.gif"
+                                                    alt="수량증가"
+                                                    class="QuantityDown down"/></span>
+                                        </div>
+                                        <div align="center">
+                                            <input th:id="|qty${basketDTO.prodid}|" name="quantity_name" style="" value="1" type="text"/>
+                                        </div>
+                                        <div align="center">
+                                            <span th:id="${basketDTO.prodid}" name="btnQuantityDown"><img
+                                                    src="//img.echosting.cafe24.com/skin/base_ko_KR/product/btn_count_down.gif"
+                                                    alt="수량감소"
+                                                    class="QuantityUp up"/></span>
+                                        </div>
                                     </div>
                                 </div>
                             </td>
@@ -231,6 +245,7 @@ input::-webkit-inner-spin-button {
         $('#totalprice' + $(this).attr('id')).text(parseInt($('#price' + $(this).attr('id')).text()) * parseInt(inputQty.val()))
         $('#total').text(parseInt($('#total').text()) + parseInt($('#price' + $(this).attr('id')).text()));
     }).on('click', 'span[name=btnQuantityDown]', function () {
+    if(parseInt($('#quantity').val())>1)
         inputQty = $('#qty' + $(this).attr('id'))
         inputQty.val(parseInt(inputQty.val()) - 1)
 

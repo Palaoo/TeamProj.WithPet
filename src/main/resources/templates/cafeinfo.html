@@ -8,123 +8,93 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Cafe Info</title>
+  <th:block th:replace="fragments/index::style"></th:block>
 </head>
-<body>
 <style>
-        div.container{}
-        div.header div.footer{clear:left}
-        div.left{float:left;}
-        .header{height: 200px;}
-        .top{height: 70px;
-            margin: auto;}
-        .footer{height: 30px;}
-        .left{height: 500px; width:200px;}
-        .contents{height: 500px;}
-        #login,#signin,#cafename{
-                text-decoration:none;
-                color:black;
-            }
-            nav a{
-                text-decoration:none;
-                color:black;
-                margin:2em;
-            }
-            nav{
-                display:flex;
-                justify-content:center;
-            }
+<!--    div.header div.footer{clear:left}-->
+<!--    div.left{float:left;}-->
+<!--    .header{height: 200px;}-->
+<!--    .top{height: 70px;-->
+<!--        margin: auto;}-->
+<!--    .footer{height: 30px;}-->
+<!--    .left{height: 500px; width:200px;}-->
+<!--    .contents{height: 500px;}-->
 
-        #myform fieldset{
-          display: inline-block;
-          direction: rtl;
-          border:0;
-        }
-        #myform fieldset legend{
-          text-align: right;
-        }
-        #myform input[type=radio]{
-          display: none;
-        }
-        #myform label{
-          font-size: 3em;
-          color: transparent;
-          text-shadow: 0 0 0 #f0f0f0;
-        }
-        #myform label:hover{
-          text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
-        }
-        #myform label:hover ~ label{
-          text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
-        }
-        #myform input[type=radio]:checked ~ label{
-          text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
-        }
-        #reviewContents {
-          width: 100%;
-          height: 150px;
-          padding: 10px;
-          box-sizing: border-box;
-          border: solid 1.5px #D3D3D3;
-          border-radius: 5px;
-          font-size: 16px;
-          resize: none;
-        }
-        .rating{
-          color:sandybrown;
-        }
+    #myform fieldset{
+      display: inline-block;
+      direction: rtl;
+      border:0;
+    }
+    #myform fieldset legend{
+      text-align: right;
+    }
+    #myform input[type=radio]{
+      display: none;
+    }
+    #myform label{
+      font-size: 3em;
+      color: transparent;
+      text-shadow: 0 0 0 #f0f0f0;
+    }
+    #myform label:hover{
+      text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
+    }
+    #myform label:hover ~ label{
+      text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
+    }
+    #myform input[type=radio]:checked ~ label{
+      text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
+    }
+    #reviewContents {
+      width: 100%;
+      height: 150px;
+      padding: 10px;
+      box-sizing: border-box;
+      border: solid 1.5px #D3D3D3;
+      border-radius: 5px;
+      font-size: 16px;
+      resize: none;
+    }
+    .rating{
+      color:sandybrown;
+    }
 
-        div.updatescore fieldset{
-          display: inline-block;
-          direction: rtl;
-          border:0;
-        }
-        div.updatescore fieldset legend{
-          text-align: right;
-        }
-        div.updatescore input[type=radio]{
-          display: none;
-        }
-        div.updatescore label{
-          font-size: 3em;
-          color: transparent;
-          text-shadow: 0 0 0 #f0f0f0;
-        }
-        div.updatescore label:hover{
-          text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
-        }
-        div.updatescore label:hover ~ label{
-          text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
-        }
-        div.updatescore input[type=radio]:checked ~ label{
-          text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
-        }
+    div.updatescore fieldset{
+      display: inline-block;
+      direction: rtl;
+      border:0;
+    }
+    div.updatescore fieldset legend{
+      text-align: right;
+    }
+    div.updatescore input[type=radio]{
+      display: none;
+    }
+    div.updatescore label{
+      font-size: 3em;
+      color: transparent;
+      text-shadow: 0 0 0 #f0f0f0;
+    }
+    div.updatescore label:hover{
+      text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
+    }
+    div.updatescore label:hover ~ label{
+      text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
+    }
+    div.updatescore input[type=radio]:checked ~ label{
+      text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
+    }
 
-    </style>
+</style>
+<body>
+<div th:replace="fragments/index :: header"></div>
 
 <div class="container">
-
-  <div class="header">
-    <div th:if="${not #strings.isEmpty(userid)}">
-      <p align=right><a id="logout" href='logout'>로그아웃</a>&nbsp;&nbsp;<a id="mypage" href='mypage'>마이페이지</a></p>
-    </div>
-    <div th:if="${#strings.isEmpty(userid)}">
-      <p align=right><a id="login" href='login'>로그인</a>&nbsp;&nbsp;<a id="signup" href='signup'>회원가입</a></p>
-    </div>
-    <h1 align=center><a href="/static">WITH PET</a></h1>
-    <nav>
-      <a href="#">숙소</a>
-      <a href="cafe_list">카페</a>
-      <a href="Restaurant-list">맛집</a>
-      <a href="#">기타</a>
-      <a href="#">상점</a>
-      <a href="#">게시판</a>
-    </nav>
-  </div>
   <div class="content">
     <th:block th:value="${cafe.shopid}"></th:block>
     <div class="row pb-4 mb-4 border-bottom">
       <div class="col-md-12 pb-4 mb-4">
-        <img src="../static/tamar.jpg" alt="" width="1000" height="400">
+        <img th:src="${shopimg}" alt="" width="1000" height="400">
       </div>
       <div class="col-md-9"><h3 th:text="${cafe.getName()}"></h3></div>
       <div class="col-md-3"><input type="button" value="저장하기"></div>
@@ -209,7 +179,7 @@
       <span th:text="${#lists.size(shopreview)}"></span>개
       <th:block th:each="review , index : ${shopreview}">
         <div  class="row">
-          <div class="col-sm-2"><img src="dd.JPG"><p th:text="${review.getUserid()}"></p></div>
+          <div class="col-sm-2"><p th:text="${review.getUserid()}"></p></div>
           <div class="col-sm-5">
             <th:block th:if="${review.getScore()==5}">
               <div class="rating">★★★★★</div>
@@ -255,24 +225,75 @@
                         <div class="updatescore">
                              <fieldset>
                                 <span class="text-bold">별점을 선택하세요</span>
-                                <input type="radio" name="score" value="5" id="rate1_"><label
-                                      for="rate1_">★</label>
-                                <input type="radio" name="score" value="4" id="rate2_"><label
-                                      for="rate2_">★</label>
-                                <input type="radio" name="score" value="3" id="rate3_"><label
-                                      for="rate3_">★</label>
-                                <input type="radio" name="score" value="2" id="rate4_"><label
-                                      for="rate4_">★</label>
-                                <input type="radio" name="score" value="1" id="rate5_"><label
-                                      for="rate5_">★</label>
+                               <th:block th:if="${review.getScore()==5}">
+                                 <input type="radio" name="score" value="5" checked id="rate1_"><label
+                                       for="rate1_">★</label>
+                                 <input type="radio" name="score" value="4" id="rate2_"><label
+                                       for="rate2_">★</label>
+                                 <input type="radio" name="score" value="3" id="rate3_"><label
+                                       for="rate3_">★</label>
+                                 <input type="radio" name="score" value="2" id="rate4_"><label
+                                       for="rate4_">★</label>
+                                 <input type="radio" name="score" value="1" id="rate5_"><label
+                                       for="rate5_">★</label>
+                               </th:block>
+                               <th:block th:if="${review.getScore()==4}">
+                                 <input type="radio" name="score" value="5" id="rate1_"><label
+                                       for="rate1_">★</label>
+                                 <input type="radio" name="score" value="4" checked id="rate2_"><label
+                                       for="rate2_">★</label>
+                                 <input type="radio" name="score" value="3" id="rate3_"><label
+                                       for="rate3_">★</label>
+                                 <input type="radio" name="score" value="2" id="rate4_"><label
+                                       for="rate4_">★</label>
+                                 <input type="radio" name="score" value="1" id="rate5_"><label
+                                       for="rate5_">★</label>
+                               </th:block>
+                               <th:block th:if="${review.getScore()==3}">
+                                 <input type="radio" name="score" value="5" id="rate1_"><label
+                                       for="rate1_">★</label>
+                                 <input type="radio" name="score" value="4" id="rate2_"><label
+                                       for="rate2_">★</label>
+                                 <input type="radio" name="score" value="3" checked id="rate3_"><label
+                                       for="rate3_">★</label>
+                                 <input type="radio" name="score" value="2" id="rate4_"><label
+                                       for="rate4_">★</label>
+                                 <input type="radio" name="score" value="1" id="rate5_"><label
+                                       for="rate5_">★</label>
+                               </th:block>
+                               <th:block th:if="${review.getScore()==2}">
+                                 <input type="radio" name="score" value="5" id="rate1_"><label
+                                       for="rate1_">★</label>
+                                 <input type="radio" name="score" value="4" id="rate2_"><label
+                                       for="rate2_">★</label>
+                                 <input type="radio" name="score" value="3" id="rate3_"><label
+                                       for="rate3_">★</label>
+                                 <input type="radio" name="score" value="2" checked id="rate4_"><label
+                                       for="rate4_">★</label>
+                                 <input type="radio" name="score" value="1" id="rate5_"><label
+                                       for="rate5_">★</label>
+                               </th:block>
+                               <th:block th:if="${review.getScore()==1}">
+                                 <input type="radio" name="score" value="5" id="rate1_"><label
+                                       for="rate1_">★</label>
+                                 <input type="radio" name="score" value="4" id="rate2_"><label
+                                       for="rate2_">★</label>
+                                 <input type="radio" name="score" value="3" id="rate3_"><label
+                                       for="rate3_">★</label>
+                                 <input type="radio" name="score" value="2" id="rate4_"><label
+                                       for="rate4_">★</label>
+                                 <input type="radio" name="score" value="1" checked id="rate5_"><label
+                                       for="rate5_">★</label>
+                               </th:block>
                               </fieldset>
                         </div>
                           <div class="mb-3">
                             <label for="message-text" class="col-form-label">내용</label>
                             <textarea class="form-control" id="message-text" name="content"></textarea>
+                            <input type="hidden" name="rid" id="review-id">
                           </div>
                           <input type="hidden" name="shopid" th:value="${review.getShopid()}">
-                          <input type="hidden" name="rid" th:value="${review.getRid()}">
+<!--                          <input type="hidden" name="rid" th:value="${review.getRid()}">-->
                           <input type="hidden" name="userid" th:value="${review.getUserid()}">
                           <input type="hidden" name="date" id="currentTime" th:value="${review.getDate()}">
                         <input type="hidden" name="score" id="score-value">
@@ -336,10 +357,14 @@
       </div>
     </div>
   </div>
-  <div class="footer">footer
-  </div>
 </div>
+
+<!--<div class="row">
+  <img class="col" th:src="${shopimg}" style="size: auto">-->
+
+<th:block th:replace="fragments/index :: footer"></th:block>
 <script src='https://code.jquery.com/jquery-3.4.1.js'></script>
+</body>
 <script>
   const commentEditModal = document.querySelector("#review-edit-Modal")
 
@@ -349,10 +374,12 @@
 
       const content = triggerBtn.getAttribute("data-bs-content");
       const score = triggerBtn.getAttribute("data-bs-score");
+      const rid = triggerBtn.getAttribute("data-bs-rid");
 
-      console.log(score);
+      console.log(rid);
       document.querySelector("#message-text").value = content
       document.querySelector("#score-value").value = score
+      document.querySelector("#review-id").value = rid
     })
 </script>
 <script>
@@ -366,8 +393,4 @@
           })
 
 </script>
-
-
-
-</body>
 </html>

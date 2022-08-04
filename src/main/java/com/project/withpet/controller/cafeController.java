@@ -1,9 +1,12 @@
 package com.project.withpet.controller;
 
+import com.project.withpet.domain.Hotelimg;
 import com.project.withpet.domain.cafe;
 import com.project.withpet.domain.shopreview;
+import com.project.withpet.repository.HotelimgRepository;
 import com.project.withpet.repository.cafeRepository;
 import com.project.withpet.repository.shopreviewRepository;
+import com.project.withpet.service.ShopLikeService;
 import com.project.withpet.service.cafeService;
 import com.project.withpet.service.reviewService;
 import lombok.extern.slf4j.Slf4j;
@@ -14,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -33,21 +37,40 @@ public class cafeController {
     @Autowired
     private shopreviewRepository shopreviewRepository;
 
+    private final ShopLikeService shopLikeService;
+    private final HotelimgRepository hotelimgRepository;
 
+    public cafeController(ShopLikeService shopLikeService, HotelimgRepository hotelimgRepository) {
+        this.shopLikeService = shopLikeService;
+        this.hotelimgRepository = hotelimgRepository;
+    }
 
 
     @GetMapping("cafe_list")   //카페 목록 가져오기
     public String viewList(Model model, HttpServletRequest req) {
 
         HttpSession session = req.getSession();
-        String userid = (String) session.getAttribute("userid");
+        String userid = (String) session.getAttribute("userLogined");
         model.addAttribute("userid",userid);
 
+
         List<cafe> cafeList = cafeService.findByshoptype(2L);
-        model.addAttribute("cafeList", cafeList);
+        List<CafeDTOList> cafeDTOLists = new ArrayList<>();
+        for (cafe cafe : cafeList) {
+            boolean shopLike = shopLikeService.islike(cafe.getShopid(),userid);
+            Optional<Hotelimg> hotelimg = hotelimgRepository.findByShopid(cafe.getShopid());
+            String path = "";
+            if(hotelimg.isPresent()) {
+                path = hotelimg.get().getPath();
+            } else {
+                path = "https://withpetimg.s3.ap-northeast-2.amazonaws.com/images/hoteldefault.jpg";
+            }
+            cafeDTOLists.add(new CafeDTOList(cafe,shopLike,path, shopLikeService.getLikeCount(cafe.getShopid())));
+        }
+
+        model.addAttribute("cafeDTOLists", cafeDTOLists);
         return "cafe_list";
     }
-
 
 
     @GetMapping("cafeinfo") //카페 상세정보
@@ -59,12 +82,17 @@ public class cafeController {
         log.info(cafe.toString());
 
         HttpSession session = req.getSession();
-        String userid = (String) session.getAttribute("userid");
+        String userid = (String) session.getAttribute("userLogined");
         model.addAttribute("userid",userid);
         //리뷰 리스트
         List<shopreview> shopreviewList = reviewService.findByshopid(shopid);
-        model.addAttribute("shopreview",shopreviewList);
+        model.addAttribute("shopreview", shopreviewList);
         log.info(shopreviewList.toString());
+
+        Optional<Hotelimg> hotelimg = hotelimgRepository.findByShopid(shopid);
+        String path = hotelimg.get().getPath();
+        model.addAttribute("shopimg", path);
+
         return "cafeinfo";
 
     }
@@ -72,11 +100,23 @@ public class cafeController {
     @GetMapping("Restaurant-list")
     public String viewRestList(Model model, HttpServletRequest req) {
         HttpSession session = req.getSession();
-        String userid = (String) session.getAttribute("userid");
+        String userid = (String) session.getAttribute("userLogined");
         model.addAttribute("userid",userid);
 
         List<cafe> cafeList = cafeService.findByshoptype(3L);
-        model.addAttribute("cafeList", cafeList);
+        List<CafeDTOList> cafeDTOLists = new ArrayList<>();
+        for (cafe cafe : cafeList) {
+            boolean shopLike = shopLikeService.islike(cafe.getShopid(),userid);
+            Optional<Hotelimg> hotelimg = hotelimgRepository.findByShopid(cafe.getShopid());
+            String path = "";
+            if(hotelimg.isPresent()) {
+                path = hotelimg.get().getPath();
+            } else {
+                path = "https://withpetimg.s3.ap-northeast-2.amazonaws.com/images/hoteldefault.jpg";
+            }
+            cafeDTOLists.add(new CafeDTOList(cafe,shopLike,path, shopLikeService.getLikeCount(cafe.getShopid())));
+        }
+        model.addAttribute("cafeList", cafeDTOLists);
         return "Restaurant-list";
     }
 
@@ -89,18 +129,19 @@ public class cafeController {
         log.info(cafe.toString());
 
         HttpSession session = req.getSession();
-        String userid = (String) session.getAttribute("userid");
+        String userid = (String) session.getAttribute("userLogined");
         model.addAttribute("userid",userid);
         //리뷰 리스트
         List<shopreview> shopreviewList = reviewService.findByshopid(shopid);
-        model.addAttribute("shopreview",shopreviewList);
+        model.addAttribute("shopreview", shopreviewList);
         log.info(shopreviewList.toString());
+
+        Optional<Hotelimg> hotelimg = hotelimgRepository.findByShopid(shopid);
+        String path = hotelimg.get().getPath();
+        model.addAttribute("shopimg", path);
         return "restaurant-info";
 
     }
-
-
-
 
 
 }

@@ -30,6 +30,14 @@
     .rating {
         -webkit-text-fill-color: gold;
     }
+
+    #quantity{
+        width:100%;
+        border:0;
+        outline:0;
+        text-align:right;
+    }
+
 </style>
 <body>
 <div th:replace="fragments/index :: header"></div>
@@ -72,7 +80,7 @@
                             <i class="fa fa-star"></i>
                             <i class="fa fa-star"></i>
                             <i class="fa fa-star-o"></i>
-                            <span> - 5 Reviews</span>
+                            <span th:text="|-${pReviewList.size()}Reviews|"> - 5 Reviews</span>
                         </div>
                         <h3 th:text="${product.price}" id="price"></h3> <!--<span>70.00</span>-->
                         <input type="hidden" name="prodId" id="prodId" th:value="${product.id}">
@@ -80,8 +88,8 @@
                             cuff tabs, adjustable asymmetric hem with elastic side tabs and a front zip fastening
                             with placket.</p>-->
                         <div class="product__details__cart__option">
-                            <div class="quantity">
-                                <div class="pro-qty">
+                            <div class="quantity" align="center">
+                                <div class="pro-qty-2">
                                     <!--                                    <table>-->
                                     <!--                                        <tr>-->
                                     <!--                                            <td>-->
@@ -99,25 +107,63 @@
                                     <!--                                            </td>-->
                                     <!--                                        </tr>-->
                                     <!--                                    </table>-->
-                                    <input id="quantity" name="quantity_name" style="" value="1" type="text"/>
-                                    <button
-                                            id="btnQuantityUp"><img
-                                            src="//img.echosting.cafe24.com/skin/base_ko_KR/product/btn_count_up.gif"
-                                            alt="수량증가"
-                                            class="QuantityUp up"/></button>
-                                    <button id="btnQuantityDown"><img
-                                            src="//img.echosting.cafe24.com/skin/base_ko_KR/product/btn_count_down.gif"
-                                            alt="수량감소" class="QuantityDown down"/></button>
-                                    </span>
-                                    <span class="quantity_price" id="totalPrice" th:text="${product.price}">19800</span>
-                                    <span
-                                            class="mileage displaynone">(<img src=""/> <span
-                                            class="mileage_price"></span>)</span>
+                                <!--    <div align="center" style="float:left; margin-right:10px; border:none;">
+                                        <input id="quantity" name="quantity_name" style="" value="1" type="text"/>
+                                    </div>
+                                    <div align="center" style="float:left;">
+                                        <div>
+                                            <button
+                                                    id="btnQuantityUp"><img
+                                                    src="//img.echosting.cafe24.com/skin/base_ko_KR/product/btn_count_up.gif"
+                                                    width="22" height="13"
+                                                    alt="수량증가"
+                                                    class="QuantityUp up"/></button>
+                                        </div>
+                                        <div>
+                                            <button id="btnQuantityDown"><img
+                                                    src="//img.echosting.cafe24.com/skin/base_ko_KR/product/btn_count_down.gif"
+                                                    width="22" height="13"
+                                                    alt="수량감소" class="fa fa-angle-left dec qtybtn"/></button>
+                                        </div>
 
+                                    </div>-->
+                                    <div class="row">
+                                        <div align="right" class="col-5">
+                                            <input id="quantity" name="quantity_name" style="" value="1" type="text"/>
+                                        </div>
+                                        <div class="col-2">
+                                            <div id="up">
+                                            <span
+                                                    id="btnQuantityUp"><img
+                                                    src="//img.echosting.cafe24.com/skin/base_ko_KR/product/btn_count_up.gif"
+                                                    width="22" height="13"
+                                                    alt="수량증가"
+                                                    class="QuantityUp up"/></span>
+                                            </div>
+
+                                            <div id="down">
+                                            <span id="btnQuantityDown"><img
+                                                    src="//img.echosting.cafe24.com/skin/base_ko_KR/product/btn_count_down.gif"
+                                                    width="22" height="13"
+                                                    alt="수량감소" class="fa fa-angle-left dec qtybtn"/></span>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="col-5">
+                                        <span class="quantity_price" id="totalPrice"
+                                              th:text="${product.price}">19800</span>
+                                            <span
+                                                    class="mileage displaynone">(<img src=""/> <span
+                                                    class="mileage_price"></span>)</span>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            <a href="#" class="primary-btn" id="payment">TossPay 결제</a>
-                            <a href="#" class="primary-btn" id="bascket">장바구니</a>
+                            <div>
+                                <a href="#" class="primary-btn" id="payment">TossPay 결제</a>
+                                <a href="#" class="primary-btn" id="bascket">장바구니</a>
+                            </div>
                         </div>
                         <div class="product__details__btns__option">
                             <a href="#"><i class="fa fa-heart"></i> add to wishlist</a>
@@ -137,7 +183,8 @@
                                    role="tab">Description</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" data-toggle="tab" href="#tabs-6" role="tab" th:text="|Customer Previews(${pReviewList.size()})|">Customer
+                                <a class="nav-link" data-toggle="tab" href="#tabs-6" role="tab"
+                                   th:text="|Customer Previews(${pReviewList.size()})|">Customer
                                     Previews(0)</a>
                             </li>
                         </ul>
@@ -155,7 +202,8 @@
                                        role="tab">Description</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link active" data-toggle="tab" href="#tabs-6" role="tab" th:text="|Customer Previews(${pReviewList.size()})|">Customer
+                                    <a class="nav-link active" data-toggle="tab" href="#tabs-6" role="tab"
+                                       th:text="|Customer Previews(${pReviewList.size()})|">Customer
                                         Previews(5)</a>
                                 </li>
                             </ul>
@@ -211,6 +259,7 @@
         $('#quantity').val(parseInt($('#quantity').val()) + 1);
         $('#totalPrice').text(parseInt($('#price').text()) * parseInt($('#quantity').val()))
     }).on('click', '#btnQuantityDown', function () {
+    if($('#quantity').val()>1)
         $('#quantity').val(parseInt($('#quantity').val()) - 1);
         $('#totalPrice').text(parseInt($('#price').text()) * parseInt($('#quantity').val()))
     }).on('click', '#bascket', function () {
@@ -253,5 +302,9 @@
         $('#tabs-6').show();
         $('#tabs-6').tab('show');
     }
+
+
+
+
 </script>
 </html>

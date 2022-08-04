@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import javax.transaction.Transactional;
+import java.util.List;
 import java.util.Optional;
 
 @Transactional
@@ -36,5 +37,9 @@ public class BoardService {
 
     public void deletePost(Long boardcode){
         boardRepository.deleteById(boardcode);
+    }
+
+    public List<Board> findByUserid(String userid){
+        return boardRepository.findByWriter(userid);
     }
 }
