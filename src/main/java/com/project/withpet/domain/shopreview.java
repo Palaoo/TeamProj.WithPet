@@ -4,6 +4,7 @@ import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 
 
 @Entity
@@ -25,7 +26,6 @@ public class shopreview {
 
     @Column
     private String content;
-
     @Column
     @CreatedDate
     private String date;

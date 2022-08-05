@@ -98,9 +98,12 @@
         <img th:src="${shopimg}" alt="" width="1000" height="400">
       </div>
       <div class="col-md-9"><h3 th:text="${cafe.getName()}"></h3></div>
-      <th:block>
-        <div class="col-md-3" th:text="|${scoreAvg} / 5|"></div>
+      <th:block th:if="${#lists.size(shopreview)!=0}">
+        <div class="col-md-3" th:text="|⭐ ${scoreAvg} / 5|"></div>
       </th:block>
+<!--      <th:block th:unless="${#lists.size(shopreview)==0}">-->
+<!--        <div class="col-md-3">작성된 리뷰가 없습니다.</div>-->
+<!--      </th:block>-->
     </div>
 
     <div class="row mb-1">

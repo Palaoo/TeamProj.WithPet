@@ -144,22 +144,25 @@ public class cafeController {
         List<shopreview> shopreviewList = reviewService.findByshopid(shopid);
         model.addAttribute("shopreview", shopreviewList);
         log.info(shopreviewList.toString());
+
+        float scoreTotal = 0;
+        float scoreAvg = 0;
         if (!shopreviewList.isEmpty()) {
-            float scoreTotal = 0;
-            float scoreAvg = 0;
             for (shopreview shopreview : shopreviewList) {
                 scoreTotal += shopreview.getScore();
                 System.out.println("scoreTotal = " + scoreTotal);
             }
+        }
             scoreAvg = scoreTotal / shopreviewList.size();
             model.addAttribute("scoreAvg", scoreAvg);
+
             log.info(shopreviewList.toString());
 
             Optional<Hotelimg> hotelimg = hotelimgRepository.findByShopid(shopid);
             String path = hotelimg.get().getPath();
             model.addAttribute("shopimg", path);
 
-        }
+
         return "restaurant-info";
 
     }
