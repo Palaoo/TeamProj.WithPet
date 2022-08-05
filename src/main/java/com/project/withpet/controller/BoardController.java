@@ -235,6 +235,7 @@ public class BoardController {
     @GetMapping("/community/delete")
     public String deletePost(@RequestParam("boardcode") Long boardcode){
         boardimgService.deleteImg(boardcode);
+
         boardService.deletePost(boardcode);
         return "redirect:/community";
     }
