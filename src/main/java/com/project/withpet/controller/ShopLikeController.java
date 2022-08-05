@@ -8,7 +8,6 @@ import com.project.withpet.dto.LikeshopDTO;
 import com.project.withpet.repository.HotelimgRepository;
 import com.project.withpet.repository.LikeHotel.SpringLikeHotelRepository;
 import com.project.withpet.repository.ShopLike.LikeShopRepository;
-import com.project.withpet.service.LikeHotelService;
 import com.project.withpet.service.ShopLikeService;
 import com.project.withpet.service.cafeService;
 import lombok.extern.slf4j.Slf4j;
@@ -35,6 +34,7 @@ public class ShopLikeController {
     private final HotelimgRepository hotelimgRepository;
     private final SpringLikeHotelRepository springLikeHotelRepository;
 
+    private final Tools tools = new Tools();
 
     public ShopLikeController(ShopLikeService shopLikeService, com.project.withpet.service.cafeService cafeService, LikeShopRepository likeshopRepository, HotelimgRepository hotelimgRepository, SpringLikeHotelRepository springLikeHotelRepository) {
         this.shopLikeService = shopLikeService;
@@ -49,6 +49,10 @@ public class ShopLikeController {
         HttpSession session = req.getSession();
         String userid = (String) session.getAttribute("userLogined");
         model.addAttribute("userLogined", userid);
+
+        if (!tools.isUserLogined(req)) {
+            return "/login";
+        }
 
         List<shoplike> shoplikeList = shopLikeService.findByUserId(userid);
         List<LikeshopDTO> likeshopDTOList = new ArrayList<>();
