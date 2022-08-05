@@ -1,5 +1,6 @@
 package com.project.withpet.dto;
 
+import com.project.withpet.domain.LikeHotel;
 import com.project.withpet.domain.cafe;
 import com.project.withpet.domain.shoplike;
 
@@ -10,9 +11,18 @@ public class LikeshopDTO {
     private String userid;
     shoplike shoplike;
     cafe cafe;
+    LikeHotel likeHotel;
 
     boolean islike;
     private String path;
+
+    public LikeHotel getLikeHotel() {
+        return likeHotel;
+    }
+
+    public void setLikeHotel(LikeHotel likeHotel) {
+        this.likeHotel = likeHotel;
+    }
 
     public String getPath() {
         return path;
@@ -51,5 +61,9 @@ public class LikeshopDTO {
 
     }
 
-
+    public LikeshopDTO(LikeHotel likeHotel, cafe cafe, String path) {
+        this.cafe = cafe;
+        this.likeHotel = likeHotel;
+        this.path = path;
+    }
 }

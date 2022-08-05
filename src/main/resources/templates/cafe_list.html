@@ -11,15 +11,6 @@
 </head>
 <body>
 <style>
-/*    div.container{}
-    div.header div.footer{clear:left}
-    div.left{float:left;}
-    .header{height: 200px;}
-    .top{height: 70px;
-        margin: auto;}
-    .footer{height: 30px;}
-    .left{height: 500px; width:200px;}
-    .contents{height: 500px;}*/
     #top{
         margin-bottom: 5%;
     }
@@ -57,23 +48,6 @@
 </section>
 <div id="top"></div>
 <div class="container">
-<!--    <div class="header">-->
-<!--        <div th:if="${not #strings.isEmpty(userid)}">-->
-<!--            <p align=right><a id="logout" href='/'>로그아웃</a>&nbsp;&nbsp;<a id="mypage" href='mypage'>마이페이지</a></p>-->
-<!--        </div>-->
-<!--        <div th:if="${#strings.isEmpty(userid)}">-->
-<!--            <p align=right><a id="login" href='login'>로그인</a>&nbsp;&nbsp;<a id="signup" href='signup'>회원가입</a></p>-->
-<!--        </div>-->
-<!--        <h1 align=center><a href="/">WITH PET</a></h1>-->
-<!--        <nav>-->
-<!--            <a href="#">숙소</a>-->
-<!--            <a href="cafe_list">카페</a>-->
-<!--            <a href="Restaurant-list">맛집</a>-->
-<!--            <a href="#">기타</a>-->
-<!--            <a href="#">상점</a>-->
-<!--            <a href="#">게시판</a>-->
-<!--        </nav>-->
-<!--    </div>-->
     <form action="/cafe_list/search" method="GET">
         <div class="search" align="center">
             <input name="keyword" id="search" type="text" placeholder="지역을 입력해주세요">

@@ -17,29 +17,6 @@
         float: left;
         margin: 10px;
     }
-/*    div.header div.footer {
-        clear: left
-    }
-
-    div.left {
-        float: left;
-    }
-
-    .top {
-        height: 70px;
-        margin: auto;
-    }
-
-
-    .left {
-        height: 500px;
-        width: 200px;
-    }
-
-    .contents {
-        height: 500px;
-    }
-    */
 
     #myform fieldset {
         display: inline-block;
@@ -124,10 +101,6 @@
 
 <div th:replace="fragments/index :: header"></div>
 
-<!--<div class="row">-->
-<!--    <img class="col" th:src="${shopimg}" style="size: auto">-->
-<!--</div>-->
-
 <!--version2-->
 <section class="blog-hero spad">
     <div class="container">
@@ -137,7 +110,14 @@
                     <h2 th:text="${shop.getName()}"></h2>
                     <h6 th:text="${shop.getIntro()}"></h6>
                     <ul>
-                        <li><input type="button" value="좋아요"></li>
+                        <li>
+                            <a href="javascript:return false;" id="btnLike" th:name="${shop.getShopid()}">
+                                <img th:if="${liked==1}" src="/image/redheart.png"
+                                     th:id="|btnLike${shop.getShopid()}|" width="25" height="25" alt="">
+                                <img th:if="${liked==0}" src="/image/heart.png"
+                                     th:id="|btnLike${shop.getShopid()}|" width="25" height="25" alt="">
+                            </a>
+                        </li>
                         <li>
                             <div class="rating">
                                 <i class="fa fa-star"></i>
@@ -562,6 +542,30 @@
                 }
             })
             return flag;
+        })
+
+        .on('click', '#btnLike', function () {
+            shopId = $(this).attr('name')
+            console.log(shopId)
+            $.ajax({
+                type: 'get',
+                url: '/append_likehotel?shopId=' + shopId,
+                success: function (data) {
+                    ID = '#btnLike' + shopId
+                    if (data == '1') {
+                        $(ID).attr("src", "/image/redheart.png")
+                        $(ID).attr("width", "25px")
+                        $(ID).attr("height", "25px")
+                        $('#likeCount' + shopId).text(parseInt($('#likeCount' + shopId).text()) + 1)
+                    } else {
+                        console.log('여기')
+                        $(ID).attr("width", "25px")
+                        $(ID).attr("height", "25px")
+                        $(ID).attr("src", "/image/heart.png")
+                        $('#likeCount' + shopId).text(parseInt($('#likeCount' + shopId).text()) - 1)
+                    }
+                }
+            })
         })
 
 

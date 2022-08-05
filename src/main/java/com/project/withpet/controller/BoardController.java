@@ -247,6 +247,9 @@ public class BoardController {
                            @RequestParam("boardcode") Long boardcode) {
 
         Reply reply = new Reply();
+        System.out.println("writer = " + writer);
+        System.out.println("content = " + content);
+        System.out.println("boardcode = " + boardcode);
         reply.setWriter(writer);
         reply.setContent(content);
         reply.setBoardcode(boardcode);

@@ -13,6 +13,10 @@ public class ShopLikeService {
         this.shopLikeRepository = shopLikeRepository;
     }
 
+    public Long getLikeCount(Long shopId) {
+        return shopLikeRepository.findCountByShopid(shopId);
+    }
+
     public int saveordelete(String userId, Long shopId) {
         try {
             validate(shopId, userId);

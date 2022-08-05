@@ -9,7 +9,6 @@ public class HotelroomForm {
     private Long person;
     private String content;
     private String avail;
-
     private String path;
 
     public String getPath() {

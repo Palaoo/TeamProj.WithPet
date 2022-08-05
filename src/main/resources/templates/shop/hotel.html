@@ -12,71 +12,26 @@
     #top {
         margin-bottom: 5%;
     }
-    #search{
+
+    #search {
         margin-bottom: 5%;
     }
-    #submit, #btn_search{
+
+    #submit, #btn_search {
         background-color: #000;
         color: white;
     }
-    #submit:hover, #btn_search:hover{
+
+    #submit:hover, #btn_search:hover {
         background: white;
         border: 1px solid;
-        color:  #518581;
+        color: #518581;
     }
+    #btnLike,#heart_img{text-align:center;}
 </style>
 <body>
 
 <div th:replace="fragments/index :: header"></div>
-
-<!--<h2>호텔 찾기</h2>
-<div>
-    <form action="/hotel" method="post" id="frminfo">
-        <input type="date" name="checkin" id="checkin" th:value="${checkin}">&nbsp;
-        <input type="date" name="checkout" id="checkout" th:value="${checkout}">&nbsp;
-        인원수&nbsp;<input type="number" th:value="${person}" name="person" id="person">
-
-        <select name="order">
-            <option th:selected="${#strings.equals(order, 'price')}" value="price">요금순</option>
-            <option th:selected="${#strings.equals(order, 'score')}" value="score">평점순</option>
-        </select>&nbsp;
-
-        <select name="size">
-            <option th:selected="${#strings.equals(size, '4')}" value="4">모든견종</option>
-            <option th:selected="${#strings.equals(size, '1')}" value="1">소형견</option>
-            <option th:selected="${#strings.equals(size, '2')}" value="2">중형견</option>
-            <option th:selected="${#strings.equals(size, '3')}" value="3">대형견</option>
-        </select>
-
-        <input type="submit" th:value="조회" id="submit">
-    </form>
-</div><br>
-
-<div>
-    <div class="card mb-3" th:each="hotelList : ${hotelList}" style="max-width: 540px;">
-        <a th:href="@{/hotel/detail(shopid=${hotelList.getShopid()})}" class="detail">
-            <div class="row g-0" >
-                <div class="col-md-4">
-                    <img th:src="${hotelList.getPath()}" style="height: 150px" class="img-fluid rounded-start">
-                </div>
-                <div class="col-md-8" >
-                    <div class="card-body">
-                        <h3 class="card-title" th:text="${hotelList.getName()}"></h3><br>
-                        별점(댓글수)<br>
-                        <th:block th:each="feat:${hotelList.getShopFeats()}">
-                            <span class="card-text" th:text="${feat.getFeatname()}"></span>
-                        </th:block><br><br>
-                        <p class="card-text" th:if="${#strings.equals(hotelList.getAvail(), 'true')}"
-                           th:text="|최저가 ${hotelList.getPrice()}원|" style="text-align: right"></p>
-                        <p class="card-text" th:unless="${#strings.equals(hotelList.getAvail(), 'true')}"
-                           style="text-align: right">예약 마감</p>
-                    </div>
-                </div>
-            </div>
-        </a>
-    </div>
-</div>
-<br><br><br>-->
 
 <section class="breadcrumb-option">
     <div class="container">
@@ -96,12 +51,6 @@
 </section>
 <section class="shopping-cart spad">
     <div class="container">
-<!--        <form action="/hotel/search" method="GET">-->
-<!--            <div class="search">-->
-<!--                <input name="keyword" id="search" type="text" placeholder="지역을 입력해주세요">-->
-<!--                <button class="btn btn-success">검색</button>-->
-<!--            </div>-->
-<!--        </form>-->
 
         <div class="row">
             <div class="col-lg-12">
@@ -149,12 +98,14 @@
                                         <div class="col-sm-10">
                                             <h5 class="card-title" th:text="${hotelList.getName()}"></h5>
                                         </div>
-                                        <div class="col-sm-2">
-                                            <a href="" id="btnLike" th:name="${hotelList.shopid}">
-                                                <img th:if="${hotelList.isLiked==1}" src="img/icon/redheart.png"
+                                        <div class="col-sm-2" id="heart_img">
+                                            <a href="javascript:return false;" id="btnLike" th:name="${hotelList.shopid}">
+                                                <img th:if="${hotelList.isLiked==1}" src="/image/redheart.png"
                                                      th:id="|btnLike${hotelList.shopid}|" width="25" height="25" alt="">
-                                                <img th:if="${hotelList.isLiked==0}" src="img/icon/love.png"
+                                                <img th:if="${hotelList.isLiked==0}" src="/image/heart.png"
                                                      th:id="|btnLike${hotelList.shopid}|" width="25" height="25" alt="">
+                                                <p th:text="${hotelList.getLikeCount()}" th:id="|likeCount${hotelList.shopid}|"
+                                                   name="likeCount" id="cnt"></p>
                                             </a>
                                         </div>
                                     </div>
@@ -185,7 +136,6 @@
 <th:block th:replace="fragments/index :: footer"></th:block>
 
 </body>
-<script src='https://code.jquery.com/jquery-3.4.1.js'></script>
 <script>
     $(document)
         .on('click', '#submit', function () {
@@ -198,29 +148,30 @@
                 alert("인원수를 확인해주세요.")
                 return false;
             }
-        }).on('click', '#btnLike', function () {
-        shopId = $(this).attr('name')
-        console.log(shopId)
-        $.ajax({
-            type: 'get',
-            url: 'append_likehotel?shopId=' + shopId,
-            success: function (data) {
-                ID = '#btnLike' + shopId
-                if (data == '1') {
-                    $(ID).attr("src", "img/icon/redheart.png")
-                    $(ID).attr("width", "38px")
-                    $(ID).attr("height", "36px")
-                    $('#likeCount' + shopId).text(parseInt($('#likeCount' + shopId).text()) + 1)
-                } else {
-                    console.log('여기')
-                    $(ID).attr("height", "36px")
-                    $(ID).attr("width", "38px")
-                    $(ID).attr("src", "img/icon/love.png")
-                    $('#likeCount' + shopId).text(parseInt($('#likeCount' + shopId).text()) - 1)
-                }
-            }
         })
-    })
+        .on('click', '#btnLike', function () {
+            shopId = $(this).attr('name')
+            console.log(shopId)
+            $.ajax({
+                type: 'get',
+                url: '/append_likehotel?shopId=' + shopId,
+                success: function (data) {
+                    ID = '#btnLike' + shopId
+                    if (data == '1') {
+                        $(ID).attr("src", "/image/redheart.png")
+                        $(ID).attr("width", "25px")
+                        $(ID).attr("height", "25px")
+                        $('#likeCount' + shopId).text(parseInt($('#likeCount' + shopId).text()) + 1)
+                    } else {
+                        console.log('여기')
+                        $(ID).attr("width", "25px")
+                        $(ID).attr("height", "25px")
+                        $(ID).attr("src", "/image/heart.png")
+                        $('#likeCount' + shopId).text(parseInt($('#likeCount' + shopId).text()) - 1)
+                    }
+                }
+            })
+        })
 
 </script>
 </html>

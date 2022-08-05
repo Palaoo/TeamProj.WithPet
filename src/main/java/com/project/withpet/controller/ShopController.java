@@ -76,9 +76,6 @@ public class ShopController {
     public String hotelList(Model model, HttpServletRequest req) {
 
         HttpSession session = req.getSession();
-//        if (session.getAttribute("userid") == null) {
-//            return "login";
-//        }
         String userId = (String) req.getSession().getAttribute("userLogined");
         model.addAttribute("userid", userId);
 
@@ -131,7 +128,6 @@ public class ShopController {
 
 
         List<HotelForm> hotelForms = new ArrayList<>();
-
 
 
         for (int i = 0; i < hotelList.size(); i++) {
@@ -214,9 +210,8 @@ public class ShopController {
             throws ParseException, org.json.simple.parser.ParseException {
 
         HttpSession session = req.getSession();
-        if (session.getAttribute("userid") != null) {
-            model.addAttribute("userid", session.getAttribute("userid"));
-        }
+        String userId = (String) req.getSession().getAttribute("userLogined");
+        model.addAttribute("userid", userId);
 
         Long person = Long.parseLong(session.getAttribute("person").toString());
         String checkin = session.getAttribute("checkin").toString();
@@ -242,10 +237,16 @@ public class ShopController {
         List<HotelroomForm> hotelroomForms = new ArrayList<>();
 
         for (int i = 0; i < hotelrooms.size(); i++) {
+
             addHotelRoomForm(hotelrooms, availRooms, hotelroomForms, i);
         }
 
         model.addAttribute("hotelrooms", hotelroomForms);
+
+        int liked = likeHotelService.isLiked(shopid, userId);
+        Long likeCount = likeHotelService.getLikeCount(shopid);
+        model.addAttribute("liked", liked);
+        model.addAttribute("likeCount", likeCount);
 
 
         //블로그 검색 결과 api
@@ -399,10 +400,12 @@ public class ShopController {
     @GetMapping("append_likehotel")
     @ResponseBody
     public String appendLikeHotel(@RequestParam Long shopId, HttpServletRequest req) {
-        if (likeHotelService.appendLike(shopId, req.getSession().getAttribute("userid").toString()))
+        System.out.println(req.getSession().getAttribute("userid").toString());
+        if (likeHotelService.appendLike(shopId, req.getSession().getAttribute("userid").toString())) {
             return "1";
-
-        return "0";
+        } else {
+            return "0";
+        }
     }
 
 
@@ -434,7 +437,7 @@ public class ShopController {
         }
         Optional<Hotelimg> hotelimg = hotelimgRepository.findByShopid(hotelList.get(i).getShopid());
         String path = "";
-        if(hotelimg.isPresent()) {
+        if (hotelimg.isPresent()) {
             path = hotelimg.get().getPath();
         } else {
             path = "https://withpetimg.s3.ap-northeast-2.amazonaws.com/images/hoteldefault.jpg";
@@ -519,7 +522,7 @@ public class ShopController {
     }
 
     @GetMapping("/hotel/search")  //지역검색
-    public String searchHotel(@RequestParam("keyword") String keyword, Model model,HttpServletRequest req){
+    public String searchHotel(@RequestParam("keyword") String keyword, Model model, HttpServletRequest req) {
         HttpSession session = req.getSession();
         if (session.getAttribute("userid") == null) {
             return "login";
@@ -574,7 +577,7 @@ public class ShopController {
         List<Shop> availShop = shopQueryRepository.findAvailHotel(checkin, checkout, 2L);
 
         List<Shop> hotelList = shopService.search(keyword, 1L);
-        log.info("지역리스트 = "+ shopService.toString());
+        log.info("지역리스트 = " + shopService.toString());
         List<HotelForm> hotelForms = new ArrayList<>();
 
 

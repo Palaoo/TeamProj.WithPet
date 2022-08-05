@@ -2,6 +2,7 @@ package com.project.withpet.repository.LikeHotel;
 
 import com.project.withpet.domain.Like;
 import com.project.withpet.domain.LikeHotel;
+import com.project.withpet.domain.shoplike;
 
 import javax.persistence.EntityManager;
 import java.util.List;

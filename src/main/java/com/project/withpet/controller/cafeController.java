@@ -91,7 +91,8 @@ public class cafeController {
             } else {
                 path = "https://withpetimg.s3.ap-northeast-2.amazonaws.com/images/hoteldefault.jpg";
             }
-            cafeDTOLists.add(new CafeDTOList(cafe, shopLike, path));
+            Long likeCount = shopLikeService.getLikeCount(cafe.getShopid());
+            cafeDTOLists.add(new CafeDTOList(cafe, shopLike, path, likeCount));
         }
 
         model.addAttribute("cafeDTOLists", cafeDTOLists);
@@ -126,9 +127,15 @@ public class cafeController {
         model.addAttribute("scoreAvg", scoreAvg);
         log.info(shopreviewList.toString());
 
+        boolean liked = shopLikeService.islike(shopid, userid);
+        model.addAttribute("liked", liked);
+
         Optional<Hotelimg> hotelimg = hotelimgRepository.findByShopid(shopid);
         String path = hotelimg.get().getPath();
         model.addAttribute("shopimg", path);
+
+        Long likeCount = shopLikeService.getLikeCount(shopid);
+        model.addAttribute("likecount", likeCount);
 
         return "cafeinfo";
 
@@ -151,7 +158,8 @@ public class cafeController {
             } else {
                 path = "https://withpetimg.s3.ap-northeast-2.amazonaws.com/images/hoteldefault.jpg";
             }
-            cafeDTOLists.add(new CafeDTOList(cafe, shopLike, path));
+            Long likeCount = shopLikeService.getLikeCount(cafe.getShopid());
+            cafeDTOLists.add(new CafeDTOList(cafe, shopLike, path, likeCount));
         }
         model.addAttribute("cafeList", cafeDTOLists);
         return "Restaurant-list";
@@ -175,7 +183,8 @@ public class cafeController {
             } else {
                 path = "https://withpetimg.s3.ap-northeast-2.amazonaws.com/images/hoteldefault.jpg";
             }
-            cafeDTOLists.add(new CafeDTOList(cafe, shopLike, path));
+            Long likeCount = shopLikeService.getLikeCount(cafe.getShopid());
+            cafeDTOLists.add(new CafeDTOList(cafe, shopLike, path, likeCount));
         }
 
         model.addAttribute("cafeList", cafeDTOLists);
@@ -209,11 +218,13 @@ public class cafeController {
             }
             scoreAvg = scoreTotal / shopreviewList.size();
             model.addAttribute("scoreAvg", scoreAvg);
-            log.info(shopreviewList.toString());
 
             Optional<Hotelimg> hotelimg = hotelimgRepository.findByShopid(shopid);
             String path = hotelimg.get().getPath();
             model.addAttribute("shopimg", path);
+
+            Long likeCount = shopLikeService.getLikeCount(shopid);
+            model.addAttribute("likecount", likeCount);
 
         }
         return "restaurant-info";
