@@ -13,35 +13,11 @@
     <th:block th:replace="fragments/index::style"></th:block>
 </head>
 <style>
-    body {
-        margin-left: 50px;
-    }
-
     img, .rating {
         float: left;
         margin: 10px;
     }
-
-    #login, #signin, #cafename {
-        text-decoration: none;
-        color: black;
-    }
-
-    nav a {
-        text-decoration: none;
-        color: black;
-        margin: 2em;
-    }
-
-    nav {
-        display: flex;
-        justify-content: center;
-    }
-
-    div.container {
-    }
-
-    div.header div.footer {
+/*    div.header div.footer {
         clear: left
     }
 
@@ -49,18 +25,11 @@
         float: left;
     }
 
-    .header {
-        height: 200px;
-    }
-
     .top {
         height: 70px;
         margin: auto;
     }
 
-    .footer {
-        height: 30px;
-    }
 
     .left {
         height: 500px;
@@ -70,22 +39,7 @@
     .contents {
         height: 500px;
     }
-
-    #login, #signin, #cafename {
-        text-decoration: none;
-        color: black;
-    }
-
-    nav a {
-        text-decoration: none;
-        color: black;
-        margin: 2em;
-    }
-
-    nav {
-        display: flex;
-        justify-content: center;
-    }
+    */
 
     #myform fieldset {
         display: inline-block;
@@ -214,12 +168,12 @@
             <div class="col-lg-8">
                 <div class="blog__details__content">
                     <div class="container">
+                        <div class="blog__details__pic">
+                            <img class="col" th:src="${shopimg}" style="size: auto">
+                        </div>
                         <!--상세설명-->
                         <div class="row">
                             <div class="col-lg-12">
-                                <div class="blog__details__pic">
-                                    <img class="col" th:src="${shopimg}" style="size: auto">
-                                </div>
                                 <div class="product__details__tab">
                                     <ul class="nav nav-tabs" role="tablist">
                                         <li class="nav-item">
