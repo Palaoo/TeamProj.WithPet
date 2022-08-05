@@ -40,8 +40,6 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.*;
 
-import static org.apache.el.util.MessageFactory.get;
-
 @Controller
 @Slf4j
 public class ShopController {
