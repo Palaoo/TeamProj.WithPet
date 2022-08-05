@@ -131,18 +131,20 @@
                                      th:id="|btnLike${shop.getShopid()}|" width="25" height="25" alt="">
                                 <img th:if="${liked==0}" src="/image/heart.png"
                                      th:id="|btnLike${shop.getShopid()}|" width="25" height="25" alt="">
+                                <p th:text="${likeCount}" th:id="|likeCount${shop.getShopid()}|"
+                                   name="likeCount" id="cnt"></p>
                             </a>
                         </li>
-                        <li>
-                            <div class="rating">
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star-o"></i>
-                                <span> - 5 Reviews</span>
-                            </div>
-                        </li>
+<!--                        <li>-->
+<!--                            <div class="rating">-->
+<!--                                <i class="fa fa-star"></i>-->
+<!--                                <i class="fa fa-star"></i>-->
+<!--                                <i class="fa fa-star"></i>-->
+<!--                                <i class="fa fa-star"></i>-->
+<!--                                <i class="fa fa-star-o"></i>-->
+<!--                                <span> - 5 Reviews</span>-->
+<!--                            </div>-->
+<!--                        </li>-->
                         <li>
                             <th:block th:each="feat : ${feats}">
                                 <span th:text="${feat.getFeatname()}"></span>
@@ -158,15 +160,13 @@
 <section class="blog-details spad">
     <div class="container">
         <div class="row d-flex justify-content-center">
-            <!--            <div class="col-lg-12">-->
-
-            <!--            </div>-->
             <div class="col-lg-8">
                 <div class="blog__details__content">
                     <div class="container">
                         <div class="blog__details__pic">
                             <img id="img" class="col" th:src="${shopimg}" style="size: auto">
                         </div>
+
                         <!--상세설명-->
                         <div class="row">
                             <div class="col-lg-12">
@@ -506,6 +506,7 @@
         })
     })
 
+
     $(document)
         .on("click", "#comment-create-btn", function () {
             if ($(':radio[name="score"]:checked').length < 1) {
@@ -609,21 +610,40 @@
     // 지도를 생성합니다
     var map = new kakao.maps.Map(mapContainer, mapOption);
     // 주소-좌표 변환 객체를 생성합니다
-    var geocoder = new kakao.maps.services.Geocoder();
-    // 주소로 좌표를 검색합니다
-    geocoder.addressSearch(document.getElementById("address").innerHTML, function (result, status) {
-        // 정상적으로 검색이 완료됐으면
-        if (status === kakao.maps.services.Status.OK) {
-            var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-            // 결과값으로 받은 위치를 마커로 표시합니다
-            var marker = new kakao.maps.Marker({
-                map: map,
-                position: coords
-            });
-            // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
-            map.setCenter(coords);
-        }
+
+    $("a[href='#tabs-2']").on('shown.bs.tab', function(){
+        kakao.maps.event.trigger(map, resizeMap());
+        relayout()
+        getCenter()
     });
+
+    function getCenter(){
+        var geocoder = new kakao.maps.services.Geocoder();
+        // 주소로 좌표를 검색합니다
+        geocoder.addressSearch(document.getElementById("address").innerHTML, function (result, status) {
+            // 정상적으로 검색이 완료됐으면
+            if (status === kakao.maps.services.Status.OK) {
+                var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+                // 결과값으로 받은 위치를 마커로 표시합니다
+                var marker = new kakao.maps.Marker({
+                    map: map,
+                    position: coords
+                });
+                // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+                map.setCenter(coords);
+            }
+        });
+    }
+
+    function resizeMap() {
+        var mapContainer = document.getElementById('map');
+        mapContainer.style.width = '700px';
+        mapContainer.style.height = '300px';
+    }
+
+    function relayout() {
+        map.relayout();
+    }
 
     const commentEditModal = document.querySelector("#review-edit-Modal")
 

@@ -77,7 +77,6 @@ public class ShopLikeController {
             likehotelDTOList.add(new LikeshopDTO(likeHotel, hotel.get(), path));
         }
 
-
         model.addAttribute("likehotelDTOList", likehotelDTOList);
 
         return "myshop";
@@ -97,7 +96,7 @@ public class ShopLikeController {
 
     @GetMapping("append_shoplike")
     @ResponseBody
-    public String appendShopLike(HttpServletRequest req, @RequestParam Long shopId) {
+    public String appendShopLike(HttpServletRequest req, @RequestParam("shopId") Long shopId) {
         System.out.println("ShopLikeController appendShopLike(), , shopId");
         if (shopLikeService.saveordelete(req.getSession().getAttribute("userLogined").toString(),
                 shopId) == 0) {

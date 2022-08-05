@@ -108,22 +108,24 @@
                     <ul>
                         <li>
                             <a href="javascript:return false;" id="btnLike" th:name="${cafe.shopid}">
-                                <img th:if="${liked==true}" src="/image/redheart.png"
+                                <img th:if="${liked}" src="/image/redheart.png"
                                      th:id="|btnLike${cafe.shopid}|" width="25" height="25" alt="">
-                                <img th:if="${liked==false}" src="/image/heart.png"
+                                <img th:if="${!liked}" src="/image/heart.png"
                                      th:id="|btnLike${cafe.shopid}|" width="25" height="25" alt="">
+                                <p th:text="${likecount}" th:id="|likeCount${cafe.shopid}|"
+                                   name="likeCount" id="cnt"></p>
                             </a>
                         </li>
-                        <li>
-                            <div class="rating">
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star-o"></i>
-                                <span> - 5 Reviews</span>
-                            </div>
-                        </li>
+                        <!--                        <li>-->
+                        <!--                            <div class="rating">-->
+                        <!--                                <i class="fa fa-star"></i>-->
+                        <!--                                <i class="fa fa-star"></i>-->
+                        <!--                                <i class="fa fa-star"></i>-->
+                        <!--                                <i class="fa fa-star"></i>-->
+                        <!--                                <i class="fa fa-star-o"></i>-->
+                        <!--                                <span> - 5 Reviews</span>-->
+                        <!--                            </div>-->
+                        <!--                        </li>-->
                         <li>
                             <th:block th:each="feat: ${cafe.getShopFeats()}">
                                 <span th:text="${feat.getFeatname()}+' '"></span>
@@ -204,41 +206,6 @@
                                                             주소: <span id="address"
                                                                       th:text="${cafe.getAddress()}"></span>
                                                         </div>
-                                                        <script type="text/javascript"
-                                                                src="//dapi.kakao.com/v2/maps/sdk.js?appkey=1c12d27c88e0ef576fe237323f586e7d&libraries=services"></script>
-                                                        <script>
-                                                            var mapContainer = document.getElementById('map'), // 지도를 표시할 div
-                                                                mapOption = {
-                                                                    center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
-                                                                    level: 3 // 지도의 확대 레벨
-                                                                };
-
-                                                            // 지도를 생성합니다
-                                                            var map = new kakao.maps.Map(mapContainer, mapOption);
-
-                                                            // 주소-좌표 변환 객체를 생성합니다
-                                                            var geocoder = new kakao.maps.services.Geocoder();
-
-                                                            // 주소로 좌표를 검색합니다
-                                                            geocoder.addressSearch(document.getElementById("address").innerHTML, function (result, status) {
-
-                                                                // 정상적으로 검색이 완료됐으면
-                                                                if (status === kakao.maps.services.Status.OK) {
-
-                                                                    var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-
-                                                                    // 결과값으로 받은 위치를 마커로 표시합니다
-                                                                    var marker = new kakao.maps.Marker({
-                                                                        map: map,
-                                                                        position: coords
-                                                                    });
-
-                                                                    // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
-                                                                    map.setCenter(coords);
-                                                                }
-                                                            });
-
-                                                        </script>
                                                     </div>
                                                 </div>
                                             </div>
@@ -466,16 +433,52 @@
                                 </div>
                             </div>
                         </div>
-
                     </div>
+
                 </div>
             </div>
         </div>
+    </div>
 </section>
 
+<script type="text/javascript"
+        src="//dapi.kakao.com/v2/maps/sdk.js?appkey=1c12d27c88e0ef576fe237323f586e7d&libraries=services"></script>
 <th:block th:replace="fragments/index :: footer"></th:block>
 </body>
 <script>
+    $(document).ready(function () {
+        console.log(document)
+    }).on("click", "#comment-create-btn", function () { //별점 미선택 후기 작성시
+        if ($(':radio[name="score"]:checked').length < 1) {
+            alert("별점을 선택해주세요.");
+            return false;
+        }
+    }).on('click', '#btnLike', function () {
+
+        shopId = $(this).attr('name')
+        console.log(shopId)
+        $.ajax({
+            type: 'get',
+            url: '/append_shoplike?shopId=' + shopId,
+            success: function (data) {
+                ID = '#btnLike' + shopId
+                if (data == '1') {
+                    $(ID).attr("src", "/image/redheart.png")
+                    $(ID).attr("width", "25px")
+                    $(ID).attr("height", "25px")
+                    $('#likeCount' + shopId).text(parseInt($('#likeCount' + shopId).text()) + 1)
+                } else {
+                    console.log('여기')
+                    $(ID).attr("width", "25px")
+                    $(ID).attr("height", "25px")
+                    $(ID).attr("src", "/image/heart.png")
+                    $('#likeCount' + shopId).text(parseInt($('#likeCount' + shopId).text()) - 1)
+                }
+            }
+        })
+    })
+
+
     const triggerTabList = document.querySelectorAll('#myTab a')
     triggerTabList.forEach(triggerEl => {
         const tabTrigger = new bootstrap.Tab(triggerEl)
@@ -501,40 +504,51 @@
         document.querySelector("#score-value").value = score
         document.querySelector("#review-id").value = rid
     })
-</script>
-<script>
-    $(document)
-        //별점 미선택 후기 작성시
-        .on("click", "#comment-create-btn", function () {
-            if ($(':radio[name="score"]:checked').length < 1) {
-                alert("별점을 선택해주세요.");
-                return false;
-            }
-        })
-        .on('click', '#btnLike', function () {
-            shopId = $(this).attr('name')
-            console.log(shopId)
-            $.ajax({
-                type: 'get',
-                url: '/append_likehotel?shopId=' + shopId,
-                success: function (data) {
-                    ID = '#btnLike' + shopId
-                    if (data == '1') {
-                        $(ID).attr("src", "/image/redheart.png")
-                        $(ID).attr("width", "25px")
-                        $(ID).attr("height", "25px")
-                        $('#likeCount' + shopId).text(parseInt($('#likeCount' + shopId).text()) + 1)
-                    } else {
-                        console.log('여기')
-                        $(ID).attr("width", "25px")
-                        $(ID).attr("height", "25px")
-                        $(ID).attr("src", "/image/heart.png")
-                        $('#likeCount' + shopId).text(parseInt($('#likeCount' + shopId).text()) - 1)
-                    }
-                }
-            })
-        })
 
+
+    var mapContainer = document.getElementById('map'), // 지도를 표시할 div
+
+        mapOption = {
+            center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+            level: 3 // 지도의 확대 레벨
+        };
+    // 지도를 생성합니다
+    var map = new kakao.maps.Map(mapContainer, mapOption);
+    // 주소-좌표 변환 객체를 생성합니다
+
+    $("a[href='#tabs-2']").on('shown.bs.tab', function () {
+        kakao.maps.event.trigger(map, resizeMap());
+        relayout()
+        getCenter()
+    });
+
+    function getCenter() {
+        var geocoder = new kakao.maps.services.Geocoder();
+        // 주소로 좌표를 검색합니다
+        geocoder.addressSearch(document.getElementById("address").innerHTML, function (result, status) {
+            // 정상적으로 검색이 완료됐으면
+            if (status === kakao.maps.services.Status.OK) {
+                var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+                // 결과값으로 받은 위치를 마커로 표시합니다
+                var marker = new kakao.maps.Marker({
+                    map: map,
+                    position: coords
+                });
+                // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+                map.setCenter(coords);
+            }
+        });
+    }
+
+    function resizeMap() {
+        var mapContainer = document.getElementById('map');
+        mapContainer.style.width = '700px';
+        mapContainer.style.height = '300px';
+    }
+
+    function relayout() {
+        map.relayout();
+    }
 
 </script>
 </html>

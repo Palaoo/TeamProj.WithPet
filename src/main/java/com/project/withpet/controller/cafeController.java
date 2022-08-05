@@ -66,7 +66,8 @@ public class cafeController {
             } else {
                 path = "https://withpetimg.s3.ap-northeast-2.amazonaws.com/images/hoteldefault.jpg";
             }
-            cafeDTOLists.add(new CafeDTOList(cafe, shopLike, path));
+            Long likeCount = shopLikeService.getLikeCount(cafe.getShopid());
+            cafeDTOLists.add(new CafeDTOList(cafe, shopLike, path, likeCount));
         }
 
         model.addAttribute("cafeDTOLists", cafeDTOLists);
