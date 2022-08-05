@@ -31,6 +31,8 @@ public class ShopLikeController {
 
     private final HotelimgRepository hotelimgRepository;
 
+    private final Tools tools = new Tools();
+
     public ShopLikeController(ShopLikeService shopLikeService, com.project.withpet.service.cafeService cafeService, LikeShopRepository likeshopRepository, HotelimgRepository hotelimgRepository) {
         this.shopLikeService = shopLikeService;
         this.cafeService = cafeService;
@@ -43,6 +45,10 @@ public class ShopLikeController {
         HttpSession session = req.getSession();
         String userid = (String) session.getAttribute("userLogined");
         model.addAttribute("userLogined", userid);
+
+        if (!tools.isUserLogined(req)) {
+            return "/login";
+        }
 
         List<shoplike> shoplikeList = shopLikeService.findByUserId(userid);
         List<LikeshopDTO> likeshopDTOList = new ArrayList<>();
