@@ -85,8 +85,9 @@
                         </div>
                     </div>
                     <ul class="list-group list-group-flush">
+                        <li class="list-group-item">⭐⭐⭐⭐⭐ </li>
                         <li class="list-group-item" th:text="${cafeList.cafe.getRegion().getRegname()}"></li>
-                        <li class="list-group-item" th:text="${cafeList.cafe.getShoptype().getTypename()}" ></li>
+<!--                        <li class="list-group-item" th:text="${cafeList.cafe.getShoptype().getTypename()}" ></li>-->
                         <li class="list-group-item" >
                         <span th:each="feat: ${cafeList.cafe.getShopFeats()}" th:text="${feat.getFeatname()}+' '" ></span></li>
                     </ul>
