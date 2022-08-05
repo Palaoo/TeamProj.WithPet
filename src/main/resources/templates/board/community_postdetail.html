@@ -11,18 +11,28 @@
         width: 504px;
         height: 40px;
     }
-
-    #addReply {
-        text-align: center;
-        widhth: 100px;
+    #addReply{
+        padding: 0;
         height: 40px;
+        background-color: #000;
+        color: white;
     }
-
+    #addReply:hover{
+        background: white;
+        border: 1px solid;
+        color:  #000;
+    }
     #writer {
         vertical-align: text-top;
     }
     #content{
         color: #000;
+    }
+    #modify,#delete{
+        color: #000;
+    }
+    #modify:hover,#delete:hover{
+        color: #000 !important;
     }
 </style>
 <body>
@@ -75,9 +85,9 @@
                                     <div th:if="${not #strings.isEmpty(userid)}">
 <!--                                        <form action="newreply" method="post">-->
                                             <table id="rtable2">
-                                                <tr>
+                                                <tr style="width: 100%">
                                                     <td class="col-lg-2 col-md-2">
-                                                        <span th:text="${userid}" id="writer"></span>
+                                                        <p th:text="${userid}" id="writer"></p>
                                                     </td>
                                                     <td class="col-lg-8 col-md-8">
                                                         <textarea name="content" id="content"
@@ -86,8 +96,7 @@
                                                                id="boardcode">
                                                     </td>
                                                     <td class="col-lg-2 col-md-2">
-                                                        <input type="submit" id="addReply" class="site-btn"
-                                                               value="  작성">
+                                                        <input type="submit" id="addReply" value="작성">
                                                     </td>
                                                 </tr>
                                             </table>
