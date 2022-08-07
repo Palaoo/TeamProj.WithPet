@@ -8,4 +8,5 @@ import java.util.List;
 
 public interface SpringLikeHotelRepository extends JpaRepository<LikeHotel, Long> {
     List<LikeHotel> findByUserId(String userid);
+    void deleteByShopId(Long shopid);
 }

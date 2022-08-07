@@ -3,6 +3,8 @@ package com.project.withpet.domain;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.util.List;
@@ -13,6 +15,8 @@ public class Shop {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long shopid;
+    @Column
+    private Long bid;
     @Column
     private String name;
     @Column
@@ -34,14 +38,21 @@ public class Shop {
     @JoinColumn(name = "typeid")
     private Shoptype shoptype;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany
     @JoinTable(
-            name = "featlist",
+            name = "Featlist",
             joinColumns = @JoinColumn(name = "shopid"),
             inverseJoinColumns = @JoinColumn(name = "featid")
     )
     List<Feat> shopFeats;
 
+    public Long getBid() {
+        return bid;
+    }
+
+    public void setBid(Long bid) {
+        this.bid = bid;
+    }
 
     public Long getShopid() {
         return shopid;

@@ -2,10 +2,13 @@ package com.project.withpet.dto;
 
 import com.project.withpet.domain.Feat;
 import com.project.withpet.domain.Region;
+import com.project.withpet.domain.Shop;
 import com.project.withpet.domain.Shoptype;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
+@NoArgsConstructor
 public class HotelForm {
 
     private Long shopid;
@@ -26,6 +29,20 @@ public class HotelForm {
     private List<Feat> shopFeats;
 
     private String path;
+    private Shop shop;
+
+    public HotelForm(String path, Shop shop) {
+        this.path = path;
+        this.shop = shop;
+    }
+
+    public Shop getShop() {
+        return shop;
+    }
+
+    public void setShop(Shop shop) {
+        this.shop = shop;
+    }
 
     public Long getLikeCount() {
         return likeCount;

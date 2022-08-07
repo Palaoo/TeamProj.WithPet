@@ -13,4 +13,6 @@ public interface HotelroomRepository {
 
     Optional<Hotelroom> findById(Long roomid);
 
+    Hotelroom save(Hotelroom hotelroom);
+
 }

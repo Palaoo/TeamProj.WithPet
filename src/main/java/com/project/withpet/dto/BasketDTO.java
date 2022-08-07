@@ -1,6 +1,6 @@
 package com.project.withpet.dto;
 
-public class BascketDTO {
+public class BasketDTO {
     private String path;
 
 
@@ -48,7 +48,7 @@ public class BascketDTO {
         this.prodid = prodid;
     }
 
-    public BascketDTO(Long prodid, String name, int price, String path,String brand) {
+    public BasketDTO(Long prodid, String name, int price, String path, String brand) {
         this.path = path;
         this.name = name;
         this.price = price;

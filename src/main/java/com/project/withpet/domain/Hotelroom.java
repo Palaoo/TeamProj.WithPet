@@ -1,7 +1,10 @@
 package com.project.withpet.domain;
 
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 
+@NoArgsConstructor
 @Entity
 public class Hotelroom {
 
@@ -24,6 +27,13 @@ public class Hotelroom {
     @Column
     private String content;
 
+    public Hotelroom(Long shopid, String roomname, Long price, Long person, String content) {
+        this.shopid = shopid;
+        this.roomname = roomname;
+        this.price = price;
+        this.person = person;
+        this.content = content;
+    }
 
     public Long getRoomid() {
         return roomid;

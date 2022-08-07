@@ -4,6 +4,7 @@ import com.project.withpet.domain.Like;
 import com.project.withpet.repository.Like.LikeRepository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Transactional
@@ -48,5 +49,9 @@ public class LikeService {
         result.ifPresent(m -> {
             throw new IllegalStateException("좋아요 눌러져있음");
         });
+    }
+
+    public List<Like> likeList(String userId){
+        return likeRepository.findByUserId(userId);
     }
 }

@@ -8,4 +8,6 @@ import java.util.Optional;
 public interface HotelroomimgRepository extends JpaRepository<Hotelroomimg, Long> {
 
     Optional<Hotelroomimg> findByShopid(Long roomid);
+
+    void deleteByShopid(Long shopid);
 }

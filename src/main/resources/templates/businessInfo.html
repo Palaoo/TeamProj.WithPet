@@ -50,32 +50,7 @@
                         <div class="card">
                             <div id="collapseOne" class="collapse show" data-parent="#accordionExample">
                                 <div class="card-body">
-                                    <div class="shop__sidebar__categories">
-                                        <ul class="nav flex-column">
-                                            <li class="nav-item">
-                                                <a class="nav-link" id="reservation-tab" href="/mypage/booking">예약내역</a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link" id="save-tab" href="/mypage/myshop">저장목록</a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link" id="review-tab" href="/mypage/review">내 후기</a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link" id="mywriting-tab" href="/mypage/post">내가 남긴 글</a>
-                                            </li>
-
-                                        </ul>
-                                        <ul class="nav flex-column">
-                                            <li class="nav-item">
-                                                <a class="nav-link" id="manager-tab" href="/mypage/manager">관리자 등록</a>
-                                            </li>
-                                            <li class="nav-item" role="presentation">
-                                                <a class="nav-link active" id="business-tab" aria-current="page"
-                                                   href="/businessPage">사업자</a>
-                                            </li>
-                                        </ul>
-                                    </div>
+                                    <div th:replace="fragments/mypage :: sideBar"></div>
                                 </div>
                             </div>
 
@@ -88,19 +63,6 @@
         <div class="col-9" id="main">
             <div class="row">
                 <div class="tab-content">
-                    <div class="tab-pane" id="reservation" role="tabpanel" aria-labelledby="reservation-tab"
-                         th:each="book, i:${bookList}">
-                        <div class="card-body">
-                            <h5 class="card-text" th:text="|${book.getHotelname()} / ${book.getRoomname}|"></h5><br>
-                            <h5 class="card-text"
-                                th:text="|${book.getCheckin()} ~ ${book.getCheckout()} (${book.getName()})|"></h5><br>
-                            <p class="card-text" th:text="${book.getMobile()}"></p>
-                            <p class="card-text" th:text="${book.getDetail()}"></p>
-                            <a th:href="@{/mypage/booking/change(bookid=${book.getBookid()})}">
-                                <button style="float:right;">예약 변경</button>
-                            </a>
-                        </div>
-                    </div>
 
                     <div class="tab-pane" id="save" role="tabpanel" aria-labelledby="save-tab">
                     </div>
@@ -119,6 +81,10 @@
                             <p th:text="|사업자 번호 : ${businessId}|"></p>
                             <form action="appendProd" method="get">
                                 <button class="primary-btn" type="submit">상품등록하기</button>
+                            </form>
+                            <br>
+                            <form action="appendShop" method="get">
+                                <button class="primary-btn" type="submit">상점등록하기</button>
                             </form>
                         </div>
                     </div>

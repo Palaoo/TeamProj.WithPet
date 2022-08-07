@@ -32,4 +32,19 @@ public class ShopService {
         return shopRepository.findByAddressContainingAndShoptypeTypeid(keyword,typeid);
     }
 
+    public Long save(Shop shop){
+        return shopRepository.save(shop).getShopid();
+    }
+
+    public List<Shop> findHotelByBid(Long bid){
+        return shopRepository.findByBidAndShoptypeTypeid(bid, 1L);
+    }
+
+    public List<Shop> findAllByBid(Long bid){
+        return shopRepository.findAllByBid(bid);
+    }
+
+    public void deleteById(Long shopid){
+        shopRepository.deleteById(shopid);
+    }
 }
