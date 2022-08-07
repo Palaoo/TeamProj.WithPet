@@ -470,6 +470,17 @@
 <th:block th:replace="fragments/index :: footer"></th:block>
 </body>
 <script>
+
+    const triggerTabList = document.querySelectorAll('#myTab a')
+    triggerTabList.forEach(triggerEl => {
+        const tabTrigger = new bootstrap.Tab(triggerEl)
+
+        triggerEl.addEventListener('click', event => {
+            event.preventDefault()
+            tabTrigger.show()
+        })
+    })
+
     $(document).ready(function () {
         console.log(document)
     }).on("click", "#comment-create-btn", function () { //별점 미선택 후기 작성시
@@ -500,33 +511,6 @@
                 }
             }
         })
-    })
-
-
-    const triggerTabList = document.querySelectorAll('#myTab a')
-    triggerTabList.forEach(triggerEl => {
-        const tabTrigger = new bootstrap.Tab(triggerEl)
-
-        triggerEl.addEventListener('click', event => {
-            event.preventDefault()
-            tabTrigger.show()
-        })
-    })
-
-    const commentEditModal = document.querySelector("#review-edit-Modal")
-
-    commentEditModal.addEventListener("show.bs.modal", function (event) {
-
-        const triggerBtn = event.relatedTarget
-
-        const content = triggerBtn.getAttribute("data-bs-content");
-        const score = triggerBtn.getAttribute("data-bs-score");
-        const rid = triggerBtn.getAttribute("data-bs-rid");
-
-        console.log(rid);
-        document.querySelector("#message-text").value = content
-        document.querySelector("#score-value").value = score
-        document.querySelector("#review-id").value = rid
     })
 
 
@@ -574,5 +558,21 @@
         map.relayout();
     }
 
+
+    const commentEditModal = document.querySelector("#review-edit-Modal")
+
+    commentEditModal.addEventListener("show.bs.modal", function (event) {
+
+        const triggerBtn = event.relatedTarget
+
+        const content = triggerBtn.getAttribute("data-bs-content");
+        const score = triggerBtn.getAttribute("data-bs-score");
+        const rid = triggerBtn.getAttribute("data-bs-rid");
+
+        console.log(rid);
+        document.querySelector("#message-text").value = content
+        document.querySelector("#score-value").value = score
+        document.querySelector("#review-id").value = rid
+    })
 </script>
 </html>

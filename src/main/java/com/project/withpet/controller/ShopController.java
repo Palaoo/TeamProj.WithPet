@@ -4,13 +4,11 @@ import com.project.withpet.dto.HotelForm;
 import com.project.withpet.dto.HotelroomForm;
 import com.project.withpet.domain.*;
 import com.project.withpet.dto.reviewDto;
+import com.project.withpet.repository.*;
 import com.project.withpet.repository.Booking.BookingRepository;
-import com.project.withpet.repository.HotelimgRepository;
 import com.project.withpet.repository.Hotelroom.HotelroomRepository;
-import com.project.withpet.repository.HotelroomimgRepository;
 import com.project.withpet.repository.Shop.ShopQueryRepository;
 import com.project.withpet.repository.Shop.ShopRepository;
-import com.project.withpet.repository.shopreviewRepository;
 import com.project.withpet.service.HotelroomService;
 import com.project.withpet.service.LikeHotelService;
 import com.project.withpet.service.ShopService;
@@ -26,6 +24,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -55,9 +54,14 @@ public class ShopController {
     private final reviewService reviewService;
     private final shopreviewRepository shopreviewRepository;
     private final LikeHotelService likeHotelService;
+    private final FeatlistRepository featlistRepository;
+
+    private final S3Uploader s3Uploader;
+    private final ShopTypeRepository shopTypeRepository;
+    private final RegionRepository regionRepository;
 
     @Autowired
-    public ShopController(ShopService shopService, HotelroomService hotelroomService, ShopQueryRepository shopQueryRepository, ShopRepository shopRepository, HotelroomRepository hotelroomRepository, UserService userService, BookingRepository bookingRepository, HotelimgRepository hotelimgRepository, HotelroomimgRepository hotelroomimgRepository, com.project.withpet.service.reviewService reviewService, com.project.withpet.repository.shopreviewRepository shopreviewRepository, LikeHotelService likeHotelService) {
+    public ShopController(ShopService shopService, HotelroomService hotelroomService, ShopQueryRepository shopQueryRepository, ShopRepository shopRepository, HotelroomRepository hotelroomRepository, UserService userService, BookingRepository bookingRepository, HotelimgRepository hotelimgRepository, HotelroomimgRepository hotelroomimgRepository, com.project.withpet.service.reviewService reviewService, com.project.withpet.repository.shopreviewRepository shopreviewRepository, LikeHotelService likeHotelService, FeatlistRepository featlistRepository, S3Uploader s3Uploader, ShopTypeRepository shopTypeRepository, RegionRepository regionRepository) {
         this.shopService = shopService;
         this.hotelroomService = hotelroomService;
         this.shopQueryRepository = shopQueryRepository;
@@ -68,6 +72,10 @@ public class ShopController {
         this.reviewService = reviewService;
         this.shopreviewRepository = shopreviewRepository;
         this.likeHotelService = likeHotelService;
+        this.featlistRepository = featlistRepository;
+        this.s3Uploader = s3Uploader;
+        this.shopTypeRepository = shopTypeRepository;
+        this.regionRepository = regionRepository;
     }
 
     @GetMapping("/hotel")
@@ -355,7 +363,7 @@ public class ShopController {
         booking.setMobile(mobile);
         bookingRepository.save(booking);
 
-        return "redirect:/";
+        return "redirect:/mypage/mypage_booking";
 
     }
 
@@ -594,6 +602,55 @@ public class ShopController {
         session.setAttribute("checkout", checkout);
 
         return "shop/hotel";
+    }
+
+    @PostMapping("/newShop")
+    public String newProd(Shop shop, @RequestParam Long typeid, @RequestParam String featidList,
+                          @RequestParam MultipartFile thumb,
+                          @RequestParam(required = false) String[] roomname, @RequestParam(required = false) Long[] person,
+                          @RequestParam(required = false) Long[] price, @RequestParam(required = false) String[] content,
+                          @RequestParam(required = false) MultipartFile[] roomThumb,
+                          HttpServletRequest req) throws IOException {
+
+        shop.setBid(Long.parseLong(req.getSession().getAttribute("businessId").toString()));
+
+        shop.setShoptype(shopTypeRepository.findById(typeid).get());
+
+        String[] addressSplit = shop.getAddress().split(" ");
+//        System.out.println("주소 = " + shop.getAddress());
+//        System.out.println("addressSplit.length = " + addressSplit.length);
+//        System.out.println("addressSplit[0] = " + addressSplit[0]);
+        if (addressSplit[0].equals("세종특별자치시")) {
+            addressSplit[0] = "세종";
+        } else if (addressSplit[0].equals("제주특별자치도")) {
+            addressSplit[0] = "제주도";
+        }
+
+        shop.setRegion(regionRepository.findByRegname(addressSplit[0]));
+
+        Long shopid = shopService.save(shop);
+        String[] featid = featidList.split(",");
+//        System.out.println(featidList);
+        for (int i = 0; i < featid.length; i++) {
+//            System.out.println(featid[i]);
+            featlistRepository.save(new Featlist(shopid, Long.parseLong(featid[i])));
+        }
+
+        String path = s3Uploader.uploadFiles(thumb, "thumbnail");
+
+        hotelimgRepository.save(new Hotelimg(shopid, UUID.randomUUID().toString(), thumb.getOriginalFilename(), path));
+
+        if (typeid == 1) {
+            for (int i = 0; i < roomname.length; i++) {
+                Hotelroom hotelroom = hotelroomService.save(new Hotelroom(shopid, roomname[i], price[i], person[i], content[i]));
+
+                String roomPath = s3Uploader.uploadFiles(roomThumb[i], "thumbnail");
+                hotelroomimgRepository.save(new Hotelroomimg(hotelroom.getRoomid(), UUID.randomUUID().toString(), roomThumb[i].getOriginalFilename(), roomPath));
+            }
+
+        }
+
+        return "redirect:/businessInfo";
     }
 
 }

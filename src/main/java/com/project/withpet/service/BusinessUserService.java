@@ -48,4 +48,6 @@ public class BusinessUserService {
     public BusinessUser findByBid(Long bid) {
         return businessUserRepository.findById(bid).get();
     }
+
+
 }

@@ -54,5 +54,12 @@ public class JpaLikeRepository implements LikeRepository {
         return result.stream().findAny();
     }
 
+    @Override
+    public List<Like> findByUserId(String userId){
+        return em.createQuery("select l from Like l where l.userId= :userId")
+                .setParameter("userId", userId)
+                .getResultList();
+    }
+
 
 }

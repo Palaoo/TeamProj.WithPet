@@ -49,32 +49,7 @@
                         <div class="card">
                             <div id="collapseOne" class="collapse show" data-parent="#accordionExample">
                                 <div class="card-body">
-                                    <div class="shop__sidebar__categories" id="lefttab">
-                                        <ul class="nav flex-column">
-                                            <li class="nav-item">
-                                                <a class="nav-link" id="reservation-tab" href="/mypage/booking">예약내역</a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link" id="save-tab" href="/mypage/myshop">저장목록</a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link" id="review-tab" href="/mypage/review">내 후기</a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link active" id="mywriting-tab" aria-current="page"
-                                                   href="/mypage/post">내가 남긴 글</a>
-                                            </li>
-
-                                        </ul>
-                                        <ul class="nav flex-column">
-                                            <li class="nav-item">
-                                                <a class="nav-link" id="manager-tab" href="/mypage/manager">관리자 등록</a>
-                                            </li>
-                                            <li class="nav-item" role="presentation">
-                                                <a class="nav-link" id="business-tab" href="/businessPage">사업자</a>
-                                            </li>
-                                        </ul>
-                                    </div>
+                                    <div th:replace="fragments/mypage :: sideBar"></div>
                                 </div>
                             </div>
 
