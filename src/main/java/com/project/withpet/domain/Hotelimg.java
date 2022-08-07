@@ -16,6 +16,7 @@ public class Hotelimg {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @JoinColumn(name = "shop_shopid")
     private Long shopid;
     @Column

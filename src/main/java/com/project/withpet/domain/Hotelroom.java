@@ -3,6 +3,7 @@ package com.project.withpet.domain;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @NoArgsConstructor
 @Entity
@@ -27,12 +28,43 @@ public class Hotelroom {
     @Column
     private String content;
 
+    @OneToMany(mappedBy = "shopid", cascade = CascadeType.REMOVE)
+    private List<Hotelroomimg> hotelroomimgList;
+
+    @OneToMany(mappedBy = "roomid", cascade = CascadeType.REMOVE)
+    private List<Booking> bookings;
+
     public Hotelroom(Long shopid, String roomname, Long price, Long person, String content) {
         this.shopid = shopid;
         this.roomname = roomname;
         this.price = price;
         this.person = person;
         this.content = content;
+    }
+
+    public Hotelroom(Long roomid, Long shopid, String roomname, Long price, Long person, String content) {
+        this.roomid = roomid;
+        this.shopid = shopid;
+        this.roomname = roomname;
+        this.price = price;
+        this.person = person;
+        this.content = content;
+    }
+
+    public List<Booking> getBookings() {
+        return bookings;
+    }
+
+    public void setBookings(List<Booking> bookings) {
+        this.bookings = bookings;
+    }
+
+    public List<Hotelroomimg> getHotelroomimgList() {
+        return hotelroomimgList;
+    }
+
+    public void setHotelroomimgList(List<Hotelroomimg> hotelroomimgList) {
+        this.hotelroomimgList = hotelroomimgList;
     }
 
     public Long getRoomid() {
