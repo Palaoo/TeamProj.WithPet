@@ -16,8 +16,10 @@ import javax.persistence.*;
 public class Featlist {
 
     @Id
+    @JoinColumn(name = "shop_shopid")
     private Long shopid;
     @Id
+    @JoinColumn(name = "feat_featid")
     private Long featid;
 
 }
