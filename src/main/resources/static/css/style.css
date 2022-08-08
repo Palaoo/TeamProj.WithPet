@@ -521,9 +521,9 @@ ol {
 
 .header__nav__option a span {
 	color: #0d0d0d;
-	font-size: 11px;
+	font-size: 6px;
 	position: absolute;
-	left: 5px;
+	left: 4px;
 	top: 8px;
 }
 

@@ -16,7 +16,7 @@
         outline: none;
         height: 50px;
         width: 100%;
-        background-color: #518581;
+        background-color: #000;
         color: white;
         border-radius: 4px;
         font-weight: bold;
@@ -24,7 +24,7 @@
     .btn1:hover,#btnValid:hover{
         background: white;
         border: 1px solid;
-        color:  #518581;
+        color:  #000;
     }
     #btnValid{
         border: none;
@@ -59,7 +59,7 @@
 </table>
 </form>-->
 
-<form action="signup" method="post">
+<form action="/signup" method="post">
     <section class="Form my-4 mx-5">
         <div class="container" align="center">
             <div class="row">
@@ -135,7 +135,7 @@
             success: function (data) {    // 회원가입 성공 : 0 / 아이디 중복 : 1 /
                 if (data == '0') {
                     alert('회원가입 성공 ' + data)
-                    location = 'loginPage'
+                    location = '/login'
                 }
                 else if (data == '1') {
                     alert('사용 불가능한 ID 입니다.')

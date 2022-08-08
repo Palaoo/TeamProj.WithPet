@@ -11,9 +11,10 @@
 
     <th:block th:replace="fragments/index::style"></th:block>
 </head>
+<th:block th:replace="fragments/mypage::style"></th:block>
 <style>
     #main {
-        margin-top: 15px;
+        margin-top: 10%;
     }
 </style>
 <body>
@@ -60,7 +61,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-9" id="main">
+        <div class="col-9">
             <div class="row">
                 <div class="tab-content">
                     <br><br><br>
@@ -80,7 +81,7 @@
                     </div>
 
                     <div class="tab-pane active" id="business" role="tabpanel" aria-labelledby="business-tab">
-                        <div align="center">
+                        <div align="center"  id="main">
                             <p>사업자 등록 하시겠습니까?</p>
                             <form action="/registBusiness" method="get">
                                 <button class="primary-btn" type="submit" id="btnsignup" onclick="return reconfirm()">등록</button>

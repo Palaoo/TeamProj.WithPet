@@ -19,6 +19,13 @@
     #order:hover{
         color: #e53637 !important;
     }
+    #quickmenu{
+        position:absolute;
+        width:380px;
+        height:215px;
+        top:350px;
+        right:50px;
+    }
 </style>
 <body>
 <div th:replace="fragments/index :: header"></div>
@@ -197,7 +204,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-4">
+            <div class="col-lg-4" id="quickmenu">
                 <!--<div class="cart__discount">
                     <h6>Discount codes</h6>
                     <form action="#">
@@ -232,6 +239,12 @@
         $('#totalprice' + prodID).text(price);
         /*[/]*/
         $('#total').text(totalprice);
+
+        var currentPosition = parseInt($("#quickmenu").css("top"));
+        $(window).scroll(function() {
+            var position = $(window).scrollTop();
+            $("#quickmenu").stop().animate({"top":position+currentPosition+"px"},500);
+        });
     }).on('click', 'span[name=btnQuantityUp]', function () {
         inputQty = $('#qty' + $(this).attr('id'))
         console.log(inputQty)
