@@ -30,4 +30,7 @@ public class HotelroomService {
     public Hotelroom save(Hotelroom hotelroom){
         return hotelroomRepository.save(hotelroom);
     }
+    public void deleteById(Long roomid){
+        hotelroomRepository.deleteById(roomid);
+    }
 }

@@ -1,5 +1,6 @@
 package com.project.withpet.domain;
 
+import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -33,6 +34,8 @@ public class Hotelroom {
 
     @OneToMany(mappedBy = "roomid", cascade = CascadeType.REMOVE)
     private List<Booking> bookings;
+
+
 
     public Hotelroom(Long shopid, String roomname, Long price, Long person, String content) {
         this.shopid = shopid;

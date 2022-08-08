@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
@@ -169,7 +170,7 @@ public class BusinessUserController {
 
     @PostMapping("/updateShop")
     public String updateShop(Shop shop, @RequestParam Long typeid, @RequestParam String featidList,
-                             @RequestParam(required = false) MultipartFile thumb, @RequestParam Long shopid,
+                             @RequestParam(required = false) MultipartFile thumb,
                              @RequestParam(required = false) Long[] roomid,
                              @RequestParam(required = false) String[] roomname, @RequestParam(required = false) Long[] person,
                              @RequestParam(required = false) Long[] price, @RequestParam(required = false) String[] content,
@@ -189,6 +190,7 @@ public class BusinessUserController {
 
         shop.setRegion(regionRepository.findByRegname(addressSplit[0]));
 
+        Long shopid = shop.getShopid();
         shop.setShopid(shopid);
         shopService.save(shop);
         if (!thumb.isEmpty()) {
@@ -206,15 +208,26 @@ public class BusinessUserController {
 
         if (typeid == 1) {
             for (int i = 0; i < roomname.length; i++) {
-                Hotelroom hotelroom = hotelroomService.save(new Hotelroom(roomid[i], shopid, roomname[i], price[i], person[i], content[i]));
+                hotelroomService.save(new Hotelroom(roomid[i], shopid, roomname[i], price[i], person[i], content[i]));
+
                 if (!roomThumb[i].isEmpty()) {
-                    hotelimgRepository.deleteByShopid(roomid[i]);
+                    hotelroomimgRepository.deleteByShopid(roomid[i]);
                     String roomPath = s3Uploader.uploadFiles(roomThumb[i], "thumbnail");
-                    hotelroomimgRepository.save(new Hotelroomimg(hotelroom.getRoomid(), UUID.randomUUID().toString(), roomThumb[i].getOriginalFilename(), roomPath));
+                    hotelroomimgRepository.save(new Hotelroomimg(roomid[i], UUID.randomUUID().toString(), roomThumb[i].getOriginalFilename(), roomPath));
                 }
             }
         }
         return "redirect:/businessInfo";
+    }
+
+    @GetMapping("/deleteRoom")
+    @ResponseBody
+    public boolean deleteRoom(@RequestParam Long roomid) {
+        Optional<Hotelroom> hotelroom = hotelroomService.findById(roomid);
+        if (hotelroom.isPresent()) {
+            hotelroomService.deleteById(roomid);
+        }
+        return true;
     }
 
     @GetMapping("/shopInfo")
