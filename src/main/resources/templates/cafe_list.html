@@ -80,9 +80,13 @@
             <input type="submit" th:value="검색" id="btn_search">
         </div>
     </form>
-
+<!--    <div id="map" style="width:350px; height:500px"></div>-->
+<!--    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=1c12d27c88e0ef576fe237323f586e7d&libraries=services"></script>-->
+<!--    <script>-->
+<!--    </script>-->
     <div  class="row row-cols-1 row-cols-md-3 g-4">
-        <div class="col" id="list" th:each="cafeList: ${cafeDTOLists}">
+        <div class="col" id="list" th:each="cafeList, index: ${cafeDTOLists}">
+            <input type="hidden" id="address" th:value="${cafeList.cafe.getAddress()}">
             <input type="hidden" th:value="${cafeList.cafe.getShopid()}">
             <input type="hidden" th:value="${cafeList.cafe.getShoptype().getTypeid()}">
             <div class="card h-100">
@@ -90,7 +94,7 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-sm-10">
-                            <h5 class="card-title" th:text="${cafeList.cafe.name}"></h5>
+                            <h5 class="card-title" id="title" th:text="${cafeList.cafe.name}"></h5>
                         </div>
                         <div class="col-sm-2">
                             <a href="" id="btnLike" th:name="${cafeList.cafe.getShopid()}">
@@ -102,6 +106,11 @@
                         </div>
                     </div>
                     <ul class="list-group list-group-flush">
+                        <li th:if="${cafeList.cafe.getShopid()==shopreview.get(index.count).getShopid()}">
+                            <span th:text="${#lists.size(shopreview)}"></span> Reviews
+                        </li>
+                        <li th:if="${#lists.size(shopreview)!=0}"><p th:text="|⭐ ${cafeList.likeAvg} / 5 | "></p></li>
+                        <li th:unless="${#lists.size(shopreview)!=0}"><p>⭐ 0 / 5</p></li>
                         <li class="list-group-item" th:text="${cafeList.cafe.getRegion().getRegname()}"></li>
                         <li class="list-group-item" th:text="${cafeList.cafe.getShoptype().getTypename()}" ></li>
                         <li class="list-group-item" >

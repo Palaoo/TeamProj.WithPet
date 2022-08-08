@@ -99,7 +99,16 @@
           <h2 th:text="${cafe.getName()}"></h2>
           <!--<h6 th:text="${cafe.getIntro()}"></h6>-->
           <ul>
-            <li><input type="button" value="저장하기"></li>
+            <li>
+              <span th:text="${#lists.size(shopreview)}"></span> Reviews
+            </li>
+            <li th:if="${#lists.size(shopreview)!=0}"><p th:text="|⭐ ${scoreAvg} / 5 | "></p></li>
+            <li th:unless="${#lists.size(shopreview)!=0}"><p>⭐ 0 / 5</p></li>
+<!--            <li>-->
+<!--              <th:block th:if="${#lists.size(shopreview)!=0}">-->
+<!--                <p th:text="|⭐ ${scoreAvg} / 5 | "></p>-->
+<!--              </th:block>-->
+<!--            </li>-->
 <!--            <li>-->
 <!--              <div class="rating">-->
 <!--                <i class="fa fa-star"></i>-->

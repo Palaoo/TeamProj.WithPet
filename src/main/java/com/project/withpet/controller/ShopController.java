@@ -225,8 +225,20 @@ public class ShopController {
         model.addAttribute("checkout", checkout);
         model.addAttribute("person", person);
 
-        List<shopreview> shopreviewList = reviewService.findByshopid(shopid);
+        List<Shopreview> shopreviewList = reviewService.findByshopid(shopid);
         model.addAttribute("shopreview", shopreviewList);
+
+        //별점 평균
+        float scoreTotal = 0;
+        float scoreAvg = 0;
+        if(!shopreviewList.isEmpty()) {
+            for (Shopreview shopreview : shopreviewList) {
+                scoreTotal += shopreview.getScore();
+                System.out.println("scoreTotal = " + scoreTotal);
+            }
+        }
+        scoreAvg = scoreTotal / shopreviewList.size();
+        model.addAttribute("scoreAvg", scoreAvg);
 
         Optional<Shop> shop = shopService.findById(shopid);
         model.addAttribute("shop", shop.get());
@@ -282,24 +294,24 @@ public class ShopController {
             dto.setUserid(userid);
         }
 
-        shopreview shopreview = dto.toEntity();
+        Shopreview shopreview = dto.toEntity();
 
-        shopreview saved = shopreviewRepository.save(shopreview);
+        Shopreview saved = shopreviewRepository.save(shopreview);
         return "redirect:/hotel/detail?shopid=" + saved.getShopid();
     }
 
     @GetMapping("/reviews/deletehotel") //리뷰 삭제
     public String delete(reviewDto dto, @RequestParam("rid") Long rid, Long shopid) {
         reviewService.deleteReview(rid);
-        shopreview shopreview = dto.toEntity();
+        Shopreview shopreview = dto.toEntity();
         return "redirect:/hotel/detail?shopid=" + dto.getShopid();
     }
 
     @PostMapping("/reviews/updatehotel")  //리뷰 수정
     public String update(reviewDto dto) {
-        shopreview shopreview = dto.toEntity();
+        Shopreview shopreview = dto.toEntity();
         System.out.println(shopreview.getRid());
-        shopreview target = shopreviewRepository.findById(shopreview.getRid()).orElse(null);
+        Shopreview target = shopreviewRepository.findById(shopreview.getRid()).orElse(null);
         if (target != null) {
             shopreviewRepository.save(shopreview);
         }

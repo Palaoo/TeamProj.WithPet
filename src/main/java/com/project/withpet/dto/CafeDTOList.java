@@ -7,6 +7,18 @@ public class CafeDTOList {
     cafe cafe;
     boolean islike;
 
+    double likeAvg;
+
+    private Long likeCount;
+
+    public double getLikeAvg() {
+        return likeAvg;
+    }
+
+    public void setLikeAvg(double likeAvg) {
+        this.likeAvg = likeAvg;
+    }
+
     public com.project.withpet.domain.cafe getCafe() {
         return cafe;
     }
@@ -23,11 +35,20 @@ public class CafeDTOList {
         this.islike = islike;
     }
 
+    public Long getLikeCount() {
+        return likeCount;
+    }
+
+    public void setLikeCount(Long likeCount) {
+        this.likeCount = likeCount;
+    }
+
     public CafeDTOList() {
     }
 
-    public CafeDTOList(cafe cafe, boolean islike) {
+    public CafeDTOList(cafe cafe, boolean islike, Long likeCount) {
         this.cafe = cafe;
         this.islike = islike;
+        this.likeCount = likeCount;
     }
 }

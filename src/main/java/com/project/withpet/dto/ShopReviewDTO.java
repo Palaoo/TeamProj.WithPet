@@ -1,11 +1,11 @@
 package com.project.withpet.dto;
 
+import com.project.withpet.domain.Shopreview;
 import com.project.withpet.domain.cafe;
-import com.project.withpet.domain.shopreview;
 
 
 public class ShopReviewDTO {
-    shopreview shopreview;
+    Shopreview shopreview;
     cafe cafe;
     String path;
 
@@ -18,11 +18,11 @@ public class ShopReviewDTO {
         this.path = path;
     }
 
-    public shopreview getShopreview() {
+    public Shopreview getShopreview() {
         return shopreview;
     }
 
-    public void setShopreview(shopreview shopreview) {
+    public void setShopreview(Shopreview shopreview) {
         this.shopreview = shopreview;
     }
 
@@ -38,13 +38,13 @@ public class ShopReviewDTO {
     public ShopReviewDTO() {
     }
 
-    public ShopReviewDTO(com.project.withpet.domain.shopreview shopreview, com.project.withpet.domain.cafe cafe, String path) {
+    public ShopReviewDTO(Shopreview shopreview, com.project.withpet.domain.cafe cafe, String path) {
         this.shopreview = shopreview;
         this.cafe = cafe;
         this.path = path;
     }
 
-    public ShopReviewDTO(shopreview shopreview, cafe cafe) {
+    public ShopReviewDTO(Shopreview shopreview, cafe cafe) {
         this.shopreview = shopreview;
         this.cafe = cafe;
     }

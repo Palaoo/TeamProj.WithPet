@@ -2,7 +2,7 @@ package com.project.withpet.controller;
 
 import com.project.withpet.domain.Hotelimg;
 import com.project.withpet.domain.cafe;
-import com.project.withpet.domain.shopreview;
+import com.project.withpet.domain.Shopreview;
 import com.project.withpet.repository.HotelimgRepository;
 import com.project.withpet.repository.cafeRepository;
 import com.project.withpet.repository.shopreviewRepository;
@@ -57,6 +57,7 @@ public class cafeController {
         List<cafe> cafeList = cafeService.findByshoptype(2L);
         log.info("카페 리스트 = " + cafeList.toString());
         List<CafeDTOList> cafeDTOLists = new ArrayList<>();
+        List<Shopreview> shopreviewList = new ArrayList<>();
         for (cafe cafe : cafeList) {
             boolean shopLike = shopLikeService.islike(cafe.getShopid(), userid);
             Optional<Hotelimg> hotelimg = hotelimgRepository.findByShopid(cafe.getShopid());
@@ -66,8 +67,25 @@ public class cafeController {
             } else {
                 path = "https://withpetimg.s3.ap-northeast-2.amazonaws.com/images/hoteldefault.jpg";
             }
+            Double avgByShopid = shopreviewRepository.getAvgByShopid(cafe.getShopid());
             cafeDTOLists.add(new CafeDTOList(cafe, shopLike, path));
         }
+
+        //리뷰 리스트
+        model.addAttribute("shopreview", shopreviewList);
+
+        //별점 평균
+        float scoreTotal = 0;
+        float scoreAvg = 0;
+        if (!shopreviewList.isEmpty()) {
+            for (Shopreview shopreview : shopreviewList) {
+                scoreTotal += shopreview.getScore();
+                System.out.println("scoreTotal = " + scoreTotal);
+            }
+        }
+        scoreAvg = scoreTotal / shopreviewList.size();
+        model.addAttribute("scoreAvg", scoreAvg);
+        log.info(shopreviewList.toString());
 
         model.addAttribute("cafeDTOLists", cafeDTOLists);
         return "cafe_list";
@@ -114,13 +132,17 @@ public class cafeController {
         model.addAttribute("userid", userid);
 
         //리뷰 리스트
-        List<shopreview> shopreviewList = reviewService.findByshopid(shopid);
+        List<Shopreview> shopreviewList = reviewService.findByshopid(shopid);
         model.addAttribute("shopreview", shopreviewList);
+
+        //별점 평균
         float scoreTotal = 0;
         float scoreAvg = 0;
-        for (shopreview shopreview : shopreviewList) {
-            scoreTotal += shopreview.getScore();
-            System.out.println("scoreTotal = " + scoreTotal);
+        if (!shopreviewList.isEmpty()) {
+            for (Shopreview shopreview : shopreviewList) {
+                scoreTotal += shopreview.getScore();
+                System.out.println("scoreTotal = " + scoreTotal);
+            }
         }
         scoreAvg = scoreTotal / shopreviewList.size();
         model.addAttribute("scoreAvg", scoreAvg);
@@ -151,7 +173,7 @@ public class cafeController {
             } else {
                 path = "https://withpetimg.s3.ap-northeast-2.amazonaws.com/images/hoteldefault.jpg";
             }
-            cafeDTOLists.add(new CafeDTOList(cafe, shopLike, path));
+            cafeDTOLists.add(new CafeDTOList(cafe, shopLike, path, shopLikeService.getLikeCount(cafe.getShopid())));
         }
         model.addAttribute("cafeList", cafeDTOLists);
         return "Restaurant-list";
@@ -197,25 +219,27 @@ public class cafeController {
         String userid = (String) session.getAttribute("userLogined");
         model.addAttribute("userid", userid);
         //리뷰 리스트
-        List<shopreview> shopreviewList = reviewService.findByshopid(shopid);
+        List<Shopreview> shopreviewList = reviewService.findByshopid(shopid);
         model.addAttribute("shopreview", shopreviewList);
         log.info(shopreviewList.toString());
+        //별점 평균
+        float scoreTotal = 0;
+        float scoreAvg = 0;
         if (!shopreviewList.isEmpty()) {
-            float scoreTotal = 0;
-            float scoreAvg = 0;
-            for (shopreview shopreview : shopreviewList) {
+            for (Shopreview shopreview : shopreviewList) {
                 scoreTotal += shopreview.getScore();
                 System.out.println("scoreTotal = " + scoreTotal);
             }
-            scoreAvg = scoreTotal / shopreviewList.size();
-            model.addAttribute("scoreAvg", scoreAvg);
-            log.info(shopreviewList.toString());
-
-            Optional<Hotelimg> hotelimg = hotelimgRepository.findByShopid(shopid);
-            String path = hotelimg.get().getPath();
-            model.addAttribute("shopimg", path);
-
         }
+        scoreAvg = scoreTotal / shopreviewList.size();
+        model.addAttribute("scoreAvg", scoreAvg);
+        log.info(shopreviewList.toString());
+
+        Optional<Hotelimg> hotelimg = hotelimgRepository.findByShopid(shopid);
+        String path = hotelimg.get().getPath();
+        model.addAttribute("shopimg", path);
+
+
         return "restaurant-info";
     }
 }

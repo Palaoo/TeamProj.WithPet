@@ -81,6 +81,8 @@
                                      th:id="|btnLike${cafeList.cafe.shopid}|" width="25" height="25" alt="">
                                 <img th:if="${!cafeList.islike}" src="image/heart.png"
                                      th:id="|btnLike${cafeList.cafe.shopid}|" width="25" height="25" alt="">
+                                <p th:text="${cafeList.likeCount}" th:id="|likeCount${cafeList.cafe.shopid}|"
+                                   name="likeCount" id="cnt"></p>
                             </a>
                         </div>
                     </div>

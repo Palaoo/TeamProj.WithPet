@@ -17,6 +17,8 @@ public interface ShopLikeRepository{
 
     public void delete(String userId,Long shopId);
 
+    Long findCountByShopid(Long shopId);
+
 
 
 }
