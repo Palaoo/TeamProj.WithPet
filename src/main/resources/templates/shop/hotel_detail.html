@@ -15,6 +15,9 @@
     <th:block th:replace="fragments/index::style"></th:block>
 </head>
 <style>
+    #datebar{
+        margin-top: 5%;
+    }
     #content{
         resize:none;
     }
@@ -37,7 +40,7 @@
     #submit:hover, #book:hover {
         background: white;
         border: 1px solid;
-        color: #518581;
+        color: #000;
     }
 
     #myform fieldset {
@@ -135,7 +138,7 @@
             <div class="col-lg-9 text-center">
                 <div class="blog__hero__text">
                     <h2 th:text="${shop.getName()}"></h2>
-                    <h6 th:text="${shop.getIntro()}"></h6>
+
                     <ul>
                         <li>
                             <a href="javascript:return false;" id="btnLike" th:name="${shop.getShopid()}">
@@ -202,11 +205,12 @@
                                     <div class="tab-content">
                                         <div class="tab-pane active" id="tabs-1" role="tabpanel">
                                             <div class="product__details__tab__content">
+                                                <h6 th:text="${shop.getIntro()}"></h6>
                                                 <th:block th:text="${shop.getInfo()}"></th:block>
 
                                                 <form action="/hotel/booking" method="post">
-                                                    <div class="row">
-                                                        <div class="datebar" style="margin:10px">
+                                                    <div class="row" id="datebar">
+                                                        <div class="datebar" style="margin:10px" align="center">
                                                             <input type="hidden" name="shopid" id="shopid"
                                                                    th:value="${shop.getShopid()}">
                                                             <input type="date" name="checkin" id="checkin"
@@ -221,9 +225,11 @@
                                                     <br>
                                                     <div id="rooms">
                                                         <div class="row" th:each="hotelroom:${hotelrooms}"
-                                                             style="width: 700px; height:130px">
-                                                            <img class="col-4" th:src="${hotelroom.getPath()}"
-                                                                 style="width: 200px; height: 100px">
+                                                             style="width: 100%; height:130px">
+                                                            <div class="col-4">
+                                                                <img th:src="${hotelroom.getPath()}"
+                                                                     style="width: 200px; height: 100px">
+                                                            </div>
                                                             <div class="col-4">
                                                                 <input type="hidden" th:value="${hotelroom.getRoomid()}"
                                                                        name="roomid">
