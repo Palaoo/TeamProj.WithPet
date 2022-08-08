@@ -2,10 +2,13 @@ package com.project.withpet.dto;
 
 import com.project.withpet.domain.Feat;
 import com.project.withpet.domain.Region;
+import com.project.withpet.domain.Shop;
 import com.project.withpet.domain.Shoptype;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
+@NoArgsConstructor
 public class HotelForm {
 
     private Long shopid;
@@ -16,6 +19,57 @@ public class HotelForm {
     private String address;
     private String tel;
     private Region region;
+
+    private Shoptype shoptype;
+    private Long price;
+    private String avail;
+    private Long likeCount;
+    private int isLiked;
+
+    private List<Feat> shopFeats;
+
+    private String path;
+    private Shop shop;
+
+    private double scoreAvg;
+
+    public HotelForm(String path, Shop shop) {
+        this.path = path;
+        this.shop = shop;
+    }
+
+
+//    private void addHotelForm(Shop availShop,
+//                              Shop hotelList,
+//                              List<HotelForm> hotelForms,
+//                              int i,
+//                              Long likeCount,
+//                              int isLiked,
+//                              Double avgByShopid){
+//        this.shop = availShop;
+//        this.shop= hotelList;
+//        this.hotelForm = hotelForms;
+//        this.i = i;
+//        this.likeCount = likeCount;
+//        this.isLiked = isLiked;
+//        this.scoreAvg = scoreAvg;
+//
+//    }
+
+    public double getScoreAvg() {
+        return scoreAvg;
+    }
+
+    public void setScoreAvg(double scoreAvg) {
+        this.scoreAvg = scoreAvg;
+    }
+    public Shop getShop() {
+        return shop;
+    }
+
+    public void setShop(Shop shop) {
+        this.shop = shop;
+    }
 
     public Long getLikeCount() {
         return likeCount;
@@ -32,16 +86,6 @@ public class HotelForm {
     public void setIsLiked(int isLiked) {
         this.isLiked = isLiked;
     }
-
-    private Shoptype shoptype;
-    private Long price;
-    private String avail;
-    private Long likeCount;
-    private int isLiked;
-
-    private List<Feat> shopFeats;
-
-    private String path;
 
     public String getPath() {
         return path;

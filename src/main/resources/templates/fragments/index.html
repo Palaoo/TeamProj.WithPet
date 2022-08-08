@@ -32,6 +32,12 @@
     a {
         text-decoration: none;
     }
+    #menu a:hover{
+        color: #000 !important;
+    }
+    .footer__widget a{
+        color:white !important;
+    }
 </style>
 <body>
 <th:block th:fragment="header">
@@ -55,8 +61,8 @@
                                 <div align="center"
                                      th:if="${not #strings.isEmpty(userid)} or ${not #strings.isEmpty(userLogined)}">
                                     <a id="myshopping2" href="/myshopping">마이쇼핑</a>
-                                    <a id="basket_shopping2" href="/basket_view">장바구니</a>
-                                    <a id="userInfo2" href="/mypage/booking">회원정보</a>
+                                    <!--<a id="basket_shopping2" href="/basket_view">Cart</a>-->
+                                    <a id="userInfo2" href="/mypage/booking">마이페이지</a>
                                     <a id="logout2" href="/logout">로그아웃</a>
                                 </div>
                                 <div align="center"
@@ -79,7 +85,7 @@
                 </div>
                 <div class="col-lg-6 col-md-6">
                     <nav class="header__menu mobile-menu">
-                        <ul>
+                        <ul id="menu">
                             <li><a href="/hotel">숙소</a></li>
                             <li><a href="/cafe_list">카페</a></li>
                             <li><a href="/Restaurant-list">맛집</a></li>
@@ -93,7 +99,7 @@
                     <div class="header__nav__option">
                         <!--<a href="#" class="search-switch"><img th:src="@{/img/icon/search.png}"/></a>-->
                         <a href="/mypage/myshop"><img th:src="@{/img/icon/heart.png}"/></a>
-                        <a href="basket_view"><img th:src="@{/img/icon/cart.png}"/></a>
+                        <a href="/basket_view"><img th:src="@{/img/icon/cart.png}"/><span></span></a>
 
                         <!-- <div class="price">$0.00</div> -->
                     </div>
@@ -102,6 +108,8 @@
             <div class="canvas__open"><i class="fa fa-bars"></i></div>
         </div>
     </header>
+
+    <a id="back-to-top"></a>
     <!-- Header Section End -->
 </th:block>
 
@@ -1047,6 +1055,12 @@
                     <div class="footer__widget">
                         <h6><a href="/cafe_list">CAFE</a></h6>
                         <h6><a href="/Restaurant-list">RESTAURANT</a></h6>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-3 col-sm-6">
+                    <div class="footer__widget">
+                        <h6><a href="/community">COMMUNITY</a></h6>
+                        <h6><a href="/mypage/booking">MYPAGE</a></h6>
                     </div>
                 </div>
                 <!--<div class="col-lg-3 offset-lg-1 col-md-6 col-sm-6">

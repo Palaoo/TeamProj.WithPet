@@ -9,4 +9,6 @@ import java.util.Optional;
 public interface BookingRepository extends JpaRepository<Booking, Long> {
     Booking save(Booking booking);
     List<Booking> findAllByUserid(String userid);
+
+    List<Booking> findAllByRoomid(Long roomid);
 }

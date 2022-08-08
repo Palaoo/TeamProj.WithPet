@@ -53,7 +53,7 @@ public class cafe {
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
-            name = "featlist",
+            name = "Featlist",
             joinColumns = @JoinColumn(name = "shopid"),
             inverseJoinColumns = @JoinColumn(name = "featid")
     )
@@ -63,15 +63,15 @@ public class cafe {
 
 //    @ManyToOne
 //    @JoinColumn (name = "shopid")
-//    private featlist featlist;
+//    private Featlist Featlist;
 
 //    @ManyToMany
-//    @JoinTable(name = "featlist",
+//    @JoinTable(name = "Featlist",
 //                joinColumns = @JoinColumn(name = "shopid"),
 //                inverseJoinColumns = @JoinColumn(name = "featid"))
 //    private List<feat> fearList = new ArrayList<>();
 //    @OneToMany(mappedBy = "cafe")
-//    private List<featlist> featlist;
+//    private List<Featlist> Featlist;
 
 //    public cafe(Long shopid, String name, Long regid, Long typeid) {
 //        this.shopid = shopid;

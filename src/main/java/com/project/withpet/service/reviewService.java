@@ -49,6 +49,9 @@ public class reviewService {
         shopreviewRepository.deleteById(rid);
     }
 
+//    public Long getReviewCount(Long shopid) {
+//            return shopreviewRepository.findByShopid(shopid);
+//    }
 
 
 

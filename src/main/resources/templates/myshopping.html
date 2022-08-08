@@ -7,34 +7,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="resources/css/plugin/datepicker/bootstrap-datepicker.css">
-    <title>Document</title>
+    <title>MYSHOPPING</title>
     <th:block th:replace="fragments/index::style"></th:block>
 </head>
 <style>
     table {
         border-spacing: 20px;
         border-collapse: separate;
-
         /* position:absolute;
         left:500px; */
     }
-
-    #submit {
-        border: none;
-        outline: none;
-        height: 50px;
-        width: 100%;
-        background-color: #518581;
-        color: white;
-        border-radius: 4px;
-        font-weight: bold;
+/*    #tb_search{
+        margin-bottom: 10%;
+    }*/
+    #date{
+        text-align: left;
+        margin-top: 10%;
     }
-
-    #submit:hover {
-        background: white;
-        border: 1px solid;
-        color: #518581;
-    }
+/*    #btnSearch{
+        height: 38px;
+        vertical-align: top;
+    }*/
 
     input[type="text"] {
         width: 100%;
@@ -182,7 +175,21 @@
 <!--    <p th:text="${orderId}"></p>-->
 <!--    <p th:text="${amount}"></p>-->
 
-
+<section class="breadcrumb-option">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="breadcrumb__text">
+                    <h4>Myshopping</h4>
+                    <div class="breadcrumb__links">
+                        <a href="/">Home</a>
+                        <span>Myshopping</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 <section class="shopping-cart spad">
     <div class="container">
         <div class="row">
@@ -193,7 +200,7 @@
 <!--                &lt;!&ndash; <p th:text="|${user.name} 님|"></p> &ndash;&gt;-->
 <!--            </div>-->
 
-            <div class="col-lg-12" align="center">
+            <div id="tb_search" class="col-lg-12" align="center">
                 <div class="up-right-up">
                     <div class="col-lg-4">
                         <input type="date" id="datePicker1" class="form-control" value="">
@@ -247,20 +254,19 @@
 <!--                    </tbody>-->
 <!--                </table>-->
 <!--            </div>-->
-            <div>
+            <div align="center">
             <table th:each="orderDTO:${orderDTOList}" >
                 <p id="date" th:text="${#strings.substring(orderDTO.ordertable.orderdate,0,10)}"></p>
 
-                <tbody>
-                <tr th:each="prodandCount:${orderDTO.prodandCounts}">
-                    <td class="product__cart__item">
+                <tr th:each="prodandCount:${orderDTO.prodandCounts}" style="width: 100%">
+                    <td class="product__cart__item" style="width: 20%">
                         <div class="product__cart__item__pic">
                             <img th:src="${prodandCount.imgPath}" style="cursor:pointer;" th:onclick="|location.href='prod_view?prodId=${prodandCount.prod.id}'|"
                                  onerror="this.src='https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbNZo14%2Fbtq17bsvo5i%2FOSV3gGWnwAKqNB0EOSQkrK%2Fimg.png'"
                                  width="200" height="200">
                         </div>
                     </td>
-                    <td class="quantity__item">
+                    <td class="quantity__item" style="width: 60%">
                         <div class="product__cart__item__text">
                             <h4><b th:text="${prodandCount.prod.name}" style="cursor:pointer;" th:onclick="|location.href='prod_view?prodId=${prodandCount.prod.id}'|">상품명</b></h4><br><br>
                             <h6 th:text="|${prodandCount.prod.price}원    ${prodandCount.count}개|"></h6><br><br>
@@ -276,7 +282,7 @@
                         </div>
                     </div>-->
                     </td>
-                    <td class="cart__price">
+                    <td class="cart__price" style="width: 20%">
                         <a href="#" class="primary-btn" th:name="${prodandCount.prod.id}"
                            onclick="new_window(this.getAttribute('name'))">리뷰쓰기</a>
                         <!--<button id="btnComplain">문의하기</button>-->
@@ -291,7 +297,7 @@
 <!--                        &lt;!&ndash;<button id="btnReOrder">재구매</button>&ndash;&gt;-->
 <!--                    </td>-->
                 </tr>
-                </tbody>
+
             </table>
             </div>
         </div>

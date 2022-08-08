@@ -8,15 +8,15 @@ import lombok.Setter;
 import javax.persistence.*;
 
 @Entity
-@NoArgsConstructor
-@AllArgsConstructor
 @Getter
 @Setter
+@NoArgsConstructor
 public class Hotelimg {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @JoinColumn(name = "shop_shopid")
     private Long shopid;
     @Column
@@ -25,4 +25,11 @@ public class Hotelimg {
     private String origname;
     @Column
     private String path;
+
+    public Hotelimg(Long shopid, String name, String origname, String path) {
+        this.shopid = shopid;
+        this.name = name;
+        this.origname = origname;
+        this.path = path;
+    }
 }

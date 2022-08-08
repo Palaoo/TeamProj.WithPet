@@ -6,35 +6,27 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cafe List</title>
+    <title>Cafe</title>
     <th:block th:replace="fragments/index::style"></th:block>
 </head>
 <body>
 <style>
-/*    div.container{}
-    div.header div.footer{clear:left}
-    div.left{float:left;}
-    .header{height: 200px;}
-    .top{height: 70px;
-        margin: auto;}
-    .footer{height: 30px;}
-    .left{height: 500px; width:200px;}
-    .contents{height: 500px;}*/
     #top{
         margin-bottom: 5%;
     }
     #search ,#list {
         margin-bottom: 5%;
     }
-    #submit, #btn_search{
+    #btn_search{
         background-color: #000;
         color: white;
     }
-    #submit:hover, #btn_search:hover{
+    #btn_search:hover{
         background: white;
         border: 1px solid;
-        color:  #518581;
+        color:  #000;
     }
+    #btnLike,#heart_img{text-align:center;}
 </style>
 
 <div th:replace="fragments/index :: header"></div>
@@ -57,23 +49,6 @@
 </section>
 <div id="top"></div>
 <div class="container">
-<!--    <div class="header">-->
-<!--        <div th:if="${not #strings.isEmpty(userid)}">-->
-<!--            <p align=right><a id="logout" href='/'>로그아웃</a>&nbsp;&nbsp;<a id="mypage" href='mypage'>마이페이지</a></p>-->
-<!--        </div>-->
-<!--        <div th:if="${#strings.isEmpty(userid)}">-->
-<!--            <p align=right><a id="login" href='login'>로그인</a>&nbsp;&nbsp;<a id="signup" href='signup'>회원가입</a></p>-->
-<!--        </div>-->
-<!--        <h1 align=center><a href="/">WITH PET</a></h1>-->
-<!--        <nav>-->
-<!--            <a href="#">숙소</a>-->
-<!--            <a href="cafe_list">카페</a>-->
-<!--            <a href="Restaurant-list">맛집</a>-->
-<!--            <a href="#">기타</a>-->
-<!--            <a href="#">상점</a>-->
-<!--            <a href="#">게시판</a>-->
-<!--        </nav>-->
-<!--    </div>-->
     <form action="/cafe_list/search" method="GET">
         <div class="search" align="center">
             <input name="keyword" id="search" type="text" placeholder="지역을 입력해주세요">
@@ -96,23 +71,22 @@
                         <div class="col-sm-10">
                             <h5 class="card-title" id="title" th:text="${cafeList.cafe.name}"></h5>
                         </div>
-                        <div class="col-sm-2">
-                            <a href="" id="btnLike" th:name="${cafeList.cafe.getShopid()}">
-                                <img th:if="${cafeList.islike}" src="image/redheart.png"
+                        <!--좋아요-->
+                        <div class="col-sm-2" id="heart_img">
+                            <a href="javascript:return false;" id="btnLike" th:name="${cafeList.cafe.getShopid()}">
+                                <img th:if="${cafeList.islike}" src="/image/redheart.png"
                                      th:id="|btnLike${cafeList.cafe.shopid}|" width="25" height="25" alt="">
-                                <img th:if="${!cafeList.islike}" src="image/heart.png"
+                                <img th:if="${!cafeList.islike}" src="/image/heart.png"
                                      th:id="|btnLike${cafeList.cafe.shopid}|" width="25" height="25" alt="">
+                                <p th:text="${cafeList.likeCount}" th:id="|likeCount${cafeList.cafe.getShopid()}|"
+                                   name="likeCount" id="cnt"></p>
                             </a>
                         </div>
                     </div>
                     <ul class="list-group list-group-flush">
-                        <li th:if="${cafeList.cafe.getShopid()==shopreview.get(index.count).getShopid()}">
-                            <span th:text="${#lists.size(shopreview)}"></span> Reviews
-                        </li>
-                        <li th:if="${#lists.size(shopreview)!=0}"><p th:text="|⭐ ${cafeList.likeAvg} / 5 | "></p></li>
-                        <li th:unless="${#lists.size(shopreview)!=0}"><p>⭐ 0 / 5</p></li>
+                        <li class="list-group-item"><p th:text="|⭐ ${cafeList.getScoreAvg()} / 5.0|"></p></li>
                         <li class="list-group-item" th:text="${cafeList.cafe.getRegion().getRegname()}"></li>
-                        <li class="list-group-item" th:text="${cafeList.cafe.getShoptype().getTypename()}" ></li>
+<!--                        <li class="list-group-item" th:text="${cafeList.cafe.getShoptype().getTypename()}" ></li>-->
                         <li class="list-group-item" >
                         <span th:each="feat: ${cafeList.cafe.getShopFeats()}" th:text="${feat.getFeatname()}+' '" ></span></li>
                     </ul>
@@ -130,19 +104,20 @@
             shopid = $(this).attr('name')
             $.ajax({
                 type: 'get',
-                url: 'append_shoplike?shopId=' + shopid,
+                url: '/append_shoplike?shopId=' + shopid,
                 success: function (data) {
                     ID = '#btnLike' + shopid
                     if (data == '1') {
-                        $(ID).attr("src", "image/redheart.png")
+                        $(ID).attr("src", "/image/redheart.png")
                         $(ID).attr("width", "25px")
                         $(ID).attr("height", "25px")
+                        $('#likeCount' + shopid).text(parseInt($('#likeCount' + shopid).text()) + 1)
                     } else {
                         console.log('여기')
                         $(ID).attr("height", "25px")
                         $(ID).attr("width", "25px")
-                        $(ID).attr("src", "image/heart.png")
-
+                        $(ID).attr("src", "/image/heart.png")
+                        $('#likeCount' + shopid).text(parseInt($('#likeCount' + shopid).text()) - 1)
                     }
                 }
             })

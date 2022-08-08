@@ -13,8 +13,8 @@ public class Feat {
     @Column
     private String featname;
 
-    @ManyToMany(mappedBy = "shopFeats")
-    List<Shop> feats;
+//    @ManyToMany(mappedBy = "shopFeats")
+//    List<Shop> feats;
 
     public Long getFeatid() {
         return featid;

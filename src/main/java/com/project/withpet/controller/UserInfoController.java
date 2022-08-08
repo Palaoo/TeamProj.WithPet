@@ -4,11 +4,10 @@ import com.project.withpet.domain.*;
 import com.project.withpet.dto.BoardForm;
 import com.project.withpet.dto.BookingForm;
 import com.project.withpet.repository.Booking.BookingRepository;
+import com.project.withpet.repository.Booking.HotelroomQueryRepository;
 import com.project.withpet.repository.HotelimgRepository;
-import com.project.withpet.service.BoardService;
-import com.project.withpet.service.BoardimgService;
-import com.project.withpet.service.HotelroomService;
-import com.project.withpet.service.ShopService;
+import com.project.withpet.repository.HotelroomimgRepository;
+import com.project.withpet.service.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -36,29 +35,52 @@ public class UserInfoController {
     private final BoardService boardService;
     private final BoardimgService boardimgService;
     private final HotelimgRepository hotelimgRepository;
+    private final BusinessUserService businessUserService;
+    private final HotelroomQueryRepository hotelroomQueryRepository;
+    private final HotelroomimgRepository hotelroomimgRepository;
 
     @Autowired
-    public UserInfoController(BookingRepository bookingRepository, HotelroomService hotelroomService, ShopService shopService, BoardService boardService, HotelimgRepository hotelimgRepository, BoardimgService boardimgService, HotelimgRepository hotelimgRepository1) {
+    public UserInfoController(BookingRepository bookingRepository, HotelroomService hotelroomService, ShopService shopService, BoardService boardService, HotelimgRepository hotelimgRepository, BoardimgService boardimgService, HotelimgRepository hotelimgRepository1, BusinessUserService businessUserService, HotelroomQueryRepository hotelroomQueryRepository, HotelroomimgRepository hotelroomimgRepository) {
         this.bookingRepository = bookingRepository;
         this.hotelroomService = hotelroomService;
         this.shopService = shopService;
         this.boardService = boardService;
         this.boardimgService = boardimgService;
         this.hotelimgRepository = hotelimgRepository1;
+        this.businessUserService = businessUserService;
+        this.hotelroomQueryRepository = hotelroomQueryRepository;
+        this.hotelroomimgRepository = hotelroomimgRepository;
     }
 
     @GetMapping("/mypage/booking")
-    public String userInfo(HttpServletRequest req, Model model){
+    public String userInfo(HttpServletRequest req, Model model) {
 
         HttpSession session = req.getSession();
         if (session.getAttribute("userid") == null) {
             return "redirect:/login";
         } else {
+            if (businessUserService.isBusinessUser(req.getSession().getAttribute("userid").toString()) != -1L) {
+                model.addAttribute("businessId", businessUserService.findByUid(req.getSession().getAttribute("userid").toString()).getBid());
+                req.getSession().setAttribute("businessId", model.getAttribute("businessId").toString());
+                Long bid = businessUserService.findByUid(req.getSession().getAttribute("userid").toString()).getBid();
+                List<BookingForm> bookingForms = new ArrayList<>();
+                if (hotelroomQueryRepository.findBookingByBid(bid) != null) {
+                    List<Booking> bookingByBid = new ArrayList<>();
+                    bookingByBid = hotelroomQueryRepository.findBookingByBid(bid);
+                    for (Booking booking : bookingByBid) {
+                        String path = hotelroomimgRepository.findByShopid(booking.getRoomid()).get().getPath();
+                        String hotelname = shopService.findById(hotelroomService.findById(booking.getRoomid()).get().getShopid()).get().getName();
+                        String roomname = hotelroomService.findById(booking.getRoomid()).get().getRoomname();
+                        bookingForms.add(new BookingForm(roomname, hotelname, path, booking));
+                    }
+                }
+                model.addAttribute("bidBookList", bookingForms);
+            }
             String userid = (String) session.getAttribute("userid");
             model.addAttribute("userid", userid);
             List<Booking> booking = bookingRepository.findAllByUserid(userid);
             List<BookingForm> bookingList = new ArrayList<>();
-            for(int i = 0; i < booking.size(); i++){
+            for (int i = 0; i < booking.size(); i++) {
                 BookingForm bookingForm = new BookingForm();
                 bookingForm.setBookid(booking.get(i).getBookid());
                 bookingForm.setCheckin(booking.get(i).getCheckin());
@@ -101,7 +123,7 @@ public class UserInfoController {
             Date checkinDate = new SimpleDateFormat("yyyy-MM-dd").parse(checkin);
             Date checkoutDate = new SimpleDateFormat("yyyy-MM-dd").parse(checkout);
             Long diffSec = (checkoutDate.getTime() - checkinDate.getTime()) / 1000;
-            Long diffDays = diffSec / (24*60*60);
+            Long diffDays = diffSec / (24 * 60 * 60);
             model.addAttribute("days", diffDays);
             return "mypage/mypage_booking_change";
         }
@@ -112,7 +134,7 @@ public class UserInfoController {
                                 @RequestParam("bookid") Long bookid,
                                 @RequestParam("name") String name,
                                 @RequestParam("detail") String detail,
-                                @RequestParam("mobile") String mobile){
+                                @RequestParam("mobile") String mobile) {
         HttpSession session = req.getSession();
         if (session.getAttribute("userid") == null) {
             return "redirect:/login";
@@ -132,7 +154,7 @@ public class UserInfoController {
     }
 
     @GetMapping("mypage/booking/delete")
-    public String deleteBooking(@RequestParam("bookid") Long bookid){
+    public String deleteBooking(@RequestParam("bookid") Long bookid) {
         bookingRepository.deleteById(bookid);
         return "redirect:/mypage/booking";
     }
@@ -150,19 +172,19 @@ public class UserInfoController {
 //    }
 
     @GetMapping("/mypage/post")
-    public String mypost(HttpServletRequest req, Model model){
+    public String mypost(HttpServletRequest req, Model model) {
         HttpSession session = req.getSession();
-        if(session.getAttribute("userid") == null){
+        if (session.getAttribute("userid") == null) {
             return "redirect:/login";
         } else {
             String userid = (String) session.getAttribute("userid");
             model.addAttribute("userid", userid);
             List<Board> boardList = boardService.findByUserid(userid);
             List<BoardForm> boardFormList = new ArrayList<>();
-            for(Board board : boardList){
+            for (Board board : boardList) {
                 Optional<Boardimg> boardimg = boardimgService.findOne(board.getBoardcode());
                 String path = "";
-                if(boardimg.isPresent()) {
+                if (boardimg.isPresent()) {
                     path = boardimg.get().getPath();
                 } else {
                     path = "/image/catbg.jpg";
@@ -170,8 +192,9 @@ public class UserInfoController {
                 boardFormList.add(new BoardForm(path, board));
             }
             model.addAttribute("postList", boardFormList);
-            return  "mypage/mypage_post";
+            return "mypage/mypage_post";
         }
     }
+
 
 }
