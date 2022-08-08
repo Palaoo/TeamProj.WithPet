@@ -15,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -39,8 +40,10 @@ public class UserInfoController {
     private final HotelroomQueryRepository hotelroomQueryRepository;
     private final HotelroomimgRepository hotelroomimgRepository;
 
+    private final UserService userService;
+
     @Autowired
-    public UserInfoController(BookingRepository bookingRepository, HotelroomService hotelroomService, ShopService shopService, BoardService boardService, HotelimgRepository hotelimgRepository, BoardimgService boardimgService, HotelimgRepository hotelimgRepository1, BusinessUserService businessUserService, HotelroomQueryRepository hotelroomQueryRepository, HotelroomimgRepository hotelroomimgRepository) {
+    public UserInfoController(BookingRepository bookingRepository, HotelroomService hotelroomService, ShopService shopService, BoardService boardService, HotelimgRepository hotelimgRepository, BoardimgService boardimgService, HotelimgRepository hotelimgRepository1, BusinessUserService businessUserService, HotelroomQueryRepository hotelroomQueryRepository, HotelroomimgRepository hotelroomimgRepository, UserService userService) {
         this.bookingRepository = bookingRepository;
         this.hotelroomService = hotelroomService;
         this.shopService = shopService;
@@ -50,6 +53,7 @@ public class UserInfoController {
         this.businessUserService = businessUserService;
         this.hotelroomQueryRepository = hotelroomQueryRepository;
         this.hotelroomimgRepository = hotelroomimgRepository;
+        this.userService = userService;
     }
 
     @GetMapping("/mypage/booking")
@@ -196,5 +200,71 @@ public class UserInfoController {
         }
     }
 
+    @GetMapping("/userCheck")
+    public String userCheck(Model model,HttpServletRequest req){
+        HttpSession session = req.getSession();
+        if(session.getAttribute("userid")!=null){
+            model.addAttribute("userid", session.getAttribute("userid"));
+        }
+        String id = (String) session.getAttribute("userid");
+        Optional<User> byId = userService.findById(id);
+        model.addAttribute("user", byId.get());
+        return "/userCheck";
+    }
+    @GetMapping("/userUpdate")
+    public String myPage(Model model,HttpServletRequest req) {
+        HttpSession session = req.getSession();
+        if(session.getAttribute("userid")!=null){
+            model.addAttribute("userid", session.getAttribute("userid"));
+        }
+        String id = (String) session.getAttribute("userid");
+        Optional<User> byId = userService.findById(id);
+        model.addAttribute("user", byId.get());
+        return "/userUpdate";
+    }
+
+    @PostMapping("/userUpdate")
+    @ResponseBody
+    public int myPage(Model model, HttpServletRequest req, @RequestParam String pwd, @RequestParam String newpwd, @RequestParam String mobile, @RequestParam String name){
+        HttpSession session = req.getSession();
+        String id= (String) session.getAttribute("userid");
+        Optional<User> byId = userService.findById(id);
+        System.out.println(newpwd);
+        if(newpwd==""){
+            newpwd=pwd;
+        }
+        System.out.println(byId.get().getPassword());
+        System.out.println(pwd);
+        if (byId.get().getPassword().equals(pwd)){
+            User user= new User();
+            user.setUserId(id);
+            user.setPassword(newpwd);
+            user.setName(name);
+            user.setMobile(mobile);
+            userService.join(user);
+            return 1;
+        }
+        return 0;
+    }
+
+    @GetMapping("/userDelete")
+    public String myDelete(Model model,HttpServletRequest req){
+        HttpSession session = req.getSession();
+        userService.delete((String) session.getAttribute("userid"));
+        session.removeAttribute("userid");
+        return "redirect:/";
+    }
+
+    @PostMapping("/checkPwd")
+    @ResponseBody
+    public int myDelete(@RequestParam String pwd, Model model, HttpServletRequest req){
+        HttpSession session = req.getSession();
+        String id= (String) session.getAttribute("userid");
+        Optional<User> byId = userService.findById(id);
+        if (byId.get().getPassword().equals(pwd)){
+            return 1;
+        }
+        return 0;
+    }
 
 }
