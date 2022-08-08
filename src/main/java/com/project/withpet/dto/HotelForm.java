@@ -2,10 +2,14 @@ package com.project.withpet.dto;
 
 import com.project.withpet.domain.Feat;
 import com.project.withpet.domain.Region;
+
+import com.project.withpet.domain.Shop;
 import com.project.withpet.domain.Shoptype;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
+@NoArgsConstructor
 public class HotelForm {
 
     private Long shopid;
@@ -16,6 +20,31 @@ public class HotelForm {
     private String address;
     private String tel;
     private Region region;
+
+
+    private Shoptype shoptype;
+    private Long price;
+    private String avail;
+    private Long likeCount;
+    private int isLiked;
+
+    private List<Feat> shopFeats;
+
+    private String path;
+    private Shop shop;
+
+    public HotelForm(String path, Shop shop) {
+        this.path = path;
+        this.shop = shop;
+    }
+
+    public Shop getShop() {
+        return shop;
+    }
+
+    public void setShop(Shop shop) {
+        this.shop = shop;
+    }
 
     public Long getLikeCount() {
         return likeCount;
@@ -33,15 +62,6 @@ public class HotelForm {
         this.isLiked = isLiked;
     }
 
-    private Shoptype shoptype;
-    private Long price;
-    private String avail;
-    private Long likeCount;
-    private int isLiked;
-
-    private List<Feat> shopFeats;
-
-    private String path;
 
     public String getPath() {
         return path;

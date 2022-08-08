@@ -5,11 +5,16 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=<device-width>, initial-scale=1.0">
+<<<<<<< HEAD
     <title>Title</title>
+=======
+    <title>HOTEL</title>
+>>>>>>> f447d949d36c3e792afcf631f3469f4c6e448ae6
     <th:block th:replace="fragments/index::style"></th:block>
     <script src="https://js.tosspayments.com/v1"></script>
 </head>
 <style>
+<<<<<<< HEAD
     #img{
         background-size:cover;
         width:100%;
@@ -20,6 +25,29 @@
         margin-top:10px;
         height:50px;
         resize:none;
+=======
+    #img {
+        background-size: cover;
+        width: 100%;
+        height: 300px;
+    }
+
+    #detail {
+        width: 100%;
+        margin-top: 10px;
+        height: 50px;
+        resize: none;
+    }
+
+    input[type=text] {
+        outline: solid black 1px;
+        color: #000;
+    }
+
+    textarea {
+        outline: solid black 1px;
+        color: #000;
+>>>>>>> f447d949d36c3e792afcf631f3469f4c6e448ae6
     }
 
 </style>
@@ -27,6 +55,7 @@
 
 <div th:replace="fragments/index :: header"></div>
 
+<<<<<<< HEAD
 <!--<div class="row">
     <h2 th:text="${hotelroom.getRoomname()}" id="roomname"></h2>
     <input type="hidden" th:value="${hotelroom.getRoomid()}" id="roomid">
@@ -75,6 +104,8 @@
 </div>
 <br>-->
 
+=======
+>>>>>>> f447d949d36c3e792afcf631f3469f4c6e448ae6
 <section class="breadcrumb-option">
     <div class="container">
         <div class="row">
@@ -82,8 +113,13 @@
                 <div class="breadcrumb__text">
                     <h4>Check Out</h4>
                     <div class="breadcrumb__links">
+<<<<<<< HEAD
                         <a href="./index.html">Home</a>
                         <a href="./shop.html">Hotel</a>
+=======
+                        <a href="/">Home</a>
+                        <a href="/hotel">Hotel</a>
+>>>>>>> f447d949d36c3e792afcf631f3469f4c6e448ae6
                         <span>Reservation</span>
                     </div>
                 </div>
@@ -95,6 +131,7 @@
 <section class="checkout spad">
     <div class="container">
         <div class="checkout__form">
+<<<<<<< HEAD
             <form action="#">
                 <div class="row">
                     <div class="col-lg-8 col-md-6">
@@ -160,6 +197,63 @@
                     </div>
                 </div>
             </form>
+=======
+            <div class="row">
+                <div class="col-lg-8 col-md-6">
+                    <h6 class="checkout__title">Hotel Reservation</h6>
+                    <div class="checkout__input">
+                        <h6><p th:text="${hotelroom.getRoomname()}" id="roomname"></p></h6>
+                        <input type="hidden" th:value="${hotelroom.getRoomid()}" id="roomid">
+                        <img th:src="${hotelroomimg}" style="height: 300px; width: 550px" id="img">
+                    </div>
+                    <div class="checkout__input">
+                        <p th:text="${hotelroom.getContent()}"></p>
+                    </div>
+                    <div class="checkout__input">
+                        <h6><p th:text="|${checkin} / ${checkout} (${days}박)|"></p></h6>
+                        <input type="hidden" th:value="${checkin}" id="checkin">
+                        <input type="hidden" th:value="${checkout}" id="checkout">
+                        <input type="text" th:value="${username}" id="name">
+                        <input type="text" th:value="${usermobile}" id="mobile">
+                    </div>
+                    <div class="checkout__input">
+                        <input type="text" placeholder="세부사항" style="height: 300px" id="detail">
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="checkout__order">
+                        <h4 class="order__title">결제 정보</h4>
+                        <div class="checkout__order__products">Product <span>Total</span></div>
+                        <ul class="checkout__total__all">
+                            <li>예약 금액 <span th:text="${total}">$750.99</span></li>
+                            <li>총 결제금액(VAT 포함) <span th:text="${total}" id="total">$750.99</span></li>
+                        </ul>
+                        <div class="checkout__input__checkbox">
+                            <label for="check1">
+                                이용규칙동의
+                                <input type="checkbox" id="check1">
+                                <span class="checkmark"></span>
+                            </label>
+                        </div>
+                        <div class="checkout__input__checkbox">
+                            <label for="check2">
+                                개인정보제공동의
+                                <input type="checkbox" id="check2">
+                                <span class="checkmark"></span>
+                            </label>
+                        </div>
+                        <div class="checkout__input__checkbox">
+                            <label for="check3">
+                                환불규정동의
+                                <input type="checkbox" id="check3">
+                                <span class="checkmark"></span>
+                            </label>
+                        </div>
+                        <input id="btnPay" type="button" class="site-btn" value="결제하기">
+                    </div>
+                </div>
+            </div>
+>>>>>>> f447d949d36c3e792afcf631f3469f4c6e448ae6
         </div>
     </div>
 </section>
@@ -170,6 +264,7 @@
 
 <script>
     $(document).on('click', '#btnPay', function () {
+<<<<<<< HEAD
         if($('#name').val()!=""&&$('#detail').val()!=""){
             if($('#check1').is(":checked")&&$('#check2').is(":checked")&&$('#check3').is(":checked")){
                 tossPayments()
@@ -178,6 +273,18 @@
             }
         } else {
             alert('내용을 입력해주세요')
+=======
+        if ($('#name').val() != "" && $('#detail').val() != "") {
+            if ($('#check1').is(":checked") && $('#check2').is(":checked") && $('#check3').is(":checked")) {
+                tossPayments()
+            } else {
+                alert('약관에 동의해주세요')
+                return false;
+            }
+        } else {
+            alert('내용을 입력해주세요')
+            return false;
+>>>>>>> f447d949d36c3e792afcf631f3469f4c6e448ae6
         }
 
     })
@@ -191,9 +298,15 @@
             orderId: '2oTYvWk-KaCQUlf786gv9',
             orderName: $('#roomname').text(),
             customerName: $('#username').text(),
+<<<<<<< HEAD
             successUrl: 'http://localhost:8080/hotel/booking?checkin='+$('#checkin').val()
                 +"&checkout="+$('#checkout').val()+"&detail="+$('#detail').val()
                 +"&roomid="+$('#roomid').val()+"&name="+$('#name').val()+"&mobile="+$('#mobile').val(),
+=======
+            successUrl: 'http://localhost:8080/hotel/booking?checkin=' + $('#checkin').val()
+                + "&checkout=" + $('#checkout').val() + "&detail=" + $('#detail').val()
+                + "&roomid=" + $('#roomid').val() + "&name=" + $('#name').val() + "&mobile=" + $('#mobile').val(),
+>>>>>>> f447d949d36c3e792afcf631f3469f4c6e448ae6
             failUrl: 'http://localhost:8080/',
         })
     }

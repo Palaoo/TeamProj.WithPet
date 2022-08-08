@@ -37,7 +37,6 @@ public class Tools {
         List<LocalDateTime> list = new ArrayList<>();
         list.add(localDateTime1);
         list.add(localDateTime2);
-
         return list;
     }
 

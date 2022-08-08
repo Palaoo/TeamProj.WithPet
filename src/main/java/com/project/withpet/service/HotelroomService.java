@@ -25,5 +25,12 @@ public class HotelroomService {
 
     public Optional<Hotelroom> findById(Long roomid){
         return hotelroomRepository.findById(roomid);
+<<<<<<< HEAD
+=======
+    }
+
+    public Hotelroom save(Hotelroom hotelroom){
+        return hotelroomRepository.save(hotelroom);
+>>>>>>> f447d949d36c3e792afcf631f3469f4c6e448ae6
     }
 }

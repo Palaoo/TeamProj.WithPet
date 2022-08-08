@@ -1,6 +1,7 @@
 package com.project.withpet.controller;
 
-import com.project.withpet.dto.BascketDTO;
+
+import com.project.withpet.dto.BasketDTO;
 import com.project.withpet.service.BasketService;
 import com.project.withpet.service.BusinessUserService;
 import com.project.withpet.service.ImgService;
@@ -47,15 +48,15 @@ public class BasketController {
 
         String userId = req.getSession().getAttribute("userid").toString();
         List<Basket> basketList = basketService.findByUserid(userId);
-        ArrayList<BascketDTO> bascketDTOs = new ArrayList<>();
+        ArrayList<BasketDTO> basketDTOs = new ArrayList<>();
         for (Basket basket : basketList) {
             Product prod = prodService.findById(basket.getProdId()).get();
             String brand = businessUserService.findByBid(prod.getBid()).getBrand();
-            bascketDTOs.add(new BascketDTO(basket.getProdId(), prod.getName(), prod.getPrice(), imgService.findByProdid(basket.getProdId()).get().getPath(), brand));
+            basketDTOs.add(new BasketDTO(basket.getProdId(), prod.getName(), prod.getPrice(), imgService.findByProdid(basket.getProdId()).get().getPath(), brand));
         }
 
 
-        model.addAttribute("BasketDTOs", bascketDTOs);
+        model.addAttribute("BasketDTOs", basketDTOs);
         model.addAttribute("userLogined", userId);
         return "basket_view";
     }

@@ -14,11 +14,15 @@ public class ReplyService {
         this.replyRepository = replyRepository;
     }
 
-    public void newReply(Reply reply) {
-        replyRepository.save(reply);
+    public Reply newReply(Reply reply) {
+        return replyRepository.save(reply);
     }
 
     public List<Reply> findList(Long boardcode){
         return replyRepository.findByBoardcode(boardcode);
+    }
+
+    public void deleteReply(Long rid){
+        replyRepository.deleteById(rid);
     }
 }

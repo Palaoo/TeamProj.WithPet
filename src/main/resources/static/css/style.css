@@ -93,11 +93,23 @@ textarea:focus {
 	outline: none;
 }
 
+<<<<<<< HEAD
+=======
+/*#myshopping2:hover{
+	text-decoration: none;
+	outline: none;
+	color: #ffffff;
+}*/
+>>>>>>> f447d949d36c3e792afcf631f3469f4c6e448ae6
 a:hover,
 a:focus {
 	text-decoration: none;
 	outline: none;
+<<<<<<< HEAD
 	color: #ffffff;
+=======
+	color: #ffffff !important;
+>>>>>>> f447d949d36c3e792afcf631f3469f4c6e448ae6
 }
 
 ul,
@@ -516,9 +528,15 @@ ol {
 
 .header__nav__option a span {
 	color: #0d0d0d;
+<<<<<<< HEAD
 	font-size: 11px;
 	position: absolute;
 	left: 5px;
+=======
+	font-size: 6px;
+	position: absolute;
+	left: 4px;
+>>>>>>> f447d949d36c3e792afcf631f3469f4c6e448ae6
 	top: 8px;
 }
 
@@ -1977,12 +1995,20 @@ ol {
 }
 
 .footer__widget ul li a {
+<<<<<<< HEAD
 	color: #b7b7b7;
+=======
+	color: #ffffff;
+>>>>>>> f447d949d36c3e792afcf631f3469f4c6e448ae6
 	font-size: 15px;
 }
 
 .footer__widget .footer__newslatter p {
+<<<<<<< HEAD
 	color: #b7b7b7;
+=======
+	color:#ffffff;
+>>>>>>> f447d949d36c3e792afcf631f3469f4c6e448ae6
 }
 
 .footer__widget .footer__newslatter form {
@@ -1992,7 +2018,11 @@ ol {
 .footer__widget .footer__newslatter form input {
 	width: 100%;
 	font-size: 15px;
+<<<<<<< HEAD
 	color: #3d3d3d;
+=======
+	color: #ffffff;
+>>>>>>> f447d949d36c3e792afcf631f3469f4c6e448ae6
 	background: transparent;
 	border: none;
 	padding: 15px 0;
@@ -2923,7 +2953,11 @@ ol {
 .blog-hero {
 	background: #f3f2ee;
 	padding-top: 125px;
+<<<<<<< HEAD
 	padding-bottom: 190px;
+=======
+	padding-bottom: 125px;
+>>>>>>> f447d949d36c3e792afcf631f3469f4c6e448ae6
 }
 
 .blog__hero__text h2 {
@@ -3848,4 +3882,44 @@ ol {
 	.categories__text:before {
 		height: 250px;
 	}
+<<<<<<< HEAD
+=======
+}
+
+#back-to-top {
+	display: inline-block;
+	background-color: #ffc0cb;
+	width: 50px;
+	height: 50px;
+	text-align: center;
+	border-radius: 4px;
+	position: fixed;
+	bottom: 40px;
+	right: 40px;
+	transition: background-color .3s,
+	opacity .5s, visibility .5s;
+	opacity: 0;
+	visibility: hidden;
+	z-index: 1000;
+}
+#back-to-top::after {
+	content: "\f077";
+	font-family: FontAwesome;
+	font-weight: normal;
+	font-style: normal;
+	font-size: 2em;
+	line-height: 50px;
+	color: #fff;
+}
+#back-to-top:hover {
+	cursor: pointer;
+	background-color: #333;
+}
+#back-to-top:active {
+	background-color: #555;
+}
+#back-to-top.show {
+	opacity: 1;
+	visibility: visible;
+>>>>>>> f447d949d36c3e792afcf631f3469f4c6e448ae6
 }

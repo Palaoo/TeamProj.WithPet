@@ -29,11 +29,6 @@ public class UserController {
     }
 
 
-//    @GetMapping("/loginPage")
-//    public String loginPage() {
-//        return "login";
-//    }
-
     @GetMapping("/signupPage")
     public String signup() {
         return "signup";

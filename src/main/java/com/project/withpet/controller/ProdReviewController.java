@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -18,6 +19,7 @@ public class ProdReviewController {
     }
 
     @GetMapping("save_prodReview")
+    @ResponseBody
     public String saveProdReview(@RequestParam(name = "content") String text, @RequestParam(name = "prodId") Long prodId,
                                  @RequestParam(name = "rating") int star,
                                  HttpServletRequest req) {
@@ -29,9 +31,14 @@ public class ProdReviewController {
 
         String userId = req.getSession().getAttribute("userid").toString();
 
-        prodReviewService.saveProdReview(prodId, userId, text, star);
 
-        return "redirect:prod_view?prodId=" + prodId;
+        try {
+            prodReviewService.saveProdReview(prodId, userId, text, star);
+        } catch (IllegalStateException e) {
+            return "0";
+        }
+
+        return "1";
 
     }
 

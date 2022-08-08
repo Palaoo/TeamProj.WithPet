@@ -127,6 +127,7 @@ public class BoardController {
     }
 
 
+
     @GetMapping("/community/newpost")
     public String createPost(HttpServletRequest req, Model model) {
         HttpSession session = req.getSession();
@@ -211,6 +212,7 @@ public class BoardController {
 
         HttpSession session = req.getSession();
 
+
         Optional<Board> boardOptional = boardService.findById(boardcode);
         Board board = boardOptional.get();
         board.setTitle(title);
@@ -243,7 +245,7 @@ public class BoardController {
 
     @PostMapping("/community/newreply")
     @ResponseBody
-    public Object newreply(HttpServletRequest req, @RequestParam("writer") String writer,
+    public Reply newreply(HttpServletRequest req, @RequestParam("writer") String writer,
                            @RequestParam("content") String content,
                            @RequestParam("boardcode") Long boardcode) {
 
@@ -251,9 +253,15 @@ public class BoardController {
         reply.setWriter(writer);
         reply.setContent(content);
         reply.setBoardcode(boardcode);
-        replyService.newReply(reply);
-        List<Reply> replies = replyService.findList(boardcode);
-        return replies;
+        Reply reply1 = replyService.newReply(reply);
+        return reply1;
+    }
+
+    @GetMapping("/community/deletereply")
+    @ResponseBody
+    public Long deleteReply(@RequestParam Long rid){
+        replyService.deleteReply(rid);
+        return rid;
     }
 
 }

@@ -7,6 +7,16 @@ public class CafeDTOList {
     boolean islike;
     String path;
 
+    private Long likeCount;
+
+    public Long getLikeCount() {
+        return likeCount;
+    }
+
+    public void setLikeCount(Long likeCount) {
+        this.likeCount = likeCount;
+    }
+
     public String getPath() {
         return path;
     }
@@ -38,5 +48,13 @@ public class CafeDTOList {
         this.cafe = cafe;
         this.islike = islike;
         this.path = path;
+    }
+
+
+    public CafeDTOList(com.project.withpet.domain.cafe cafe, boolean islike, String path, Long likeCount) {
+        this.cafe = cafe;
+        this.islike = islike;
+        this.path = path;
+        this.likeCount = likeCount;
     }
 }

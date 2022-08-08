@@ -1,9 +1,11 @@
 package com.project.withpet.controller;
 
+import com.project.withpet.domain.Hotelimg;
 import com.project.withpet.domain.cafe;
 import com.project.withpet.dto.ShopReviewDTO;
 import com.project.withpet.dto.reviewDto;
 import com.project.withpet.domain.shopreview;
+import com.project.withpet.repository.HotelimgRepository;
 import com.project.withpet.repository.shopreviewRepository;
 import com.project.withpet.service.cafeService;
 import com.project.withpet.service.reviewService;
@@ -31,6 +33,9 @@ public class reviewController {
 
     @Autowired
     private shopreviewRepository shopreviewRepository;
+
+    @Autowired
+    private HotelimgRepository hotelimgRepository;
 
     @PostMapping("/reviews/create")  //리뷰 등록
     public String createReview(reviewDto dto, HttpServletRequest req, @RequestParam ("shopid") Long shopid, Model model) {
@@ -83,7 +88,9 @@ public class reviewController {
         for (int i = 0; i < shopreviewList.size(); i++) {
             shopreview shopreview = shopreviewList.get(i);
             Optional<cafe> cafe = cafeService.findById(shopreview.getShopid());
-            shopReviewDTOList.add(new ShopReviewDTO(shopreview, cafe.get()));
+            Optional<Hotelimg> shopimg = hotelimgRepository.findByShopid(shopreview.getShopid());
+            String path = shopimg.get().getPath();
+            shopReviewDTOList.add(new ShopReviewDTO(shopreview, cafe.get(), path));
         }
 
         model.addAttribute("shopReviewDTOList",shopReviewDTOList);

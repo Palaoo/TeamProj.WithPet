@@ -16,7 +16,6 @@ public class Booking {
     private String userid;
     private String detail;
 
-    @JoinColumn(name = "hotelroom_roomid")
     private Long roomid;
 
     private String name;

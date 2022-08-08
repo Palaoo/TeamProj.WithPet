@@ -4,6 +4,10 @@ import com.project.withpet.domain.Like;
 import com.project.withpet.repository.Like.LikeRepository;
 import org.springframework.transaction.annotation.Transactional;
 
+<<<<<<< HEAD
+=======
+import java.util.List;
+>>>>>>> f447d949d36c3e792afcf631f3469f4c6e448ae6
 import java.util.Optional;
 
 @Transactional
@@ -49,4 +53,11 @@ public class LikeService {
             throw new IllegalStateException("좋아요 눌러져있음");
         });
     }
+<<<<<<< HEAD
+=======
+
+    public List<Like> likeList(String userId){
+        return likeRepository.findByUserId(userId);
+    }
+>>>>>>> f447d949d36c3e792afcf631f3469f4c6e448ae6
 }

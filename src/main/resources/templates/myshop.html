@@ -1,83 +1,146 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+            crossorigin="anonymous"></script>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MY SHOP</title>
+
+    <title>MYPAGE</title>
     <th:block th:replace="fragments/index::style"></th:block>
 </head>
 <body>
 <style>
-    /*div.container{}*/
-    /*div.header div.footer{clear:left}*/
-    /*div.left{float:left;}*/
-    /*.header{height: 200px;}*/
-    /*.top{height: 70px;*/
-    /*    margin: auto;}*/
-    /*.footer{height: 30px;}*/
-    /*.left{height: 500px; width:200px;}*/
-    /*.contents{height: 500px;}*/
-    /*#login,#signin,#cafename{*/
-    /*        text-decoration:none;*/
-    /*        color:black;*/
-    /*    }*/
-    /*    nav a{*/
-    /*        text-decoration:none;*/
-    /*        color:black;*/
-    /*        margin:2em;*/
-    /*    }*/
-    /*    nav{*/
-    /*        display:flex;*/
-    /*        justify-content:center;*/
-    /*    }*/
+
 </style>
 
 <div th:replace="fragments/index :: header"></div>
-<div class="container">
-<!--    -->
-<!--    <div class="header">-->
-<!--        <p align=right><a id="logout" href='/'>로그아웃</a>&nbsp;&nbsp;<a id="mypage" href='mypage'>마이페이지</a></p>-->
-<!--        <h1 align=center><a href="/">WITH PET</a></h1>-->
-<!--        <nav>-->
-<!--           <a href="#">숙소</a>-->
-<!--           <a href="cafe_list">카페</a>-->
-<!--           <a href="Restaurant-list">맛집</a>-->
-<!--           <a href="#">상점</a>-->
-<!--           <a href="#">게시판</a>-->
-<!--        </nav>-->
-<!--    </div>-->
 
-    <div class="top">
-        <img src="dd.JPG"><span th:text="${userLogined}"></span>님
-    </div>
-
-    <div class="contents">
+<section class="breadcrumb-option">
+    <div class="container">
         <div class="row">
-            <div class="col-sm-4">
-                <div style="height:120px"><a href="/mypage">예약내역</a></div>
-                <div style="height:120px"><a href="/mypage/myshop">저장목록</a></div><br><br>
-                <div style="height:120px"><a href="/mypage/review">내 후기</a></div><br><br>
-                <div style="height:120px"><a href>내가 남긴 글</a></div>
+            <div class="col-lg-12">
+                <div class="breadcrumb__text">
+                    <h4>Mypage</h4>
+                    <div class="breadcrumb__links">
+                        <a href="/">Home</a>
+                        <span>Mypage</span>
+                    </div>
+                </div>
             </div>
+        </div>
+    </div>
+</section>
 
-            <div class="col-sm-8">
-                <th:block th:each="LikeDTO, index : ${likeshopDTOList}">
-                    <div class="card mb-3" style="max-width: 540px;">
-                        <div class="row g-0">
-                            <div class="col-md-4">
-                                <img src="..." class="img-fluid rounded-start" alt="..." width="300" height="300">
+
+<div class="container">
+    <div class="row">
+        <div class="col-3" id="leftbar">
+            <div class="col-12">
+                <br><br>
+                <h5 th:text="|${userLogined}님|"></h5>
+            </div>
+            <div class="shop__sidebar">
+                <div class="shop__sidebar__accordion">
+                    <div class="accordion" id="accordionExample">
+                        <div class="card">
+                            <div id="collapseOne" class="collapse show" data-parent="#accordionExample">
+                                <div class="card-body">
+                                    <div th:replace="fragments/mypage :: sideBar"></div>
+                                </div>
                             </div>
 
-                            <div class="col-md-5">
-                                <div class="card-body">
-                                    <p th:text="${LikeDTO.cafe.getShoptype().getTypename()}">shoptype name</p>
-                                    <p th:text="${LikeDTO.cafe.getRegion().getRegname()}">region name</p>
-                                    <div class="row">
-                                        <h5 class="card-title" th:text="${LikeDTO.cafe.name}"></h5>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-9">
+            <div class="row">
+                <div class="tab-content">
+                    <div class="tab-pane" id="reservation" role="tabpanel" aria-labelledby="reservation-tab">
+                    </div>
+                    <br><br><br>
+                    <div class="tab-pane active" id="save" role="tabpanel" aria-labelledby="save-tab">
+                        <div class="card mb-2" style="max-width: 700px;"
+                             th:each="HotelLikeDTO, Hotelindex : ${likehotelDTOList}">
+                            <div class="row g-0">
+                                <div class="col-md-4">
+                                    <img th:src="${HotelLikeDTO.path}" class="img-fluid rounded-start"
+                                         style="object-fit: cover; width: 100%; height: 15vw">
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="card-body">
+                                        <p th:text="|${HotelLikeDTO.cafe.getShoptype().getTypename()} / ${HotelLikeDTO.cafe.getRegion().getRegname()}|"></p>
+                                        <h5 class="card-title" th:text="${HotelLikeDTO.cafe.name}"></h5>
+                                        <p th:text="${HotelLikeDTO.cafe.getIntro()}"></p>
                                     </div>
+                                </div>
+
+                                <div class="col-md-2" style="margin: auto" align="center">
+                                    <form th:action="${'/mypage/myshop/deletehotel'}" method="get" id="deletehotel">
+                                        <input type="hidden" name="hotellikeid"
+                                               th:value="${HotelLikeDTO.getLikeHotel().getId()}">
+                                        <button class="btn btn-outline-danger btn-sm" name="delete">삭제</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card mb-2" style="max-width: 700px;" th:each="LikeDTO: ${likeshopDTOList}">
+                            <div class="row g-0">
+                                <div class="col-md-4">
+                                    <img th:src="${LikeDTO.path}" class="img-fluid rounded-start"
+                                         style="object-fit: cover; width: 100%; height: 15vw">
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="card-body">
+                                        <p th:text="|${LikeDTO.cafe.getShoptype().getTypename()} / ${LikeDTO.cafe.getRegion().getRegname()}|"></p>
+                                        <h5 class="card-title" th:text="${LikeDTO.cafe.name}"></h5>
+                                        <p th:text="${LikeDTO.cafe.getIntro()}"></p>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-2" style="margin: auto" align="center">
+                                    <form th:action="${'/mypage/myshop/delete'}" method="get" id="deleteshop">
+                                        <input type="hidden" name="likeid"
+                                               th:value="${LikeDTO.shoplike.getLikeid()}">
+                                        <button class="btn btn-outline-danger btn-sm" name="delete">삭제</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card mb-2" style="max-width: 700px;"
+                             th:each="prodLikeDTO, prodindex : ${likeProdDTOList}">
+                            <div class="row g-0">
+                                <div class="col-md-4">
+                                    <img th:src="${prodLikeDTO.path}" class="img-fluid rounded-start"
+                                         style="object-fit: cover; width: 100%; height: 15vw">
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="card-body">
+                                        <!--                                    <p th:text="|${prodLikeDTO.product.getShoptype().getTypename()} / ${HotelLikeDTO.cafe.getRegion().getRegname()}|"></p>-->
+                                        <h5 class="card-title" th:text="${prodLikeDTO.product.getName()}"></h5>
+                                        <!--                                    <p th:text="${HotelLikeDTO.cafe.getIntro()}"></p>-->
+                                    </div>
+                                </div>
+
+                                <div class="col-md-2" style="margin: auto" align="center">
+                                    <form th:action="${'/mypage/myshop/deleteprod'}" method="get" id="deleteprod">
+                                        <input type="hidden" name="prodlikeid"
+                                               th:value="${prodLikeDTO.like.getId()}">
+                                        <button class="btn btn-outline-danger btn-sm" name="delete">삭제</button>
+                                    </form>
                                 </div>
                             </div>
 
@@ -90,14 +153,28 @@
                             </div>
                         </div>
                     </div>
-                </th:block>
+
+
+                        <div class="tab-pane" id="review" role="tabpanel" aria-labelledby="review-tab">
+                        </div>
+
+                        <div class="tab-pane" id="mywriting" role="tabpanel" aria-labelledby="mywriting-tab">
+                        </div>
+
+                        <div class="tab-pane" id="manager" role="tabpanel" aria-labelledby="manager-tab">
+                        </div>
+
+                        <div class="tab-pane" id="business" role="tabpanel" aria-labelledby="business-tab">
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-</div>
-<th:block th:replace="fragments/index :: footer"></th:block>
+    <br><br><br><br>
+
+    <th:block th:replace="fragments/index :: footer"></th:block>
 </body>
-<script src='https://code.jquery.com/jquery-3.4.1.js'></script>
 <script>
     $(document)
         .on('click', '#btnLike', function () {

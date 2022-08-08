@@ -21,6 +21,7 @@ public class ShopQueryRepository {
         this.queryFactory = queryFactory;
     }
 
+<<<<<<< HEAD
 //    public List<Shop> findAvailHotel(String checkin, String checkout, Long person){
 //        return queryFactory
 //                .selectFrom(shop)
@@ -40,6 +41,8 @@ public class ShopQueryRepository {
 //                )
 //                .fetch();
 //    }
+=======
+>>>>>>> f447d949d36c3e792afcf631f3469f4c6e448ae6
 
     public List<Shop> findAvailHotel(String checkin, String checkout, Long person){
         return queryFactory
@@ -88,6 +91,7 @@ public class ShopQueryRepository {
                 .fetch();
     }
 
+<<<<<<< HEAD
 //    public List<Hotelroom> findAvailRoom(String checkin, String checkout, Long person, Long shopid){
 //        return queryFactory
 //                .selectFrom(hotelroom)
@@ -103,6 +107,8 @@ public class ShopQueryRepository {
 //                .fetch();
 //    }
 
+=======
+>>>>>>> f447d949d36c3e792afcf631f3469f4c6e448ae6
 
 
 }

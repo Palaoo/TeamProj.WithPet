@@ -1,18 +1,23 @@
 package com.project.withpet.domain;
 
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
 @Entity
+@Getter
+@Setter
 public class Shop {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long shopid;
+    @Column
+    private Long bid;
     @Column
     private String name;
     @Column
@@ -36,92 +41,28 @@ public class Shop {
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
-            name = "featlist",
+            name = "Featlist",
             joinColumns = @JoinColumn(name = "shopid"),
             inverseJoinColumns = @JoinColumn(name = "featid")
     )
     List<Feat> shopFeats;
 
 
-    public Long getShopid() {
-        return shopid;
-    }
+    @OneToMany(mappedBy = "shopid", cascade = CascadeType.REMOVE)
+    private List<shoplike> shoplikes;
 
-    public void setShopid(Long shopid) {
-        this.shopid = shopid;
-    }
+    @OneToMany(mappedBy = "shopId", cascade = CascadeType.REMOVE)
+    private List<LikeHotel> likeHotels;
 
-    public String getName() {
-        return name;
-    }
+    @OneToMany(mappedBy = "shopid", cascade = CascadeType.REMOVE)
+    private List<Hotelimg> hotelimgs;
 
-    public void setName(String name) {
-        this.name = name;
-    }
+    @OneToMany(mappedBy = "shopid", cascade = CascadeType.REMOVE)
+    private List<shopreview> shopreviews;
 
-    public String getIntro() {
-        return intro;
-    }
+    @OneToMany(mappedBy = "shopid", cascade = CascadeType.REMOVE)
+    private List<Hotelroom> hotelrooms;
 
-    public void setIntro(String intro) {
-        this.intro = intro;
-    }
-
-    public String getHour() {
-        return hour;
-    }
-
-    public void setHour(String hour) {
-        this.hour = hour;
-    }
-
-    public String getInfo() {
-        return info;
-    }
-
-    public void setInfo(String info) {
-        this.info = info;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public String getTel() {
-        return tel;
-    }
-
-    public void setTel(String tel) {
-        this.tel = tel;
-    }
-
-    public Region getRegion() {
-        return region;
-    }
-
-    public void setRegion(Region region) {
-        this.region = region;
-    }
-
-    public Shoptype getShoptype() {
-        return shoptype;
-    }
-
-    public void setShoptype(Shoptype shoptype) {
-        this.shoptype = shoptype;
-    }
-
-    public List<Feat> getShopFeats() {
-        return shopFeats;
-    }
-
-    public void setShopFeats(List<Feat> shopFeats) {
-        this.shopFeats = shopFeats;
-    }
 
 
 }

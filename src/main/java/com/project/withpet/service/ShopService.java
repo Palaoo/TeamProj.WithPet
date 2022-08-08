@@ -1,6 +1,10 @@
 package com.project.withpet.service;
 
 import com.project.withpet.domain.Shop;
+<<<<<<< HEAD
+=======
+import com.project.withpet.domain.cafe;
+>>>>>>> f447d949d36c3e792afcf631f3469f4c6e448ae6
 import com.project.withpet.repository.Shop.ShopRepository;
 
 import javax.transaction.Transactional;
@@ -27,4 +31,26 @@ public class ShopService {
         return shopRepository.findAllByshoptypeTypeid(typeid);
     }
 
+<<<<<<< HEAD
+=======
+    public List<Shop> search(String keyword, Long typeid) {
+        return shopRepository.findByAddressContainingAndShoptypeTypeid(keyword,typeid);
+    }
+
+    public Long save(Shop shop){
+        return shopRepository.save(shop).getShopid();
+    }
+
+    public List<Shop> findHotelByBid(Long bid){
+        return shopRepository.findByBidAndShoptypeTypeid(bid, 1L);
+    }
+
+    public List<Shop> findAllByBid(Long bid){
+        return shopRepository.findAllByBid(bid);
+    }
+
+    public void deleteById(Long shopid){
+        shopRepository.deleteById(shopid);
+    }
+>>>>>>> f447d949d36c3e792afcf631f3469f4c6e448ae6
 }

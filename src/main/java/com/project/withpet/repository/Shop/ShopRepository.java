@@ -16,5 +16,17 @@ public interface ShopRepository {
     Optional<Shop> findById(Long id);
 
 
+<<<<<<< HEAD
 
+=======
+    List<Shop> findByAddressContainingAndShoptypeTypeid(String keyword, Long typeid);
+
+    Shop save(Shop shop);
+
+    List<Shop> findByBidAndShoptypeTypeid(Long bid, Long typeid);
+
+    List<Shop> findAllByBid(Long bid);
+
+    void deleteById(Long shopid);
+>>>>>>> f447d949d36c3e792afcf631f3469f4c6e448ae6
 }

@@ -4,15 +4,99 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
 
+    <meta name="description" content="Male_Fashion Template">
+    <meta name="keywords" content="Male_Fashion, unica, creative, html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>BUSINESS</title>
+
+    <th:block th:replace="fragments/index::style"></th:block>
+</head>
+<style>
+    #main {
+        margin-top: 15px;
+    }
+</style>
 <body>
-    <p th:text="|사업자 번호 : ${businessId}|"></p>
-    <form action="appendProd" method="get">
-        <button type="submit">상품등록하기</button>
-    </form>
+<div th:replace="fragments/index :: header"></div>
+
+<section class="breadcrumb-option">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="breadcrumb__text">
+                    <h4>회원정보</h4>
+                    <div class="breadcrumb__links">
+                        <a href="./index.html">Home</a>
+                        <span>Info</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<div class="container">
+        <div class="row">
+        <div class="col-3" id="leftbar">
+            <div class="col-12">
+                <br><br>
+                <h5 th:text="|${userid}님|"></h5>
+            </div>
+            <div class="shop__sidebar">
+                <div class="shop__sidebar__accordion">
+                    <div class="accordion" id="accordionExample">
+                        <div class="card">
+                            <div id="collapseOne" class="collapse show" data-parent="#accordionExample">
+                                <div class="card-body">
+                                    <div th:replace="fragments/mypage :: sideBar"></div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-9" id="main">
+            <div class="row">
+                <div class="tab-content">
+
+                    <div class="tab-pane" id="save" role="tabpanel" aria-labelledby="save-tab">
+                    </div>
+
+                    <div class="tab-pane" id="review" role="tabpanel" aria-labelledby="review-tab">
+                    </div>
+
+                    <div class="tab-pane" id="mywriting" role="tabpanel" aria-labelledby="mywriting-tab">
+                    </div>
+
+                    <div class="tab-pane" id="manager" role="tabpanel" aria-labelledby="manager-tab">
+                    </div>
+
+                    <div class="tab-pane active" id="business" role="tabpanel" aria-labelledby="business-tab">
+                        <div align="center">
+                            <p th:text="|사업자 번호 : ${businessId}|"></p>
+                            <form action="appendProd" method="get">
+                                <button class="primary-btn" type="submit">상품등록하기</button>
+                            </form>
+                            <br>
+                            <form action="newShop" method="get">
+                                <button class="primary-btn" type="submit">상점등록하기</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<th:block th:replace="fragments/index :: footer"></th:block>
 </body>
 
 

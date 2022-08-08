@@ -4,18 +4,19 @@ import com.project.withpet.dto.HotelForm;
 import com.project.withpet.dto.HotelroomForm;
 import com.project.withpet.domain.*;
 import com.project.withpet.dto.reviewDto;
+
+import com.project.withpet.repository.*;
 import com.project.withpet.repository.Booking.BookingRepository;
-import com.project.withpet.repository.HotelimgRepository;
 import com.project.withpet.repository.Hotelroom.HotelroomRepository;
-import com.project.withpet.repository.HotelroomimgRepository;
 import com.project.withpet.repository.Shop.ShopQueryRepository;
 import com.project.withpet.repository.Shop.ShopRepository;
-import com.project.withpet.repository.shopreviewRepository;
 import com.project.withpet.service.HotelroomService;
 import com.project.withpet.service.LikeHotelService;
 import com.project.withpet.service.ShopService;
 import com.project.withpet.service.UserService;
 import com.project.withpet.service.reviewService;
+
+import lombok.extern.slf4j.Slf4j;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -39,9 +42,8 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.*;
 
-import static org.apache.el.util.MessageFactory.get;
-
 @Controller
+@Slf4j
 public class ShopController {
 
     private final ShopService shopService;
@@ -56,8 +58,14 @@ public class ShopController {
     private final shopreviewRepository shopreviewRepository;
     private final LikeHotelService likeHotelService;
 
+    private final FeatlistRepository featlistRepository;
+
+    private final S3Uploader s3Uploader;
+    private final ShopTypeRepository shopTypeRepository;
+    private final RegionRepository regionRepository;
+
     @Autowired
-    public ShopController(ShopService shopService, HotelroomService hotelroomService, ShopQueryRepository shopQueryRepository, ShopRepository shopRepository, HotelroomRepository hotelroomRepository, UserService userService, BookingRepository bookingRepository, HotelimgRepository hotelimgRepository, HotelroomimgRepository hotelroomimgRepository, com.project.withpet.service.reviewService reviewService, com.project.withpet.repository.shopreviewRepository shopreviewRepository, LikeHotelService likeHotelService) {
+    public ShopController(ShopService shopService, HotelroomService hotelroomService, ShopQueryRepository shopQueryRepository, ShopRepository shopRepository, HotelroomRepository hotelroomRepository, UserService userService, BookingRepository bookingRepository, HotelimgRepository hotelimgRepository, HotelroomimgRepository hotelroomimgRepository, com.project.withpet.service.reviewService reviewService, com.project.withpet.repository.shopreviewRepository shopreviewRepository, LikeHotelService likeHotelService, FeatlistRepository featlistRepository, S3Uploader s3Uploader, ShopTypeRepository shopTypeRepository, RegionRepository regionRepository) {
         this.shopService = shopService;
         this.hotelroomService = hotelroomService;
         this.shopQueryRepository = shopQueryRepository;
@@ -68,6 +76,11 @@ public class ShopController {
         this.reviewService = reviewService;
         this.shopreviewRepository = shopreviewRepository;
         this.likeHotelService = likeHotelService;
+
+        this.featlistRepository = featlistRepository;
+        this.s3Uploader = s3Uploader;
+        this.shopTypeRepository = shopTypeRepository;
+        this.regionRepository = regionRepository;
     }
 
     @GetMapping("/hotel")
@@ -77,6 +90,7 @@ public class ShopController {
         if (session.getAttribute("userid") != null) {
             model.addAttribute("userid", session.getAttribute("userid"));
         }
+
 
         LocalDate now = LocalDate.now();
         Calendar cal = Calendar.getInstance();
@@ -129,6 +143,7 @@ public class ShopController {
         List<HotelForm> hotelForms = new ArrayList<>();
 
         String userId = req.getSession().getAttribute("userid").toString();
+
 
         for (int i = 0; i < hotelList.size(); i++) {
             int liked = likeHotelService.isLiked(hotelList.get(i).getShopid(), userId);
@@ -210,9 +225,9 @@ public class ShopController {
             throws ParseException, org.json.simple.parser.ParseException {
 
         HttpSession session = req.getSession();
-        if (session.getAttribute("userid") != null) {
-            model.addAttribute("userid", session.getAttribute("userid"));
-        }
+
+        String userId = (String) req.getSession().getAttribute("userLogined");
+        model.addAttribute("userid", userId);
 
         Long person = Long.parseLong(session.getAttribute("person").toString());
         String checkin = session.getAttribute("checkin").toString();
@@ -238,10 +253,17 @@ public class ShopController {
         List<HotelroomForm> hotelroomForms = new ArrayList<>();
 
         for (int i = 0; i < hotelrooms.size(); i++) {
+
             addHotelRoomForm(hotelrooms, availRooms, hotelroomForms, i);
         }
 
         model.addAttribute("hotelrooms", hotelroomForms);
+
+
+        int liked = likeHotelService.isLiked(shopid, userId);
+        Long likeCount = likeHotelService.getLikeCount(shopid);
+        model.addAttribute("liked", liked);
+        model.addAttribute("likeCount", likeCount);
 
 
         //블로그 검색 결과 api
@@ -352,7 +374,8 @@ public class ShopController {
         booking.setMobile(mobile);
         bookingRepository.save(booking);
 
-        return "redirect:/";
+
+        return "redirect:/mypage/mypage_booking";
 
     }
 
@@ -395,10 +418,13 @@ public class ShopController {
     @GetMapping("append_likehotel")
     @ResponseBody
     public String appendLikeHotel(@RequestParam Long shopId, HttpServletRequest req) {
-        if (likeHotelService.appendLike(shopId, req.getSession().getAttribute("userid").toString()))
-            return "1";
 
-        return "0";
+        System.out.println(req.getSession().getAttribute("userid").toString());
+        if (likeHotelService.appendLike(shopId, req.getSession().getAttribute("userid").toString())) {
+            return "1";
+        } else {
+            return "0";
+        }
     }
 
 
@@ -430,7 +456,8 @@ public class ShopController {
         }
         Optional<Hotelimg> hotelimg = hotelimgRepository.findByShopid(hotelList.get(i).getShopid());
         String path = "";
-        if(hotelimg.isPresent()) {
+
+        if (hotelimg.isPresent()) {
             path = hotelimg.get().getPath();
         } else {
             path = "https://withpetimg.s3.ap-northeast-2.amazonaws.com/images/hoteldefault.jpg";
@@ -513,4 +540,83 @@ public class ShopController {
             throw new RuntimeException("API 응답을 읽는데 실패했습니다.", e);
         }
     }
+
+
+    @GetMapping("/hotel/search")  //지역검색
+    public String searchHotel(@RequestParam("keyword") String keyword, Model model, HttpServletRequest req) {
+        HttpSession session = req.getSession();
+        if (session.getAttribute("userid") == null) {
+            return "login";
+        }
+        String userId = req.getSession().getAttribute("userid").toString();
+        model.addAttribute("userid", userId);
+
+        LocalDate now = LocalDate.now();
+        Calendar cal = Calendar.getInstance();
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = null;
+        try {
+            date = df.parse(now.toString());
+        } catch (java.text.ParseException e) {
+            throw new RuntimeException(e);
+        }
+
+        cal.setTime(date);
+
+        int week = now.getDayOfWeek().getValue();
+
+        if (week == 0 || week == 1 || week == 2 || week == 3 || week == 4 || week == 5) {
+            switch (week) {
+                case 0:
+                    cal.add(Calendar.DATE, 6);
+                    break;
+                case 1:
+                    cal.add(Calendar.DATE, 5);
+                    break;
+                case 2:
+                    cal.add(Calendar.DATE, 4);
+                    break;
+                case 3:
+                    cal.add(Calendar.DATE, 3);
+                    break;
+                case 4:
+                    cal.add(Calendar.DATE, 2);
+                    break;
+                case 5:
+                    cal.add(Calendar.DATE, 1);
+                    break;
+            }
+        }
+
+        String checkin = df.format(cal.getTime());
+        model.addAttribute("checkin", checkin);
+
+        cal.add(Calendar.DATE, 1);
+        String checkout = df.format(cal.getTime());
+        model.addAttribute("checkout", checkout);
+
+        List<Shop> availShop = shopQueryRepository.findAvailHotel(checkin, checkout, 2L);
+
+        List<Shop> hotelList = shopService.search(keyword, 1L);
+        log.info("지역리스트 = " + shopService.toString());
+        List<HotelForm> hotelForms = new ArrayList<>();
+
+
+        for (int i = 0; i < hotelList.size(); i++) {
+            int liked = likeHotelService.isLiked(hotelList.get(i).getShopid(), userId);
+            Long likeCount = likeHotelService.getLikeCount(hotelList.get(i).getShopid());
+
+            addHotelForm(availShop, hotelList, hotelForms, i, likeCount, liked);
+        }
+        model.addAttribute("hotelList", hotelForms);
+        model.addAttribute("hotelList", hotelForms);
+        model.addAttribute("person", 2);
+
+        session.setAttribute("person", 2);
+        session.setAttribute("checkin", checkin);
+        session.setAttribute("checkout", checkout);
+
+        return "shop/hotel";
+    }
+
 }
