@@ -15,6 +15,12 @@
 </head>
 <body>
 <style>
+    form{
+        display:inline;
+    }
+    .nav-link:hover,.nav-link:focus{
+        color: #000 !important;
+    }
     #myform fieldset {
         display: inline-block;
         direction: rtl;
@@ -112,9 +118,9 @@
                                      th:id="|btnLike${cafe.shopid}|" width="25" height="25" alt="">
                                 <img th:if="${!liked}" src="/image/heart.png"
                                      th:id="|btnLike${cafe.shopid}|" width="25" height="25" alt="">
-                                <p th:text="${likecount}" th:id="|likeCount${cafe.shopid}|"
-                                   name="likeCount" id="cnt"></p>
                             </a>
+                            <span th:text="${likecount}" th:id="|likeCount${cafe.shopid}|"
+                                  name="likeCount" id="cnt"></span>
                         </li>
                         <!--                        <li>-->
                         <!--                            <div class="rating">-->
@@ -199,7 +205,7 @@
                                                 <div class="product__details__tab__content__item">
                                                     <div class="row pb-4 mb-4 border-bottom">
                                                         <div id="map"
-                                                             style="width:700px !important;height:300px !important;"></div>
+                                                             style="width:100% !important;height:300px !important;"></div>
                                                         <div>
                                                             <br>
                                                             전화번호: <span th:text="${cafe.getTel()}"></span><br>
@@ -428,7 +434,7 @@
                                             <div class="product__details__tab__content">
                                                 <div class="product__details__tab__content__item">
                                                     <div class="card mb-3" th:each="item:${review.items}"
-                                                         style="width: 700px">
+                                                         style="width: 100%">
                                                         <a th:href="${item.link}">
                                                             <div class="card-body">
                                                                 <h4 class="card-title"
@@ -550,7 +556,7 @@
 
     function resizeMap() {
         var mapContainer = document.getElementById('map');
-        mapContainer.style.width = '700px';
+        mapContainer.style.width = '100%';
         mapContainer.style.height = '300px';
     }
 
