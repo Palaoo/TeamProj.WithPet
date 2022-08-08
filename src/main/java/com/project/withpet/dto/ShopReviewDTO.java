@@ -7,10 +7,7 @@ import com.project.withpet.domain.shopreview;
 public class ShopReviewDTO {
     shopreview shopreview;
     cafe cafe;
-<<<<<<< HEAD
 
-
-=======
     String path;
 
 
@@ -22,7 +19,6 @@ public class ShopReviewDTO {
         this.path = path;
     }
 
->>>>>>> f447d949d36c3e792afcf631f3469f4c6e448ae6
     public shopreview getShopreview() {
         return shopreview;
     }
@@ -39,12 +35,7 @@ public class ShopReviewDTO {
         this.cafe = cafe;
     }
 
-<<<<<<< HEAD
-    public ShopReviewDTO() {
-    }
 
-
-=======
 
     public ShopReviewDTO() {
     }
@@ -54,7 +45,6 @@ public class ShopReviewDTO {
         this.cafe = cafe;
         this.path = path;
     }
->>>>>>> f447d949d36c3e792afcf631f3469f4c6e448ae6
 
     public ShopReviewDTO(shopreview shopreview, cafe cafe) {
         this.shopreview = shopreview;

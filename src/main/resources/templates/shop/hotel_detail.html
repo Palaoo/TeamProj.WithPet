@@ -5,87 +5,6 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=<device-width>, initial-scale=1.0">
-<<<<<<< HEAD
-    <title>Document</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <link href="/assets/css/star.css" rel="stylesheet"/>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-    <th:block th:replace="fragments/index::style"></th:block>
-</head>
-<style>
-    body {
-        margin-left: 50px;
-    }
-
-    img, .rating {
-        float: left;
-        margin: 10px;
-    }
-
-    #login, #signin, #cafename {
-        text-decoration: none;
-        color: black;
-    }
-
-    nav a {
-        text-decoration: none;
-        color: black;
-        margin: 2em;
-    }
-
-    nav {
-        display: flex;
-        justify-content: center;
-    }
-
-    div.container {
-    }
-
-    div.header div.footer {
-        clear: left
-    }
-
-    div.left {
-        float: left;
-    }
-
-    .header {
-        height: 200px;
-    }
-
-    .top {
-        height: 70px;
-        margin: auto;
-    }
-
-    .footer {
-        height: 30px;
-    }
-
-    .left {
-        height: 500px;
-        width: 200px;
-    }
-
-    .contents {
-        height: 500px;
-    }
-
-    #login, #signin, #cafename {
-        text-decoration: none;
-        color: black;
-    }
-
-    nav a {
-        text-decoration: none;
-        color: black;
-        margin: 2em;
-    }
-
-    nav {
-        display: flex;
-        justify-content: center;
-=======
     <title>HOTEL</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
@@ -96,6 +15,9 @@
     <th:block th:replace="fragments/index::style"></th:block>
 </head>
 <style>
+    #content{
+        resize:none;
+    }
     form{
         display:inline;
     }
@@ -116,7 +38,6 @@
         background: white;
         border: 1px solid;
         color: #518581;
->>>>>>> f447d949d36c3e792afcf631f3469f4c6e448ae6
     }
 
     #myform fieldset {
@@ -134,7 +55,7 @@
     }
 
     #myform label {
-        font-size: 3em;
+        font-size: 2em;
         color: transparent;
         text-shadow: 0 0 0 #f0f0f0;
     }
@@ -163,12 +84,8 @@
     }
 
     .rating {
-<<<<<<< HEAD
-        color: sandybrown;
-=======
         color: transparent;
         text-shadow: 0 0 0 gold;
->>>>>>> f447d949d36c3e792afcf631f3469f4c6e448ae6
     }
 
     div.updatescore fieldset {
@@ -202,237 +119,15 @@
     div.updatescore input[type=radio]:checked ~ label {
         text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
     }
+    #comment-create-btn{
+        background-color: #000;
+        color: white;
+    }
 </style>
 <body>
 
 <div th:replace="fragments/index :: header"></div>
 
-<<<<<<< HEAD
-<div class="row">
-    <img class="col" th:src="${shopimg}" style="size: auto">
-<!--<div class="row">
-    <img class="col" src="/image/poolvil.jfif" style="size: auto">
->>>>>>> 5ed1ad44d6bf33d12ccf12c4a315df6734a5d12a
-    <div class="col">
-        <br>
-        <h5 th:text="${shop.getName()}"></h5><br><br>
-        <th:block th:each="feat : ${feats}">
-            <span th:text="${feat.getFeatname()}"></span>
-        </th:block>
-        <br>
-        <th:block th:text="${shop.getIntro()}"></th:block>
-        <br>
-    </div>
-</div>
-<br><br>
-
-<div>
-    <h2>이용안내</h2>
-    <th:block th:text="${shop.getInfo()}"></th:block>
-</div>
-<br><br>
-<div>
-
-    <div class="row">
-        <div class="datebar" style="margin:10px">
-            <input type="hidden" name="shopid" id="shopid" th:value="${shop.getShopid()}">
-            <input type="date" name="checkin" id="checkin" th:value="${checkin}">&nbsp;
-            <input type="date" name="checkout" id="checkout" th:value="${checkout}">&nbsp;
-            인원수&nbsp;<input type="text" name="person" id="person" th:value="${person}" readonly>&nbsp;
-            <input type="button" value="변경" id="submit">
-        </div>
-    </div>
-    <br>
-    <div id="rooms">
-        <div class="row" th:each="hotelroom, i:${hotelrooms}" style="width: 700px; height:130px">
-            <form action="/hotel/booking" method="post" th:id="${i.index}">
-                <img class="col-4" th:src="${hotelroom.getPath()}" style="width: 200px; height: 100px">
-                <div class="col">
-                    <span th:text="${hotelroom.getRoomname()}"></span><br>
-                    <span th:text="${hotelroom.getContent()}"></span><br>
-                    <span th:text="${hotelroom.getPerson()}"></span><br>
-                    <span th:if="${#strings.equals(hotelroom.getAvail(), 'true')}"
-                          th:text="|${hotelroom.getPrice()}원|"></span>
-                    <span th:unless="${#strings.equals(hotelroom.getAvail(), 'true')}">예약 마감</span>
-                    <input type="hidden" name="shopid" th:value="${shop.getShopid()}">
-                    <input type="hidden" name="checkin" th:value="${checkin}">&nbsp;
-                    <input type="hidden" name="checkout" th:value="${checkout}">&nbsp;
-                    <input type="hidden" name="person" th:value="${person}">
-                    <input type="hidden" th:value="${hotelroom.getRoomid()}" name="roomid">
-                    <br>
-                    <input type="submit" style="float: right" value="예약하기" id="book">
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-<br><br>
-
-<div class="row">
-    <h2>기본정보</h2>
-    <div id="map" style="width:500px;height:400px;"></div>
-    <div>
-        <br>
-        전화번호: <span th:text="${shop.getTel()}"></span><br>
-        주소: <span th:text="${shop.getAddress()}" id="address"></span>
-    </div>
-</div>
-<br><br>
-<div>
-    <h5>리뷰</h5>
-    <span th:text="${#lists.size(shopreview)}"></span>개
-    <th:block th:each="review , index : ${shopreview}">
-        <div class="row">
-            <div class="col-sm-2">
-                <p th:text="${review.getUserid()}"></p></div>
-            <div class="col-sm-5">
-                <th:block th:if="${review.getScore()==5}">
-                    <div class="rating">★★★★★</div>
-                </th:block>
-                <th:block th:if="${review.getScore()==4}">
-                    <div class="rating">★★★★</div>
-                </th:block>
-                <th:block th:if="${review.getScore()==3}">
-                    <div class="rating">★★★</div>
-                </th:block>
-                <th:block th:if="${review.getScore()==2}">
-                    <div class="rating">★★</div>
-                </th:block>
-                <th:block th:if="${review.getScore()==1}">
-                    <div class="rating">★</div>
-                </th:block>
-                <p id="content1" th:text="${review.getContent()}"></p>
-            </div>
-            <div class="col-sm-3">
-                <p th:text="${review.getDate()}"></p>
-            </div>
-
-            <div class="col-sm-2">
-                <div th:if="${review.getUserid()==userid}">
-                    <form th:action="@{'/reviews/updatehotel'}" method="post">
-                                       <input type="hidden" name="rid" th:value="${review.getRid()}">-->
-                        <button type="button" th:id="${index}"
-                                class="btn btn-outline-primary btn-sm"
-                                data-bs-toggle="modal"
-                                data-bs-target="#review-edit-Modal"
-                                th:attr="data-bs-content=${review.getContent()},
-                                    data-bs-score=${review.getScore()},
-                                    data-bs-rid=${review.getRid()}"
-                                data-bs-userid=""
-                                data-bs-shopid="">수정
-                        </button>
-                        <div class="modal fade" id="review-edit-Modal" tabindex="-1"
-                             aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">리뷰 수정하기</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <div class="updatescore">
-                                            <fieldset>
-                                                <span class="text-bold">별점을 선택하세요</span>
-                                                <input type="radio" name="score" value="5" id="rate1_"><label
-                                                    for="rate1_">★</label>
-                                                <input type="radio" name="score" value="4" id="rate2_"><label
-                                                    for="rate2_">★</label>
-                                                <input type="radio" name="score" value="3" id="rate3_"><label
-                                                    for="rate3_">★</label>
-                                                <input type="radio" name="score" value="2" id="rate4_"><label
-                                                    for="rate4_">★</label>
-                                                <input type="radio" name="score" value="1" id="rate5_"><label
-                                                    for="rate5_">★</label>
-                                            </fieldset>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="message-text" class="col-form-label">내용</label>
-                                            <textarea class="form-control" id="message-text"
-                                                      name="content"></textarea>
-                                            <input type="hidden" name="rid" id="review-id">
-                                        </div>
-                                        <input type="hidden" name="shopid" th:value="${review.getShopid()}">
-                                        <!--                          <input type="hidden" name="rid" th:value="${review.getRid()}">-->
-                                        <input type="hidden" name="userid" th:value="${review.getUserid()}">
-                                        <input type="hidden" name="date" id="currentTime"
-                                               th:value="${review.getDate()}">
-                                        <input type="hidden" name="score" id="score-value">
-                                    </div>
-
-                                    <script>
-                                        document.getElementById("currentTime").value = new Date(+new Date() + 3240 * 10000).toISOString().split("T")[0];
-                                    </script>
-
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기
-                                        </button>
-                                        <button type="submit" class="btn btn-primary">수정</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                    <script>
-                        var myModal = document.getElementById('myModal')
-                        var myInput = document.getElementById('myInput')
-
-                        myModal.addEventListener('shown.bs.modal', function () {
-                            myInput.focus()
-                        })
-                    </script>
-                    <!--리뷰 삭제-->
-                    <form th:action="@{'/reviews/deletehotel/'}" method="get">
-                        <input type="hidden" name="shopid" th:value="${review.getShopid()}">
-                        <input type="hidden" name="rid" th:value="${review.getRid()}">
-                        <button class="btn btn-outline-danger btn-sm" name="delete">삭제</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </th:block>
-
-    <!--후기 남기기-->
-    <div th:if="${not #strings.isEmpty(userid)}">
-        <form class="mb-3" name="myform" id="myform" action="/reviews/createhotel" method="post"
-              onsubmit="return submitCheck();">
-            <fieldset>
-                <span class="text-bold">별점을 선택하세요</span>
-                <input type="radio" name="score" value="5" id="rate1"><label
-                    for="rate1">★</label>
-                <input type="radio" name="score" value="4" id="rate2"><label
-                    for="rate2">★</label>
-                <input type="radio" name="score" value="3" id="rate3"><label
-                    for="rate3">★</label>
-                <input type="radio" name="score" value="2" id="rate4"><label
-                    for="rate4">★</label>
-                <input type="radio" name="score" value="1" id="rate5"><label
-                    for="rate5">★</label>
-            </fieldset>
-            <div>
-                <input type="hidden" th:value="${shop.getShopid()}" name="shopid">
-                <input type="hidden" th:value="${userid}" name="userid">
-                <textarea class="col-auto form-control" type="text" id="content" name="content"
-                          placeholder="후기를 남겨주세요"></textarea>
-                <button type="submit" class="btn btn-outline-primary btn-sm" id="comment-create-btn">후기 작성</button>
-            </div>
-        </form>
-    </div>
-</div>
-<br><br>
-
-<div>
-    <h2>블로그 후기</h2>
-    <div class="card mb-3" th:each="item:${review.items}" style="width: 700px">
-        <a th:href="${item.link}">
-            <div class="card-body">
-                <h3 class="card-title" th:utext="${item.title}"></h3><br>
-                <p class="card-text" th:utext="${item.description}"></p><br>
-                <p class="card-text">
-                    <small class="text-muted" th:utext="${item.bloggername}"></small>&nbsp;
-                    <small class="text-muted" th:utext="${item.postdate}"></small>
-                </p>
-=======
 <!--version2-->
 <section class="blog-hero spad">
     <div class="container">
@@ -450,18 +145,18 @@
                                      th:id="|btnLike${shop.getShopid()}|" width="25" height="25" alt="">
                             </a>
                             <span th:text="${likeCount}" th:id="|likeCount${shop.getShopid()}|"
-                               name="likeCount" id="cnt"></span>
+                                  name="likeCount" id="cnt"></span>
                         </li>
-<!--                        <li>-->
-<!--                            <div class="rating">-->
-<!--                                <i class="fa fa-star"></i>-->
-<!--                                <i class="fa fa-star"></i>-->
-<!--                                <i class="fa fa-star"></i>-->
-<!--                                <i class="fa fa-star"></i>-->
-<!--                                <i class="fa fa-star-o"></i>-->
-<!--                                <span> - 5 Reviews</span>-->
-<!--                            </div>-->
-<!--                        </li>-->
+                        <!--                        <li>-->
+                        <!--                            <div class="rating">-->
+                        <!--                                <i class="fa fa-star"></i>-->
+                        <!--                                <i class="fa fa-star"></i>-->
+                        <!--                                <i class="fa fa-star"></i>-->
+                        <!--                                <i class="fa fa-star"></i>-->
+                        <!--                                <i class="fa fa-star-o"></i>-->
+                        <!--                                <span> - 5 Reviews</span>-->
+                        <!--                            </div>-->
+                        <!--                        </li>-->
                         <li>
                             <th:block th:each="feat : ${feats}">
                                 <span th:text="${feat.getFeatname()}"></span>
@@ -470,93 +165,9 @@
                         </li>
                     </ul>
                 </div>
->>>>>>> f447d949d36c3e792afcf631f3469f4c6e448ae6
             </div>
         </div>
     </div>
-<<<<<<< HEAD
-    <div class="postbar" style="clear:both; text-align: center;">
-        <a th:href="@{https://search.naver.com/search.naver(query=${shop.getName()})}">검색 결과 더 보기</a>
-    </div>
-    <br>
-</div>
-
-
-<!--version2-->
-<section class="blog-hero spad">
-    <div class="container">
-        <div class="row d-flex justify-content-center">
-            <div class="col-lg-9 text-center">
-                <div class="blog__hero__text">
-                    <h2 th:text="${shop.getName()}"></h2>
-                    <h6 th:text="${shop.getIntro()}"></h6>
-                    <ul>
-                        <li><input type="button" value="좋아요"></li>
-                        <li>
-                            <div class="rating">
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star-o"></i>
-                                <span> - 5 Reviews</span>
-                            </div>
-                        </li>
-                        <li>
-                            <th:block th:each="feat : ${feats}">
-                                <span th:text="${feat.getFeatname()}"></span>
-                            </th:block><br>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-<section class="blog-details spad">
-    <div class="container">
-        <div class="row d-flex justify-content-center">
-            <div class="col-lg-12">
-                <div class="blog__details__pic">
-                    <!--<img class="col" src="/image/poolvil.jfif" style="size: auto">-->
-                    <img class="col" src="img/blog/details/blog-details.jpg" style="size: auto">
-                </div>
-            </div>
-            <div class="col-lg-8">
-                <div class="blog__details__content">
-                    <!--<div class="blog__details__text">
-                        <p>Hydroderm is the highly desired anti-aging cream on the block. This serum restricts the
-                            occurrence of early aging sings on the skin and keeps the skin younger, tighter and
-                            healthier. It reduces the wrinkles and loosening of skin. This cream nourishes the skin
-                            and brings back the glow that had lost in the run of hectic years.</p>
-                        <p>The most essential ingredient that makes hydroderm so effective is Vyo-Serum, which is a
-                            product of natural selected proteins. This concentrate works actively in bringing about
-                            the natural youthful glow of the skin. It tightens the skin along with its moisturizing
-                            effect on the skin. The other important ingredient, making hydroderm so effective is
-                            “marine collagen” which along with Vyo-Serum helps revitalize the skin.</p>
-                    </div>-->
-
-                    <div class="container">
-                        <!--상세설명-->
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="product__details__tab">
-                                    <ul class="nav nav-tabs" role="tablist">
-                                        <li class="nav-item">
-                                            <a class="nav-link active" data-toggle="tab" href="#tabs-1" role="tab">이용안내</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" data-toggle="tab" href="#tabs-2" role="tab">기본정보</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" data-toggle="tab" href="#tabs-3" role="tab">사용자후기</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" data-toggle="tab" href="#tabs-4" role="tab">블로그후기</a>
-                                        </li>
-                                    </ul>
-
-=======
 </section>
 <section class="blog-details spad">
     <div class="container">
@@ -581,14 +192,13 @@
                                             <a class="nav-link" data-toggle="tab" href="#tabs-2" role="tab">기본정보</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" data-toggle="tab" href="#tabs-3" role="tab">사용자후기</a>
+                                            <a class="nav-link" data-toggle="tab" href="#tabs-3" role="tab" th:text="|사용자후기(${#lists.size(shopreview)})|">사용자후기</a>
                                         </li>
                                         <li class="nav-item">
                                             <a class="nav-link" data-toggle="tab" href="#tabs-4" role="tab">블로그후기</a>
                                         </li>
                                     </ul>
 
->>>>>>> f447d949d36c3e792afcf631f3469f4c6e448ae6
                                     <div class="tab-content">
                                         <div class="tab-pane active" id="tabs-1" role="tabpanel">
                                             <div class="product__details__tab__content">
@@ -597,12 +207,6 @@
                                                 <form action="/hotel/booking" method="post">
                                                     <div class="row">
                                                         <div class="datebar" style="margin:10px">
-<<<<<<< HEAD
-                                                            <input type="hidden" name="shopid" id="shopid" th:value="${shop.getShopid()}">
-                                                            <input type="date" name="checkin" id="checkin" th:value="${checkin}">&nbsp;
-                                                            <input type="date" name="checkout" id="checkout" th:value="${checkout}">&nbsp;
-                                                            인원수&nbsp;<input type="text" name="person" id="person" th:value="${person}" readonly>&nbsp;
-=======
                                                             <input type="hidden" name="shopid" id="shopid"
                                                                    th:value="${shop.getShopid()}">
                                                             <input type="date" name="checkin" id="checkin"
@@ -611,18 +215,11 @@
                                                                    th:value="${checkout}">&nbsp;
                                                             인원수&nbsp;<input type="text" name="person" id="person"
                                                                             th:value="${person}" readonly>&nbsp;
->>>>>>> f447d949d36c3e792afcf631f3469f4c6e448ae6
                                                             <input type="button" value="변경" id="submit">
                                                         </div>
                                                     </div>
                                                     <br>
                                                     <div id="rooms">
-<<<<<<< HEAD
-                                                        <div class="row" th:each="hotelroom:${hotelrooms}" style="width: 700px; height:130px">
-                                                            <img class="col-4" src="/image/poolvil.jfif" style="width: 200px; height: 100px">
-                                                            <div class="col">
-                                                                <input type="hidden" th:value="${hotelroom.getRoomid()}" name="roomid">
-=======
                                                         <div class="row" th:each="hotelroom:${hotelrooms}"
                                                              style="width: 700px; height:130px">
                                                             <img class="col-4" th:src="${hotelroom.getPath()}"
@@ -630,138 +227,48 @@
                                                             <div class="col-4">
                                                                 <input type="hidden" th:value="${hotelroom.getRoomid()}"
                                                                        name="roomid">
->>>>>>> f447d949d36c3e792afcf631f3469f4c6e448ae6
                                                                 <span th:text="${hotelroom.getRoomname()}"></span><br>
                                                                 <span th:text="${hotelroom.getContent()}"></span><br>
                                                                 <span th:text="${hotelroom.getPerson()}"></span><br>
                                                                 <span th:if="${#strings.equals(hotelroom.getAvail(), 'true')}"
                                                                       th:text="|${hotelroom.getPrice()}원|"></span>
                                                                 <span th:unless="${#strings.equals(hotelroom.getAvail(), 'true')}">예약 마감</span><br>
-<<<<<<< HEAD
-                                                                <input type="submit" style="float: right" value="예약하기" id="book">
-                                                            </div>
-=======
 
                                                             </div>
                                                             <div id="dv_book" class="col-4">
                                                                 <br>
                                                                 <input type="submit" style="float: right" value="예약하기"
                                                                        id="book"></div>
->>>>>>> f447d949d36c3e792afcf631f3469f4c6e448ae6
                                                         </div>
                                                     </div>
                                                 </form>
                                             </div>
                                         </div>
 
-<<<<<<< HEAD
-                                        <ul class="nav nav-tabs" role="tablist">
-                                            <li class="nav-item">
-                                                <a class="nav-link" data-toggle="tab" href="#tabs-1" role="tab">이용안내</a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link active" data-toggle="tab" href="#tabs-2" role="tab">기본정보</a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link" data-toggle="tab" href="#tabs-3" role="tab">사용자후기</a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link" data-toggle="tab" href="#tabs-4" role="tab">블로그후기</a>
-                                            </li>
-                                        </ul>
-
-                                        <div class="tab-pane active" id="tabs-2" role="tabpanel">
-                                            <div class="product__details__tab__content">
-                                                <div class="product__details__tab__content__item" >
-                                                    <div id="map" style="width:500px;height:400px;"></div>
-=======
                                         <div class="tab-pane" id="tabs-2" role="tabpanel"> <!-- active-->
                                             <div class="product__details__tab__content">
                                                 <div class="product__details__tab__content__item">
                                                     <div id="map"
                                                          style="width:100% !important;height:300px !important;"></div>
->>>>>>> f447d949d36c3e792afcf631f3469f4c6e448ae6
                                                     <div>
                                                         <br>
                                                         전화번호: <span th:text="${shop.getTel()}"></span><br>
                                                         주소: <span th:text="${shop.getAddress()}" id="address"></span>
                                                     </div>
-<<<<<<< HEAD
-
-=======
->>>>>>> f447d949d36c3e792afcf631f3469f4c6e448ae6
                                                 </div>
                                             </div>
                                         </div>
 
-<<<<<<< HEAD
-                                        <ul class="nav nav-tabs" role="tablist">
-                                            <li class="nav-item">
-                                                <a class="nav-link" data-toggle="tab" href="#tabs-1" role="tab">이용안내</a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link" data-toggle="tab" href="#tabs-2" role="tab">기본정보</a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link active" data-toggle="tab" href="#tabs-3" role="tab">사용자후기</a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link" data-toggle="tab" href="#tabs-4" role="tab">블로그후기</a>
-                                            </li>
-                                        </ul>
-
-                                        <div class="tab-pane active" id="tabs-3" role="tabpanel">
-                                            <div class="product__details__tab__content">
-                                                <div class="product__details__tab__content__item" >
-
-                                                    <div class="row">
-                                                        사용자 이름<br>
-                                                        별점<br>
-                                                        후기 내용<br>
-                                                        후기 쓴 날짜<br>
-                                                        <br>
-                                                    </div>
-                                                    <div class="row">
-                                                        사용자 이름<br>
-                                                        별점<br>
-                                                        후기 내용<br>
-                                                        후기 쓴 날짜
-                                                    </div>
-
-                                                    <!--<div class="rating" style="float:left;">
-                                                        <i class="fa fa-star-o"></i>
-                                                        <i class="fa fa-star-o"></i>
-                                                        <i class="fa fa-star-o"></i>
-                                                        <i class="fa fa-star-o"></i>
-                                                        <i class="fa fa-star-o"></i>
-                                                    </div>
-                                                    <div style="float:right;">
-                                                        <h5 align="right">id</h5>
-                                                    </div>-->
-
-                                                </div>
-                                                <!--<div>
-                                                    <p>A Pocket PC is a handheld computer, which features many of the same
-                                                        capabilities as a modern PC. These handy little devices allow
-                                                        individuals to retrieve and store e-mail messages, create a contact
-                                                        file, coordinate appointments, surf the internet, exchange text messages
-                                                        and more. Every product that is labeled as a Pocket PC must be
-                                                        accompanied with specific software to operate the unit and must feature
-                                                        a touchscreen and touchpad.</p>
-                                                </div>-->
-                                                <div>
-                                                    <img src="">
-=======
                                         <div class="tab-pane" id="tabs-3" role="tabpanel">
                                             <div class="product__details__tab__content">
                                                 <div class="product__details__tab__content__item">
 
-                                                    <span th:text="${#lists.size(shopreview)}"></span>개
+                                                    <!--<span th:text="|리뷰 ${#lists.size(shopreview)}개|"></span>-->
                                                     <th:block th:each="review , index : ${shopreview}">
                                                         <div class="row">
                                                             <div class="col-sm-2">
                                                                 <p th:text="${review.getUserid()}"></p></div>
-                                                            <div class="col-sm-5">
+                                                            <div class="col-sm-8">
                                                                 <th:block th:if="${review.getScore()==5}">
                                                                     <div class="rating">★★★★★</div>
                                                                 </th:block>
@@ -779,11 +286,13 @@
                                                                 </th:block>
                                                                 <p id="content1" th:text="${review.getContent()}"></p>
                                                             </div>
+
+                                                            <!--<div class="col-sm-2">
+
+                                                            </div>-->
                                                             <div class="col-sm-2">
                                                                 <p th:text="${review.getDate()}"></p>
-                                                            </div>
 
-                                                            <div class="col-sm-2">
                                                                 <div th:if="${review.getUserid()==userid}">
                                                                     <form th:action="@{'/reviews/updatehotel'}"
                                                                           method="post">
@@ -912,6 +421,7 @@
                                                                     </form>
                                                                 </div>
                                                             </div>
+
                                                         </div>
                                                     </th:block>
 
@@ -921,10 +431,10 @@
                                                               action="/reviews/createhotel" method="post"
                                                               onsubmit="return submitCheck();">
                                                             <fieldset>
-                                                                <button type="submit"
+                                                                <!--<button type="submit"
                                                                         class="btn btn-outline-primary btn-sm"
                                                                         id="comment-create-btn">후기 작성
-                                                                </button>
+                                                                </button>-->
                                                                 <span class="text-bold">별점을 선택하세요</span>
                                                                 <input type="radio" name="score" value="5"
                                                                        id="rate1"><label
@@ -942,49 +452,20 @@
                                                                        id="rate5"><label
                                                                     for="rate5">★</label>
                                                             </fieldset>
-                                                            <div>
+                                                            <div class="input-group">
                                                                 <input type="hidden" th:value="${shop.getShopid()}"
                                                                        name="shopid">
                                                                 <input type="hidden" th:value="${userid}" name="userid">
-                                                                <textarea class="col-auto form-control" type="text"
-                                                                          id="content" name="content"
+                                                                <textarea class="form-control" aria-label="With textarea" id="content" name="content"
                                                                           placeholder="후기를 남겨주세요"></textarea>
+                                                                <button type="submit" class="input-group-text" id="comment-create-btn">후기 작성</button>
                                                             </div>
                                                         </form>
                                                     </div>
->>>>>>> f447d949d36c3e792afcf631f3469f4c6e448ae6
                                                 </div>
                                             </div>
                                         </div>
 
-<<<<<<< HEAD
-                                        <ul class="nav nav-tabs" role="tablist">
-                                            <li class="nav-item">
-                                                <a class="nav-link" data-toggle="tab" href="#tabs-1" role="tab">이용안내</a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link" data-toggle="tab" href="#tabs-2" role="tab">기본정보</a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link" data-toggle="tab" href="#tabs-3" role="tab">사용자후기</a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link active" data-toggle="tab" href="#tabs-4" role="tab">블로그후기</a>
-                                            </li>
-                                        </ul>
-
-                                        <div class="tab-pane active" id="tabs-4" role="tabpanel">
-                                            <div class="product__details__tab__content">
-                                                <div class="product__details__tab__content__item" >
-                                                    <div class="card mb-3" th:each="item:${review.items}" style="width: 700px">
-                                                        <a th:href="${item.link}">
-                                                            <div class="card-body" >
-                                                                <h3 class="card-title" th:utext="${item.title}"></h3><br>
-                                                                <p class="card-text" th:utext="${item.description}"></p><br>
-                                                                <p class="card-text">
-                                                                    <small class="text-muted" th:utext="${item.bloggername}"></small>&nbsp;
-                                                                    <small class="text-muted" th:utext="${item.postdate}"></small>
-=======
                                         <div class="tab-pane" id="tabs-4" role="tabpanel">
                                             <div class="product__details__tab__content">
                                                 <div class="product__details__tab__content__item">
@@ -992,7 +473,7 @@
                                                          style="width: 100%">
                                                         <a th:href="${item.link}">
                                                             <div class="card-body">
-                                                                <h4 class="card-title" th:utext="${item.title}"></h4>
+                                                                <h5 class="card-title" th:utext="${item.title}"></h5>
                                                                 <br>
                                                                 <p class="card-text" th:utext="${item.description}"></p>
                                                                 <br>
@@ -1001,21 +482,15 @@
                                                                            th:utext="${item.bloggername}"></small>&nbsp;
                                                                     <small class="text-muted"
                                                                            th:utext="${item.postdate}"></small>
->>>>>>> f447d949d36c3e792afcf631f3469f4c6e448ae6
                                                                 </p>
                                                             </div>
                                                         </a>
                                                     </div>
                                                     <div class="postbar" style="clear:both; text-align: center;">
-<<<<<<< HEAD
-                                                        <a th:href="@{https://search.naver.com/search.naver(query=${shop.getName()})}">검색 결과 더 보기</a>
-                                                    </div><br>
-=======
                                                         <a th:href="@{https://search.naver.com/search.naver(query=${shop.getName()})}">검색
                                                             결과 더 보기</a>
                                                     </div>
                                                     <br>
->>>>>>> f447d949d36c3e792afcf631f3469f4c6e448ae6
                                                 </div>
                                             </div>
                                         </div>
@@ -1035,8 +510,6 @@
         src="//dapi.kakao.com/v2/maps/sdk.js?appkey=55427368a7ad4ced6d2416666f61ad47&libraries=services"></script>
 </body>
 <script>
-<<<<<<< HEAD
-=======
     const triggerTabList = document.querySelectorAll('#myTab a')
     triggerTabList.forEach(triggerEl => {
         const tabTrigger = new bootstrap.Tab(triggerEl)
@@ -1048,7 +521,6 @@
     })
 
 
->>>>>>> f447d949d36c3e792afcf631f3469f4c6e448ae6
     $(document)
         .on("click", "#comment-create-btn", function () {
             if ($(':radio[name="score"]:checked').length < 1) {
@@ -1118,8 +590,6 @@
             return flag;
         })
 
-<<<<<<< HEAD
-=======
         .on('click', '#btnLike', function () {
             shopId = $(this).attr('name')
             console.log(shopId)
@@ -1144,7 +614,6 @@
             })
         })
 
->>>>>>> f447d949d36c3e792afcf631f3469f4c6e448ae6
 
     var mapContainer = document.getElementById('map'), // 지도를 표시할 div
 
@@ -1155,24 +624,6 @@
     // 지도를 생성합니다
     var map = new kakao.maps.Map(mapContainer, mapOption);
     // 주소-좌표 변환 객체를 생성합니다
-<<<<<<< HEAD
-    var geocoder = new kakao.maps.services.Geocoder();
-    // 주소로 좌표를 검색합니다
-    geocoder.addressSearch(document.getElementById("address").innerHTML, function (result, status) {
-        // 정상적으로 검색이 완료됐으면
-        if (status === kakao.maps.services.Status.OK) {
-            var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-            // 결과값으로 받은 위치를 마커로 표시합니다
-            var marker = new kakao.maps.Marker({
-                map: map,
-                position: coords
-            });
-            // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
-            map.setCenter(coords);
-        }
-    });
-
-=======
 
     $("a[href='#tabs-2']").on('shown.bs.tab', function(){
         kakao.maps.event.trigger(map, resizeMap());
@@ -1208,7 +659,6 @@
         map.relayout();
     }
 
->>>>>>> f447d949d36c3e792afcf631f3469f4c6e448ae6
     const commentEditModal = document.querySelector("#review-edit-Modal")
 
     commentEditModal.addEventListener("show.bs.modal", function (event) {

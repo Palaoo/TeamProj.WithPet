@@ -5,18 +5,13 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=<device-width>, initial-scale=1.0">
-<<<<<<< HEAD
-    <title>Document</title>
-=======
+
     <title>HOTEL</title>
->>>>>>> f447d949d36c3e792afcf631f3469f4c6e448ae6
     <th:block th:replace="fragments/index::style"></th:block>
 </head>
 <style>
     #top {
-<<<<<<< HEAD
-        margin-bottom: 10%;
-=======
+
         margin-bottom: 5%;
     }
 
@@ -33,7 +28,6 @@
         background: white;
         border: 1px solid;
         color: #000;
->>>>>>> f447d949d36c3e792afcf631f3469f4c6e448ae6
     }
     #btnLike,#heart_img{text-align:center;}
 </style>
@@ -41,74 +35,17 @@
 
 <div th:replace="fragments/index :: header"></div>
 
-<<<<<<< HEAD
-<!--<h2>호텔 찾기</h2>
-<div>
-    <form action="/hotel" method="post" id="frminfo">
-        <input type="date" name="checkin" id="checkin" th:value="${checkin}">&nbsp;
-        <input type="date" name="checkout" id="checkout" th:value="${checkout}">&nbsp;
-        인원수&nbsp;<input type="number" th:value="${person}" name="person" id="person">
 
-        <select name="order">
-            <option th:selected="${#strings.equals(order, 'price')}" value="price">요금순</option>
-            <option th:selected="${#strings.equals(order, 'score')}" value="score">평점순</option>
-        </select>&nbsp;
-
-        <select name="size">
-            <option th:selected="${#strings.equals(size, '4')}" value="4">모든견종</option>
-            <option th:selected="${#strings.equals(size, '1')}" value="1">소형견</option>
-            <option th:selected="${#strings.equals(size, '2')}" value="2">중형견</option>
-            <option th:selected="${#strings.equals(size, '3')}" value="3">대형견</option>
-        </select>
-
-        <input type="submit" th:value="조회" id="submit">
-    </form>
-</div><br>
-
-<div>
-    <div class="card mb-3" th:each="hotelList : ${hotelList}" style="max-width: 540px;">
-        <a th:href="@{/hotel/detail(shopid=${hotelList.getShopid()})}" class="detail">
-            <div class="row g-0" >
-                <div class="col-md-4">
-                    <img th:src="${hotelList.getPath()}" style="height: 150px" class="img-fluid rounded-start">
-                </div>
-                <div class="col-md-8" >
-                    <div class="card-body">
-                        <h3 class="card-title" th:text="${hotelList.getName()}"></h3><br>
-                        별점(댓글수)<br>
-                        <th:block th:each="feat:${hotelList.getShopFeats()}">
-                            <span class="card-text" th:text="${feat.getFeatname()}"></span>
-                        </th:block><br><br>
-                        <p class="card-text" th:if="${#strings.equals(hotelList.getAvail(), 'true')}"
-                           th:text="|최저가 ${hotelList.getPrice()}원|" style="text-align: right"></p>
-                        <p class="card-text" th:unless="${#strings.equals(hotelList.getAvail(), 'true')}"
-                           style="text-align: right">예약 마감</p>
-                    </div>
-                </div>
-            </div>
-        </a>
-    </div>
-</div>
-<br><br><br>-->
-
-=======
->>>>>>> f447d949d36c3e792afcf631f3469f4c6e448ae6
 <section class="breadcrumb-option">
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
                 <div class="breadcrumb__text">
-<<<<<<< HEAD
-                    <h4>호텔찾기</h4>
-                    <div class="breadcrumb__links">
-                        <a href="./index.html">Home</a>
-                        <a href="./shop.html">Hotel</a>
-=======
+
                     <h4>Hotel</h4>
                     <div class="breadcrumb__links">
                         <a href="/">Home</a>
                         <a href="/hotel">Hotel</a>
->>>>>>> f447d949d36c3e792afcf631f3469f4c6e448ae6
                         <span>Search</span>
                     </div>
                 </div>
@@ -118,74 +55,7 @@
 </section>
 <section class="shopping-cart spad">
     <div class="container">
-<<<<<<< HEAD
-        <div class="row">
-            <div class="col-lg-12">
-                <div id="top">
-                    <form action="/hotel" method="post" id="frminfo">
-                        <table align="center">
-                            <tr>
-                                <td><select name="order">
-                                    <option th:selected="${#strings.equals(order, 'price')}" value="price">요금순</option>
-                                    <option th:selected="${#strings.equals(order, 'score')}" value="score">평점순</option>
-                                </select>&nbsp;
-                                </td>
-                                <td><select name="size">
-                                    <option th:selected="${#strings.equals(size, '4')}" value="4">모든견종</option>
-                                    <option th:selected="${#strings.equals(size, '1')}" value="1">소형견</option>
-                                    <option th:selected="${#strings.equals(size, '2')}" value="2">중형견</option>
-                                    <option th:selected="${#strings.equals(size, '3')}" value="3">대형견</option>
-                                </select></td>
-                                <td><input type="date" name="checkin" id="checkin" th:value="${checkin}">&nbsp;
-                                    <input type="date" name="checkout" id="checkout" th:value="${checkout}">&nbsp;
-                                </td>
-                                <td>인원수&nbsp;<input type="number" th:value="${person}" name="person" id="person"
-                                                    min="1"></td>
-                                <td><input type="submit" th:value="조회" id="submit"></td>
-                            </tr>
-                        </table>
-                    </form>
-                </div>
 
-                <div class="container">
-                    <div class="row row-cols-1 row-cols-md-3 g-4">
-                        <div class="col" th:each="hotelList : ${hotelList}">
-                            <div class="card h-100">
-                                <a th:href="@{/hotel/detail(shopid=${hotelList.getShopid()})}" class="detail"><img
-                                        th:src="${hotelList.path}" class="card-img-top" alt="" width="300" height="300"></a>
-                                <div class="card-body">
-                                    <h5 class="card-title" th:text="${hotelList.getName()}"></h5>
-                                    <a href="#" id="btnLike" th:name="${hotelList.shopid}">
-                                        <img th:if="${hotelList.isLiked==1}" src="img/icon/redheart.png"
-                                             th:id="|btnLike${hotelList.shopid}|" width="38" height="36" alt="">
-                                        <img th:if="${hotelList.isLiked==0}" src="img/icon/heart.png"
-                                             th:id="|btnLike${hotelList.shopid}|" alt="">
-                                    </a>
-                                    <ul class="list-group list-group-flush">
-                                        <li class="list-group-item">별점(댓글수)</li>
-                                        <li class="list-group-item"
-                                            th:if="${#strings.equals(hotelList.getAvail(), 'true')}"
-                                            th:text="|최저가 ${hotelList.getPrice()}원|"></li>
-                                        <li class="list-group-item"
-                                            th:unless="${#strings.equals(hotelList.getAvail(), 'true')}">예약 마감
-                                        </li>
-                                        <li class="list-group-item">
-                                            <th:block th:each="feat:${hotelList.getShopFeats()}">
-                                                <span class="card-text" th:text="${feat.getFeatname()}"></span>
-                                            </th:block>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-=======
 
         <div class="row">
             <div class="col-lg-12">
@@ -268,7 +138,6 @@
     </div>
 </section>
 
->>>>>>> f447d949d36c3e792afcf631f3469f4c6e448ae6
 <th:block th:replace="fragments/index :: footer"></th:block>
 
 </body>
@@ -284,31 +153,7 @@
                 alert("인원수를 확인해주세요.")
                 return false;
             }
-<<<<<<< HEAD
-        }).on('click', '#btnLike', function () {
-        shopId = $(this).attr('name')
-        console.log(shopId)
-        $.ajax({
-            type: 'get',
-            url: 'append_likehotel?shopId=' + shopId,
-            success: function (data) {
-                ID = '#btnLike' + shopId
-                if (data == '1') {
-                    $(ID).attr("src", "img/icon/redheart.png")
-                    $(ID).attr("width", "38px")
-                    $(ID).attr("height", "36px")
-                    $('#likeCount' + shopId).text(parseInt($('#likeCount' + shopId).text()) + 1)
-                } else {
-                    console.log('여기')
-                    $(ID).attr("height", "36px")
-                    $(ID).attr("width", "38px")
-                    $(ID).attr("src", "img/icon/love.png")
-                    $('#likeCount' + shopId).text(parseInt($('#likeCount' + shopId).text()) - 1)
-                }
-            }
-        })
-    })
-=======
+
         })
         .on('click', '#btnLike', function () {
             shopId = $(this).attr('name')
@@ -333,7 +178,6 @@
                 }
             })
         })
->>>>>>> f447d949d36c3e792afcf631f3469f4c6e448ae6
 
 </script>
 </html>

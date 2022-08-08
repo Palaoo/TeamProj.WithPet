@@ -50,23 +50,23 @@ public class BusinessUserController {
         this.hotelroomimgRepository = hotelroomimgRepository;
     }
 
-    @GetMapping("/businessPage")
-    public String businessPage(HttpServletRequest req, Model model) {
-
-        HttpSession session = req.getSession();
-        if (session.getAttribute("userid") != null) {
-            model.addAttribute("userid", session.getAttribute("userid"));
-        }
-
-        if (!tools.isUserLogined(req)) {
-            return "login";
-        }
-
-        if (businessUserService.isBusinessUser(req.getSession().getAttribute("userid").toString()) == -1L) {
-            return "registBusiness";
-        }
-        return "redirect:/businessInfo";
-    }
+//    @GetMapping("/businessPage")
+//    public String businessPage(HttpServletRequest req, Model model) {
+//        if (!tools.isUserLogined(req)) {
+//            return "login";
+//        }
+//
+//        HttpSession session = req.getSession();
+//
+//        if (session.getAttribute("userid") != null) {
+//            model.addAttribute("userid", session.getAttribute("userid"));
+//        }
+//
+//        if (businessUserService.isBusinessUser(req.getSession().getAttribute("userid").toString()) == -1L) {
+//            return "registBusiness";
+//        }
+//        return "redirect:/businessInfo";
+//    }
 
     @GetMapping("/registBusiness")
     public String registBusiness(HttpServletRequest req) {
@@ -149,7 +149,7 @@ public class BusinessUserController {
 
 
         Long shopid = shopService.save(shop);
-        String path = s3Uploader.uploadFiles(thumb, "thumbnail");
+        String path = s3Uploader.uploadFiles(thumb, "thumbnail",0);
         hotelimgRepository.save(new Hotelimg(shopid, UUID.randomUUID().toString(), thumb.getOriginalFilename(), path));
 
 
@@ -162,7 +162,7 @@ public class BusinessUserController {
         if (typeid == 1) {
             for (int i = 0; i < roomname.length; i++) {
                 Hotelroom hotelroom = hotelroomService.save(new Hotelroom(shopid, roomname[i], price[i], person[i], content[i]));
-                String roomPath = s3Uploader.uploadFiles(roomThumb[i], "thumbnail");
+                String roomPath = s3Uploader.uploadFiles(roomThumb[i], "thumbnail",0);
                 hotelroomimgRepository.save(new Hotelroomimg(hotelroom.getRoomid(), UUID.randomUUID().toString(), roomThumb[i].getOriginalFilename(), roomPath));
             }
         }
@@ -195,7 +195,7 @@ public class BusinessUserController {
         shopService.save(shop);
         if (!thumb.isEmpty()) {
             hotelimgRepository.deleteByShopid(shopid);
-            String path = s3Uploader.uploadFiles(thumb, "thumbnail");
+            String path = s3Uploader.uploadFiles(thumb, "thumbnail",0);
             hotelimgRepository.save(new Hotelimg(shopid, UUID.randomUUID().toString(), thumb.getOriginalFilename(), path));
         }
 
@@ -211,7 +211,7 @@ public class BusinessUserController {
                 Hotelroom hotelroom = hotelroomService.save(new Hotelroom(roomid[i], shopid, roomname[i], price[i], person[i], content[i]));
                 if (!roomThumb[i].isEmpty()) {
                     hotelimgRepository.deleteByShopid(roomid[i]);
-                    String roomPath = s3Uploader.uploadFiles(roomThumb[i], "thumbnail");
+                    String roomPath = s3Uploader.uploadFiles(roomThumb[i], "thumbnail",0);
                     hotelroomimgRepository.save(new Hotelroomimg(hotelroom.getRoomid(), UUID.randomUUID().toString(), roomThumb[i].getOriginalFilename(), roomPath));
                 }
             }

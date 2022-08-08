@@ -1,5 +1,7 @@
 package com.project.withpet.controller;
 
+import com.amazonaws.AmazonServiceException;
+import com.amazonaws.SdkClientException;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.PutObjectRequest;
@@ -23,15 +25,19 @@ public class S3Uploader {
     private String bucket;
 
 
-
-    public String uploadFiles(MultipartFile multipartFile, String dirName) throws IOException {
+    public String uploadFiles(MultipartFile multipartFile, String dirName, int i) throws IOException {
         File uploadFile = convert(multipartFile)  // 파일 변환할 수 없으면 에러
                 .orElseThrow(() -> new IllegalArgumentException("error: MultipartFile -> File convert fail"));
-        return upload(uploadFile, dirName);
+        return upload(uploadFile, dirName, i);
     }
 
-    public String upload(File uploadFile, String filePath) {
-        String fileName = filePath + "/" + uploadFile.getName();   // S3에 저장된 파일 이름
+    public String upload(File uploadFile, String filePath, int i) {
+        String fileName;
+        if (i == 0)
+            fileName = filePath + "/" + uploadFile.getName();   // S3에 저장된 파일 이름
+        else {
+            fileName = filePath + "/" + UUID.randomUUID() + uploadFile.getName();
+        }
         String uploadImageUrl = putS3(uploadFile, fileName); // s3로 업로드
         removeNewFile(uploadFile);
         return uploadImageUrl;
@@ -41,6 +47,10 @@ public class S3Uploader {
     private String putS3(File uploadFile, String fileName) {
         amazonS3Client.putObject(new PutObjectRequest(bucket, fileName, uploadFile).withCannedAcl(CannedAccessControlList.PublicRead));
         return amazonS3Client.getUrl(bucket, fileName).toString();
+    }
+
+    public void deleteS3(String source,String path) throws SdkClientException, AmazonServiceException {
+        amazonS3Client.deleteObject("withpetimg", path + source);
     }
 
     // 로컬에 저장된 이미지 지우기

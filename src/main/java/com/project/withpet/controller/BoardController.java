@@ -159,7 +159,7 @@ public class BoardController {
         String[] pathContent = new String[files.size()];
         for (int i = 0; i < files.size(); i++) {
             File file = files.get(i);
-            s3Uploader.upload(file, "images");
+            s3Uploader.upload(file, "images",0);
             pathContent[i]= file.getPath().replace("C:\\summernote_image\\",
                     "https://withpetimg.s3.ap-northeast-2.amazonaws.com/images/");
             Boardimg boardimg = new Boardimg(boardCode, file.getName(), "생략", pathContent[i]);
@@ -224,7 +224,7 @@ public class BoardController {
         String[] pathContent = new String[files.size()];
         for (int i = 0; i < files.size(); i++) {
             File file = files.get(i);
-            s3Uploader.upload(file, "images");
+            s3Uploader.upload(file, "images",0);
             pathContent[i]= file.getPath().replace("C:\\summernote_image\\",
                     "https://withpetimg.s3.ap-northeast-2.amazonaws.com/images/");
             Boardimg boardimg = new Boardimg(boardcode, file.getName(), "생략", pathContent[i]);

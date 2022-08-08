@@ -1,9 +1,7 @@
 package com.project.withpet.dto;
 
-<<<<<<< HEAD
-=======
+
 import com.project.withpet.domain.Booking;
->>>>>>> f447d949d36c3e792afcf631f3469f4c6e448ae6
 import lombok.*;
 
 @NoArgsConstructor
@@ -23,8 +21,7 @@ public class BookingForm {
     private String name;
     private Long shopid;
     private String mobile;
-<<<<<<< HEAD
-=======
+
     private String path;
     private Booking booking;
 
@@ -34,5 +31,4 @@ public class BookingForm {
         this.path = path;
         this.booking = booking;
     }
->>>>>>> f447d949d36c3e792afcf631f3469f4c6e448ae6
 }

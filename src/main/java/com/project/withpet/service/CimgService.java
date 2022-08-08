@@ -42,4 +42,8 @@ public class CimgService {
         }
         return pathList;
     }
+
+    public List<Cimg> findImgByProdId(Long prodId) {
+        return cimgRepository.findByProdid(prodId);
+    }
 }

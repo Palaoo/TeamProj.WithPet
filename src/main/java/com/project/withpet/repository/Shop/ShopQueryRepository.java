@@ -21,28 +21,7 @@ public class ShopQueryRepository {
         this.queryFactory = queryFactory;
     }
 
-<<<<<<< HEAD
-//    public List<Shop> findAvailHotel(String checkin, String checkout, Long person){
-//        return queryFactory
-//                .selectFrom(shop)
-//                .where(shop.shopid.in(
-//                        JPAExpressions.select(hotelroom.shopid)
-//                                .from(hotelroom)
-//                                .where(hotelroom.person.goe(person), hotelroom.roomid.notIn(
-//                                        JPAExpressions.select(booking.roomid)
-//                                                .from(booking)
-//                                                .where(booking.checkin.between(checkin, checkout)
-//                                                        .or(booking.checkout.between(checkin, checkout))
-//                                                        .or(booking.checkin.loe(checkin)), booking.checkout.goe(checkout)
-//                                                )
-//                                        )
-//                                )
-//                        )
-//                )
-//                .fetch();
-//    }
-=======
->>>>>>> f447d949d36c3e792afcf631f3469f4c6e448ae6
+
 
     public List<Shop> findAvailHotel(String checkin, String checkout, Long person){
         return queryFactory
@@ -91,24 +70,7 @@ public class ShopQueryRepository {
                 .fetch();
     }
 
-<<<<<<< HEAD
-//    public List<Hotelroom> findAvailRoom(String checkin, String checkout, Long person, Long shopid){
-//        return queryFactory
-//                .selectFrom(hotelroom)
-//                .where(hotelroom.shopid.eq(shopid), hotelroom.person.goe(person), hotelroom.roomid.notIn(
-//                        JPAExpressions.select(booking.roomid)
-//                                .from(booking)
-//                                .where(booking.checkin.between(checkin, checkout)
-//                                        .or(booking.checkout.between(checkin, checkout))
-//                                        .or(booking.checkin.loe(checkin)), booking.checkout.goe(checkout)
-//                                )
-//                        )
-//                )
-//                .fetch();
-//    }
 
-=======
->>>>>>> f447d949d36c3e792afcf631f3469f4c6e448ae6
 
 
 }

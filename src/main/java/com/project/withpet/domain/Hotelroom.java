@@ -28,8 +28,7 @@ public class Hotelroom {
     @Column
     private String content;
 
-<<<<<<< HEAD
-=======
+
     @OneToMany(mappedBy = "shopid", cascade = CascadeType.REMOVE)
     private List<Hotelroomimg> hotelroomimgList;
 
@@ -68,7 +67,6 @@ public class Hotelroom {
     public void setHotelroomimgList(List<Hotelroomimg> hotelroomimgList) {
         this.hotelroomimgList = hotelroomimgList;
     }
->>>>>>> f447d949d36c3e792afcf631f3469f4c6e448ae6
 
     public Long getRoomid() {
         return roomid;

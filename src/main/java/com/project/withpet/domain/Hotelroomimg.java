@@ -17,10 +17,7 @@ public class Hotelroomimg {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-<<<<<<< HEAD
-=======
 
->>>>>>> f447d949d36c3e792afcf631f3469f4c6e448ae6
     @JoinColumn(name = "hotelroom_roomid")
     private Long shopid;
     @Column
@@ -29,8 +26,7 @@ public class Hotelroomimg {
     private String origname;
     @Column
     private String path;
-<<<<<<< HEAD
-=======
+
 
     public Hotelroomimg(Long shopid, String name, String origname, String path) {
         this.shopid = shopid;
@@ -38,5 +34,4 @@ public class Hotelroomimg {
         this.origname = origname;
         this.path = path;
     }
->>>>>>> f447d949d36c3e792afcf631f3469f4c6e448ae6
 }

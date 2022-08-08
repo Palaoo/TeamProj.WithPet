@@ -9,13 +9,12 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>MYPAGE</title>
     <th:block th:replace="fragments/index::style"></th:block>
 </head>
 <body>
+<th:block th:replace="fragments/mypage::style"></th:block>
 <style>
-
 </style>
 
 <div th:replace="fragments/index :: header"></div>
@@ -53,7 +52,6 @@
                                     <div th:replace="fragments/mypage :: sideBar"></div>
                                 </div>
                             </div>
-
 
                         </div>
 
@@ -143,37 +141,28 @@
                                     </form>
                                 </div>
                             </div>
-
-                            <div class="col-md-3">
-                                <form th:action="${'/mypage/myshop/delete'}" method="get">
-                                    <input type="hidden" name="likeid" th:value="${LikeDTO.shoplike.getLikeid()}">
-                                    <input type="hidden" name="shopid" th:value="${LikeDTO.shoplike.getShopid()}">
-                                    <button  class="btn btn-outline-danger btn-sm" name="delete">삭제</button>
-                                </form>
-                            </div>
                         </div>
                     </div>
 
+                    <div class="tab-pane" id="review" role="tabpanel" aria-labelledby="review-tab">
+                    </div>
 
-                        <div class="tab-pane" id="review" role="tabpanel" aria-labelledby="review-tab">
-                        </div>
+                    <div class="tab-pane" id="mywriting" role="tabpanel" aria-labelledby="mywriting-tab">
+                    </div>
 
-                        <div class="tab-pane" id="mywriting" role="tabpanel" aria-labelledby="mywriting-tab">
-                        </div>
+                    <div class="tab-pane" id="manager" role="tabpanel" aria-labelledby="manager-tab">
+                    </div>
 
-                        <div class="tab-pane" id="manager" role="tabpanel" aria-labelledby="manager-tab">
-                        </div>
-
-                        <div class="tab-pane" id="business" role="tabpanel" aria-labelledby="business-tab">
-                        </div>
+                    <div class="tab-pane" id="business" role="tabpanel" aria-labelledby="business-tab">
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <br><br><br><br>
+</div>
+<br><br><br><br>
 
-    <th:block th:replace="fragments/index :: footer"></th:block>
+<th:block th:replace="fragments/index :: footer"></th:block>
 </body>
 <script>
     $(document)

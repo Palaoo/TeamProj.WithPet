@@ -161,13 +161,9 @@
 		Quantity change
 	--------------------- */
     var proQty = $('.pro-qty');
-<<<<<<< HEAD
-    proQty.prepend('<span class="fa fa-angle-up dec qtybtn"></span>');
-    proQty.append('<span class="fa fa-angle-down inc qtybtn"></span>');
-=======
+
     /*proQty.prepend('<span class="fa fa-angle-up dec qtybtn"></span>');
     proQty.append('<span class="fa fa-angle-down inc qtybtn"></span>');*/
->>>>>>> f447d949d36c3e792afcf631f3469f4c6e448ae6
     proQty.on('click', '.qtybtn', function () {
         var $button = $(this);
         var oldValue = $button.parent().find('input').val();
@@ -185,13 +181,9 @@
     });
 
     var proQty = $('.pro-qty-2');
-<<<<<<< HEAD
-    proQty.prepend('<span class="fa fa-angle-left dec qtybtn"></span>');
-    proQty.append('<span class="fa fa-angle-right inc qtybtn"></span>');
-=======
+
     /*proQty.prepend('<span class="fa fa-angle-left dec qtybtn"></span>');
     proQty.append('<span class="fa fa-angle-right inc qtybtn"></span>');*/
->>>>>>> f447d949d36c3e792afcf631f3469f4c6e448ae6
     proQty.on('click', '.qtybtn', function () {
         var $button = $(this);
         var oldValue = $button.parent().find('input').val();
@@ -223,8 +215,6 @@
         });
     });
 
-<<<<<<< HEAD
-=======
     $('#back-to-top').on('click',function(e){
         e.preventDefault();
         $('html,body').animate({scrollTop:0},100);
@@ -238,5 +228,4 @@
         }
     });
 
->>>>>>> f447d949d36c3e792afcf631f3469f4c6e448ae6
 })(jQuery);

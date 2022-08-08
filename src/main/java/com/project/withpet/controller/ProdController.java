@@ -1,5 +1,7 @@
 package com.project.withpet.controller;
 
+import com.amazonaws.AmazonServiceException;
+import com.amazonaws.SdkClientException;
 import com.project.withpet.domain.Cimg;
 import com.project.withpet.domain.Img;
 import com.project.withpet.domain.ProdReview;
@@ -46,6 +48,109 @@ public class ProdController {
         this.businessUserService = businessUserService;
         this.likeService = likeService;
         this.prodReviewService = prodReviewService;
+    }
+
+    @GetMapping("/businessPage")
+    public String businessPage(HttpServletRequest req, Model model,
+                               @PageableDefault(sort = "id", direction = Sort.Direction.DESC, size = 6) Pageable pageable) {
+        if (!tools.isUserLogined(req)) {
+            return "login";
+        }
+
+        HttpSession session = req.getSession();
+
+        if (session.getAttribute("userid") != null) {
+            model.addAttribute("userid", session.getAttribute("userid"));
+        }
+
+        if (businessUserService.isBusinessUser(req.getSession().getAttribute("userid").toString()) == -1L) {
+            return "registBusiness";
+        }
+
+        String userId = req.getSession().getAttribute("userid").toString();
+        Page<Product> prods = prodService.findProdsByBid(pageable, businessUserService.findByUid(userId).getBid());
+        List<String> imgURLs = imgService.findImgURLs(prods);
+        ArrayList<ProdDTO> pDTOs = new ArrayList<ProdDTO>();
+
+        for (int i = 0; i < prods.getNumberOfElements(); i++) {
+            Product product = prods.toList().get(i);
+            String imgURL = imgURLs.get(i);
+            String brand = businessUserService.findByBid(product.getBid()).getBrand();
+            ProdDTO pDTO = new ProdDTO(product, imgURL, brand, likeService.isLiked(product.getId(), userId));
+            pDTOs.add(pDTO);
+        }
+        int pageN = pageable.getPageNumber();
+        int startPage = ((int) Math.floor(pageN / 5)) * 5 + 1;
+        int totalPages = prods.getTotalPages();
+        int endPage = 0;
+        if (totalPages < startPage + 4) {
+            endPage = totalPages;
+        } else {
+            endPage = startPage + 4;
+        }
+
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endPage);
+        model.addAttribute("totalPage", prods.getTotalPages());
+        model.addAttribute("pDTOs", pDTOs);
+
+        model.addAttribute("businessId", businessUserService.findByUid(req.getSession().getAttribute("userid").toString()).getBid());
+
+        return "businessInfo";
+    }
+
+    @GetMapping("prod_update_page")
+    public String prodUpdatePage(@RequestParam("prodId") Long prodId, Model model) {
+        Product product = prodService.findById(prodId).get();
+        Img img = imgService.findByProdid(prodId).get();
+        model.addAttribute("prodName", product.getName());
+        model.addAttribute("price", product.getPrice());
+        model.addAttribute("type", product.getType());
+        model.addAttribute("detail", product.getDetail());
+        model.addAttribute("prodId", prodId);
+
+
+
+        return "updateProd";
+    }
+
+    @PostMapping("prod_update")
+    public String prodUpdate(@RequestParam String prodName, @RequestParam int price,
+                             @RequestParam int type, HttpServletRequest req,
+                             @RequestParam String content, @RequestParam("prodId") Long prodId,
+                             Model model) {
+        content = content.replace("/summernoteImage/", "https://withpetimg.s3.ap-northeast-2.amazonaws.com/contents/");
+
+        prodService.updateByProdId(prodId, content, prodName, price, type);
+
+        String[] pathContent = new String[files.size()];
+        for (int i = 0; i < files.size(); i++) {
+            pathContent[i] = s3Uploader.upload(files.get(i), "contents", 0);
+            Cimg cimg = new Cimg();
+            cimg.setPath(pathContent[i]);
+            cimg.setProdid(prodId);
+            cimg.setOrigname("생략");
+            cimg.setName(files.get(i).getName());
+            cimgService.save(cimg);
+        }
+
+
+
+        return "redirect:/businessPage";
+    }
+
+    @GetMapping("prod_delete")
+    public String prodDelete(@RequestParam("prodId") Long prodId) {
+        prodService.deleteProdByProdId(prodId);
+        try {
+            s3Uploader.deleteS3(imgService.findByProdid(prodId).get().getName(), "thumbnail/");
+            for (Cimg cimg : cimgService.findImgByProdId(prodId)) {
+                s3Uploader.deleteS3(cimg.getName(), "contents/");
+            }
+        } catch (Exception se) {
+            se.printStackTrace();
+        }
+        return "redirect:/businessPage";
     }
 
 
@@ -105,7 +210,7 @@ public class ProdController {
     @PostMapping("/newProd")
     public String newProd(@RequestParam String prodName, @RequestParam int price,
                           @RequestParam int type, HttpServletRequest req, @RequestParam MultipartFile thumb,
-                          @RequestParam List<MultipartFile> cimgs, @RequestParam String content) throws IOException {
+                          @RequestParam String content) throws IOException {
 
         content = content.replace("/summernoteImage/", "https://withpetimg.s3.ap-northeast-2.amazonaws.com/contents/");
 
@@ -120,7 +225,7 @@ public class ProdController {
 
         String[] pathContent = new String[files.size()];
         for (int i = 0; i < files.size(); i++) {
-            pathContent[i] = s3Uploader.upload(files.get(i), "contents");
+            pathContent[i] = s3Uploader.upload(files.get(i), "contents", 0);
             Cimg cimg = new Cimg();
             cimg.setPath(pathContent[i]);
             cimg.setProdid(prodId);
@@ -129,14 +234,14 @@ public class ProdController {
             cimgService.save(cimg);
         }
 
-        files.clear();
 
-        String pathThumb = s3Uploader.uploadFiles(thumb, "thumbnail");
+        files.clear();
+        String pathThumb = s3Uploader.uploadFiles(thumb, "thumbnail", 1);
 
         Img img = new Img();
 //        for (MultipartFile file : files) {
         img.setOrigname(thumb.getOriginalFilename());
-        img.setName(UUID.randomUUID().toString());  // 이부분 고쳐야함
+        img.setName(pathThumb.substring(61));  // 이부분 고쳐야함
         img.setProdid(prodId);
         img.setPath(pathThumb);
         imgService.save(img);
@@ -145,7 +250,7 @@ public class ProdController {
         System.out.println(pathThumb);
 
 
-        return "redirect:/businessInfo";
+        return "redirect:/businessPage";
     }
 
     ArrayList<File> files = new ArrayList<>();

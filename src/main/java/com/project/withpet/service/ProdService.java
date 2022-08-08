@@ -25,8 +25,20 @@ public class ProdService {
     public Product findByName(String prodName) {
         return prodRepository.findByName(prodName).get();
     }
+
     public Optional<Product> findById(Long id) {
         return prodRepository.findById(id);
     }
 
+    public Page<Product> findProdsByBid(Pageable pageable, Long bid) {
+        return prodRepository.findAllByBid(pageable, bid);
+    }
+
+    public void deleteProdByProdId(Long prodId) {
+        prodRepository.deleteById(prodId);
+    }
+
+    public void updateByProdId(Long prodId, String detail, String name, int price, int type) {
+        prodRepository.update(prodId, detail, name, price, type);
+    }
 }

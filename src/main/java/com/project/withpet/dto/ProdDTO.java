@@ -59,6 +59,13 @@ public class ProdDTO {
         this.imgURL = imgURL;
     }
 
+    public ProdDTO(Product product, String imgURL, String brand, int isLiked) {
+        this.product = product;
+        this.imgURL = imgURL;
+        this.brand = brand;
+        this.isLiked = isLiked;
+    }
+
     public ProdDTO(Product product, String imgURL, String brand, Long likeCount, int isLiked) {
         this.product = product;
         this.imgURL = imgURL;
