@@ -62,10 +62,10 @@ public class ShopController {
 
     private final S3Uploader s3Uploader;
     private final ShopTypeRepository shopTypeRepository;
-    private final RegionRepository regionRepository;
+//    private final RegionRepository regionRepository;
 
     @Autowired
-    public ShopController(ShopService shopService, HotelroomService hotelroomService, ShopQueryRepository shopQueryRepository, ShopRepository shopRepository, HotelroomRepository hotelroomRepository, UserService userService, BookingRepository bookingRepository, HotelimgRepository hotelimgRepository, HotelroomimgRepository hotelroomimgRepository, com.project.withpet.service.reviewService reviewService, com.project.withpet.repository.shopreviewRepository shopreviewRepository, LikeHotelService likeHotelService, FeatlistRepository featlistRepository, S3Uploader s3Uploader, ShopTypeRepository shopTypeRepository, RegionRepository regionRepository) {
+    public ShopController(ShopService shopService, HotelroomService hotelroomService, ShopQueryRepository shopQueryRepository, ShopRepository shopRepository, HotelroomRepository hotelroomRepository, UserService userService, BookingRepository bookingRepository, HotelimgRepository hotelimgRepository, HotelroomimgRepository hotelroomimgRepository, com.project.withpet.service.reviewService reviewService, com.project.withpet.repository.shopreviewRepository shopreviewRepository, LikeHotelService likeHotelService, FeatlistRepository featlistRepository, S3Uploader s3Uploader, ShopTypeRepository shopTypeRepository) {
         this.shopService = shopService;
         this.hotelroomService = hotelroomService;
         this.shopQueryRepository = shopQueryRepository;
@@ -80,7 +80,7 @@ public class ShopController {
         this.featlistRepository = featlistRepository;
         this.s3Uploader = s3Uploader;
         this.shopTypeRepository = shopTypeRepository;
-        this.regionRepository = regionRepository;
+//        this.regionRepository = regionRepository;
     }
 
     @GetMapping("/hotel")

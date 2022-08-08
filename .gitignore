@@ -40,3 +40,4 @@ out/
 *.properties
 S3Config.java
 application.properties
+src/main/resources/application.properties

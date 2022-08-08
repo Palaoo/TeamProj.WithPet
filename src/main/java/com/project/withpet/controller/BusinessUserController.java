@@ -32,19 +32,19 @@ public class BusinessUserController {
 
     private final FeatlistRepository featlistRepository;
     private final ShopTypeRepository shopTypeRepository;
-    private final RegionRepository regionRepository;
+//    private final RegionRepository regionRepository;
     private final S3Uploader s3Uploader;
     private final HotelroomService hotelroomService;
     private final HotelroomimgRepository hotelroomimgRepository;
 
     @Autowired
-    public BusinessUserController(BusinessUserService businessUserService, ShopService shopService, HotelimgRepository hotelimgRepository, FeatlistRepository featlistRepository, ShopTypeRepository shopTypeRepository, RegionRepository regionRepository, S3Uploader s3Uploader, HotelroomService hotelroomService, HotelroomimgRepository hotelroomimgRepository) {
+    public BusinessUserController(BusinessUserService businessUserService, ShopService shopService, HotelimgRepository hotelimgRepository, FeatlistRepository featlistRepository, ShopTypeRepository shopTypeRepository, S3Uploader s3Uploader, HotelroomService hotelroomService, HotelroomimgRepository hotelroomimgRepository) {
         this.businessUserService = businessUserService;
         this.shopService = shopService;
         this.hotelimgRepository = hotelimgRepository;
         this.featlistRepository = featlistRepository;
         this.shopTypeRepository = shopTypeRepository;
-        this.regionRepository = regionRepository;
+//        this.regionRepository = regionRepository;
         this.s3Uploader = s3Uploader;
         this.hotelroomService = hotelroomService;
         this.hotelroomimgRepository = hotelroomimgRepository;
@@ -145,7 +145,7 @@ public class BusinessUserController {
             addressSplit[0] = "제주도";
         }
 
-        shop.setRegion(regionRepository.findByRegname(addressSplit[0]));
+//        shop.setRegion(regionRepository.findByRegname(addressSplit[0]));
 
 
         Long shopid = shopService.save(shop);
@@ -189,7 +189,7 @@ public class BusinessUserController {
             addressSplit[0] = "제주도";
         }
 
-        shop.setRegion(regionRepository.findByRegname(addressSplit[0]));
+//        shop.setRegion(regionRepository.findByRegname(addressSplit[0]));
 
         shop.setShopid(shopid);
         shopService.save(shop);
