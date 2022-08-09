@@ -85,8 +85,17 @@
                              th:each="shopForm : ${shopForms}">
                             <div class="row g-0">
                                 <div class="col-md-4">
-                                    <img th:src="${shopForm.path}" class="img-fluid rounded-start"
-                                         style="object-fit: cover; width: 100%; height: 15vw">
+                                    <a th:if="${shopForm.shop.shoptype.typeid}==1"
+                                       th:href="@{/hotel/detail(shopid=${shopForm.shop.shopid})}">
+                                        <img th:src="${shopForm.path}" class="img-fluid rounded-start"
+                                             style="object-fit: cover; width: 100%; height: 15vw">
+                                    </a>
+                                    <a th:unless="${shopForm.shop.shoptype.typeid}==1"
+                                       th:href="@{/cafeinfo(shopid=${shopForm.shop.shopid})}">
+                                        <img th:src="${shopForm.path}" class="img-fluid rounded-start"
+                                             style="object-fit: cover; width: 100%; height: 15vw">
+                                    </a>
+
                                 </div>
 
                                 <div class="col-md-6">
@@ -101,14 +110,18 @@
                                     <a th:href="@{/shopInfo/updateShop(shopid=${shopForm.shop.shopid})}">
                                         <button class="btn btn-outline-primary btn-sm" type="submit">변경</button>
                                     </a><br>
-                                    <a th:href="@{/shopInfo/deleteShop(shopid=${shopForm.shop.shopid}, typeid=${shopForm.shop.shoptype.typeid})}">
-                                        <button class="btn btn-outline-danger btn-sm">삭제</button>
-                                    </a>
+                                    <button class="btn btn-outline-danger btn-sm" id="btnDelete"
+                                            th:onclick="|location.href=@{/shopInfo/deleteShop(shopid=${shopForm.shop.shopid}, typeid=${shopForm.shop.shoptype.typeid})}|">
+                                        삭제
+                                    </button>
+
                                 </div>
                             </div>
                         </div>
                     </div>
+
                 </div>
+                <br><br><br>
             </div>
         </div>
     </div>
@@ -117,6 +130,11 @@
 
 <th:block th:replace="fragments/index :: footer"></th:block>
 </body>
-
+<script>
+    $(document)
+        .on('click', '#btnDelete', function () {
+            return confirm('상점을 삭제하시겠습니까?')
+        })
+</script>
 
 </html>

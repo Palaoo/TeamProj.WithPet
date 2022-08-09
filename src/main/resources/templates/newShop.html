@@ -8,6 +8,8 @@
     <title>SHOP</title>
     <link href="css/bootstrap.min.css" rel="stylesheet"/>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+
 </head>
 <style>
     .header {
@@ -46,8 +48,16 @@
         color: #000;
     }
 
-    input[type="text"] {
+    input[type="text"], input[type="number"] {
         width: 100%;
+    }
+
+    #address {
+        width: 75%;
+    }
+
+    #showFeat {
+        width: 320px;
     }
 </style>
 
@@ -129,6 +139,7 @@
             </td>
         </tr>
         <tr>
+            <td></td>
             <td id="showFeat"></td>
             <input type="hidden" id="featidList" name="featidList" required>
         </tr>
@@ -166,10 +177,20 @@
 
     function addFeat() {
         var feat = $('#feat option:selected')
-        $('#showFeat').append(feat.text() + " ")
-        var featidList = feat.val() + "," + $('#featidList').val()
-        $('#featidList').val(featidList)
-        // console.log($('#featidList').val())
+        if ($('#' + feat.val()).val() != feat.text()) {
+            var str = '<input type=button onclick="deleteFeat(this.id)" value=' + feat.text() + ' id="' + feat.val() + 'f">'
+            $('#showFeat').append(str + " ")
+            var idNum = feat.val().split('f')
+            var featidList = idNum[0] + "," + $('#featidList').val()
+            $('#featidList').val(featidList)
+        }
+    }
+
+    function deleteFeat(id) {
+        $('#' + id).remove()
+        var idNum = id.split('f')
+        var str = $('#featidList').val().replace(idNum[0] + ',', '')
+        $('#featidList').val(str)
     }
 
     var count = 0;
@@ -180,23 +201,23 @@
             var str = '<tr class="roomForm" id="' + count + '" name="' + count + '">' +
                 '<td>객실' + count + '</td>' +
                 '<td>' +
-                '<input type="text" name="roomname" placeholder="객실 이름" required><br>' +
-                '<input type="number" name="person" placeholder="수용 인원" required><br>' +
-                '<input type="number" name="price" placeholder="1박 가격" required><br>' +
-                '<input type="text" name="content" placeholder="설명" required><br>' +
+                '<input type="text" name="roomname" placeholder="객실 이름" required><br><br>' +
+                '<input type="number" name="person" placeholder="수용 인원" required><br><br>' +
+                '<input type="number" name="price" placeholder="1박 가격" required><br><br>' +
+                '<input type="text" name="content" placeholder="설명" required><br><br>' +
                 '<input type="file" name="roomThumb" multiple="multiple" class="form-control" required>' +
                 '</td></tr>'
-            if(count == 1){
+            if (count == 1) {
                 str = str +
-                    '<tr id="btnTr"><td>' +
+                    '<tr><td colspan="2" align="right" id="btnTr">' +
                     '<input type="button" id="btnAddRoom" value="객실 추가" onclick="addRoomForm()">' +
                     '</td></tr>'
                 $('#thumbnailTr').after(str)
             } else {
                 $('#' + (count - 1)).after(str)
 
-                if($('#btnRemove').val() != '삭제'){
-                    var btnStr = '<input type="button" id="btnRemove" value="삭제" onclick="deleteTr()">'
+                if ($('#btnRemove').val() != '삭제') {
+                    var btnStr = '&nbsp<input type="button" id="btnRemove" value="삭제" onclick="deleteTr()">'
                     $('#btnTr').append(btnStr)
                 }
             }
@@ -209,7 +230,7 @@
     function deleteTr() {
         $('#' + count).remove()
 
-        if(count == 2){
+        if (count == 2) {
             $('#btnRemove').remove()
         }
 

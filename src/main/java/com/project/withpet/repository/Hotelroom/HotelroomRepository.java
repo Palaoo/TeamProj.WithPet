@@ -15,4 +15,6 @@ public interface HotelroomRepository {
 
     Hotelroom save(Hotelroom hotelroom);
 
+    void deleteById(Long roomid);
+
 }
