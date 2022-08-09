@@ -99,17 +99,19 @@
           <h2 th:text="${cafe.getName()}"></h2>
           <!--<h6 th:text="${cafe.getIntro()}"></h6>-->
           <ul>
-            <li><input type="button" value="저장하기"></li>
-            <!--            <li>-->
-            <!--              <div class="rating">-->
-            <!--                <i class="fa fa-star"></i>-->
-            <!--                <i class="fa fa-star"></i>-->
-            <!--                <i class="fa fa-star"></i>-->
-            <!--                <i class="fa fa-star"></i>-->
-            <!--                <i class="fa fa-star-o"></i>-->
-            <!--                <span> - 5 Reviews</span>-->
-            <!--              </div>-->
-            <!--            </li>-->
+            <li><span th:text="${#lists.size(shopreview)}"></span> Reviews</li>
+            <li th:if="${#lists.size(shopreview)!=0}"><p th:text="|⭐ ${scoreAvg} / 5 |"></p></li>
+            <li th:unless="${#lists.size(shopreview)!=0}"><p>⭐ 0 / 5</p></li>
+            <li>
+              <a href="javascript:return false;" id="btnLike" th:name="${cafe.getShopid()}">
+                <img th:if="${islike}" src="/image/redheart.png"
+                     th:id="|btnLike${cafe.getShopid()}|" width="25" height="25" alt="">
+                <img th:unless="${islike}" src="/image/heart.png"
+                     th:id="|btnLike${cafe.getShopid()}|" width="25" height="25" alt="">
+              </a>
+              <span th:text="${likeCount}" th:id="|likeCount${cafe.getShopid()}|"
+                    name="likeCount" id="cnt"></span>
+            </li>
             <li>
               <th:block th:each="feat: ${cafe.getShopFeats()}">
                 <span th:text="${feat.getFeatname()}+' '"></span>
@@ -363,6 +365,30 @@
             }
           })
 
+          //좋아요
+          .on('click', '#btnLike', function () {
+            shopid = $(this).attr('name')
+            $.ajax({
+                type: 'get',
+                url: 'append_shoplike?shopId=' + shopid,
+                success: function (data) {
+                    ID = '#btnLike' + shopid
+                    if (data == '1') {
+                        $(ID).attr("src", "/image/redheart.png")
+                        $(ID).attr("width", "25px")
+                        $(ID).attr("height", "25px")
+                        $('#likeCount' + shopid).text(parseInt($('#likeCount' + shopid).text()) + 1)
+                    } else {
+                        console.log('여기')
+                        $(ID).attr("height", "25px")
+                        $(ID).attr("width", "25px")
+                        $(ID).attr("src", "/image/heart.png")
+                        $('#likeCount' + shopid).text(parseInt($('#likeCount' + shopid).text()) + 1)
+                    }
+                }
+            })
+        })
 </script>
+</section>
 </body>
 </html>

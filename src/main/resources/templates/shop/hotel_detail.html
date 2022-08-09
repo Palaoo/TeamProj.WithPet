@@ -140,6 +140,17 @@
                     <h2 th:text="${shop.getName()}"></h2>
 
                     <ul>
+
+                        <li><input type="button" value="좋아요"></li>
+                        <li><span th:text="${#lists.size(shopreview)}"></span> Reviews</li>
+                        <li th:if="${#lists.size(shopreview)!=0}"><p th:text="|⭐ ${scoreAvg} / 5 | "></p></li>
+                        <li th:unless="${#lists.size(shopreview)!=0}"><p>⭐ 0 / 5</p></li>
+<!--                        <li>-->
+<!--                            <th:block th:if="${#lists.size(shopreview)!=0}">-->
+<!--                                <p th:text="|⭐ ${scoreAvg} / 5 | "></p>-->
+<!--                            </th:block>-->
+<!--                        </li>    -->
+
                         <li>
                             <a href="javascript:return false;" id="btnLike" th:name="${shop.getShopid()}">
                                 <img th:if="${liked==1}" src="/image/redheart.png"
@@ -151,15 +162,22 @@
                                name="likeCount" id="cnt"></span>
                         </li>
 <!--                        <li>-->
+
 <!--                            <div class="rating">-->
 <!--                                <i class="fa fa-star"></i>-->
 <!--                                <i class="fa fa-star"></i>-->
 <!--                                <i class="fa fa-star"></i>-->
 <!--                                <i class="fa fa-star"></i>-->
 <!--                                <i class="fa fa-star-o"></i>-->
+
+
+<!--                            </div>-->
+
+
 <!--                                <span> - 5 Reviews</span>-->
 <!--                            </div>-->
 <!--                        </li>-->
+
                         <li>
                             <th:block th:each="feat : ${feats}">
                                 <span th:text="${feat.getFeatname()}"></span>

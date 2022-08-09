@@ -2,13 +2,12 @@ package com.project.withpet.service;
 
 import com.project.withpet.dto.reviewDto;
 import com.project.withpet.domain.cafe;
-import com.project.withpet.domain.shopreview;
+import com.project.withpet.domain.Shopreview;
 import com.project.withpet.repository.cafeRepository;
 import com.project.withpet.repository.shopreviewRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,8 +34,8 @@ public class cafeService {
         return cafeRepository.findAllByShoptypeTypeid(typeid);
     }
 
-    public shopreview create(reviewDto dto) {
-        shopreview shopreview = dto.toEntity();
+    public Shopreview create(reviewDto dto) {
+        Shopreview shopreview = dto.toEntity();
         return shopreviewRepository.save(shopreview);
     }
 

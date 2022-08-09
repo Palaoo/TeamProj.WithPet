@@ -1,6 +1,6 @@
 package com.project.withpet.service;
 
-import com.project.withpet.domain.shopreview;
+import com.project.withpet.domain.Shopreview;
 import com.project.withpet.repository.cafeRepository;
 import com.project.withpet.repository.shopreviewRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,23 +21,27 @@ public class reviewService {
 //    public Optional<shopreview> findByUserid(String userid) {
 //        return shopreviewRepository.findByUserid(userid);
 //    }
-        public List<shopreview> findByuserid(String userid) {
+        public List<Shopreview> findByuserid(String userid) {
             return shopreviewRepository.findByUserid(userid);
         }
 //    public List<shopreview> findByUserId(String userid) {
 //        return shopreviewRepository.findByUserid(userid);
 //    }
 
-    public Optional<shopreview> findById(Long rid) {
+    public Optional<Shopreview> findById(Long rid) {
         return shopreviewRepository.findById(rid);
     }
 
-    public List<shopreview> findAll() {
+    public List<Shopreview> findAll() {
         return shopreviewRepository.findAll();
     }
 
-    public List<shopreview> findByshopid(Long shopid) {
+    public List<Shopreview> findByshopid(Long shopid) {
         return shopreviewRepository.findByShopid(shopid);
+    }
+
+    public double getAvgByshopid(Long shopid) {
+        return shopreviewRepository.getAvgByShopid(shopid);
     }
 
     public void deleteReview(Long rid) {
@@ -45,6 +49,9 @@ public class reviewService {
         shopreviewRepository.deleteById(rid);
     }
 
+//    public Long getReviewCount(Long shopid) {
+//            return shopreviewRepository.findByShopid(shopid);
+//    }
 
 
 

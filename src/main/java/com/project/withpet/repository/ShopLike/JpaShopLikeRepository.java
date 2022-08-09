@@ -50,7 +50,6 @@ public class JpaShopLikeRepository implements ShopLikeRepository {
     @Override
     public Long findCountByShopid(Long shopId) {
         String query = "select l from shoplike l where l.shopid= :shopId";
-
         return em.createQuery(query, shoplike.class).setParameter("shopId",shopId).getResultStream().count();
     }
 }

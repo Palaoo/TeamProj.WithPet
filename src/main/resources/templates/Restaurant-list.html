@@ -78,9 +78,9 @@
                         </div>
                         <div class="col-sm-2" id="heart_img">
                             <a href="javascript:return false;" id="btnLike" th:name="${cafeList.cafe.getShopid()}">
-                                <img th:if="${cafeList.islike}" src="image/redheart.png"
+                                <img th:if="${cafeList.islike}" src="/image/redheart.png"
                                      th:id="|btnLike${cafeList.cafe.shopid}|" width="25" height="25" alt="">
-                                <img th:if="${!cafeList.islike}" src="image/heart.png"
+                                <img th:if="${!cafeList.islike}" src="/image/heart.png"
                                      th:id="|btnLike${cafeList.cafe.shopid}|" width="25" height="25" alt="">
                                 <p th:text="${cafeList.likeCount}" th:id="|likeCount${cafeList.cafe.shopid}|"
                                    name="likeCount" id="cnt"></p>
@@ -88,7 +88,7 @@
                         </div>
                     </div>
                     <ul class="list-group list-group-flush">
-                        <li class="list-group-item">⭐⭐⭐⭐⭐ </li>
+                        <li class="list-group-item"><p th:text="|⭐ ${cafeList.getScoreAvg()} / 5.0|"></p></li>
                         <li class="list-group-item" th:text="${cafeList.cafe.getRegion().getRegname()}"></li>
 <!--                        <li class="list-group-item" th:text="${cafeList.cafe.getShoptype().getTypename()}" ></li>-->
                         <li class="list-group-item" >
@@ -108,11 +108,11 @@
             shopid = $(this).attr('name')
             $.ajax({
                 type: 'get',
-                url: 'append_shoplike?shopId=' + shopid,
+                url: '/append_shoplike?shopId=' + shopid,
                 success: function (data) {
                     ID = '#btnLike' + shopid
                     if (data == '1') {
-                        $(ID).attr("src", "image/redheart.png")
+                        $(ID).attr("src", "/image/redheart.png")
                         $(ID).attr("width", "25px")
                         $(ID).attr("height", "25px")
                         $('#likeCount' + shopid).text(parseInt($('#likeCount' + shopid).text()) + 1)
@@ -120,7 +120,7 @@
                         console.log('여기')
                         $(ID).attr("height", "25px")
                         $(ID).attr("width", "25px")
-                        $(ID).attr("src", "image/heart.png")
+                        $(ID).attr("src", "/image/heart.png")
                         $('#likeCount' + shopid).text(parseInt($('#likeCount' + shopid).text()) + 1)
                     }
                 }

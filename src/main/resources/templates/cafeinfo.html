@@ -117,6 +117,40 @@
 <div th:replace="fragments/index :: header"></div>
 
 <section class="blog-hero spad">
+  <div class="container">
+    <th:block th:value="${cafe.shopid}"></th:block>
+    <div class="row d-flex justify-content-center">
+      <div class="col-lg-9 text-center">
+        <div class="blog__hero__text">
+          <h2 th:text="${cafe.getName()}"></h2>
+          <!--<h6 th:text="${cafe.getIntro()}"></h6>-->
+          <ul>
+            <li>
+              <span th:text="${#lists.size(shopreview)}"></span> Reviews
+            </li>
+            <li th:if="${#lists.size(shopreview)!=0}"><p th:text="|⭐ ${scoreAvg} / 5 | "></p></li>
+            <li th:unless="${#lists.size(shopreview)!=0}"><p>⭐ 0 / 5</p></li>
+<!--            <li>-->
+<!--              <th:block th:if="${#lists.size(shopreview)!=0}">-->
+<!--                <p th:text="|⭐ ${scoreAvg} / 5 | "></p>-->
+<!--              </th:block>-->
+<!--            </li>-->
+<!--            <li>-->
+<!--              <div class="rating">-->
+<!--                <i class="fa fa-star"></i>-->
+<!--                <i class="fa fa-star"></i>-->
+<!--                <i class="fa fa-star"></i>-->
+<!--                <i class="fa fa-star"></i>-->
+<!--                <i class="fa fa-star-o"></i>-->
+<!--                <span> - 5 Reviews</span>-->
+<!--              </div>-->
+<!--            </li>-->
+            <li>
+              <th:block th:each="feat: ${cafe.getShopFeats()}">
+                <span th:text="${feat.getFeatname()}+' '"></span>
+              </th:block><br>
+            </li>
+          </ul>
     <div class="container">
         <th:block th:value="${cafe.shopid}"></th:block>
         <div class="row d-flex justify-content-center">
@@ -125,25 +159,23 @@
                     <h2 th:text="${cafe.getName()}"></h2>
                     <ul>
                         <li>
-                            <a href="javascript:return false;" id="btnLike" th:name="${cafe.shopid}">
-                                <img th:if="${liked}" src="/image/redheart.png"
-                                     th:id="|btnLike${cafe.shopid}|" width="25" height="25" alt="">
-                                <img th:if="${!liked}" src="/image/heart.png"
-                                     th:id="|btnLike${cafe.shopid}|" width="25" height="25" alt="">
+                            <a href="javascript:return false;" id="btnLike" th:name="${cafe.getShopid()}">
+                                <img th:if="${islike}" src="/image/redheart.png"
+                                     th:id="|btnLike${cafe.getShopid()}|" width="25" height="25" alt="">
+                                <img th:unless="${islike}" src="/image/heart.png"
+                                     th:id="|btnLike${cafe.getShopid()}|" width="25" height="25" alt="">
                             </a>
-                            <span th:text="${likecount}" th:id="|likeCount${cafe.shopid}|"
-                                  name="likeCount" id="cnt"></span>
+                            <span th:text="${likeCount}" th:id="|likeCount${cafe.getShopid()}|"
+                               name="likeCount" id="cnt"></span>
+<!--                            <a href="javascript:return false;" id="btnLike" th:name="${cafe.getShopid()}">-->
+<!--                                <img th:if="${liked}" src="/image/redheart.png"-->
+<!--                                     th:id="|btnLike${cafe.getShopid()}|" width="25" height="25" alt="">-->
+<!--                                <img th:if="${!liked}" src="/image/heart.png"-->
+<!--                                     th:id="|btnLike${cafe.getShopid()}|" width="25" height="25" alt="">-->
+<!--                            </a>-->
+<!--                            <span th:text="${likeCount}" th:id="|likeCount${cafe.getShopid()}|"-->
+<!--                                  name="likeCount" id="cnt"></span>-->
                         </li>
-                        <!--                        <li>-->
-                        <!--                            <div class="rating">-->
-                        <!--                                <i class="fa fa-star"></i>-->
-                        <!--                                <i class="fa fa-star"></i>-->
-                        <!--                                <i class="fa fa-star"></i>-->
-                        <!--                                <i class="fa fa-star"></i>-->
-                        <!--                                <i class="fa fa-star-o"></i>-->
-                        <!--                                <span> - 5 Reviews</span>-->
-                        <!--                            </div>-->
-                        <!--                        </li>-->
                         <li>
                             <th:block th:each="feat: ${cafe.getShopFeats()}">
                                 <span th:text="${feat.getFeatname()}+' '"></span>
@@ -155,7 +187,7 @@
             </div>
         </div>
     </div>
-</section>
+
 <section class="blog-details spad">
     <div class="container">
         <div class="row d-flex justify-content-center">
@@ -510,25 +542,24 @@
             return false;
         }
     }).on('click', '#btnLike', function () {
-
-        shopId = $(this).attr('name')
-        console.log(shopId)
+        shopid = $(this).attr('name')
+        console.log(shopid)
         $.ajax({
             type: 'get',
-            url: '/append_shoplike?shopId=' + shopId,
+            url: '/append_shoplike?shopId=' + shopid,
             success: function (data) {
-                ID = '#btnLike' + shopId
+                ID = '#btnLike' + shopid
                 if (data == '1') {
                     $(ID).attr("src", "/image/redheart.png")
                     $(ID).attr("width", "25px")
                     $(ID).attr("height", "25px")
-                    $('#likeCount' + shopId).text(parseInt($('#likeCount' + shopId).text()) + 1)
+                    $('#likeCount' + shopid).text(parseInt($('#likeCount' + shopid).text()) + 1)
                 } else {
                     console.log('여기')
                     $(ID).attr("width", "25px")
                     $(ID).attr("height", "25px")
                     $(ID).attr("src", "/image/heart.png")
-                    $('#likeCount' + shopId).text(parseInt($('#likeCount' + shopId).text()) - 1)
+                    $('#likeCount' + shopid).text(parseInt($('#likeCount' + shopid).text()) - 1)
                 }
             }
         })

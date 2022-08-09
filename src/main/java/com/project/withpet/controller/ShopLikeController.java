@@ -29,12 +29,16 @@ public class ShopLikeController {
     private final LikeShopRepository likeshopRepository;
 
     private final HotelimgRepository hotelimgRepository;
+
+    private final Tools tools = new Tools();
+
     private final SpringLikeHotelRepository springLikeHotelRepository;
     private final LikeService likeService;
     private final ProdService prodService;
     private final ImgService imgService;
 
-    private final Tools tools = new Tools();
+
+//    private final Tools tools = new Tools();
 
     public ShopLikeController(ShopLikeService shopLikeService, com.project.withpet.service.cafeService cafeService, LikeShopRepository likeshopRepository, HotelimgRepository hotelimgRepository, SpringLikeHotelRepository springLikeHotelRepository, LikeService likeService, ProdService prodService, ImgService imgService) {
         this.shopLikeService = shopLikeService;
@@ -50,7 +54,10 @@ public class ShopLikeController {
     @GetMapping("/mypage/myshop")  //마이페이지 좋아요 리스트
     public String showMyshop(HttpServletRequest req, Model model) {
         HttpSession session = req.getSession();
-        String userid = (String) session.getAttribute("userLogined");
+        if (!tools.isUserLogined(req)) {
+            return "login";
+        }
+        String userid = (String) session.getAttribute("userid");
         model.addAttribute("userLogined", userid);
 
         if (!tools.isUserLogined(req)) {

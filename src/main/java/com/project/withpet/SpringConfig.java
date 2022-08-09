@@ -21,6 +21,7 @@ import com.project.withpet.repository.Shop.ShopRepository;
 import com.project.withpet.repository.ShopLike.JpaShopLikeRepository;
 import com.project.withpet.repository.ShopLike.ShopLikeRepository;
 import com.project.withpet.repository.User.UserRepository;
+import com.project.withpet.repository.shopreviewRepository;
 import com.project.withpet.service.*;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.context.annotation.Bean;
@@ -47,18 +48,19 @@ public class SpringConfig {
     private final CimgRepository cimgRepository;
     private final OrderRepository orderRepository;
     private final OrderprodRepository orderprodRepository;
-    private final BasketRepository basketRepository;
+    private final shopreviewRepository shopreviewRepository;
 
 
     @PersistenceContext
     private EntityManager entityManager;
+    private final BasketRepository basketRepository;
 
     public SpringConfig(UserRepository userRepository, BoardRepository boardRepository,
                         BoardimgRepository boardimgRepository, ReplyRepository replyRepository,
                         ShopRepository shopRepository, HotelroomRepository hotelroomRepository,
                         BusinessUserRepository businessUserRepository, ProdRepository prodRepository,
                         ImgRepository imgRepository, CimgRepository cimgRepository, OrderRepository orderRepository,
-                        OrderprodRepository orderprodRepository, BasketRepository basketRepository) {
+                        OrderprodRepository orderprodRepository, com.project.withpet.repository.shopreviewRepository shopreviewRepository, BasketRepository basketRepository) {
 
         this.userRepository = userRepository;
         this.boardRepository = boardRepository;
@@ -72,6 +74,7 @@ public class SpringConfig {
         this.cimgRepository = cimgRepository;
         this.orderRepository = orderRepository;
         this.orderprodRepository = orderprodRepository;
+        this.shopreviewRepository = shopreviewRepository;
         this.basketRepository = basketRepository;
     }
 

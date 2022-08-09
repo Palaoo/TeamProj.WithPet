@@ -58,7 +58,7 @@ public class Shop {
     private List<Hotelimg> hotelimgs;
 
     @OneToMany(mappedBy = "shopid", cascade = CascadeType.REMOVE)
-    private List<shopreview> shopreviews;
+    private List<Shopreview> shopreviews;
 
     @OneToMany(mappedBy = "shopid", cascade = CascadeType.REMOVE)
     private List<Hotelroom> hotelrooms;

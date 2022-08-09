@@ -1,10 +1,10 @@
 package com.project.withpet.controller;
 
 import com.project.withpet.domain.Hotelimg;
+import com.project.withpet.domain.Shopreview;
 import com.project.withpet.domain.cafe;
 import com.project.withpet.dto.ShopReviewDTO;
 import com.project.withpet.dto.reviewDto;
-import com.project.withpet.domain.shopreview;
 import com.project.withpet.repository.HotelimgRepository;
 import com.project.withpet.repository.shopreviewRepository;
 import com.project.withpet.service.cafeService;
@@ -47,11 +47,11 @@ public class reviewController {
         }
 
         System.out.println("테스트" + dto.toString());
-        shopreview shopreview = dto.toEntity();
+        Shopreview shopreview = dto.toEntity();
         System.out.println("테스트2" + shopreview.toString());
 
 
-        shopreview saved = shopreviewRepository.save(shopreview);
+        Shopreview saved = shopreviewRepository.save(shopreview);
         System.out.println("테스트3" + saved.toString());
         return "redirect:/cafeinfo?shopid="+ saved.getShopid();
     }
@@ -59,7 +59,7 @@ public class reviewController {
     @GetMapping("/reviews/delete") //리뷰 삭제
     public String delete(reviewDto dto,@RequestParam("rid") Long rid, Long shopid){
         reviewService.deleteReview(rid);
-        shopreview shopreview = dto.toEntity();
+        Shopreview shopreview = dto.toEntity();
         log.info(shopreview.toString());
         return "redirect:/cafeinfo?shopid="+ dto.getShopid();
     }
@@ -67,9 +67,9 @@ public class reviewController {
     @PostMapping("/reviews/update")  //리뷰 수정
     public String update(reviewDto dto) {
         log.info("수정 데이터"+dto.toString());
-        shopreview shopreview = dto.toEntity();
+        Shopreview shopreview = dto.toEntity();
         System.out.println(shopreview.getRid());
-        shopreview target = shopreviewRepository.findById(shopreview.getRid()).orElse(null);
+        Shopreview target = shopreviewRepository.findById(shopreview.getRid()).orElse(null);
         if (target != null) {
             shopreviewRepository.save(shopreview);
         }
@@ -83,10 +83,10 @@ public class reviewController {
         String userid = (String) session.getAttribute("userLogined");
         model.addAttribute("userLogined",userid);
 
-        List<shopreview> shopreviewList = reviewService.findByuserid(userid);
+        List<Shopreview> shopreviewList = reviewService.findByuserid(userid);
         List<ShopReviewDTO> shopReviewDTOList = new ArrayList<>();
         for (int i = 0; i < shopreviewList.size(); i++) {
-            shopreview shopreview = shopreviewList.get(i);
+            Shopreview shopreview = shopreviewList.get(i);
             Optional<cafe> cafe = cafeService.findById(shopreview.getShopid());
             Optional<Hotelimg> shopimg = hotelimgRepository.findByShopid(shopreview.getShopid());
             String path = shopimg.get().getPath();
@@ -101,15 +101,15 @@ public class reviewController {
     @GetMapping("/mypage/review/delete") //마이페이지 리뷰 삭제
     public String deleteReview(reviewDto dto, @RequestParam("rid") Long rid, Long shopid) {
         reviewService.deleteReview(rid);
-        shopreview shopreview = dto.toEntity();
+        Shopreview shopreview = dto.toEntity();
         return "redirect:/mypage/review";
     }
 
     @PostMapping("/mypage/review/update") //마이페이지 리뷰 수정
     public String updateReview(reviewDto dto) {
-        shopreview shopreview = dto.toEntity();
+        Shopreview shopreview = dto.toEntity();
         log.info("마이페이지 리뷰 수정 "+ dto.toString());
-        shopreview target = shopreviewRepository.findById(shopreview.getRid()).orElse(null);
+        Shopreview target = shopreviewRepository.findById(shopreview.getRid()).orElse(null);
         if (target != null) {
             shopreviewRepository.save(shopreview);
         }

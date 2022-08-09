@@ -31,11 +31,38 @@ public class HotelForm {
     private String path;
     private Shop shop;
 
+    private double scoreAvg;
+
     public HotelForm(String path, Shop shop) {
         this.path = path;
         this.shop = shop;
     }
 
+
+//    private void addHotelForm(Shop availShop,
+//                              Shop hotelList,
+//                              List<HotelForm> hotelForms,
+//                              int i,
+//                              Long likeCount,
+//                              int isLiked,
+//                              Double avgByShopid){
+//        this.shop = availShop;
+//        this.shop= hotelList;
+//        this.hotelForm = hotelForms;
+//        this.i = i;
+//        this.likeCount = likeCount;
+//        this.isLiked = isLiked;
+//        this.scoreAvg = scoreAvg;
+//
+//    }
+
+    public double getScoreAvg() {
+        return scoreAvg;
+    }
+
+    public void setScoreAvg(double scoreAvg) {
+        this.scoreAvg = scoreAvg;
+    }
     public Shop getShop() {
         return shop;
     }

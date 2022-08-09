@@ -1,6 +1,6 @@
 package com.project.withpet.dto;
 
-import com.project.withpet.domain.shopreview;
+import com.project.withpet.domain.Shopreview;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -31,9 +31,9 @@ public class reviewDto {
 //        this.userid = shopreview.getMember().getUserid();
 //        this.shopid = shopreview.getCafe().getShopid();
 //    }
-    public shopreview toEntity() {
+    public Shopreview toEntity() {
 
-        return new shopreview(rid, shopid, content, date, score, userid);
+        return new Shopreview(rid, shopid, content, date, score, userid);
     }
 
 }
