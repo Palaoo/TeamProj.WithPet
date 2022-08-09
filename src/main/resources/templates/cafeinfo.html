@@ -300,8 +300,7 @@
                                                                     <p th:text="${review.getDate()}"></p>
 
                                                                     <div th:if="${review.getUserid()==userid}">
-                                                                        <form th:action="@{'/reviews/update'}"
-                                                                              method="post">
+                                                                        <form th:action="@{'/reviews/update'}" method="post">
                                                                             <!--                <input type="hidden" name="rid" th:value="${review.getRid()}">-->
                                                                             <button type="button"
                                                                                     th:id="${index}"
@@ -333,31 +332,142 @@
                                                                                             <div class="updatescore">
                                                                                                 <fieldset>
                                                                                                     <span class="text-bold">별점을 선택하세요</span>
-                                                                                                    <input type="radio"
-                                                                                                           name="score"
-                                                                                                           value="5"
-                                                                                                           id="rate1_"><label
-                                                                                                        for="rate1_">★</label>
-                                                                                                    <input type="radio"
-                                                                                                           name="score"
-                                                                                                           value="4"
-                                                                                                           id="rate2_"><label
-                                                                                                        for="rate2_">★</label>
-                                                                                                    <input type="radio"
-                                                                                                           name="score"
-                                                                                                           value="3"
-                                                                                                           id="rate3_"><label
-                                                                                                        for="rate3_">★</label>
-                                                                                                    <input type="radio"
-                                                                                                           name="score"
-                                                                                                           value="2"
-                                                                                                           id="rate4_"><label
-                                                                                                        for="rate4_">★</label>
-                                                                                                    <input type="radio"
-                                                                                                           name="score"
-                                                                                                           value="1"
-                                                                                                           id="rate5_"><label
-                                                                                                        for="rate5_">★</label>
+                                                                                                    <th:block th:if="${review.getScore()==5}">
+                                                                                                        <input type="radio"
+                                                                                                               name="score"
+                                                                                                               value="5"
+                                                                                                               checked id="rate1_"><label
+                                                                                                            for="rate1_">★</label>
+                                                                                                        <input type="radio"
+                                                                                                               name="score"
+                                                                                                               value="4"
+                                                                                                               id="rate2_"><label
+                                                                                                            for="rate2_">★</label>
+                                                                                                        <input type="radio"
+                                                                                                               name="score"
+                                                                                                               value="3"
+                                                                                                               id="rate3_"><label
+                                                                                                            for="rate3_">★</label>
+                                                                                                        <input type="radio"
+                                                                                                               name="score"
+                                                                                                               value="2"
+                                                                                                               id="rate4_"><label
+                                                                                                            for="rate4_">★</label>
+                                                                                                        <input type="radio"
+                                                                                                               name="score"
+                                                                                                               value="1"
+                                                                                                               id="rate5_"><label
+                                                                                                            for="rate5_">★</label>
+                                                                                                    </th:block>
+                                                                                                    <th:block th:if="${review.getScore()==4}">
+                                                                                                        <input type="radio"
+                                                                                                               name="score"
+                                                                                                               value="5"
+                                                                                                               id="rate1_"><label
+                                                                                                            for="rate1_">★</label>
+                                                                                                        <input type="radio"
+                                                                                                               name="score"
+                                                                                                               value="4"
+                                                                                                               checked id="rate2_"><label
+                                                                                                            for="rate2_">★</label>
+                                                                                                        <input type="radio"
+                                                                                                               name="score"
+                                                                                                               value="3"
+                                                                                                               id="rate3_"><label
+                                                                                                            for="rate3_">★</label>
+                                                                                                        <input type="radio"
+                                                                                                               name="score"
+                                                                                                               value="2"
+                                                                                                               id="rate4_"><label
+                                                                                                            for="rate4_">★</label>
+                                                                                                        <input type="radio"
+                                                                                                               name="score"
+                                                                                                               value="1"
+                                                                                                               id="rate5_"><label
+                                                                                                            for="rate5_">★</label>
+                                                                                                    </th:block>
+                                                                                                    <th:block th:if="${review.getScore()==3}">
+                                                                                                        <input type="radio"
+                                                                                                               name="score"
+                                                                                                               value="5"
+                                                                                                               id="rate1_"><label
+                                                                                                            for="rate1_">★</label>
+                                                                                                        <input type="radio"
+                                                                                                               name="score"
+                                                                                                               value="4"
+                                                                                                               id="rate2_"><label
+                                                                                                            for="rate2_">★</label>
+                                                                                                        <input type="radio"
+                                                                                                               name="score"
+                                                                                                               value="3"
+                                                                                                               checked id="rate3_"><label
+                                                                                                            for="rate3_">★</label>
+                                                                                                        <input type="radio"
+                                                                                                               name="score"
+                                                                                                               value="2"
+                                                                                                               id="rate4_"><label
+                                                                                                            for="rate4_">★</label>
+                                                                                                        <input type="radio"
+                                                                                                               name="score"
+                                                                                                               value="1"
+                                                                                                               id="rate5_"><label
+                                                                                                            for="rate5_">★</label>
+                                                                                                    </th:block>
+                                                                                                    <th:block th:if="${review.getScore()==2}">
+                                                                                                        <input type="radio"
+                                                                                                               name="score"
+                                                                                                               value="5"
+                                                                                                               id="rate1_"><label
+                                                                                                            for="rate1_">★</label>
+                                                                                                        <input type="radio"
+                                                                                                               name="score"
+                                                                                                               value="4"
+                                                                                                               id="rate2_"><label
+                                                                                                            for="rate2_">★</label>
+                                                                                                        <input type="radio"
+                                                                                                               name="score"
+                                                                                                               value="3"
+                                                                                                               id="rate3_"><label
+                                                                                                            for="rate3_">★</label>
+                                                                                                        <input type="radio"
+                                                                                                               name="score"
+                                                                                                               value="2"
+                                                                                                               checked id="rate4_"><label
+                                                                                                            for="rate4_">★</label>
+                                                                                                        <input type="radio"
+                                                                                                               name="score"
+                                                                                                               value="1"
+                                                                                                               id="rate5_"><label
+                                                                                                            for="rate5_">★</label>
+                                                                                                    </th:block>
+                                                                                                    <th:block th:if="${review.getScore()==1}">
+                                                                                                        <input type="radio"
+                                                                                                               name="score"
+                                                                                                               value="5"
+                                                                                                               id="rate1_"><label
+                                                                                                            for="rate1_">★</label>
+                                                                                                        <input type="radio"
+                                                                                                               name="score"
+                                                                                                               value="4"
+                                                                                                               id="rate2_"><label
+                                                                                                            for="rate2_">★</label>
+                                                                                                        <input type="radio"
+                                                                                                               name="score"
+                                                                                                               value="3"
+                                                                                                               id="rate3_"><label
+                                                                                                            for="rate3_">★</label>
+                                                                                                        <input type="radio"
+                                                                                                               name="score"
+                                                                                                               value="2"
+                                                                                                               id="rate4_"><label
+                                                                                                            for="rate4_">★</label>
+                                                                                                        <input type="radio"
+                                                                                                               name="score"
+                                                                                                               value="1"
+                                                                                                               checked id="rate5_"><label
+                                                                                                            for="rate5_">★</label>
+                                                                                                    </th:block>
+
                                                                                                 </fieldset>
                                                                                             </div>
                                                                                             <div class="mb-3">
