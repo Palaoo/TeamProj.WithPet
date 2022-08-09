@@ -91,6 +91,8 @@ public class ShopController {
             model.addAttribute("userid", session.getAttribute("userid"));
         }
 
+        String userId = (String) req.getSession().getAttribute("userLogined");
+        model.addAttribute("userid", userId);
 
         LocalDate now = LocalDate.now();
         Calendar cal = Calendar.getInstance();
@@ -139,11 +141,7 @@ public class ShopController {
         List<Shop> availShop = shopQueryRepository.findAvailHotel(checkin, checkout, 2L);
         List<Shop> hotelList = shopService.hotelList(1L);
 
-
         List<HotelForm> hotelForms = new ArrayList<>();
-
-        String userId = req.getSession().getAttribute("userid").toString();
-
 
         for (int i = 0; i < hotelList.size(); i++) {
             int liked = likeHotelService.isLiked(hotelList.get(i).getShopid(), userId);
