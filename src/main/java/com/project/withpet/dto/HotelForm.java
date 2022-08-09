@@ -33,9 +33,18 @@ public class HotelForm {
     private String path;
     private Shop shop;
 
+    private double scoreAvg;
+
     public HotelForm(String path, Shop shop) {
         this.path = path;
         this.shop = shop;
+    }
+
+    public double getScoreAvg() {
+        return scoreAvg;
+    }
+    public void setScoreAvg(double scoreAvg) {
+        this.scoreAvg = scoreAvg;
     }
 
     public Shop getShop() {

@@ -3,6 +3,7 @@ package com.project.withpet.controller;
 import com.project.withpet.domain.Hotelimg;
 import com.project.withpet.domain.cafe;
 import com.project.withpet.domain.shopreview;
+import com.project.withpet.dto.CafeDTOList;
 import com.project.withpet.repository.HotelimgRepository;
 import com.project.withpet.repository.cafeRepository;
 import com.project.withpet.repository.shopreviewRepository;
@@ -64,18 +65,28 @@ public class cafeController {
         List<cafe> cafeList = cafeService.findByshoptype(2L);
         List<CafeDTOList> cafeDTOLists = new ArrayList<>();
         for (cafe cafe : cafeList) {
-            boolean shopLike = shopLikeService.islike(cafe.getShopid(),userid);
+
             Optional<Hotelimg> hotelimg = hotelimgRepository.findByShopid(cafe.getShopid());
             String path = "";
-            if(hotelimg.isPresent()) {
-
+            if (hotelimg.isPresent()) {
                 path = hotelimg.get().getPath();
             } else {
                 path = "https://withpetimg.s3.ap-northeast-2.amazonaws.com/images/hoteldefault.jpg";
             }
 
+            //리뷰점수 평균
+            Double avgByShopid = shopreviewRepository.getAvgByShopid(cafe.getShopid());
+            if(avgByShopid==null){
+                avgByShopid=0D;
+            }
+
+//            cafeDTOLists.add(new CafeDTOList(cafe, shopLike, path));
+            //좋아요
+            boolean shopLike = shopLikeService.islike(cafe.getShopid(), userid);
             Long likeCount = shopLikeService.getLikeCount(cafe.getShopid());
-            cafeDTOLists.add(new CafeDTOList(cafe, shopLike, path, likeCount));
+            cafeDTOLists.add(new com.project.withpet.dto.CafeDTOList(cafe, shopLike, path, likeCount, avgByShopid));
+
+
         }
 
         model.addAttribute("cafeDTOLists", cafeDTOLists);
@@ -93,7 +104,6 @@ public class cafeController {
         log.info("지역리스트 = " + cafeList.toString());
         List<CafeDTOList> cafeDTOLists = new ArrayList<>();
         for (cafe cafe : cafeList) {
-            boolean shopLike = shopLikeService.islike(cafe.getShopid(), userid);
             Optional<Hotelimg> hotelimg = hotelimgRepository.findByShopid(cafe.getShopid());
             String path = "";
             if (hotelimg.isPresent()) {
@@ -101,8 +111,10 @@ public class cafeController {
             } else {
                 path = "https://withpetimg.s3.ap-northeast-2.amazonaws.com/images/hoteldefault.jpg";
             }
+            boolean shopLike = shopLikeService.islike(cafe.getShopid(), userid);
             Long likeCount = shopLikeService.getLikeCount(cafe.getShopid());
-            cafeDTOLists.add(new CafeDTOList(cafe, shopLike, path, likeCount));
+            double avgByShopid = shopreviewRepository.getAvgByShopid(cafe.getShopid());
+            cafeDTOLists.add(new CafeDTOList(cafe, shopLike, path, likeCount, avgByShopid));
         }
 
         model.addAttribute("cafeDTOLists", cafeDTOLists);
@@ -116,38 +128,43 @@ public class cafeController {
     public String showInfo(Model model, HttpServletRequest req, @RequestParam("shopid") Long shopid) throws ParseException {
         log.info("id= " + shopid);
         Optional<cafe> cafe = cafeService.findById(shopid);
+        List<com.project.withpet.dto.CafeDTOList> cafeDTOLists = new ArrayList<>();
         cafe cafeinfo = cafe.get();
         model.addAttribute("cafe", cafeinfo);
         log.info(cafe.toString());
 
         HttpSession session = req.getSession();
         String userid = (String) session.getAttribute("userLogined");
-
         model.addAttribute("userid", userid);
 
         //리뷰 리스트
         List<shopreview> shopreviewList = reviewService.findByshopid(shopid);
         model.addAttribute("shopreview", shopreviewList);
+
+        //별점 평균
         float scoreTotal = 0;
         float scoreAvg = 0;
-        for (shopreview shopreview : shopreviewList) {
-            scoreTotal += shopreview.getScore();
-            System.out.println("scoreTotal = " + scoreTotal);
+        if (!shopreviewList.isEmpty()) {
+            for (shopreview shopreview : shopreviewList) {
+                scoreTotal += shopreview.getScore();
+                System.out.println("scoreTotal = " + scoreTotal);
+            }
         }
         scoreAvg = scoreTotal / shopreviewList.size();
         model.addAttribute("scoreAvg", scoreAvg);
         log.info(shopreviewList.toString());
 
-        boolean liked = shopLikeService.islike(shopid, userid);
-        model.addAttribute("liked", liked);
+        //좋아요
+        boolean shopLike = shopLikeService.islike(shopid, userid);
+        model.addAttribute("shopLike", shopLike);
+        Long likeCount = shopLikeService.getLikeCount(shopid);
+        model.addAttribute("likecount", likeCount);
 
         Optional<Hotelimg> hotelimg = hotelimgRepository.findByShopid(shopid);
         String path = hotelimg.get().getPath();
         model.addAttribute("shopimg", path);
 
-
-        Long likeCount = shopLikeService.getLikeCount(shopid);
-        model.addAttribute("likecount", likeCount);
+        cafeDTOLists.add(new com.project.withpet.dto.CafeDTOList(cafe, shopLike, path, likeCount));
 
         //블로그 검색 결과 api
         String clientId = "ettTXRX8Inpm4X2W5jlB";
@@ -250,7 +267,12 @@ public class cafeController {
                 path = "https://withpetimg.s3.ap-northeast-2.amazonaws.com/images/hoteldefault.jpg";
             }
             Long likeCount = shopLikeService.getLikeCount(cafe.getShopid());
-            cafeDTOLists.add(new CafeDTOList(cafe, shopLike, path, likeCount));
+            Double avgByShopid = shopreviewRepository.getAvgByShopid(cafe.getShopid());
+            if(avgByShopid==null){
+                avgByShopid=0D;
+            }
+
+            cafeDTOLists.add(new CafeDTOList(cafe, shopLike, path, likeCount, avgByShopid));
         }
         model.addAttribute("cafeList", cafeDTOLists);
         return "Restaurant-list";
@@ -266,7 +288,7 @@ public class cafeController {
         log.info("지역리스트 = " + cafeList.toString());
         List<CafeDTOList> cafeDTOLists = new ArrayList<>();
         for (cafe cafe : cafeList) {
-            boolean shopLike = shopLikeService.islike(cafe.getShopid(), userid);
+
             Optional<Hotelimg> hotelimg = hotelimgRepository.findByShopid(cafe.getShopid());
             String path = "";
             if (hotelimg.isPresent()) {
@@ -274,8 +296,10 @@ public class cafeController {
             } else {
                 path = "https://withpetimg.s3.ap-northeast-2.amazonaws.com/images/hoteldefault.jpg";
             }
+            boolean shopLike = shopLikeService.islike(cafe.getShopid(), userid);
             Long likeCount = shopLikeService.getLikeCount(cafe.getShopid());
-            cafeDTOLists.add(new CafeDTOList(cafe, shopLike, path, likeCount));
+            double avgByShopid = shopreviewRepository.getAvgByShopid(cafe.getShopid());
+            cafeDTOLists.add(new CafeDTOList(cafe, shopLike, path, likeCount, avgByShopid));
         }
 
         model.addAttribute("cafeList", cafeDTOLists);
@@ -284,7 +308,7 @@ public class cafeController {
         return "Restaurant-list";
     }
 
-    @GetMapping("restaurant-info")
+    @GetMapping("restaurant-info") //맛집 상세정보
     public String showRestaurantInfo(Model model, HttpServletRequest req,
                                      @RequestParam("shopid") Long shopid) {
         log.info("id= " + shopid);
@@ -295,16 +319,18 @@ public class cafeController {
 
         HttpSession session = req.getSession();
         String userid = (String) session.getAttribute("userLogined");
-
         model.addAttribute("userid", userid);
+
         //리뷰 리스트
         List<shopreview> shopreviewList = reviewService.findByshopid(shopid);
         model.addAttribute("shopreview", shopreviewList);
         log.info(shopreviewList.toString());
 
+        //별점 평균
+        float scoreTotal = 0;
+        float scoreAvg = 0;
         if (!shopreviewList.isEmpty()) {
-            float scoreTotal = 0;
-            float scoreAvg = 0;
+
             for (shopreview shopreview : shopreviewList) {
                 scoreTotal += shopreview.getScore();
                 System.out.println("scoreTotal = " + scoreTotal);
@@ -316,10 +342,25 @@ public class cafeController {
             String path = hotelimg.get().getPath();
             model.addAttribute("shopimg", path);
 
-            Long likeCount = shopLikeService.getLikeCount(shopid);
-            model.addAttribute("likecount", likeCount);
+//            Long likeCount = shopLikeService.getLikeCount(shopid);
+//            model.addAttribute("likecount", likeCount);
 
         }
+        scoreAvg = scoreTotal / shopreviewList.size();
+        model.addAttribute("scoreAvg", scoreAvg);
+        log.info(shopreviewList.toString());
+
+
+        //좋아요
+        boolean shopLike = shopLikeService.islike(shopid, userid);
+        model.addAttribute("shopLike", shopLike);
+        Long likeCount = shopLikeService.getLikeCount(shopid);
+        model.addAttribute("likecount", likeCount);
+
+        Optional<Hotelimg> hotelimg = hotelimgRepository.findByShopid(shopid);
+        String path = hotelimg.get().getPath();
+        model.addAttribute("shopimg", path);
+
         return "restaurant-info";
     }
 }

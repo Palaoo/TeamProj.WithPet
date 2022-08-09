@@ -237,6 +237,18 @@ public class ShopController {
         List<shopreview> shopreviewList = reviewService.findByshopid(shopid);
         model.addAttribute("shopreview", shopreviewList);
 
+        //별점 평균
+        float scoreTotal = 0;
+        float scoreAvg = 0;
+        if(!shopreviewList.isEmpty()) {
+            for (shopreview shopreview : shopreviewList) {
+                scoreTotal += shopreview.getScore();
+                System.out.println("scoreTotal = " + scoreTotal);
+            }
+        }
+        scoreAvg = scoreTotal / shopreviewList.size();
+        model.addAttribute("scoreAvg", scoreAvg);
+
         Optional<Shop> shop = shopService.findById(shopid);
         model.addAttribute("shop", shop.get());
         Optional<Hotelimg> hotelimg = hotelimgRepository.findByShopid(shopid);
@@ -444,6 +456,11 @@ public class ShopController {
         hotelForm.setPrice(cheapRoom.get().getPrice());
         hotelForm.setLikeCount(likeCount);
         hotelForm.setIsLiked(liked);
+        Double avgByShopid = shopreviewRepository.getAvgByShopid(hotelList.get(i).getShopid());
+        if(avgByShopid==null) {
+            avgByShopid = 0D;
+        }
+        hotelForm.setScoreAvg(avgByShopid);
         for (int k = 0; k < availShop.size(); k++) {
             if (hotelList.get(i).getShopid() == availShop.get(k).getShopid()) {
                 hotelForm.setAvail("true");
