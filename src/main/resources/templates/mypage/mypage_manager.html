@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MY review</title>
+    <th:block th:replace="fragments/index::style"></th:block>
+</head>
+<body>
+<style>
+</style>
+
+<div class="container">
+
+    <div th:replace="fragments/index :: header"></div>
+
+    <div class="top">
+        <img src="dd.JPG">OOO님&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;포인트
+    </div>
+
+    <div class="contents">
+        <div class="row">
+            <div th:replace="fragments/mypage :: menubar"></div>
+            <div class="col-sm-8">
+                <form method="get" action="/mypage/manager">
+                    사업자 번호:&nbsp;<input type="text" name="bnumber">
+                    <input type="submit" value="번호 확인">
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+    </div>
+
+    <th:block th:replace="fragments/index :: footer"></th:block>
+</div>
+
+</body>
+</html>

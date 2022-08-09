@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="resources/css/plugin/datepicker/bootstrap-datepicker.css">
+
+    <title>MYSHOPPING</title>
+    <th:block th:replace="fragments/index::style"></th:block>
+</head>
+<style>
+    table {
+        border-spacing: 20px;
+        border-collapse: separate;
+        /* position:absolute;
+        left:500px; */
+    }
+
+/*    #tb_search{
+        margin-bottom: 10%;
+    }*/
+    #date{
+        text-align: left;
+        margin-top: 10%;
+    }
+/*    #btnSearch{
+        height: 38px;
+        vertical-align: top;
+    }*/
+
+    input[type="text"] {
+        width: 100%;
+    }
+
+    .up-right-up {
+        display: flex;
+        flex-direction: row;
+    }
+
+    .up {
+        display: flex;
+        flex-direction: row;
+    }
+
+    .up-right-down,
+    .body,
+    .body-right-prod {
+        display: flex;
+        flex-direction: row;
+    }
+
+    textarea {
+        width: 80%;
+    }
+    <!--
+    review-- > .star-rating {
+        display: flex;
+        flex-direction: row-reverse;
+        font-size: 2.25rem;
+        line-height: 2.5rem;
+        justify-content: space-around;
+        padding: 0 0.2em;
+        text-align: center;
+        width: 5em;
+    }
+
+    .star-rating input {
+        display: none;
+    }
+
+    .star-rating label {
+        -webkit-text-fill-color: transparent;
+        /* Will override color (regardless of order) */
+        -webkit-text-stroke-width: 2.3px;
+        -webkit-text-stroke-color: #2b2a29;
+        cursor: pointer;
+    }
+
+
+    .star-rating :checked ~ label {
+        -webkit-text-fill-color: gold;
+    }
+
+    .star-rating label:hover,
+
+    .star-rating label:hover ~ label {
+        -webkit-text-fill-color: #fff58c;
+    }
+
+
+</style>
+
+<body>
+<div th:replace="fragments/index :: header"></div>
+<!--<header>
+<p align=right><a id="myshopping" href='myshopping'>마이쇼핑</a>&nbsp;&nbsp;<a id="basket_shopping"
+                                                                           href='basket_view'>장바구니</a>&nbsp;&nbsp;<a
+        th:if="${userLogined==null}" id="loginPage"
+        href='loginPage'>로그인</a><a th:if="${userLogined!=null}" th:text="${userLogined}"
+                                   href="userInfoPage"></a>
+</p>
+<h1 align=center>WITH PET</h1>
+<nav>
+    <a href="#">숙소</a>
+    <a href="#">카페</a>
+    <a href="#">맛집</a>
+    <a href="mallPage">상점</a>
+    <a href="#">게시판</a>
+</nav>
+</header>
+<hr>-->
+
+<!--    <div class="up">-->
+<!--        <div class="up-left">-->
+<!--            <img src=""-->
+<!--                onerror="this.src='https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbNZo14%2Fbtq17bsvo5i%2FOSV3gGWnwAKqNB0EOSQkrK%2Fimg.png'"-->
+<!--                width="200" height="200">-->
+<!--            &lt;!&ndash; <p th:text="|${user.name} 님|"></p> &ndash;&gt;-->
+<!--        </div>-->
+<!--        <div class="up-right">-->
+<!--            <div class="up-right-up">-->
+<!--                <div>-->
+<!--                    <p>배송중</p>-->
+<!--                    &lt;!&ndash; <p th:text="${shipping}">0</p> &ndash;&gt;-->
+<!--                </div>-->
+<!--                <div>-->
+<!--                    <p>배송완료</p>-->
+<!--                    &lt;!&ndash; <p th:text="${shiped}">0</p> &ndash;&gt;-->
+<!--                </div>-->
+<!--                <div>-->
+<!--                    <p>취소/반품</p>-->
+<!--                    &lt;!&ndash; <p th:text="${cancel}">0</p> &ndash;&gt;-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="up-right-down">-->
+<!--                <input type="date" id="datePicker1" class="form-control" value="">~-->
+<!--                <input type="date" id="datePicker2" class="form-control" value="">-->
+<!--                <button id="btnSearch">조회</button>-->
+<!--            </div>-->
+<!--            <div class="body">-->
+<!--                <div class="body-left">-->
+
+<!--                </div>-->
+<!--                <div class="body-right">-->
+<!--                    &lt;!&ndash; <h4 th:text="${}">해당 년월</h4>  &ndash;&gt;-->
+<!--                    <div th:each="orderDTO:${orderDTOList}">-->
+<!--                        <p th:text="${orderDTO.ordertable.orderdate}"></p>-->
+<!--                        &lt;!&ndash; th:each 들어갈 곳 &ndash;&gt;-->
+<!--                        <div class="body-right-prod" th:each="prodandCount:${orderDTO.prodandCounts}">-->
+<!--                            <div class="body-right-prod-img">-->
+<!--                                <img th:src="${prodandCount.imgPath}"-->
+<!--                                    onerror="this.src='https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbNZo14%2Fbtq17bsvo5i%2FOSV3gGWnwAKqNB0EOSQkrK%2Fimg.png'"-->
+<!--                                    width="200" height="200">-->
+<!--                            </div>-->
+<!--                            <div class="body-right-prod-detail">-->
+<!--                                <p th:text="${prodandCount.prod.name}">상품명</p>-->
+<!--                                <p th:text="|${prodandCount.prod.price}    ${prodandCount.count}|"></p>-->
+<!--                                <p>구매가 완료되었습니다. 이용해주셔서 감사합니다.-->
+<!--                                    구매확정 이후 상품의 이용방법, 반품 등에 대한 문의는 판매자에게 문의해주세요.</p>-->
+<!--                            </div>-->
+<!--                            <div class="body-right-prod-brand">-->
+<!--                                &lt;!&ndash; <p th:text="${}">브랜드명</p> &ndash;&gt;-->
+<!--                                &lt;!&ndash; <p th:text="${}">브랜드 문의전화</p> &ndash;&gt;-->
+<!--                                <button id="btnComplain">문의하기</button>-->
+<!--                            </div>-->
+<!--                            <div class="body-right-prod-re">-->
+<!--                                <button id="btnReOrder">재구매</button>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+
+<!--    <p th:text="${paymentKey}"></p>-->
+<!--    <p th:text="${orderId}"></p>-->
+<!--    <p th:text="${amount}"></p>-->
+
+<section class="breadcrumb-option">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="breadcrumb__text">
+                    <h4>Myshopping</h4>
+                    <div class="breadcrumb__links">
+                        <a href="/">Home</a>
+                        <span>Myshopping</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+<section class="shopping-cart spad">
+    <div class="container">
+        <div class="row">
+<!--            <div class="col-lg-4">-->
+<!--                <img src=""-->
+<!--                     onerror="this.src='https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbNZo14%2Fbtq17bsvo5i%2FOSV3gGWnwAKqNB0EOSQkrK%2Fimg.png'"-->
+<!--                     width="200" height="200">-->
+<!--                &lt;!&ndash; <p th:text="|${user.name} 님|"></p> &ndash;&gt;-->
+<!--            </div>-->
+
+            <div id="tb_search" class="col-lg-12" align="center">
+                <div class="up-right-up">
+                    <div class="col-lg-4">
+                        <input type="date" id="datePicker1" class="form-control" value="">
+                    </div>
+                    <div class="col-lg-1" align="center"><h6>~</h6></div>
+                    <div class="col-lg-4">
+                        <input type="date" id="datePicker2" class="form-control" value="">
+                    </div>
+                    <div class="col-lg-3">
+                        <a href="#" class="primary-btn" id="btnSearch">조회</a>
+                        <!--<button class="continue__btn update__btn" id="btnSearch">조회</button>--></div>
+                </div>
+            </div>
+<!--            <div>-->
+<!--                <table th:each="orderDTO:${orderDTOList}">-->
+<!--                    <p th:text="${orderDTO.ordertable.orderdate}"></p>-->
+
+<!--                    <tbody>-->
+<!--                    <tr th:each="prodandCount:${orderDTO.prodandCounts}">-->
+<!--                        <td class="product__cart__item">-->
+<!--                            <div class="product__cart__item__pic">-->
+<!--                                <img th:src="${prodandCount.imgPath}"-->
+<!--                                     onerror="this.src='https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbNZo14%2Fbtq17bsvo5i%2FOSV3gGWnwAKqNB0EOSQkrK%2Fimg.png'"-->
+<!--                                     width="200" height="200">-->
+<!--                            </div>-->
+<!--                        </td>-->
+<!--                        <td class="quantity__item">-->
+<!--                            <div class="product__cart__item__text">-->
+<!--                                <p th:text="${prodandCount.prod.name}">상품명</p>-->
+<!--                                <h6 th:text="|${prodandCount.prod.price}    ${prodandCount.count}|"></h6>-->
+<!--                                <h5>-->
+<!--                                    <p>구매가 완료되었습니다. 이용해주셔서 감사합니다.-->
+<!--                                        구매확정 이후 상품의 이용방법, 반품 등에 대한 문의는 판매자에게 문의해주세요.</p>-->
+<!--                                </h5>-->
+<!--                            </div>-->
+
+<!--                            &lt;!&ndash;<div class="quantity">-->
+<!--                            <div class="pro-qty-2">-->
+<!--                                <button id="btnComplain">문의하기</button>-->
+<!--                            </div>-->
+<!--                        </div>&ndash;&gt;-->
+<!--                        </td>-->
+<!--                        <td class="cart__price">-->
+<!--                            <button id="btnComplain">문의하기</button>-->
+<!--                        </td>-->
+<!--                        <td class="cart__close">-->
+<!--                            <input type="button" value="사용리뷰쓰기" onclick="new_window();">-->
+<!--                            <button id="btnReOrder">재구매</button>-->
+<!--                        </td>-->
+<!--                    </tr>-->
+<!--                    </tbody>-->
+<!--                </table>-->
+<!--            </div>-->
+            <div align="center">
+            <table th:each="orderDTO:${orderDTOList}" >
+                <p id="date" th:text="${#strings.substring(orderDTO.ordertable.orderdate,0,10)}"></p>
+
+                <tr th:each="prodandCount:${orderDTO.prodandCounts}" style="width: 100%">
+                    <td class="product__cart__item" style="width: 20%">
+                        <div class="product__cart__item__pic">
+                            <img th:src="${prodandCount.imgPath}" style="cursor:pointer;" th:onclick="|location.href='prod_view?prodId=${prodandCount.prod.id}'|"
+                                 onerror="this.src='https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbNZo14%2Fbtq17bsvo5i%2FOSV3gGWnwAKqNB0EOSQkrK%2Fimg.png'"
+                                 width="200" height="200">
+                        </div>
+                    </td>
+                    <td class="quantity__item" style="width: 60%">
+                        <div class="product__cart__item__text">
+                            <h4><b th:text="${prodandCount.prod.name}" style="cursor:pointer;" th:onclick="|location.href='prod_view?prodId=${prodandCount.prod.id}'|">상품명</b></h4><br><br>
+                            <h6 th:text="|${prodandCount.prod.price}원    ${prodandCount.count}개|"></h6><br><br>
+                            <h5>
+                                <p>구매가 완료되었습니다. 이용해주셔서 감사합니다. <br>
+                                    구매확정 이후 상품의 이용방법, 반품 등에 대한 문의는 판매자에게 문의해주세요.</p>
+                            </h5>
+                        </div>
+
+                        <!--<div class="quantity">
+                        <div class="pro-qty-2">
+                            <button id="btnComplain">문의하기</button>
+                        </div>
+                    </div>-->
+                    </td>
+                    <td class="cart__price" style="width: 20%">
+                        <a href="#" class="primary-btn" th:name="${prodandCount.prod.id}"
+                           onclick="new_window(this.getAttribute('name'))">리뷰쓰기</a>
+                        <!--<button id="btnComplain">문의하기</button>-->
+                    </td>
+<!--                    <td class="cart__close">-->
+<!--                        <a href="#" class="primary-btn" th:name="${prodandCount.prod.id}"-->
+<!--                           onclick="new_window(this.getAttribute('name'))">리뷰쓰기</a>-->
+
+<!--                        &lt;!&ndash;<input type="button" value="사용리뷰쓰기" th:name="${prodandCount.prod.id}"-->
+<!--                               onclick="new_window(this.getAttribute('name'))">&ndash;&gt;-->
+<!--                        &lt;!&ndash;<button id="review">사용리뷰쓰기</button>&ndash;&gt;-->
+<!--                        &lt;!&ndash;<button id="btnReOrder">재구매</button>&ndash;&gt;-->
+<!--                    </td>-->
+                </tr>
+
+            </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-4 col-md-4 col-sm-4">
+                <div class="continue__btn">
+                    <p th:text="${paymentKey}"></p>
+                    <!--<a href="#">Continue Shopping</a>-->
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4">
+                <div class="continue__btn update__btn">
+                    <p th:text="${orderId}"></p>
+                    <!--<a href="#"><i class="fa fa-spinner"></i> Update cart</a>-->
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4">
+                <div class="continue__btn update__btn">
+                    <p th:text="${amount}"></p>
+                    <!--<a href="#"><i class="fa fa-spinner"></i> Update cart</a>-->
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    </div>
+</section>
+<!-- <section class="contact spad">
+ <div class="container">
+     <form action="#">
+         <input type="button" value="사용리뷰쓰기" onclick="new_window();">
+         <div class="row" align="center">
+             <div class="col-lg-3">
+                 <input type="hidden" id="id">
+                 <div class="star-rating space-x-4 mx-auto">
+                     <input type="radio" id="5-stars" name="rating" value="5" v-model="ratings"/>
+                     <label for="5-stars" class="star pr-4">★</label>
+                     <input type="radio" id="4-stars" name="rating" value="4" v-model="ratings"/>
+                     <label for="4-stars" class="star">★</label>
+                     <input type="radio" id="3-stars" name="rating" value="3" v-model="ratings"/>
+                     <label for="3-stars" class="star">★</label>
+                     <input type="radio" id="2-stars" name="rating" value="2" v-model="ratings"/>
+                     <label for="2-stars" class="star">★</label>
+                     <input type="radio" id="1-star" name="rating" value="1" v-model="ratings" />
+                     <label for="1-star" class="star">★</label>
+                 </div>
+             </div>
+             <div class="col-lg-6">
+                 <textarea placeholder="후기를 남겨주세요."></textarea>
+             </div>
+             <div class="col-lg-3">
+                 <button type="cancel" class="site-btn">취소</button>
+                 <button type="submit" class="site-btn">등록</button>
+             </div>
+         </div>
+     </form>
+ </div>
+</section>-->
+<!--<input type="button" value="사용리뷰쓰기" onclick="new_window();">-->
+<th:block th:replace="fragments/index :: footer"></th:block>
+</body>
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<script src="resources/js/plugin/datepicker/bootstrap-datepicker.js"></script>
+<script>
+    $('#btnSearch').on('click', function () {
+        let startDate = $('#datePicker1').val()
+        let endDate = $('#datePicker2').val()
+        document.location = 'myshopping?startDate=' + startDate + '&endDate=' + endDate
+        // $.ajax({
+        //     url: 'myshopping',
+        //     type: 'get',
+        //     data: {
+        //         'startDate': startDate,
+        //         'endDate': endDate
+        //     },
+        //     success: function (data) {
+        //         document.write(data)
+        //     }
+        // })
+    })
+
+    function new_window(prodId) {
+        var openWin = window.open(
+            "review?prodId=" + prodId,
+            "Review",
+            "width=400, height=300, top=50, left=50"
+        );
+
+
+    }
+
+
+</script>
+
+</html>

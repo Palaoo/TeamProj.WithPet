@@ -1,0 +1,206 @@
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Male_Fashion Template">
+    <meta name="keywords" content="Male_Fashion, unica, creative, html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>WITH PET</title>
+
+    <th:block th:replace="fragments/index::style"></th:block>
+</head>
+<body>
+
+<div th:replace="fragments/index :: header"></div>
+
+<!-- Hero Section Begin -->
+<section class="hero">
+    <div class="hero__slider owl-carousel">
+        <div class="hero__items set-bg" data-setbg="img/hero/bg1.png">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-5 col-lg-7 col-md-8">
+                        <div class="hero__text">
+                            <h6>MALL</h6>
+                            <h2>For the Cats & Dogs</h2>
+                            <p>Dogs will give you unconditional love until the day they die. Cats will make you pay for every mistake you’ve ever made since the day you were born.</p>
+                            <a href="/mallPage" class="primary-btn">Shop now <span class="arrow_right"></span></a>
+                            <!--<div class="hero__social">
+                                <a href="#"><i class="fa fa-facebook"></i></a>
+                                <a href="#"><i class="fa fa-twitter"></i></a>
+                                <a href="#"><i class="fa fa-pinterest"></i></a>
+                                <a href="#"><i class="fa fa-instagram"></i></a>
+                            </div>-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="hero__items set-bg" data-setbg="img/hero/bg2.png">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-5 col-lg-7 col-md-8">
+                        <div class="hero__text">
+                            <h6>COMMUNITY</h6>
+                            <h2>Go around</h2>
+                            <p>There is no power for change greater than a community discovering what it cares about.</p>
+                            <a href="/community" class="primary-btn">GO now <span class="arrow_right"></span></a>
+                            <!--<div class="hero__social">
+                                <a href="#"><i class="fa fa-facebook"></i></a>
+                                <a href="#"><i class="fa fa-twitter"></i></a>
+                                <a href="#"><i class="fa fa-pinterest"></i></a>
+                                <a href="#"><i class="fa fa-instagram"></i></a>
+                            </div>-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Hero Section End -->
+
+<!-- Banner Section Begin -->
+<section class="banner spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-7 offset-lg-4">
+                <div class="banner__item">
+                    <div class="banner__item__pic">
+                        <img src="img/banner/banner_hotel.jpg" alt="">
+                    </div>
+                    <div class="banner__item__text">
+                        <h2>Hotel</h2>
+                        <a href="hotel">Go now</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-5">
+                <div class="banner__item banner__item--middle">
+                    <div class="banner__item__pic">
+                        <img src="img/banner/banner_cafe.jpg" alt="">
+                    </div>
+                    <div class="banner__item__text">
+                        <h2>Cafe</h2>
+                        <a href="cafe_list">Go now</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-7">
+                <div class="banner__item banner__item--last">
+                    <div class="banner__item__pic">
+                        <img src="img/banner/banner_rst.jpg" alt="">
+                    </div>
+                    <div class="banner__item__text">
+                        <h2>Restaurant</h2>
+                        <a href="#">Go now</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Banner Section End -->
+
+<!-- Instagram Section Begin -->
+<section class="instagram spad">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <img src="https://technext.github.io/petsitting/images/bg_2.jpg">
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Instagram Section End -->
+
+<!-- Latest Blog Section Begin -->
+<section class="latest spad">
+    <!--<div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="section-title">
+                    <span>Community</span>
+                    <h2>Fashion New Trends</h2>
+                </div>
+            </div>
+        </div>
+
+        &lt;!&ndash;bk&ndash;&gt;
+        &lt;!&ndash; <div class="row row-cols-1 row-cols-md-3 g-4">
+             <div class="col" th:each="post: ${posts}">
+                 <div class="card border-secondary mb-3">
+                     <a th:href="@{/community/postdetail(boardcode=${post.boardcode})}">
+                         <img class="card-img-top" src="/image/catsock.jfif" alt="" width="200" height="200">
+                         <div class="card-body">
+                             <h5 class="card-title" th:text="${post.title}"></h5>
+                             <p class="card-text" id=postContent th:utext="${post.content}"></p>
+                             <ul class="list-group list-group-flush">
+                                 <li class="list-group-item" th:text="${post.writer}"></li>
+                                 <li class="list-group-item" th:text="${post.date}">&nbsp;조회수&nbsp;좋아요&nbsp;댓글</li>
+                             </ul>
+                         </div>
+                     </a>
+                 </div>
+                 <input type="hidden" th:value="${post.boardcode}">
+             </div>
+         </div>&ndash;&gt;
+
+        &lt;!&ndash;change&ndash;&gt;
+        &lt;!&ndash;        <div class="row">
+                        <div class="col-lg-4 col-md-6 col-sm-6" th:each="post: ${posts}">
+                            <div class="blog__item">
+                                <a th:href="@{/community/postdetail(boardcode=${post.boardcode})}">
+                                <div class="blog__item__pic set-bg" data-setbg="/image/catsock.jfif"></div>
+                                <div class="blog__item__text">
+                                    <span><img src="img/icon/calendar.png" alt="" th:text="${post.date}"> 16 February 2020</span>
+                                    <h5 th:text="${post.title}">What Curling Irons Are The Best Ones</h5>
+                                    <a href="#">Read More</a>
+                                </div>
+                                </a>
+                            </div>
+                            <input type="hidden" th:value="${post.boardcode}">
+                        </div>
+                    </div>&ndash;&gt;
+        &lt;!&ndash;change End&ndash;&gt;
+
+        <div class="row">
+            <div class="col-lg-4 col-md-6 col-sm-6">
+                <div class="blog__item">
+                    <div class="blog__item__pic set-bg" data-setbg="img/blog/blog-1.jpg"></div>
+                    <div class="blog__item__text">
+                        <span><img src="img/icon/calendar.png" alt="" > 16 February 2020</span>
+                        <h5>What Curling Irons Are The Best Ones</h5>
+                        <a href="#">Read More</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-6">
+                <div class="blog__item">
+                    <div class="blog__item__pic set-bg" data-setbg="img/blog/blog-2.jpg"></div>
+                    <div class="blog__item__text">
+                        <span><img src="img/icon/calendar.png" alt=""> 21 February 2020</span>
+                        <h5>Eternity Bands Do Last Forever</h5>
+                        <a href="#">Read More</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-6">
+                <div class="blog__item">
+                    <div class="blog__item__pic set-bg" data-setbg="img/blog/blog-3.jpg"></div>
+                    <div class="blog__item__text">
+                        <span><img src="img/icon/calendar.png" alt=""> 28 February 2020</span>
+                        <h5>The Health Benefits Of Sunglasses</h5>
+                        <a href="#">Read More</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>-->
+</section>
+<th:block th:replace="fragments/index :: footer"></th:block>
+</div>
+</body>
+
+</html>

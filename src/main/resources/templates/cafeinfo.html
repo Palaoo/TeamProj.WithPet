@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link href="/assets/css/star.css" rel="stylesheet"/>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+            crossorigin="anonymous"></script>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cafe</title>
+    <th:block th:replace="fragments/index::style"></th:block>
+</head>
+<body>
+<style>
+    form{
+        display:inline;
+    }
+    .nav-link:hover,.nav-link:focus{
+        color: #000 !important;
+    }
+    #myform fieldset {
+        display: inline-block;
+        direction: rtl;
+        border: 0;
+    }
+
+    #myform fieldset legend {
+        text-align: right;
+    }
+
+    #myform input[type=radio] {
+        display: none;
+    }
+
+    #myform label {
+        font-size: 3em;
+        color: transparent;
+        text-shadow: 0 0 0 #f0f0f0;
+    }
+
+    #myform label:hover {
+        text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
+    }
+
+    #myform label:hover ~ label {
+        text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
+    }
+
+    #myform input[type=radio]:checked ~ label {
+        text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
+    }
+
+    #reviewContents {
+        width: 100%;
+        height: 150px;
+        padding: 10px;
+        box-sizing: border-box;
+        border: solid 1.5px #D3D3D3;
+        border-radius: 5px;
+        font-size: 16px;
+        resize: none;
+    }
+
+    .rating {
+        color: transparent;
+        text-shadow: 0 0 0 gold;
+    }
+
+    div.updatescore fieldset {
+        display: inline-block;
+        direction: rtl;
+        border: 0;
+    }
+
+    div.updatescore fieldset legend {
+        text-align: right;
+    }
+
+    div.updatescore input[type=radio] {
+        display: none;
+    }
+
+    div.updatescore label {
+        font-size: 3em;
+        color: transparent;
+        text-shadow: 0 0 0 #f0f0f0;
+    }
+
+    div.updatescore label:hover {
+        text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
+    }
+
+    div.updatescore label:hover ~ label {
+        text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
+    }
+
+    div.updatescore input[type=radio]:checked ~ label {
+        text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
+    }
+
+</style>
+<div th:replace="fragments/index :: header"></div>
+
+<section class="blog-hero spad">
+    <div class="container">
+        <th:block th:value="${cafe.shopid}"></th:block>
+        <div class="row d-flex justify-content-center">
+            <div class="col-lg-9 text-center">
+                <div class="blog__hero__text">
+                    <h2 th:text="${cafe.getName()}"></h2>
+                    <ul>
+                        <li>
+                            <a href="javascript:return false;" id="btnLike" th:name="${cafe.shopid}">
+                                <img th:if="${liked}" src="/image/redheart.png"
+                                     th:id="|btnLike${cafe.shopid}|" width="25" height="25" alt="">
+                                <img th:if="${!liked}" src="/image/heart.png"
+                                     th:id="|btnLike${cafe.shopid}|" width="25" height="25" alt="">
+                            </a>
+                            <span th:text="${likecount}" th:id="|likeCount${cafe.shopid}|"
+                                  name="likeCount" id="cnt"></span>
+                        </li>
+                        <!--                        <li>-->
+                        <!--                            <div class="rating">-->
+                        <!--                                <i class="fa fa-star"></i>-->
+                        <!--                                <i class="fa fa-star"></i>-->
+                        <!--                                <i class="fa fa-star"></i>-->
+                        <!--                                <i class="fa fa-star"></i>-->
+                        <!--                                <i class="fa fa-star-o"></i>-->
+                        <!--                                <span> - 5 Reviews</span>-->
+                        <!--                            </div>-->
+                        <!--                        </li>-->
+                        <li>
+                            <th:block th:each="feat: ${cafe.getShopFeats()}">
+                                <span th:text="${feat.getFeatname()}+' '"></span>
+                            </th:block>
+                            <br>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="blog-details spad">
+    <div class="container">
+        <div class="row d-flex justify-content-center">
+            <div class="col-lg-8">
+                <div class="blog__details__content">
+                    <div class="container">
+                        <div class="blog__details__pic">
+                            <img class="col" th:src="${shopimg}" style="size: auto" width="1000" height="400">
+                        </div>
+
+                        <!--가져온거-->
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="product__details__tab">
+                                    <ul class="nav nav-tabs" role="tablist" id="myTab">
+                                        <li class="nav-item">
+                                            <a class="nav-link active" data-toggle="tab" href="#tabs-1"
+                                               role="tab">이용안내</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" data-toggle="tab" href="#tabs-2"
+                                               role="tab">기본정보</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" data-toggle="tab" href="#tabs-3" role="tab">사용자후기</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" data-toggle="tab" href="#tabs-4" role="tab">블로그후기</a>
+                                        </li>
+                                    </ul>
+
+                                    <div class="tab-content">
+                                        <div class="tab-pane active" id="tabs-1" role="tabpanel">
+                                            <div class="product__details__tab__content">
+                                                <div class="pb-4 mb-4 border-bottom">
+                                                    <h5>소개글</h5>
+                                                    <div class="px-6 leading-6 mb-4">
+                                                        <p th:text="${cafe.getIntro()}"></p>
+                                                    </div>
+                                                </div>
+                                                <div class="pb-4 mb-4 border-bottom">
+                                                    <h5>영업시간</h5>
+                                                    <div>
+                                                        <p th:text="${cafe.getHour()}"></p>
+                                                    </div>
+                                                </div>
+                                                <div class="pb-4 mb-4 border-bottom">
+                                                    <h5>이용안내</h5>
+                                                    <div>
+                                                        <p th:text="${cafe.getInfo()}"></p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="tab-pane" id="tabs-2" role="tabpanel"> <!-- active-->
+                                            <div class="product__details__tab__content">
+                                                <div class="product__details__tab__content__item">
+                                                    <div class="row pb-4 mb-4 border-bottom">
+                                                        <div id="map"
+                                                             style="width:100% !important;height:300px !important;"></div>
+                                                        <div>
+                                                            <br>
+                                                            전화번호: <span th:text="${cafe.getTel()}"></span><br>
+                                                            주소: <span id="address"
+                                                                      th:text="${cafe.getAddress()}"></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="tab-pane" id="tabs-3" role="tabpanel">
+                                            <div class="product__details__tab__content">
+                                                <div class="product__details__tab__content__item">
+                                                    <div>
+                                                        <!--<h5>리뷰</h5>-->
+                                                        <span th:text="${#lists.size(shopreview)}"></span>개
+                                                        <th:block th:each="review , index : ${shopreview}">
+                                                            <div class="row">
+                                                                <div class="col-sm-2"><p
+                                                                        th:text="${review.getUserid()}"></p>
+                                                                </div>
+                                                                <div class="col-sm-5">
+                                                                    <th:block th:if="${review.getScore()==5}">
+                                                                        <div class="rating">★★★★★</div>
+                                                                    </th:block>
+                                                                    <th:block th:if="${review.getScore()==4}">
+                                                                        <div class="rating">★★★★</div>
+                                                                    </th:block>
+                                                                    <th:block th:if="${review.getScore()==3}">
+                                                                        <div class="rating">★★★</div>
+                                                                    </th:block>
+                                                                    <th:block th:if="${review.getScore()==2}">
+                                                                        <div class="rating">★★</div>
+                                                                    </th:block>
+                                                                    <th:block th:if="${review.getScore()==1}">
+                                                                        <div class="rating">★</div>
+                                                                    </th:block>
+                                                                    <p id="content1"
+                                                                       th:text="${review.getContent()}"></p>
+                                                                </div>
+                                                                <div class="col-sm-3">
+                                                                    <p th:text="${review.getDate()}"></p>
+                                                                </div>
+
+                                                                <div class="col-sm-2">
+                                                                    <div th:if="${review.getUserid()==userid}">
+                                                                        <form th:action="@{'/reviews/update'}"
+                                                                              method="post">
+                                                                            <!--                <input type="hidden" name="rid" th:value="${review.getRid()}">-->
+                                                                            <button type="button"
+                                                                                    th:id="${index}"
+                                                                                    class="btn btn-outline-primary btn-sm"
+                                                                                    data-bs-toggle="modal"
+                                                                                    data-bs-target="#review-edit-Modal"
+                                                                                    th:attr="data-bs-content=${review.getContent()},
+                                                                                        data-bs-score=${review.getScore()},data-bs-rid=${review.getRid()}"
+                                                                                    data-bs-userid=""
+                                                                                    data-bs-shopid="">수정
+                                                                            </button>
+                                                                            <div class="modal fade"
+                                                                                 id="review-edit-Modal"
+                                                                                 tabindex="-1"
+                                                                                 aria-labelledby="exampleModalLabel"
+                                                                                 aria-hidden="true">
+                                                                                <div class="modal-dialog">
+                                                                                    <div class="modal-content">
+                                                                                        <div class="modal-header">
+                                                                                            <h5 class="modal-title"
+                                                                                                id="exampleModalLabel">
+                                                                                                리뷰 수정하기</h5>
+                                                                                            <button type="button"
+                                                                                                    class="btn-close"
+                                                                                                    data-bs-dismiss="modal"
+                                                                                                    aria-label="Close"></button>
+                                                                                        </div>
+                                                                                        <div class="modal-body">
+                                                                                            <div class="updatescore">
+                                                                                                <fieldset>
+                                                                                                    <span class="text-bold">별점을 선택하세요</span>
+                                                                                                    <input type="radio"
+                                                                                                           name="score"
+                                                                                                           value="5"
+                                                                                                           id="rate1_"><label
+                                                                                                        for="rate1_">★</label>
+                                                                                                    <input type="radio"
+                                                                                                           name="score"
+                                                                                                           value="4"
+                                                                                                           id="rate2_"><label
+                                                                                                        for="rate2_">★</label>
+                                                                                                    <input type="radio"
+                                                                                                           name="score"
+                                                                                                           value="3"
+                                                                                                           id="rate3_"><label
+                                                                                                        for="rate3_">★</label>
+                                                                                                    <input type="radio"
+                                                                                                           name="score"
+                                                                                                           value="2"
+                                                                                                           id="rate4_"><label
+                                                                                                        for="rate4_">★</label>
+                                                                                                    <input type="radio"
+                                                                                                           name="score"
+                                                                                                           value="1"
+                                                                                                           id="rate5_"><label
+                                                                                                        for="rate5_">★</label>
+                                                                                                </fieldset>
+                                                                                            </div>
+                                                                                            <div class="mb-3">
+                                                                                                <label for="message-text"
+                                                                                                       class="col-form-label">내용</label>
+                                                                                                <textarea
+                                                                                                        class="form-control"
+                                                                                                        id="message-text"
+                                                                                                        name="content"></textarea>
+                                                                                                <input type="hidden"
+                                                                                                       name="rid"
+                                                                                                       id="review-id">
+                                                                                            </div>
+                                                                                            <input type="hidden"
+                                                                                                   name="shopid"
+                                                                                                   th:value="${review.getShopid()}">
+                                                                                            <!--                          <input type="hidden" name="rid" th:value="${review.getRid()}">-->
+                                                                                            <input type="hidden"
+                                                                                                   name="userid"
+                                                                                                   th:value="${review.getUserid()}">
+                                                                                            <input type="hidden"
+                                                                                                   name="date"
+                                                                                                   id="currentTime"
+                                                                                                   th:value="${review.getDate()}">
+                                                                                            <input type="hidden"
+                                                                                                   name="score"
+                                                                                                   id="score-value">
+                                                                                        </div>
+
+                                                                                        <script>
+                                                                                            document.getElementById("currentTime").value = new Date(+new Date() + 3240 * 10000).toISOString().split("T")[0];
+                                                                                        </script>
+
+                                                                                        <div class="modal-footer">
+                                                                                            <button type="button"
+                                                                                                    class="btn btn-secondary"
+                                                                                                    data-bs-dismiss="modal">
+                                                                                                닫기
+                                                                                            </button>
+                                                                                            <button type="submit"
+                                                                                                    class="btn btn-primary">
+                                                                                                수정
+                                                                                            </button>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </form>
+                                                                        <script>
+                                                                            var myModal = document.getElementById('myModal')
+                                                                            var myInput = document.getElementById('myInput')
+
+                                                                            myModal.addEventListener('shown.bs.modal', function () {
+                                                                                myInput.focus()
+                                                                            })
+                                                                        </script>
+                                                                        <!--리뷰 삭제-->
+                                                                        <form th:action="@{'/reviews/delete/'}"
+                                                                              method="get">
+                                                                            <input type="hidden" name="shopid"
+                                                                                   th:value="${review.getShopid()}">
+                                                                            <input type="hidden" name="rid"
+                                                                                   th:value="${review.getRid()}">
+                                                                            <button class="btn btn-outline-danger btn-sm"
+                                                                                    name="delete">삭제
+                                                                            </button>
+                                                                        </form>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </th:block>
+
+                                                        <!--후기 남기기-->
+                                                        <div th:if="${not #strings.isEmpty(userid)}">
+                                                            <form class="mb-3" name="myform" id="myform"
+                                                                  action="/reviews/create" method="post"
+                                                                  onsubmit="return submitCheck();">
+                                                                <fieldset>
+                                                                    <span class="text-bold">별점을 선택하세요</span>
+                                                                    <input type="radio" name="score" value="5"
+                                                                           id="rate1"><label
+                                                                        for="rate1">★</label>
+                                                                    <input type="radio" name="score" value="4"
+                                                                           id="rate2"><label
+                                                                        for="rate2">★</label>
+                                                                    <input type="radio" name="score" value="3"
+                                                                           id="rate3"><label
+                                                                        for="rate3">★</label>
+                                                                    <input type="radio" name="score" value="2"
+                                                                           id="rate4"><label
+                                                                        for="rate4">★</label>
+                                                                    <input type="radio" name="score" value="1"
+                                                                           id="rate5"><label
+                                                                        for="rate5">★</label>
+                                                                </fieldset>
+                                                                <div>
+                                                                    <input type="hidden"
+                                                                           th:value="${cafe.shopid}"
+                                                                           name="shopid">
+                                                                    <input type="hidden" th:value="${userid}"
+                                                                           name="userid">
+                                                                    <textarea class="col-auto form-control"
+                                                                              type="text" id="content"
+                                                                              name="content"
+                                                                              placeholder="후기를 남겨주세요"></textarea>
+                                                                    <button type="submit"
+                                                                            class="btn btn-outline-primary btn-sm"
+                                                                            id="comment-create-btn">후기 작성
+                                                                    </button>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="tab-pane" id="tabs-4" role="tabpanel">
+                                            <div class="product__details__tab__content">
+                                                <div class="product__details__tab__content__item">
+                                                    <div class="card mb-3" th:each="item:${review.items}"
+                                                         style="width: 100%">
+                                                        <a th:href="${item.link}">
+                                                            <div class="card-body">
+                                                                <h4 class="card-title"
+                                                                    th:utext="${item.title}"></h4>
+                                                                <br>
+                                                                <p class="card-text"
+                                                                   th:utext="${item.description}"></p>
+                                                                <br>
+                                                                <p class="card-text">
+                                                                    <small class="text-muted"
+                                                                           th:utext="${item.bloggername}"></small>&nbsp;
+                                                                    <small class="text-muted"
+                                                                           th:utext="${item.postdate}"></small>
+                                                                </p>
+                                                            </div>
+                                                        </a>
+                                                    </div>
+                                                    <div class="postbar" style="clear:both; text-align: center;">
+                                                        <a th:href="@{https://search.naver.com/search.naver(query=${cafe.getName()})}">검색
+                                                            결과 더 보기</a>
+                                                    </div>
+                                                    <br>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script type="text/javascript"
+        src="//dapi.kakao.com/v2/maps/sdk.js?appkey=1c12d27c88e0ef576fe237323f586e7d&libraries=services"></script>
+<th:block th:replace="fragments/index :: footer"></th:block>
+</body>
+<script>
+
+    const triggerTabList = document.querySelectorAll('#myTab a')
+    triggerTabList.forEach(triggerEl => {
+        const tabTrigger = new bootstrap.Tab(triggerEl)
+
+        triggerEl.addEventListener('click', event => {
+            event.preventDefault()
+            tabTrigger.show()
+        })
+    })
+
+    $(document).ready(function () {
+        console.log(document)
+    }).on("click", "#comment-create-btn", function () { //별점 미선택 후기 작성시
+        if ($(':radio[name="score"]:checked').length < 1) {
+            alert("별점을 선택해주세요.");
+            return false;
+        }
+    }).on('click', '#btnLike', function () {
+
+        shopId = $(this).attr('name')
+        console.log(shopId)
+        $.ajax({
+            type: 'get',
+            url: '/append_shoplike?shopId=' + shopId,
+            success: function (data) {
+                ID = '#btnLike' + shopId
+                if (data == '1') {
+                    $(ID).attr("src", "/image/redheart.png")
+                    $(ID).attr("width", "25px")
+                    $(ID).attr("height", "25px")
+                    $('#likeCount' + shopId).text(parseInt($('#likeCount' + shopId).text()) + 1)
+                } else {
+                    console.log('여기')
+                    $(ID).attr("width", "25px")
+                    $(ID).attr("height", "25px")
+                    $(ID).attr("src", "/image/heart.png")
+                    $('#likeCount' + shopId).text(parseInt($('#likeCount' + shopId).text()) - 1)
+                }
+            }
+        })
+    })
+
+
+    var mapContainer = document.getElementById('map'), // 지도를 표시할 div
+
+        mapOption = {
+            center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+            level: 3 // 지도의 확대 레벨
+        };
+    // 지도를 생성합니다
+    var map = new kakao.maps.Map(mapContainer, mapOption);
+    // 주소-좌표 변환 객체를 생성합니다
+
+
+    $("a[href='#tabs-2']").on('shown.bs.tab', function () {
+        kakao.maps.event.trigger(map, resizeMap());
+        relayout()
+        getCenter()
+    });
+
+    function getCenter() {
+        var geocoder = new kakao.maps.services.Geocoder();
+        // 주소로 좌표를 검색합니다
+        geocoder.addressSearch(document.getElementById("address").innerHTML, function (result, status) {
+            // 정상적으로 검색이 완료됐으면
+            if (status === kakao.maps.services.Status.OK) {
+                var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+                // 결과값으로 받은 위치를 마커로 표시합니다
+                var marker = new kakao.maps.Marker({
+                    map: map,
+                    position: coords
+                });
+                // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+                map.setCenter(coords);
+            }
+        });
+    }
+
+
+    function resizeMap() {
+        var mapContainer = document.getElementById('map');
+        mapContainer.style.width = '100%';
+        mapContainer.style.height = '300px';
+    }
+
+    function relayout() {
+        map.relayout();
+    }
+
+
+    const commentEditModal = document.querySelector("#review-edit-Modal")
+
+    commentEditModal.addEventListener("show.bs.modal", function (event) {
+
+        const triggerBtn = event.relatedTarget
+
+        const content = triggerBtn.getAttribute("data-bs-content");
+        const score = triggerBtn.getAttribute("data-bs-score");
+        const rid = triggerBtn.getAttribute("data-bs-rid");
+
+        console.log(rid);
+        document.querySelector("#message-text").value = content
+        document.querySelector("#score-value").value = score
+        document.querySelector("#review-id").value = rid
+    })
+</script>
+</html>

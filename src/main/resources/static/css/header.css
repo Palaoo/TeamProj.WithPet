@@ -1,0 +1,217 @@
+body *{
+    list-style: none;
+    text-decoration: none;
+    border-collapse: collapse;
+    margin: 0px;
+    padding: 0px;
+    color: #000;
+    font-size: 15px;
+}
+/* .intro_bg{
+    background-image: url("img/cat.jpg");
+    background-size: cover;
+    width: 100%;
+    height: 78px;
+} */
+.header{
+    display: flex;
+    width: 1280px;
+    margin: auto;
+    /* background: green; */
+    height: 86px;
+}
+.title{
+    width: 300px;
+    height: 40px;
+    /* background: pink; */
+    border-radius: 5px;
+    margin-top: 24px;
+}
+.nav{
+    display: flex;
+    justify-content: flex-start;
+    line-height: 86px;
+    width: calc(1280px - 350px);
+    /* background-color: lavender; */
+}
+.nav > li {
+    margin-left: 80px;
+}
+
+/* menuicon */
+.menu {
+    position: absolute;
+    top: 30px;
+    right: 15px;
+}
+input[id="menuicon"]{
+    display: none;
+}
+input[id="menuicon"] + label{
+    display: block;
+    width: 35px;
+    height: 25px;
+    position: relative;
+    cursor: pointer;
+}
+input[id="menuicon"] + label span{
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    border-radius: 30px;
+    background: #000;
+    transition: all .35s;
+}
+input[id="menuicon"] + label span:nth-child(1) {
+    top: 0;
+}
+input[id="menuicon"] + label span:nth-child(2) {
+    top: 50%;
+    transform: translateY(-50%);
+}
+input[id="menuicon"] + label span:nth-child(3) {
+    bottom: 0;
+}
+
+input[id="menuicon"]:checked + label span:nth-child(1) {
+    top: 50%;
+    transform: translateY(-50%) rotate(45deg);
+}
+input[id="menuicon"]:checked + label span:nth-child(2) {
+    opacity: 0;
+}
+input[id="menuicon"]:checked + label span:nth-child(3) {
+    bottom: 50%;
+    transform: translateY(50%) rotate(-45deg);
+}
+/* position: absolute; right: 100px; */
+input[id="menuicon"]:checked + label {z-index: 2; }
+div[class="sidebar"] {width:300px; height: 100%; background: #c5d6d5; position: fixed; top: 0; right: -300px; z-index: 1;transition: all .35s;}
+input[id="menuicon"]:checked + label + div {right: 0;}
+
+/* .sidebar {position: fixed; top: 0; right: -300px; width: 300px; height: 100px; background: #666; border: 1px solid #eee; z-index: 30; transition: .35s;}
+input[id="menuicon"]:checked ~ .sidebar {right: 0;} */
+
+/* menubar */
+header {width: 100%; background: #e5e5e5;}
+header > div {position: relative; width: 1200px; margin: 0 auto;}
+header > div ul.navi { font-size: 0;}
+header > div ul.navi > li {font-size: 12px; display: inline-block; vertical-align: middle;}
+header > div ul.navi > li > a { display: block; width: auto; padding: 20px;}
+header > div ul.navi > li.logo > a { padding: 20px 50px; font-size: 20px; font-weight: 900; }
+.area_desc {position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); font-size: 20px;}
+.menubtn {display: block; width: 50px; height: 50px; position: absolute; top: 50%; right: 10px; transform: translateY(-50%);cursor: pointer;}
+.menubtn span {display: block; position: absolute; width: 80%; height: 5px; border-radius: 30px; background:#222; transition: all .35s;}
+.menubtn span:nth-child(1) {top: 20%; left: 50%; transform: translateX(-50%);}
+.menubtn span:nth-child(2) {top: 50%; left: 50%; transform: translate(-50%,-50%);}
+.menubtn span:nth-child(3) {bottom: 20%; left: 50%; transform: translateX(-50%);}
+.container {width: 100%; position: relative;}
+.container .contents {width: 1200px; margin: 0 auto; min-height: 700px; border: 1px solid #eee; background: #f1f1f1;}
+.container .sidebar {position: fixed; top: 0; right: -300px; width: 300px; height: 100px; background: #666; border: 1px solid #eee; z-index: 30; transition: .35s;}
+input[id="menuicon"]:checked ~ header .menubtn {z-index: 2;}
+input[id="menuicon"]:checked ~ header .menubtn span:nth-child(1) {top:50%; left: 50%; transform: translate(-50%,-50%) rotate(135deg);}
+input[id="menuicon"]:checked ~ header .menubtn span:nth-child(2) {left: 50%; transform: translate(-50%,-50%) scale(2); opacity: 0;}
+input[id="menuicon"]:checked ~ header .menubtn span:nth-child(3) {bottom:50%; left: 50%; transform: translate(-50%,-50%) rotate(-135deg); }
+input[id="menuicon"]:checked ~ .container .sidebar {right: 0;}
+
+/* img */
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+ul,li{list-style: none;}
+[name='slide']{display: none;}
+.slidebox{max-width: 1450px; max-height:300px ; width: 100%; height: 100%; margin: 0 auto; background: red;}
+.slidebox img{
+    max-width: 1450px; max-height:300px ; width: 100%; height: 100%; margin: 0 auto; background: red;}
+.slidebox .slidelist{
+    white-space:nowrap;
+    font-size: 0;
+    overflow: hidden;
+}
+.slidebox .slideitem{
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+    width: 100%;
+    transition: all .5s;
+}
+.slidebox .slideitem label{
+    position: absolute;
+    z-index: 1;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 20px;
+    border-radius: 20px;
+    cursor: pointer;
+}
+/* label.left{
+    left: 20px;
+    background-color: #ffffff;
+    background-image: url('left.png');
+    background-position: center center;
+    background-size: 50%;
+    background-repeat: no-repeat;
+}
+label.right{
+    right: 20px;
+    background-color: #ffffff;
+    background-image: url('right.png');
+    background-position: center center;
+    background-size: 50%;
+    background-repeat: no-repeat;
+} */
+[id="slide01"]:checked ~ .slidelist .slideitem {transform: translateX(0); animation: slide01 10s infinite;}
+[id="slide02"]:checked ~ .slidelist .slideitem {transform: translateX(-100%); animation: slide02 10s infinite;}
+[id="slide03"]:checked ~ .slidelist .slideitem {transform: translateX(-200%); animation: slide03 10s infinite;}
+[id="slide04"]:checked ~ .slidelist .slideitem {transform: translateX(-300%); animation: slide04 10s infinite;}
+
+@keyframes slide01 {
+    0% {left: 0%;}
+    23% {left: 0%;}
+    25% {left: -100%;}
+    48% {left: -100%;}
+    50% {left: -200%;}
+    73% {left: -200%;}
+    75% {left: -300%;}
+    98% {left: -300%;}
+    100% {left: 0%;}
+}
+
+@keyframes slide02 {
+    0% {left: 0%;}
+    23% {left: 0%;}
+    25% {left: -100%;}
+    48% {left: -100%;}
+    50% {left: -200%;}
+    73% {left: -200%;}
+    75% {left: 100%;}
+    98% {left: 100%;}
+    100% {left: 0%;}
+}
+
+@keyframes slide03 {
+    0% {left: 0%;}
+    23% {left: 0%;}
+    25% {left: -100%;}
+    48% {left: -100%;}
+    50% {left: 200%;}
+    73% {left: 200%;}
+    75% {left: 100%;}
+    98% {left: 100%;}
+    100% {left: 0%;}
+}
+
+@keyframes slide04 {
+    0% {left: 0%;}
+    23% {left: 0%;}
+    25% {left: 300%;}
+    48% {left: 300%;}
+    50% {left: 200%;}
+    73% {left: 200%;}
+    75% {left: 100%;}
+    98% {left: 100%;}
+    100% {left: 0%;}
+}
