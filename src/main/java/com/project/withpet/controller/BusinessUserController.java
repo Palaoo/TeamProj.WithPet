@@ -229,6 +229,9 @@ public class BusinessUserController {
         if (!tools.isUserLogined(req)) {
             return "login";
         }
+
+        model.addAttribute("businessId", businessUserService.findByUid(req.getSession().getAttribute("userid").toString()).getBid());
+
         List<Shop> shops = shopService.findAllByBid(Long.parseLong(req.getSession().getAttribute("businessId").toString()));
         System.out.println("shops size = " + shops.size());
         List<HotelForm> hotelForms = new ArrayList<>();
