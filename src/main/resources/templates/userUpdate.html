@@ -173,19 +173,20 @@
                                     <td>아이디 </td>
                                     <td><input th:value="${user.userId}" type="text" name="userId" id="id" class="form-control" placeholder="이메일" aria-label="Recipient's username" aria-describedby="button-addon2" readonly></td>
                                 </tr>
-                               <!-- <tr>
+                               <!-- <tr id="pwdTr">
                                     <td>비밀번호 </td>
-                                    <td><button type="button" id="btn_change" class="btn1 mt-3 mb-5">비밀번호변경</button></td>
+                                    <td><button type="button" id="btn_change" class="btn btn-secondary">비밀번호변경</button></td>
                                 </tr>-->
-                                <tr>
+                                <tr id="now_pwdTr">
                                     <td>현재비밀번호 </td>
-                                    <td><input type="password" name="password" id="password" class="form-control" placeholder="********"></td>
+                                    <td><input type="hidden" th:value="${pwd}">
+                                        <input type="password" name="password" id="password" class="form-control" placeholder="********"></td>
                                 </tr>
-                                <tr>
+                                <tr id="new_pwdTr">
                                     <td>새비밀번호 </td>
                                     <td><input type="password" name="new_password" id="new_password" class="form-control" placeholder="********"></td>
                                 </tr>
-                                <tr>
+                                <tr id="newConfirm_pwdTr">
                                     <td>새비밀번호 확인</td>
                                     <td><input type="password" name="new_passwordConfirm" id="new_passwordConfirm" class="form-control" placeholder="********" onchange="passConfirm()"></td>
                                 </tr>
@@ -263,6 +264,12 @@
                 }
             })
         })
+        /*.on('click', '#btn_change', function () {
+            var str= '<tr><td>현재비밀번호</td><td><input type="password" name="password" id="password" className="form-control" placeholder="********"/></td></tr>'+
+                     '<tr><td>새비밀번호</td><td><input type="password" name="new_password" id="new_password" className="form-control" placeholder="********"/></td></tr>'+
+                    '<tr><td>새비밀번호 확인</td><td><input type="password" name="new_passwordConfirm" id="new_passwordConfirm" className="form-control" placeholder="********" onChange="passConfirm()"/></td></tr>'
+            $('#pwdTr').after(str)
+        })*/
 
         function passConfirm(){
             var password = document.getElementById('new_password');

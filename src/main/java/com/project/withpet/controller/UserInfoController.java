@@ -209,6 +209,7 @@ public class UserInfoController {
         String id = (String) session.getAttribute("userid");
         Optional<User> byId = userService.findById(id);
         model.addAttribute("user", byId.get());
+
         return "/userCheck";
     }
     @GetMapping("/userUpdate")
