@@ -139,10 +139,7 @@ public class ShopController {
         for (int i = 0; i < hotelList.size(); i++) {
             int liked = likeHotelService.isLiked(hotelList.get(i).getShopid(), userId);
             Long likeCount = likeHotelService.getLikeCount(hotelList.get(i).getShopid());
-//            Double avgByShopid = shopreviewRepository.getAvgByShopid(hotelList.get(i).getShopid());
-//            if(avgByShopid==null) {
-//                avgByShopid == 0D;
-//            }
+
 
             addHotelForm(availShop, hotelList, hotelForms, i, likeCount, liked);
         }
@@ -433,6 +430,7 @@ public class ShopController {
 
     private void addHotelForm(List<Shop> availShop, List<Shop> hotelList, List<HotelForm> hotelForms, int i,
                               Long likeCount, int liked) {
+
         HotelForm hotelForm = new HotelForm();
         hotelForm.setShopid(hotelList.get(i).getShopid());
         hotelForm.setName(hotelList.get(i).getName());
@@ -449,6 +447,11 @@ public class ShopController {
         hotelForm.setPrice(cheapRoom.get().getPrice());
         hotelForm.setLikeCount(likeCount);
         hotelForm.setIsLiked(liked);
+        Double avgByShopid = shopreviewRepository.getAvgByShopid(hotelList.get(i).getShopid());
+        if(avgByShopid==null) {
+            avgByShopid = 0D;
+        }
+        hotelForm.setScoreAvg(avgByShopid);
         for (int k = 0; k < availShop.size(); k++) {
             if (hotelList.get(i).getShopid() == availShop.get(k).getShopid()) {
                 hotelForm.setAvail("true");
