@@ -16,6 +16,20 @@
     #main {
         margin-top: 15px;
     }
+    #prod{
+        margin-top:5%;
+    }
+    #business_id{
+        text-align:left;
+        height:50px;
+        border:0;
+    }
+    .primary-btn{
+        padding:14px 20px !important;
+    }
+    #top{
+        margin-top:5%;
+    }
 </style>
 <body>
 <div th:replace="fragments/index :: header"></div>
@@ -80,7 +94,19 @@
                     </div>
 
                     <div class="tab-pane active" id="shops" role="tabpanel" aria-labelledby="shops-tab">
-                        <div class="card mb-2" style="max-width: 700px;"
+                        <div class="row">
+                            <div class="col-12" id="top">
+                                <div class="col-6" style="float:left" >
+                                    <input type="text" id="business_id"  th:value="|사업자 번호 : ${businessId}|">
+                                </div>
+                                <div class="col-6" style="float:right" align="center">
+                                    <form action="newShop" method="get">
+                                        <button class="primary-btn" type="submit">상점등록하기</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card mb-2" id="prod" style="max-width: 700px;"
                              th:each="shopForm : ${shopForms}">
                             <div class="row g-0">
                                 <div class="col-md-4">
