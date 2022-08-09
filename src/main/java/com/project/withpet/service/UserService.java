@@ -71,4 +71,7 @@ public class UserService {
         System.out.println("ID 중복 검사 통과");
     }
 
+    public void delete(String id){
+        userRepository.deleteByUserid(id);
+    }
 }
