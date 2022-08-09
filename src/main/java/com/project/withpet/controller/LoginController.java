@@ -2,6 +2,7 @@ package com.project.withpet.controller;
 
 import com.project.withpet.domain.User;
 import com.project.withpet.dto.UserForm;
+import com.project.withpet.service.BusinessUserService;
 import com.project.withpet.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,16 +21,18 @@ import javax.servlet.http.HttpSession;
 public class LoginController {
 
     private final UserService userService;
+    private final BusinessUserService businessUserService;
 
     @Autowired
-    public LoginController(UserService userService) {
+    public LoginController(UserService userService, BusinessUserService businessUserService) {
         this.userService = userService;
+        this.businessUserService = businessUserService;
     }
 
     @GetMapping("/")
-    public String home(Model model, HttpServletRequest req){
+    public String home(Model model, HttpServletRequest req) {
         HttpSession session = req.getSession();
-        if(session.getAttribute("userid")!=null){
+        if (session.getAttribute("userid") != null) {
             model.addAttribute("userid", session.getAttribute("userid"));
         }
         return "home";
@@ -42,7 +45,7 @@ public class LoginController {
 
 
     @PostMapping(value = "signup")
-    public String create(UserForm form){
+    public String create(UserForm form) {
         User user = new User();
         user.setUserId(form.getUserid());
         user.setMobile(form.getMobile());
@@ -55,20 +58,26 @@ public class LoginController {
     }
 
     @GetMapping(value = "login")
-    public String login(){
+    public String login() {
         return "login";
     }
 
-    @PostMapping (value = "login")
+    @PostMapping(value = "login")
     public String login(@RequestParam("userid") String userid,
                         @RequestParam("password") String password,
                         Model model,
                         HttpServletRequest req) {
         boolean result = userService.checkUser(userid, password);
-        if(result==true){
+        if (result == true) {
             HttpSession session = req.getSession();
             session.setAttribute("userid", userid);
             session.setAttribute("userLogined", userid);
+            if (businessUserService.isBusinessUser(req.getSession().getAttribute("userid").toString()) != -1L) {
+                model.addAttribute("businessId", businessUserService.findByUid(req.getSession().getAttribute("userid").toString()).getBid());
+                req.getSession().setAttribute("businessId", model.getAttribute("businessId").toString());
+
+            }
+
             return "redirect:/";
         } else {
             return "redirect:/login";
@@ -84,15 +93,14 @@ public class LoginController {
 
     @PostMapping("checkuser")
     @ResponseBody
-    public boolean checkuser(HttpServletRequest req, Model model){
+    public boolean checkuser(HttpServletRequest req, Model model) {
         HttpSession session = req.getSession();
-        if(session.getAttribute("userid")!=null){
+        if (session.getAttribute("userid") != null) {
             return true;
         } else {
             return false;
         }
     }
-
 
 
 }

@@ -126,8 +126,6 @@ public class BoardController {
         return replies;
     }
 
-
-
     @GetMapping("/community/newpost")
     public String createPost(HttpServletRequest req, Model model) {
         HttpSession session = req.getSession();
@@ -217,6 +215,8 @@ public class BoardController {
                 "https://withpetimg.s3.ap-northeast-2.amazonaws.com/images/");
         board.setContent(content);
         boardService.newPost(board);
+
+        boardimgService.deleteImg(boardcode);
 
         String[] pathContent = new String[files.size()];
         for (int i = 0; i < files.size(); i++) {
