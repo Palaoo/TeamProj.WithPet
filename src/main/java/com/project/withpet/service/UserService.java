@@ -2,9 +2,13 @@ package com.project.withpet.service;
 
 import com.project.withpet.domain.User;
 import com.project.withpet.repository.User.UserRepository;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 
 
 import javax.transaction.Transactional;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
@@ -74,4 +78,14 @@ public class UserService {
     public void delete(String id){
         userRepository.deleteByUserid(id);
     }
+
+    /*public Map<String, String> validateHandling(BindingResult errors) {
+        Map<String, String> validatorResult = new HashMap<>();
+
+        for (FieldError error : errors.getFieldErrors()) {
+            String validKeyName = String.format("valid_%s", error.getField());
+            validatorResult.put(validKeyName, error.getDefaultMessage());
+        }
+        return validatorResult;
+    }*/
 }

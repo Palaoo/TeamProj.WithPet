@@ -69,8 +69,9 @@
                     <div class="form-row">
                         <div class="col-lg-6">
                         <div class="input-group mb-3">
-                            <input type="text" name="userId" id="id" class="form-control" placeholder="이메일" aria-label="Recipient's username" aria-describedby="button-addon2">
+                            <input type="text" name="userId" id="id" class="form-control" placeholder="아이디" aria-label="Recipient's username" aria-describedby="button-addon2">
                             <button class="btn btn-outline-secondary" type="button" id="button-addon2">중복확인</button> <!--id="btnValid"-->
+                            <!--<span th:style="${'color: red; font-size:11px;'}" th:text="${valid_name}"></span>-->
                         </div>
                         </div>
 
@@ -86,12 +87,13 @@
                     </div>-->
                     <div class="form-row">
                         <div class="col-lg-6">
-                            <input type="password" name="password" id="password" class="form-control" placeholder="********">
+                            <input type="password" name="password" id="password" class="form-control" placeholder="******">
+                            <!--<span th:style="${'color: red; font-size:11px;'}" th:text="${valid_password}"></span>-->
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="col-lg-6">
-                            <input type="password" name="passwordConfirm" id="passwordConfirm" class="form-control" placeholder="********" onchange="passConfirm()"><span id="confirmMsg"></span>
+                            <input type="password" name="passwordConfirm" id="passwordConfirm" class="form-control" placeholder="******" onchange="passConfirm()"><span id="confirmMsg"></span>
                         </div>
                     </div>
                     <div class="form-row">
@@ -128,6 +130,36 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(document).on('click', '#btnsignup', function () {
+        var id=document.getElementById('id').value;
+        var nm=document.getElementById('name').value;
+        var mb=document.getElementById('mobile').value;
+        var p=document.getElementById('password').value;
+        var p2=document.getElementById('passwordConfirm').value;
+
+        if(p.length<6){
+            alert('비밀번호가 6글자 이상이어야 합니다.');
+            return false;
+        }
+
+        if(p != p2){
+            alert("비밀번호불일치");
+            return false;
+        }
+
+        if( id =='' || id == null ){
+            alert('아이디를 입력해주세요.');
+            return false;
+        } else if ( p2 =='' || p2 == null ){
+            alert('비밀번호를 입력해주세요.');
+            return false;
+        } else if ( nm =='' || nm == null ){
+            alert('이름을 입력해주세요.');
+            return false;
+        } else if ( mb =='' || mb == null ){
+            alert('번호를 입력해주세요.');
+            return false;
+        }
+
         $.ajax({
             type: 'post',
             url: 'appendUser',
@@ -139,6 +171,7 @@
             },
             dataType: 'text',
             success: function (data) {    // 회원가입 성공 : 0 / 아이디 중복 : 1 /
+
                 if (data == '0') {
                     alert('회원가입 성공 ' + data)
                     location = 'login'
@@ -158,6 +191,12 @@
             dataType: 'text',
             success: function (data) {        // 아이디 중복 안됨 : 0 / 중복 : 1
                 console.log(data)
+
+               if( $('#id').val() == '' || $('#id').val() == null ){
+                    alert('아이디를 입력해주세요.');
+                    return false;
+               }
+
                 if (data == '0')
                     alert('사용 가능한 ID 입니다.')
                 else if (data == '1')
@@ -180,5 +219,6 @@
 			confirmMsg.innerHTML ="비밀번호 불일치";
 		}
 	}
+
 </script>
 </html>
