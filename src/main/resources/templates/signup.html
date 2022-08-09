@@ -90,6 +90,11 @@
                     </div>
                     <div class="form-row">
                         <div class="col-lg-6">
+                            <input type="password" name="passwordConfirm" id="passwordConfirm" class="form-control" placeholder="********" onchange="passConfirm()"><span id="confirmMsg"></span>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-lg-6">
                             <input type=text name="name" id="name" class="form-control" placeholder="이름">
                         </div>
                     </div>
@@ -159,5 +164,19 @@
             }
         })
     })
+    function passConfirm(){
+        var password = document.getElementById('password');
+        var passwordConfirm = document.getElementById('passwordConfirm');
+        var confirmMsg = document.getElementById('confirmMsg');
+        var correctColor = "#00ff00";
+        var wrongColor = "#ff0000";
+        if(password.value==passwordConfirm.value){
+            confirmMsg.style.color = correctColor;
+            confirmMsg.innerHTML = "비밀번호 일치";
+        } else {
+            confirmMsg.style.color = wrongColor;
+            confirmMsg.innerHTML = "비밀번호 불일치";
+        }
+    }
 </script>
 </html>

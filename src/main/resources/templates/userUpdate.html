@@ -173,6 +173,10 @@
                                     <td>아이디 </td>
                                     <td><input th:value="${user.userId}" type="text" name="userId" id="id" class="form-control" placeholder="이메일" aria-label="Recipient's username" aria-describedby="button-addon2" readonly></td>
                                 </tr>
+                               <!-- <tr>
+                                    <td>비밀번호 </td>
+                                    <td><button type="button" id="btn_change" class="btn1 mt-3 mb-5">비밀번호변경</button></td>
+                                </tr>-->
                                 <tr>
                                     <td>현재비밀번호 </td>
                                     <td><input type="password" name="password" id="password" class="form-control" placeholder="********"></td>
@@ -180,6 +184,14 @@
                                 <tr>
                                     <td>새비밀번호 </td>
                                     <td><input type="password" name="new_password" id="new_password" class="form-control" placeholder="********"></td>
+                                </tr>
+                                <tr>
+                                    <td>새비밀번호 확인</td>
+                                    <td><input type="password" name="new_passwordConfirm" id="new_passwordConfirm" class="form-control" placeholder="********" onchange="passConfirm()"></td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td><span id="confirmMsg"></span></td>
                                 </tr>
                                 <tr>
                                     <td>이름 </td>
@@ -252,6 +264,20 @@
             })
         })
 
+        function passConfirm(){
+            var password = document.getElementById('new_password');
+            var passwordConfirm = document.getElementById('new_passwordConfirm');
+            var confirmMsg = document.getElementById('confirmMsg');
+            var correctColor = "#00ff00";
+            var wrongColor = "#ff0000";
+            if(password.value==passwordConfirm.value){
+                confirmMsg.style.color = correctColor;
+                confirmMsg.innerHTML = "비밀번호 일치";
+            } else {
+                confirmMsg.style.color = wrongColor;
+                confirmMsg.innerHTML = "비밀번호 불일치";
+            }
+        }
 
 </script>
 </html>
