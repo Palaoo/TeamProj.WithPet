@@ -136,10 +136,9 @@ public class BusinessUserController {
 
         shop.setRegion(regionRepository.findByRegname(addressSplit[0]));
 
-
         Long shopid = shopService.save(shop);
-        String path = s3Uploader.uploadFiles(thumb, "thumbnail",0);
-        hotelimgRepository.save(new Hotelimg(shopid, UUID.randomUUID().toString(), thumb.getOriginalFilename(), path));
+        String path = s3Uploader.uploadFiles(thumb, "thumbnail",1);
+        hotelimgRepository.save(new Hotelimg(shopid, thumb.getOriginalFilename(), thumb.getOriginalFilename(), path));
 
 
         String[] featid = featidList.split(",");
