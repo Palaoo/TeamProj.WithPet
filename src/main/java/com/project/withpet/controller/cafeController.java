@@ -15,6 +15,10 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -55,8 +59,10 @@ public class cafeController {
 
 
     @GetMapping("cafe_list")   //카페 목록 가져오기
-    public String viewList(Model model, HttpServletRequest req) {
-
+    public String viewList(Model model, HttpServletRequest req,
+                           @PageableDefault(sort = "shopid", direction = Sort.Direction.DESC,size = 6)
+                           Pageable pageable) {
+        
         HttpSession session = req.getSession();
         String userid = (String) session.getAttribute("userLogined");
         model.addAttribute("userid",userid);
@@ -86,10 +92,31 @@ public class cafeController {
             Long likeCount = shopLikeService.getLikeCount(cafe.getShopid());
             cafeDTOLists.add(new com.project.withpet.dto.CafeDTOList(cafe, shopLike, path, likeCount, avgByShopid));
 
+        }
+        model.addAttribute("cafeDTOLists", cafeDTOLists);
 
+        //페이징
+        Page<cafe> cafes = cafeService.findCafes(pageable,2L);
+        System.out.println(cafes.getTotalPages());
+        int pageN = pageable.getPageNumber();
+        int startPage = ((int) Math.floor(pageN / 5)) * 5+1;
+        int totalPage = cafes.getTotalPages();
+        int endpage = 0;
+        if(totalPage < startPage + 4) {
+            endpage = totalPage;
+        } else {
+            endpage = startPage + 4;
         }
 
-        model.addAttribute("cafeDTOLists", cafeDTOLists);
+        model.addAttribute("posts", cafes);
+        model.addAttribute("previous", pageable.previousOrFirst().getPageNumber());
+        model.addAttribute("next", pageable.next().getPageNumber());
+        model.addAttribute("hasNext", cafes.hasNext());
+        model.addAttribute("hasPrev", cafes.hasPrevious());
+        model.addAttribute("totalPage", cafes.getTotalPages());
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endpage);
+
         return "cafe_list";
     }
 
@@ -249,7 +276,9 @@ public class cafeController {
     }
 
     @GetMapping("Restaurant-list")  //맛집 리스트
-    public String viewRestList(Model model, HttpServletRequest req) {
+    public String viewRestList(Model model, HttpServletRequest req,
+                               @PageableDefault(sort = "shopid", direction = Sort.Direction.DESC,size = 6)
+                               Pageable pageable) {
         HttpSession session = req.getSession();
         String userid = (String) session.getAttribute("userLogined");
         model.addAttribute("userid", userid);
@@ -275,6 +304,29 @@ public class cafeController {
             cafeDTOLists.add(new CafeDTOList(cafe, shopLike, path, likeCount, avgByShopid));
         }
         model.addAttribute("cafeList", cafeDTOLists);
+        //페이징
+        //페이징
+        Page<cafe> cafes = cafeService.findCafes(pageable,3L);
+        System.out.println(cafes.getTotalPages());
+        int pageN = pageable.getPageNumber();
+        int startPage = ((int) Math.floor(pageN / 5)) * 5+1;
+        int totalPage = cafes.getTotalPages();
+        int endpage = 0;
+        if(totalPage < startPage + 4) {
+            endpage = totalPage;
+        } else {
+            endpage = startPage + 4;
+        }
+
+        model.addAttribute("posts", cafes);
+        model.addAttribute("previous", pageable.previousOrFirst().getPageNumber());
+        model.addAttribute("next", pageable.next().getPageNumber());
+        model.addAttribute("hasNext", cafes.hasNext());
+        model.addAttribute("hasPrev", cafes.hasPrevious());
+        model.addAttribute("totalPage", cafes.getTotalPages());
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endpage);
+
         return "Restaurant-list";
     }
 
@@ -363,4 +415,13 @@ public class cafeController {
 
         return "restaurant-info";
     }
+
+//    @GetMapping("/{category_name}")
+//    public String readAll(@PathVariable(required = false) String category_name,
+//                          @RequestParam(required = false, defaultValue = "0", value = "page") int pageNo,
+//                          Pageable pageable, Model model){
+//        pageNo = (pageNo == 0) ? 0 : (pageNo - 1);
+//        page<CafeDTOList.
+//    }
+
 }
