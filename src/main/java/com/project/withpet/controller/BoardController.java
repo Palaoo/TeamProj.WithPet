@@ -208,7 +208,7 @@ public class BoardController {
 
     @PostMapping("/community/modifypost")
     public String modifySubmit(@RequestParam("title") String title, @RequestParam("content") String content,
-                               @RequestParam("boardcode") Long boardcode, HttpServletRequest req){
+                               @RequestParam("boardCode") Long boardcode, HttpServletRequest req){
 
         HttpSession session = req.getSession();
 
@@ -221,6 +221,7 @@ public class BoardController {
         board.setContent(content);
         boardService.newPost(board);
 
+        boardimgService.deleteImg(boardcode);
         String[] pathContent = new String[files.size()];
         for (int i = 0; i < files.size(); i++) {
             File file = files.get(i);

@@ -3,6 +3,7 @@ package com.project.withpet.domain;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 @Entity(name = "board")
 public class Board {
@@ -23,6 +24,20 @@ public class Board {
     public void date(){
 
         this.date = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+    }
+
+    @OneToMany(mappedBy = "boardcode", cascade = CascadeType.REMOVE)
+    private List<Reply> replys;
+
+    @OneToMany(mappedBy = "boardcode", cascade = CascadeType.REMOVE)
+    private List<Boardimg> boardimgs;
+
+    public List<Reply> getReplys() {
+        return replys;
+    }
+
+    public void setReplys(List<Reply> replys) {
+        this.replys = replys;
     }
 
     public String getDate() {
