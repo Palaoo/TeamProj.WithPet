@@ -43,4 +43,6 @@ public class shopreview {
 //    @ManyToMany
 //    @JoinColumn(name = "userid")
 //    private member member;
+
 }
+

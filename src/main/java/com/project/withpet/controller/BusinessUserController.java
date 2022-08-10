@@ -32,41 +32,24 @@ public class BusinessUserController {
 
     private final FeatlistRepository featlistRepository;
     private final ShopTypeRepository shopTypeRepository;
-//    private final RegionRepository regionRepository;
+    private final RegionRepository regionRepository;
     private final S3Uploader s3Uploader;
     private final HotelroomService hotelroomService;
     private final HotelroomimgRepository hotelroomimgRepository;
 
     @Autowired
-    public BusinessUserController(BusinessUserService businessUserService, ShopService shopService, HotelimgRepository hotelimgRepository, FeatlistRepository featlistRepository, ShopTypeRepository shopTypeRepository, S3Uploader s3Uploader, HotelroomService hotelroomService, HotelroomimgRepository hotelroomimgRepository) {
+    public BusinessUserController(BusinessUserService businessUserService, ShopService shopService, HotelimgRepository hotelimgRepository, FeatlistRepository featlistRepository, ShopTypeRepository shopTypeRepository, RegionRepository regionRepository, S3Uploader s3Uploader, HotelroomService hotelroomService, HotelroomimgRepository hotelroomimgRepository) {
         this.businessUserService = businessUserService;
         this.shopService = shopService;
         this.hotelimgRepository = hotelimgRepository;
         this.featlistRepository = featlistRepository;
         this.shopTypeRepository = shopTypeRepository;
-//        this.regionRepository = regionRepository;
+        this.regionRepository = regionRepository;
         this.s3Uploader = s3Uploader;
         this.hotelroomService = hotelroomService;
         this.hotelroomimgRepository = hotelroomimgRepository;
     }
 
-//    @GetMapping("/businessPage")
-//    public String businessPage(HttpServletRequest req, Model model) {
-//        if (!tools.isUserLogined(req)) {
-//            return "login";
-//        }
-//
-//        HttpSession session = req.getSession();
-//
-//        if (session.getAttribute("userid") != null) {
-//            model.addAttribute("userid", session.getAttribute("userid"));
-//        }
-//
-//        if (businessUserService.isBusinessUser(req.getSession().getAttribute("userid").toString()) == -1L) {
-//            return "registBusiness";
-//        }
-//        return "redirect:/businessInfo";
-//    }
 
     @GetMapping("/registBusiness")
     public String registBusiness(HttpServletRequest req) {
@@ -86,6 +69,11 @@ public class BusinessUserController {
         if (!tools.isUserLogined(req)) {
             return "login";
         }
+
+        if (businessUserService.isBusinessUser(req.getSession().getAttribute("userid").toString()) == -1L) {
+            return "registBusiness";
+        }
+
         model.addAttribute("businessId", businessUserService.findByUid(req.getSession().getAttribute("userid").toString()).getBid());
         req.getSession().setAttribute("businessId", model.getAttribute("businessId").toString());
         return "businessInfo";
@@ -145,7 +133,7 @@ public class BusinessUserController {
             addressSplit[0] = "제주도";
         }
 
-//        shop.setRegion(regionRepository.findByRegname(addressSplit[0]));
+        shop.setRegion(regionRepository.findByRegname(addressSplit[0]));
 
 
         Long shopid = shopService.save(shop);
@@ -230,7 +218,13 @@ public class BusinessUserController {
             return "login";
         }
 
+
+        if (businessUserService.isBusinessUser(req.getSession().getAttribute("userid").toString()) == -1L) {
+            return "registBusiness";
+        }
+
         model.addAttribute("businessId", businessUserService.findByUid(req.getSession().getAttribute("userid").toString()).getBid());
+
 
         List<Shop> shops = shopService.findAllByBid(Long.parseLong(req.getSession().getAttribute("businessId").toString()));
         System.out.println("shops size = " + shops.size());
