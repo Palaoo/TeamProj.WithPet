@@ -70,7 +70,7 @@
 </header>
 <a href="/"><img th:src="@{/img/logo.jpg}" id="img"/></a>
 
-<form name="form" method="post" action="/newShop" enctype="multipart/form-data">
+<form name="form" method="post" action="/updateShop" enctype="multipart/form-data">
     <table align="center" id="formTable">
         <tr>
             <td colspan="2">
@@ -119,7 +119,7 @@
         <tr>
             <td>특징</td>
             <td>
-                <select id="feat" onchange="addFeat()" required>
+                <select id="feat" onchange="addFeat()">
                     <option value="" selected disabled hidden>특징을 선택해주세요</option>
                     <option value="1">소형견</option>
                     <option value="2">중형견</option>
@@ -166,15 +166,11 @@
                 <input type="text" name="content" placeholder="설명" th:value="${hotelroom.content}" required><br>
                 <input type="file" name="roomThumb" multiple="multiple" class="form-control"><br>
                 <span>*이미지를 변경하시려면 파일을 첨부해주세요.</span>
+                <input type="button" id="btnRemove" value="객실 삭제" onclick="deleteRoom(this)">
             </td>
         </tr>
         <tr id="btnTr">
-            <td>
-                <input type="button" id="btnAddRoom" value="객실 추가" onclick="addRoomForm()">
-                <input type="button" id="btnRemove" value="삭제" onclick="deleteTr()">
-            </td>
         </tr>
-
         <tr>
             <td colspan="2" align="center"><input type="submit" id="submit" value="전송"></td>
         </tr>
@@ -195,6 +191,7 @@
                 str = $(obj).attr('id') + ',' + str
             });
             $('#featidList').val(str);
+            $('#btnTr').append('<td><input type="button" id="btnAddRoom" value="객실 추가" onclick="addRoomForm()"></td>')
         })
 
     $('#address').on('keydown paste mousedown', function (e) {
@@ -234,6 +231,10 @@
     function addRoomForm() {
         if ($('#typeid option:selected').val() == 1) {
             count++
+            var str = '<tr id="btnTr"><td>' +
+                '<input type="button" id="btnAddRoom" value="객실 추가" onclick="addRoomForm()">' +
+                '</td></tr>'
+            $('#btnTr').append(str)
             var str = '<tr class="roomForm" id="' + count + '" name="' + count + '">' +
                 '<td>객실' + count + '</td>' +
                 '<td>' +
@@ -244,11 +245,7 @@
                 '<input type="file" name="roomThumb" multiple="multiple" class="form-control" required>' +
                 '</td></tr>'
             if (count == 1) {
-                str = str +
-                    '<tr id="btnTr"><td>' +
-                    '<input type="button" id="btnAddRoom" value="객실 추가" onclick="addRoomForm()">' +
-                    '</td></tr>'
-                $('#thumbnailTr').after(str)
+
             } else {
                 $('#' + (count - 1)).after(str)
 
@@ -263,12 +260,15 @@
         }
     }
 
-    function deleteTr() {
-        $('#' + count).remove()
+    function deleteRoom(btn) {
+        $(btn).parent().parent().remove()
+        console.log($(this).parent().text())
 
-        if (count == 2) {
-            $('#btnRemove').remove()
-        }
+        $.ajax({
+            url:'/shopInfo/deleteShop',
+            type:'get',
+            data:{shopid:}
+        })
 
         count--
     }

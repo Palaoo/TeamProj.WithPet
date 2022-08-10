@@ -149,7 +149,7 @@ public class BusinessUserController {
                 hotelroomimgRepository.save(new Hotelroomimg(hotelroom.getRoomid(), UUID.randomUUID().toString(), roomThumb[i].getOriginalFilename(), roomPath));
             }
         }
-        return "redirect:/businessInfo";
+        return "redirect:/businessPage";
     }
 
     @PostMapping("/updateShop")
@@ -172,7 +172,7 @@ public class BusinessUserController {
             addressSplit[0] = "제주도";
         }
 
-//        shop.setRegion(regionRepository.findByRegname(addressSplit[0]));
+        shop.setRegion(regionRepository.findByRegname(addressSplit[0]));
 
         shop.setShopid(shopid);
         shopService.save(shop);
@@ -182,10 +182,9 @@ public class BusinessUserController {
             hotelimgRepository.save(new Hotelimg(shopid, UUID.randomUUID().toString(), thumb.getOriginalFilename(), path));
         }
 
-
         String[] featid = featidList.split(",");
+        featlistRepository.deleteByShopid(shopid);
         for (int i = 0; i < featid.length; i++) {
-            featlistRepository.deleteByShopid(shopid);
             featlistRepository.save(new Featlist(shopid, Long.parseLong(featid[i])));
         }
 
@@ -199,7 +198,7 @@ public class BusinessUserController {
                 }
             }
         }
-        return "redirect:/businessInfo";
+        return "redirect:/businessPage";
     }
 
     @GetMapping("/shopInfo")
@@ -230,7 +229,7 @@ public class BusinessUserController {
     }
 
     @GetMapping("/shopInfo/deleteShop")
-    public String deleteShop(@RequestParam Long shopid, @RequestParam Long typeid) {
+    public String deleteShop(@RequestParam Long shopid) {
         shopService.deleteById(shopid);
         return "redirect:/shopInfo";
     }
