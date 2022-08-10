@@ -39,7 +39,7 @@
         vertical-align: text-top;
     }
 
-    #content {
+    #content,textarea {
         color: #000;
         resize:none;
     }
@@ -200,7 +200,7 @@
                                     <!--                                        </form>-->
                                 </div>
                                 <div th:if="${#strings.isEmpty(userid)}">
-                                    <textarea placeholder="댓글을 작성하시려면 로그인해주세요." readonly></textarea>
+                                    <textarea placeholder="댓글을 작성하시려면 로그인해주세요." style="width:100%" readonly></textarea>
                                 </div>
                                 <table id="rtable" align="center">
                                 </table>

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
@@ -154,7 +155,7 @@ public class BusinessUserController {
                 hotelroomimgRepository.save(new Hotelroomimg(hotelroom.getRoomid(), UUID.randomUUID().toString(), roomThumb[i].getOriginalFilename(), roomPath));
             }
         }
-        return "redirect:/businessInfo";
+        return "redirect:/shopInfo";
     }
 
     @PostMapping("/updateShop")
@@ -177,7 +178,7 @@ public class BusinessUserController {
             addressSplit[0] = "제주도";
         }
 
-//        shop.setRegion(regionRepository.findByRegname(addressSplit[0]));
+        shop.setRegion(regionRepository.findByRegname(addressSplit[0]));
 
         shop.setShopid(shopid);
         shopService.save(shop);
@@ -189,8 +190,8 @@ public class BusinessUserController {
 
 
         String[] featid = featidList.split(",");
+        featlistRepository.deleteByShopid(shopid);
         for (int i = 0; i < featid.length; i++) {
-            featlistRepository.deleteByShopid(shopid);
             featlistRepository.save(new Featlist(shopid, Long.parseLong(featid[i])));
         }
 
@@ -204,7 +205,7 @@ public class BusinessUserController {
                 }
             }
         }
-        return "redirect:/businessInfo";
+        return "redirect:/shopInfo";
     }
 
     @GetMapping("/shopInfo")
@@ -240,8 +241,15 @@ public class BusinessUserController {
         return "shopInfo";
     }
 
+    @GetMapping("/shopInfo/deleteRoom")
+    @ResponseBody
+    public String deleteRoom(@RequestParam Long roomid){
+        hotelroomService.deleteById(roomid);
+        return "a";
+    }
+
     @GetMapping("/shopInfo/deleteShop")
-    public String deleteShop(@RequestParam Long shopid, @RequestParam Long typeid) {
+    public String deleteShop(@RequestParam Long shopid) {
         shopService.deleteById(shopid);
         return "redirect:/shopInfo";
     }
