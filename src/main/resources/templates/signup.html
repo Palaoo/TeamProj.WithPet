@@ -135,6 +135,7 @@
                             Terms
                         </p>
                     </div>
+                    <input type="hidden" th:value="${kakaoEmail}" id="kakaoEmail">
                 </div>
             </div>
         </div>
@@ -153,6 +154,7 @@
         var mb = document.getElementById('mobile').value;
         var p = document.getElementById('password').value;
         var p2 = document.getElementById('passwordConfirm').value;
+        let kakaoEmail = document.getElementById('kakaoEmail').value;
 
         let check = document.getElementById('idCheck').value;
         var error=document.getElementById('error');
@@ -214,7 +216,8 @@
                 id: $('#id').val(),
                 password: $('#password').val(),
                 name: $('#name').val(),
-                mobile: $('#mobile').val()
+                mobile: $('#mobile').val(),
+                'kakaoEmail': kakaoEmail
             },
             dataType: 'text',
             success: function (data) {    // 회원가입 성공 : 0 / 아이디 중복 : 1 /
