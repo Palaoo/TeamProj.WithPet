@@ -37,6 +37,15 @@
     #error,#confirmMsg{
         font-size:12px;
     }
+
+
+
+
+
+
+
+
+
 </style>
 <body>
 <!--<form action="signup" method="post">
@@ -144,16 +153,25 @@
         var mb = document.getElementById('mobile').value;
         var p = document.getElementById('password').value;
         var p2 = document.getElementById('passwordConfirm').value;
+
         let check = document.getElementById('idCheck').value;
+        var error=document.getElementById('error');
+        var confrimMsg = document.getElementById('confirmMsg');
+        var wrongColor = "#ff0000";
 
         if (check == 'unchecked') {
             alert('아이디 중복확인 해주세요')
+            document.getElementById('password').value="";
+            error.innerHTML="";
+            document.getElementById('passwordConfirm').value="";
+            confirmMsg.innerHTML = "";
             return false;
         }
 
         if (p != p2) {
-
-            alert("비밀번호불일치");
+            alert('비밀번호 불일치');
+            confirmMsg.style.color = wrongColor;
+            confirmMsg.innerHTML = "비밀번호 불일치";
             return false;
         }
 
@@ -168,8 +186,7 @@
             alert('이름을 입력해주세요.');
             return false;
         } else if (mb == '' || mb == null) {
-
-            alert('번호를 입력해주세요.');
+            alert('모바일번호를 입력해주세요.');
             return false;
         }
 
@@ -213,7 +230,6 @@
 
                 if (data == '0') {
                     document.getElementById("idCheck").value = "checked"
-
                     alert('사용 가능한 ID 입니다.')
                 } else if (data == '1') {
                     document.getElementById("idCheck").value = "unchecked"
@@ -274,9 +290,13 @@
 		    //console.log("통과");
 		    error.style.color = correctColor;
 	        error.innerHTML="사용가능 합니다.";
+        }
+
+
+}
 
 
 
-    }
+
 </script>
 </html>
