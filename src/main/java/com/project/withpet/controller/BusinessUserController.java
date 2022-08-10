@@ -235,9 +235,13 @@ public class BusinessUserController {
             return "login";
         }
 
+
         if (businessUserService.isBusinessUser(req.getSession().getAttribute("userid").toString()) == -1L) {
             return "registBusiness";
         }
+
+        model.addAttribute("businessId", businessUserService.findByUid(req.getSession().getAttribute("userid").toString()).getBid());
+
 
         List<Shop> shops = shopService.findAllByBid(Long.parseLong(req.getSession().getAttribute("businessId").toString()));
         System.out.println("shops size = " + shops.size());

@@ -115,7 +115,7 @@
                                         </div>
                                     </div>
                                     <ul class="list-group list-group-flush">
-                                        <li class="list-group-item">별점(댓글수)</li>
+                                        <li class="list-group-item"><p th:text="|⭐ ${hotelList.getScoreAvg()} / 5.0|"></p></li>
                                         <li class="list-group-item"
                                             th:if="${#strings.equals(hotelList.getAvail(), 'true')}"
                                             th:text="|최저가 ${hotelList.getPrice()}원|"></li>
