@@ -93,13 +93,52 @@
             </div>
         </div>
     </div>
-
+    <div>
+        <nav aria-label="..." id="pagebar">
+            <ul class="pagination justify-content-center pagination-sm">
+                <li th:if="${hasPrev}" class="page-item">
+                    <a class="page-link" th:href="@{/cafe_list(page=${previous})}">Previous</a>
+                </li>
+                <li th:unless="${hasPrev}" class="page-item disabled">
+                    <a class="page-link" th:href="@{/cafe_list(page=${previous})}">Previous</a>
+                </li>
+                <th:block th:each="post, i : ${#numbers.sequence(0,totalPage - 1)}">
+                    <li class="page-item" th:id="${i.index}">
+                        <a class="page-link" th:href="@{/cafe_list(page=${i.count}-1)}" th:text="${i.count}"></a>
+                    </li>
+                </th:block>
+                <li th:if="${hasNext}" class="page-item">
+                    <a class="page-link" th:href="@{/cafe_list(page=${next})}">Next</a>
+                </li>
+                <li th:unless="${hasNext}" class="page-item disabled">
+                    <a class="page-link" th:href="@{/cafe_list(page=${next})}">Next</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
 </div>
 <th:block th:replace="fragments/index :: footer"></th:block>
 </body>
 <script src='https://code.jquery.com/jquery-3.4.1.js'></script>
 <script>
     $(document)
+        .ready(function (){
+            var url = window.location.href
+            var pageIndex = url.split('=')
+            console.log(pageIndex[1])
+            console.log(pageIndex[0])
+            if(typeof pageIndex[1] == "undefined"){
+                $('#0').addClass('active')
+            } else {
+                $('#'+pageIndex[1]).addClass('active')
+            }
+        })
+
+    $('.pagination').on('click', 'li', function() {
+        $('.pagination li').removeClass('active');
+        $(this).addClass('active');
+    });
+
         .on('click', '#btnLike', function () {
             shopid = $(this).attr('name')
             $.ajax({
@@ -123,5 +162,7 @@
                 }
             })
         })
+
+
 </script>
 </html>

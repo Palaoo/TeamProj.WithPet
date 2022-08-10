@@ -6,12 +6,16 @@ import com.project.withpet.domain.shopreview;
 import com.project.withpet.repository.cafeRepository;
 import com.project.withpet.repository.shopreviewRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
+@Transactional
 @Service
 public class cafeService {
 
@@ -22,6 +26,11 @@ public class cafeService {
     private shopreviewRepository shopreviewRepository;
 
 
+    public Page<cafe> cafes(Pageable pageable) { return cafeRepository.findAll(pageable);}
+
+    public Page<cafe> findCafes(Pageable pageable, Long typeid) {
+        return cafeRepository.findCafe(pageable, typeid);
+    }
 
     public Optional<cafe> findById(Long shopid) {
         return cafeRepository.findById(shopid);
