@@ -45,9 +45,19 @@
         border: 1px solid;
         color: #000;
     }
-
-    input[type="text"] {
+    input[type="text"], input[type="number"] {
         width: 100%;
+    }
+
+    #address {
+        width: 75%;
+    }
+
+    #showFeat {
+        width: 320px;
+    }
+    .btns{
+        float: right;
     }
 </style>
 
@@ -129,6 +139,7 @@
             </td>
         </tr>
         <tr>
+            <td></td>
             <td id="showFeat"></td>
             <input type="hidden" id="featidList" name="featidList" required>
         </tr>
@@ -166,10 +177,18 @@
 
     function addFeat() {
         var feat = $('#feat option:selected')
-        $('#showFeat').append(feat.text() + " ")
-        var featidList = feat.val() + "," + $('#featidList').val()
-        $('#featidList').val(featidList)
-        // console.log($('#featidList').val())
+        if ($('#' + feat.val()).val() != feat.text()) {
+            var str = '<input type=button onclick="deleteFeat(this.id)" value=' + feat.text() + ' id=' + feat.val() + '>'
+            $('#showFeat').append(str + " ")
+            var featidList = feat.val() + "," + $('#featidList').val()
+            $('#featidList').val(featidList)
+        }
+    }
+
+    function deleteFeat(id) {
+        $('#' + id).remove()
+        var str = $('#featidList').val().replace(id + ',', '')
+        $('#featidList').val(str)
     }
 
     var count = 0;
@@ -189,14 +208,14 @@
             if(count == 1){
                 str = str +
                     '<tr id="btnTr"><td>' +
-                    '<input type="button" id="btnAddRoom" value="객실 추가" onclick="addRoomForm()">' +
+                    '<input type="button" id="btnAddRoom" value="객실 추가" class="btns" onclick="addRoomForm()">' +
                     '</td></tr>'
                 $('#thumbnailTr').after(str)
             } else {
                 $('#' + (count - 1)).after(str)
 
                 if($('#btnRemove').val() != '삭제'){
-                    var btnStr = '<input type="button" id="btnRemove" value="삭제" onclick="deleteTr()">'
+                    var btnStr = '<input type="button" id="btnRemove" value="삭제" class="btns" onclick="deleteTr()">'
                     $('#btnTr').append(btnStr)
                 }
             }

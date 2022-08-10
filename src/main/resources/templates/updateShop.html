@@ -46,7 +46,7 @@
         color: #000;
     }
 
-    input[type="text"] {
+    input[type="text"], input[type="number"] {
         width: 100%;
     }
 
@@ -56,6 +56,9 @@
 
     #showFeat {
         width: 320px;
+    }
+    .btns{
+        float: right;
     }
 </style>
 
@@ -70,7 +73,7 @@
 </header>
 <a href="/"><img th:src="@{/img/logo.jpg}" id="img"/></a>
 
-<form name="form" method="post" action="/newShop" enctype="multipart/form-data">
+<form name="form" method="post" action="/updateShop" enctype="multipart/form-data">
     <table align="center" id="formTable">
         <tr>
             <td colspan="2">
@@ -119,7 +122,7 @@
         <tr>
             <td>특징</td>
             <td>
-                <select id="feat" onchange="addFeat()" required>
+                <select id="feat" onchange="addFeat()">
                     <option value="" selected disabled hidden>특징을 선택해주세요</option>
                     <option value="1">소형견</option>
                     <option value="2">중형견</option>
@@ -155,26 +158,22 @@
             </td>
         </tr>
 
-        <tr th:if="${!hotelrooms.isEmpty()}" th:each="hotelroom, i : ${hotelrooms}" class="roomForm" th:id="${i.count}"
+        <tr th:if="${!hotelrooms.isEmpty()}" th:each="hotelroom, i : ${hotelrooms}" class="roomForm" th:id="|room${i.count}|"
             th:name="${i.count}">
             <td th:text="|객실${i.count}|" class="count" th:value="${i.count}"></td>
             <td>
-                <input type="hidden" th:value="${hotelroom.roomid}" name="roomid">
+                <input type="hidden" th:value="${hotelroom.roomid}" name="roomid" th:id="|roomid${i.count}|">
                 <input type="text" name="roomname" placeholder="객실 이름" th:value="${hotelroom.roomname}" required><br>
                 <input type="number" name="person" placeholder="수용 인원" th:value="${hotelroom.person}" required><br>
                 <input type="number" name="price" placeholder="1박 가격" th:value="${hotelroom.price}" required><br>
                 <input type="text" name="content" placeholder="설명" th:value="${hotelroom.content}" required><br>
-                <input type="file" name="roomThumb" multiple="multiple" class="form-control"><br>
-                <span>*이미지를 변경하시려면 파일을 첨부해주세요.</span>
+                <input type="file" name="roomThumb" multiple="multiple" class="form-control">
+                <span>*이미지를 변경하시려면 파일을 첨부해주세요.</span><br>
+                <input type="button" th:id="|btn${i.count}|" value="객실 삭제" class="btns" onclick="deleteRoom(this.id)">
             </td>
         </tr>
         <tr id="btnTr">
-            <td>
-                <input type="button" id="btnAddRoom" value="객실 추가" onclick="addRoomForm()">
-                <input type="button" id="btnRemove" value="삭제" onclick="deleteTr()">
-            </td>
         </tr>
-
         <tr>
             <td colspan="2" align="center"><input type="submit" id="submit" value="전송"></td>
         </tr>
@@ -195,6 +194,11 @@
                 str = $(obj).attr('id') + ',' + str
             });
             $('#featidList').val(str);
+            if($('#typeid option:selected').val() == 1){
+                str = '<td colspan="2"><input type="button" class="btns" id="btnAddRoom" value="객실 추가" onClick="addRoomForm()"></td>'
+                $('#btnTr').append(str)
+            }
+
         })
 
     $('#address').on('keydown paste mousedown', function (e) {
@@ -226,51 +230,56 @@
         $('#featidList').val(str)
     }
 
-    var count = $('.count:last').val();
-    var countext = $('.count:last').text();
+    var count = $('.count:last').text().substring(2);
     console.log(count)
-    console.log(countext)
+
 
     function addRoomForm() {
         if ($('#typeid option:selected').val() == 1) {
             count++
-            var str = '<tr class="roomForm" id="' + count + '" name="' + count + '">' +
-                '<td>객실' + count + '</td>' +
+            var str = '<tr class="roomForm" id="room' + count + '" name="' + count + '">' +
+                '<td class="count" value="' + count + '">객실' + count + '</td>' +
                 '<td>' +
+                '<input type="hidden" value="0" id="roomid' + count + '">' +
                 '<input type="text" name="roomname" placeholder="객실 이름" required><br>' +
                 '<input type="number" name="person" placeholder="수용 인원" required><br>' +
                 '<input type="number" name="price" placeholder="1박 가격" required><br>' +
                 '<input type="text" name="content" placeholder="설명" required><br>' +
-                '<input type="file" name="roomThumb" multiple="multiple" class="form-control" required>' +
+                '<input type="file" name="roomThumb" multiple="multiple" class="form-control" required><br>' +
+                '<input type="button" id="btn' + count + '" value="객실 삭제" class="btns" onclick="deleteRoom(this.id)">' +
                 '</td></tr>'
-            if (count == 1) {
-                str = str +
-                    '<tr id="btnTr"><td>' +
-                    '<input type="button" id="btnAddRoom" value="객실 추가" onclick="addRoomForm()">' +
-                    '</td></tr>'
-                $('#thumbnailTr').after(str)
-            } else {
-                $('#' + (count - 1)).after(str)
-
-                if ($('#btnRemove').val() != '삭제') {
-                    var btnStr = '<input type="button" id="btnRemove" value="삭제" onclick="deleteTr()">'
-                    $('#btnTr').append(btnStr)
-                }
-            }
+            $('#room' + (count - 1)).after(str)
         } else {
             $('.roomForm').remove()
             count = 1
         }
     }
 
-    function deleteTr() {
-        $('#' + count).remove()
-
-        if (count == 2) {
-            $('#btnRemove').remove()
+    function deleteRoom(id) {
+        if(confirm('객실을 삭제하시겠습니까?')){
+            var index = id.substring(3)
+            console.log("index="+index)
+            var id = $('#roomid' + index).val()
+            console.log("id="+id)
+            if(id != 0) {
+                $.ajax({
+                    url: '/shopInfo/deleteRoom',
+                    type: 'get',
+                    data: {roomid: id},
+                    success: function (data) {
+                        $('#room' + index).remove()
+                    }
+                })
+                count--
+            } else {
+                console.log("undefined")
+                $('#room' + index).remove()
+                $('#room4').remove()
+            }
+        } else {
+            return false
         }
 
-        count--
     }
 
 </script>
