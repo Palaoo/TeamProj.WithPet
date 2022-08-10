@@ -136,7 +136,7 @@ public class ProdController {
 
 
 
-        return "redirect:/businessPage";
+        return "redirect:/myprod";
     }
 
     @GetMapping("prod_delete")
@@ -150,7 +150,7 @@ public class ProdController {
         } catch (Exception se) {
             se.printStackTrace();
         }
-        return "redirect:/businessPage";
+        return "redirect:/myprod";
     }
 
 

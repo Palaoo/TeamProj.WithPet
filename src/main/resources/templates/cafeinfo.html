@@ -15,6 +15,9 @@
 </head>
 <body>
 <style>
+    #content{
+        resize:none;
+    }
     form{
         display:inline;
     }
@@ -224,13 +227,13 @@
                                                 <div class="product__details__tab__content__item">
                                                     <div>
                                                         <!--<h5>리뷰</h5>-->
-                                                        <span th:text="${#lists.size(shopreview)}"></span>개
+                                                       <!-- <span th:text="${#lists.size(shopreview)}"></span>개-->
                                                         <th:block th:each="review , index : ${shopreview}">
                                                             <div class="row">
-                                                                <div class="col-sm-2"><p
+                                                                <div class="col-sm-3"><p
                                                                         th:text="${review.getUserid()}"></p>
                                                                 </div>
-                                                                <div class="col-sm-5">
+                                                                <div class="col-sm-7">
                                                                     <th:block th:if="${review.getScore()==5}">
                                                                         <div class="rating">★★★★★</div>
                                                                     </th:block>
@@ -249,11 +252,10 @@
                                                                     <p id="content1"
                                                                        th:text="${review.getContent()}"></p>
                                                                 </div>
-                                                                <div class="col-sm-3">
-                                                                    <p th:text="${review.getDate()}"></p>
-                                                                </div>
 
                                                                 <div class="col-sm-2">
+                                                                    <p th:text="${review.getDate()}"></p>
+
                                                                     <div th:if="${review.getUserid()==userid}">
                                                                         <form th:action="@{'/reviews/update'}"
                                                                               method="post">
@@ -518,20 +520,15 @@
                                                                            id="rate5"><label
                                                                         for="rate5">★</label>
                                                                 </fieldset>
-                                                                <div>
+                                                                <div class="input-group">
                                                                     <input type="hidden"
                                                                            th:value="${cafe.shopid}"
                                                                            name="shopid">
                                                                     <input type="hidden" th:value="${userid}"
                                                                            name="userid">
-                                                                    <textarea class="col-auto form-control"
-                                                                              type="text" id="content"
-                                                                              name="content"
+                                                                    <textarea class="form-control" aria-label="With textarea" id="content" name="content"
                                                                               placeholder="후기를 남겨주세요"></textarea>
-                                                                    <button type="submit"
-                                                                            class="btn btn-outline-primary btn-sm"
-                                                                            id="comment-create-btn">후기 작성
-                                                                    </button>
+                                                                    <button type="submit" class="input-group-text" id="comment-create-btn">후기 작성</button>
                                                                 </div>
                                                             </form>
                                                         </div>
