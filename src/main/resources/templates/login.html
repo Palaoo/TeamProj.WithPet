@@ -8,10 +8,10 @@
     <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
     <script>
         // SDK를 초기화 합니다. 사용할 앱의 JavaScript 키를 설정해 주세요.
-        // Kakao.init('7e01eb1b6006ee392dcf5b3f18b0e5f8');
+        Kakao.init('ba550e3dbc4a3eca138a7aaddfa3e70a');
 
         // SDK 초기화 여부를 판단합니다.
-        // console.log(Kakao.isInitialized());
+        console.log(Kakao.isInitialized());
     </script>
 
     <title>LOGIN</title>
@@ -109,9 +109,15 @@
                     <!--                            <input type="checkbox">로그인 상태 유지-->
                     <!--                        </div>-->
                     <!--                    </div>-->
+                    
                     <div class="form-row">
                         <div class="col-lg-6">
                             <button type="submit" class="btn1 mt-3 mb-5">로그인</button>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-lg-6">
+                            <img src="img/kakao-login/kakao_login_large_wide.png" id="kakao-login" style="width: 441px; height: 50px">
                         </div>
                     </div>
                     <div>
@@ -129,10 +135,10 @@
 <script>
     // Kakao.init('7e01eb1b6006ee392dcf5b3f18b0e5f8');
     // Kakao.isInitialized();
-    // $(document).on('click', '#kakao-login', function () {
-    //     Kakao.Auth.authorize();
-    //     console.log('카카오 로그인 버튼 실행');
-    // })
+    $(document).on('click', '#kakao-login', function () {
+        location='https://kauth.kakao.com/oauth/authorize?client_id=ba550e3dbc4a3eca138a7aaddfa3e70a&redirect_uri=http://localhost:8080/kakao-users&response_type=code'
+        console.log('카카오 로그인 버튼 실행');
+    })
 </script>
 </body>
 </html>

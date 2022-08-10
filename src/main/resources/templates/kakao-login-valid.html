@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Male_Fashion Template">
+    <meta name="keywords" content="Male_Fashion, unica, creative, html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>WITH PET</title>
+
+    <th:block th:replace="fragments/index::style"></th:block>
+</head>
+<body>
+<span th:text="|카카오 계정 ${kakaoEmail}으로 로그인 하셨습니다.
+이미 가입된 아이디: ${userId}가 본인 계정이신가요?|"></span>
+<form method="post" action="/users/update">
+    <input type="hidden" name="userId" th:value="${userId}">
+    <input type="hidden" name="kakaoEmail" th:value="${kakaoEmail}">
+    <input type="submit" value="네">
+</form>
+<form method="GET" th:action="|signup?kakaoEmail=${kakaoEmail}|">
+    <input type="submit" value="아니요">
+</form>
+</body>
+<script src='https://code.jquery.com/jquery-3.4.1.js'></script>
+<script>
+
+</script>
+</html>
