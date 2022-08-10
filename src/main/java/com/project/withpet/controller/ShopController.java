@@ -91,6 +91,8 @@ public class ShopController {
             model.addAttribute("userid", session.getAttribute("userid"));
         }
 
+        String userId = (String) req.getSession().getAttribute("userLogined");
+        model.addAttribute("userid", userId);
 
         LocalDate now = LocalDate.now();
         Calendar cal = Calendar.getInstance();
@@ -139,11 +141,7 @@ public class ShopController {
         List<Shop> availShop = shopQueryRepository.findAvailHotel(checkin, checkout, 2L);
         List<Shop> hotelList = shopService.hotelList(1L);
 
-
         List<HotelForm> hotelForms = new ArrayList<>();
-
-        String userId = req.getSession().getAttribute("userid").toString();
-
 
         for (int i = 0; i < hotelList.size(); i++) {
             int liked = likeHotelService.isLiked(hotelList.get(i).getShopid(), userId);
@@ -238,6 +236,18 @@ public class ShopController {
 
         List<shopreview> shopreviewList = reviewService.findByshopid(shopid);
         model.addAttribute("shopreview", shopreviewList);
+
+        //별점 평균
+        float scoreTotal = 0;
+        float scoreAvg = 0;
+        if(!shopreviewList.isEmpty()) {
+            for (shopreview shopreview : shopreviewList) {
+                scoreTotal += shopreview.getScore();
+                System.out.println("scoreTotal = " + scoreTotal);
+            }
+        }
+        scoreAvg = scoreTotal / shopreviewList.size();
+        model.addAttribute("scoreAvg", scoreAvg);
 
         Optional<Shop> shop = shopService.findById(shopid);
         model.addAttribute("shop", shop.get());
@@ -446,6 +456,11 @@ public class ShopController {
         hotelForm.setPrice(cheapRoom.get().getPrice());
         hotelForm.setLikeCount(likeCount);
         hotelForm.setIsLiked(liked);
+        Double avgByShopid = shopreviewRepository.getAvgByShopid(hotelList.get(i).getShopid());
+        if(avgByShopid==null) {
+            avgByShopid = 0D;
+        }
+        hotelForm.setScoreAvg(avgByShopid);
         for (int k = 0; k < availShop.size(); k++) {
             if (hotelList.get(i).getShopid() == availShop.get(k).getShopid()) {
                 hotelForm.setAvail("true");

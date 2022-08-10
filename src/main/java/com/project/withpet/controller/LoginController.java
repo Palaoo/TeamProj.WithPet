@@ -7,13 +7,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
+import java.util.Map;
 
 @Controller
 @Slf4j
@@ -42,7 +42,24 @@ public class LoginController {
 
 
     @PostMapping(value = "signup")
-    public String create(UserForm form){
+    public String create(@ModelAttribute @Valid UserForm form, BindingResult errors, Model model){
+        /*if (errors.hasErrors()) {
+            model.addAttribute("userDto", form);
+            Map<String, String> validatorResult = userService.validateHandling(errors);
+            for (String key : validatorResult.keySet()) {
+                model.addAttribute(key, validatorResult.get(key));
+            }
+            return "redirect:/signup";
+
+        }*/
+        /*if (errors.hasErrors()) {
+            Map<String, String> validatorResult = userService.validateHandling(errors);
+            for (String key : validatorResult.keySet()) {
+                model.addAttribute(key, validatorResult.get(key));
+            }
+            return "redirect:/signup";
+        }*/
+
         User user = new User();
         user.setUserId(form.getUserid());
         user.setMobile(form.getMobile());
