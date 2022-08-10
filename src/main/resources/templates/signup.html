@@ -69,8 +69,9 @@
                     <div class="form-row">
                         <div class="col-lg-6">
                         <div class="input-group mb-3">
-                            <input type="text" name="userId" id="id" class="form-control" placeholder="이메일" aria-label="Recipient's username" aria-describedby="button-addon2">
+                            <input type="text" name="userId" id="id" class="form-control" placeholder="아이디" aria-label="Recipient's username" aria-describedby="button-addon2">
                             <button class="btn btn-outline-secondary" type="button" id="button-addon2">중복확인</button> <!--id="btnValid"-->
+                            <!--<span th:style="${'color: red; font-size:11px;'}" th:text="${valid_name}"></span>-->
                         </div>
                         </div>
 
@@ -86,7 +87,8 @@
                     </div>-->
                     <div class="form-row">
                         <div class="col-lg-6">
-                            <input type="password" name="password" id="password" class="form-control" placeholder="********">
+                            <input type="password" name="password" id="password" class="form-control" placeholder="********" onchange="chkPW()">
+                            <!--<span th:style="${'color: red; font-size:11px;'}" th:text="${valid_password}"></span>-->
                         </div>
                     </div>
                     <div class="form-row">
@@ -128,6 +130,31 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(document).on('click', '#btnsignup', function () {
+        var id=document.getElementById('id').value;
+        var nm=document.getElementById('name').value;
+        var mb=document.getElementById('mobile').value;
+        var p=document.getElementById('password').value;
+        var p2=document.getElementById('passwordConfirm').value;
+
+        if(p != p2){
+            alert("비밀번호불일치");
+            return false;
+        }
+
+        if( id =='' || id == null ){
+            alert('아이디를 입력해주세요.');
+            return false;
+        } else if ( p2 =='' || p2 == null ){
+            alert('비밀번호를 입력해주세요.');
+            return false;
+        } else if ( nm =='' || nm == null ){
+            alert('이름을 입력해주세요.');
+            return false;
+        } else if ( mb =='' || mb == null ){
+            alert('번호를 입력해주세요.');
+            return false;
+        }
+
         $.ajax({
             type: 'post',
             url: 'appendUser',
@@ -139,12 +166,14 @@
             },
             dataType: 'text',
             success: function (data) {    // 회원가입 성공 : 0 / 아이디 중복 : 1 /
+
                 if (data == '0') {
                     alert('회원가입 성공 ' + data)
                     location = 'login'
                 }
                 else if (data == '1') {
-                    alert('사용 불가능한 ID 입니다.')
+                    alert('사용 불가능한 ID 입니다.');
+                    return false;
                 }
             }
         })
@@ -157,11 +186,18 @@
             },
             dataType: 'text',
             success: function (data) {        // 아이디 중복 안됨 : 0 / 중복 : 1
-                console.log(data)
+               console.log(data)
+
+               if( $('#id').val() == '' || $('#id').val() == null ){
+                    alert('아이디를 입력해주세요.');
+                    return false;
+               }
+
                 if (data == '0')
                     alert('사용 가능한 ID 입니다.')
                 else if (data == '1')
                     alert('사용 불가능한 ID 입니다.')
+
             }
         })
     })
@@ -180,5 +216,33 @@
 			confirmMsg.innerHTML ="비밀번호 불일치";
 		}
 	}
+
+	function chkPW(){
+
+		var pw = $("#password").val();
+		var id = $("#id").val();
+	    var checkNumber = pw.search(/[0-9]/g);
+	    var checkEnglish = pw.search(/[a-z]/ig);
+
+	    if(!/^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/.test(pw)){
+	        alert('숫자+영문자+특수문자 조합으로 8자리 이상 사용해야 합니다.');
+	        return false;
+	    }else if(checkNumber <0 || checkEnglish <0){
+	        alert("숫자와 영문자를 혼용하여야 합니다.");
+	        return false;
+	    }else if(/(\w)\1\1\1/.test(pw)){
+	        alert('같은 문자를 4번 이상 사용하실 수 없습니다.');
+	        return false;
+	    }else if(pw.search(id) > -1){
+	        alert("비밀번호에 아이디가 포함되었습니다.");
+	        return false;
+	    }else {
+
+		console.log("통과");
+
+		}
+
+    }
+
 </script>
 </html>
