@@ -32,7 +32,7 @@
     }
 
     div.updatescore fieldset legend {
-        text-align: right;
+        text-align: left;
     }
 
     div.updatescore input[type=radio] {
@@ -116,7 +116,7 @@
                     </div>
 
                     <div class="tab-pane active" id="review" role="tabpanel" aria-labelledby="review-tab">
-                        <th:block th:each="shopReviewDTO, index : ${shopReviewDTOList}">
+                        <th:block th:each="shopReviewDTO, i : ${shopReviewDTOList}">
                             <div class="card mb-2" style="max-width: 700px;">
                                 <div class="row g-0">
                                     <div class="col-md-4">
@@ -169,16 +169,16 @@
                                          style="margin: auto" align="center">
                                         <!--수정 모달-->
                                         <form th:action="@{'/mypage/review/update'}" method="post">
-                                            <button type="button" th:id="${index}"
+                                            <button type="button" th:id="${i.index}"
                                                     class="btn btn-outline-primary btn-sm"
                                                     data-bs-toggle="modal"
                                                     data-bs-target="#review-edit-Modal"
-                                                    th:attr="data-bs-content=${shopReviewDTO.shopreview.getContent()},
+                                                    th:attr="data-bs-target='#review-edit-Modal'+${i.index}, data-bs-content=${shopReviewDTO.shopreview.getContent()},
                                             data-bs-score=${shopReviewDTO.shopreview.getScore()},data-bs-rid=${shopReviewDTO.shopreview.getRid()}"
                                                     data-bs-userid=""
                                                     data-bs-shopid="">수정
                                             </button>
-                                            <div class="modal fade" id="review-edit-Modal" tabindex="-1"
+                                            <div class="modal fade" th:id="|review-edit-Modal${i.index}|" tabindex="-1"
                                                  aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                 <div class="modal-dialog">
                                                     <div class="modal-content">
@@ -194,21 +194,21 @@
                                                             <div class="updatescore">
                                                                 <fieldset>
                                                                     <span class="text-bold">별점을 선택하세요</span>
-                                                                    <input type="radio" name="score"
-                                                                           value="5" id="rate1_"><label
-                                                                        for="rate1_">★</label>
-                                                                    <input type="radio" name="score"
-                                                                           value="4" id="rate2_"><label
-                                                                        for="rate2_">★</label>
-                                                                    <input type="radio" name="score"
-                                                                           value="3" id="rate3_"><label
-                                                                        for="rate3_">★</label>
-                                                                    <input type="radio" name="score"
-                                                                           value="2" id="rate4_"><label
-                                                                        for="rate4_">★</label>
-                                                                    <input type="radio" name="score"
-                                                                           value="1" id="rate5_"><label
-                                                                        for="rate5_">★</label>
+                                                                    <input type="radio" name="score" value="5" th:id="|5_${i.index}|"
+                                                                           th:checked="${shopReviewDTO.shopreview.getScore()==5}"><label
+                                                                        th:for="|5_${i.index}|">★</label>
+                                                                    <input type="radio" name="score" value="4" th:id="|4_${i.index}|"
+                                                                           th:checked="${shopReviewDTO.shopreview.getScore()==4}"><label
+                                                                        th:for="|4_${i.index}|">★</label>
+                                                                    <input type="radio" name="score" value="3" th:id="|3_${i.index}|"
+                                                                           th:checked="${shopReviewDTO.shopreview.getScore()==3}"><label
+                                                                        th:for="|3_${i.index}|">★</label>
+                                                                    <input type="radio" name="score" value="2" th:id="|2_${i.index}|"
+                                                                           th:checked="${shopReviewDTO.shopreview.getScore()==2}"><label
+                                                                        th:for="|2_${i.index}|">★</label>
+                                                                    <input type="radio" name="score" value="1" th:id="|1_${i.index}|"
+                                                                           th:checked="${shopReviewDTO.shopreview.getScore()==1}"><label
+                                                                        th:for="|1_${i.index}|">★</label>
                                                                 </fieldset>
                                                             </div>
                                                             <div class="mb-3">
@@ -216,9 +216,11 @@
                                                                        class="col-form-label">내용</label>
                                                                 <textarea class="form-control"
                                                                           id="message-text"
-                                                                          name="content"></textarea>
+                                                                          name="content"
+                                                                          th:text="${shopReviewDTO.shopreview.getContent()}"></textarea>
                                                                 <input type="hidden" id="review-id"
-                                                                       name="rid">
+                                                                       name="rid"
+                                                                       th:value="${shopReviewDTO.shopreview.getRid()}">
                                                             </div>
                                                             <input type="hidden" name="shopid"
                                                                    th:value="${shopReviewDTO.shopreview.getShopid()}">
@@ -251,12 +253,12 @@
                                             </div>
                                         </form>
                                         <script>
-                                            var myModal = document.getElementById('myModal')
-                                            var myInput = document.getElementById('myInput')
-
-                                            myModal.addEventListener('shown.bs.modal', function () {
-                                                myInput.focus()
-                                            })
+                                            // var myModal = document.getElementById('myModal')
+                                            // var myInput = document.getElementById('myInput')
+                                            //
+                                            // myModal.addEventListener('shown.bs.modal', function () {
+                                            //     myInput.focus()
+                                            // })
                                         </script>
                                         <form th:action="@{'/mypage/review/delete'}" method="get">
                                             <input type="hidden" name="shopid"
@@ -294,22 +296,22 @@
 <th:block th:replace="fragments/index :: footer"></th:block>
 <script src='https://code.jquery.com/jquery-3.4.1.js'></script>
 <script>
-    const commentEditModal = document.querySelector("#review-edit-Modal")
-
-    commentEditModal.addEventListener("show.bs.modal", function (event) {
-
-        const triggerBtn = event.relatedTarget
-
-        const content = triggerBtn.getAttribute("data-bs-content");
-        const score = triggerBtn.getAttribute("data-bs-score");
-        const rid = triggerBtn.getAttribute("data-bs-rid");
-
-        console.log(rid);
-        document.querySelector("#message-text").value = content
-        document.querySelector("#score-value").value = score
-        document.querySelector("#review-id").value = rid
-
-    })
+    // const commentEditModal = document.querySelector("#review-edit-Modal")
+    //
+    // commentEditModal.addEventListener("show.bs.modal", function (event) {
+    //
+    //     const triggerBtn = event.relatedTarget
+    //
+    //     const content = triggerBtn.getAttribute("data-bs-content");
+    //     const score = triggerBtn.getAttribute("data-bs-score");
+    //     const rid = triggerBtn.getAttribute("data-bs-rid");
+    //
+    //     console.log(rid);
+    //     document.querySelector("#message-text").value = content
+    //     document.querySelector("#score-value").value = score
+    //     document.querySelector("#review-id").value = rid
+    //
+    // })
 </script>
 <script>
     $(document)

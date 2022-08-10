@@ -40,6 +40,10 @@ public class reviewService {
         return shopreviewRepository.findByShopid(shopid);
     }
 
+    public double getAvgByshopid(Long shopid) {
+        return shopreviewRepository.getAvgByShopid(shopid);
+    }
+
     public void deleteReview(Long rid) {
 
         shopreviewRepository.deleteById(rid);
