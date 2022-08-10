@@ -30,6 +30,9 @@
     .col-lg-6{
         margin-bottom:15px;
     }
+    #error,#confirmMsg{
+        font-size:12px;
+    }
 </style>
 <body>
 <!--<form action="signup" method="post">
@@ -60,7 +63,6 @@
                         <div class="col-lg-6">
                         <div class="input-group mb-3">
                             <input type="text" name="userId" id="id" class="form-control" placeholder="아이디" aria-label="Recipient's username" aria-describedby="button-addon2">
-                            <input type="hidden" id="idCheck" value="unchecked">
                             <button class="btn btn-outline-secondary" type="button" id="button-addon2">중복확인</button> <!--id="btnValid"-->
                             <!--<span th:style="${'color: red; font-size:11px;'}" th:text="${valid_name}"></span>-->
                         </div>
@@ -79,6 +81,7 @@
                     <div class="form-row">
                         <div class="col-lg-6">
                             <input type="password" name="password" id="password" class="form-control" placeholder="********" onchange="chkPW()">
+                            <span id="error"></span>
                             <!--<span th:style="${'color: red; font-size:11px;'}" th:text="${valid_password}"></span>-->
                         </div>
                     </div>
@@ -131,6 +134,9 @@
             alert("비밀번호불일치");
             return false;
         }
+
+<!--        if(!/^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/.test(p)){-->
+<!--        }else if(checkNumber <0 || checkEnglish <0){-->
 
         if( id =='' || id == null ){
             alert('아이디를 입력해주세요.');
@@ -215,22 +221,35 @@
 		var id = $("#id").val();
 	    var checkNumber = pw.search(/[0-9]/g);
 	    var checkEnglish = pw.search(/[a-z]/ig);
+        var error=document.getElementById('error');
+        var wrongColor ="#ff0000";
+        var correctColor = "#00ff00";
 
 	    if(!/^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/.test(pw)){
-	        alert('숫자+영문자+특수문자 조합으로 8자리 이상 사용해야 합니다.');
+	        //alert('숫자+영문자+특수문자 조합으로 8자리 이상 사용해야 합니다.');
+	        error.style.color = wrongColor;
+	        error.innerHTML="숫자+영문자+특수문자 조합으로 8자리 이상 사용해야 합니다.";
 	        return false;
 	    }else if(checkNumber <0 || checkEnglish <0){
-	        alert("숫자와 영문자를 혼용하여야 합니다.");
+	        //alert("숫자와 영문자를 혼용하여야 합니다.");
+	        error.style.color = wrongColor;
+	        error.innerHTML="숫자와 영문자를 혼용하여야 합니다.";
 	        return false;
 	    }else if(/(\w)\1\1\1/.test(pw)){
-	        alert('같은 문자를 4번 이상 사용하실 수 없습니다.');
+	        //alert('같은 문자를 4번 이상 사용하실 수 없습니다.');
+	        error.style.color = wrongColor;
+	        error.innerHTML="같은 문자를 4번 이상 사용하실 수 없습니다.";
 	        return false;
 	    }else if(pw.search(id) > -1){
-	        alert("비밀번호에 아이디가 포함되었습니다.");
+	        //alert("비밀번호에 아이디가 포함되었습니다.");
+	        error.style.color = wrongColor;
+	        error.innerHTML="비밀번호에 아이디가 포함되었습니다.";
 	        return false;
 	    }else {
 
-		console.log("통과");
+		    //console.log("통과");
+		    error.style.color = correctColor;
+	        error.innerHTML="사용가능 합니다.";
 
 		}
 
