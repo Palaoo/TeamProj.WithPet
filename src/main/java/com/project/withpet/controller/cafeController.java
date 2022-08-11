@@ -60,7 +60,7 @@ public class cafeController {
 
     @GetMapping("cafe_list")   //카페 목록 가져오기
     public String viewList(Model model, HttpServletRequest req,
-                           @PageableDefault(sort = "shopid", direction = Sort.Direction.DESC,size = 6)
+                           @PageableDefault(sort = "shopid", direction = Sort.Direction.ASC,size = 6)
                            Pageable pageable) {
         
         HttpSession session = req.getSession();
@@ -306,7 +306,7 @@ public class cafeController {
 
     @GetMapping("Restaurant-list")  //맛집 리스트
     public String viewRestList(Model model, HttpServletRequest req,
-                               @PageableDefault(sort = "shopid", direction = Sort.Direction.DESC,size = 6)
+                               @PageableDefault(sort = "shopid", direction = Sort.Direction.ASC,size = 6)
                                Pageable pageable) {
         HttpSession session = req.getSession();
         String userid = (String) session.getAttribute("userLogined");
