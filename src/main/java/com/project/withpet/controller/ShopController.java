@@ -27,8 +27,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import org.springframework.web.multipart.MultipartFile;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.*;
@@ -62,10 +60,10 @@ public class ShopController {
 
     private final S3Uploader s3Uploader;
     private final ShopTypeRepository shopTypeRepository;
-//    private final RegionRepository regionRepository;
+    private final RegionRepository regionRepository;
 
     @Autowired
-    public ShopController(ShopService shopService, HotelroomService hotelroomService, ShopQueryRepository shopQueryRepository, ShopRepository shopRepository, HotelroomRepository hotelroomRepository, UserService userService, BookingRepository bookingRepository, HotelimgRepository hotelimgRepository, HotelroomimgRepository hotelroomimgRepository, com.project.withpet.service.reviewService reviewService, com.project.withpet.repository.shopreviewRepository shopreviewRepository, LikeHotelService likeHotelService, FeatlistRepository featlistRepository, S3Uploader s3Uploader, ShopTypeRepository shopTypeRepository) {
+    public ShopController(ShopService shopService, HotelroomService hotelroomService, ShopQueryRepository shopQueryRepository, ShopRepository shopRepository, HotelroomRepository hotelroomRepository, UserService userService, BookingRepository bookingRepository, HotelimgRepository hotelimgRepository, HotelroomimgRepository hotelroomimgRepository, com.project.withpet.service.reviewService reviewService, com.project.withpet.repository.shopreviewRepository shopreviewRepository, LikeHotelService likeHotelService, FeatlistRepository featlistRepository, S3Uploader s3Uploader, ShopTypeRepository shopTypeRepository, RegionRepository regionRepository) {
         this.shopService = shopService;
         this.hotelroomService = hotelroomService;
         this.shopQueryRepository = shopQueryRepository;
@@ -76,11 +74,10 @@ public class ShopController {
         this.reviewService = reviewService;
         this.shopreviewRepository = shopreviewRepository;
         this.likeHotelService = likeHotelService;
-
         this.featlistRepository = featlistRepository;
         this.s3Uploader = s3Uploader;
         this.shopTypeRepository = shopTypeRepository;
-//        this.regionRepository = regionRepository;
+        this.regionRepository = regionRepository;
     }
 
     @GetMapping("/hotel")
@@ -149,6 +146,9 @@ public class ShopController {
 
             addHotelForm(availShop, hotelList, hotelForms, i, likeCount, liked);
         }
+
+        hotelForms.sort((a, b) -> (int) (b.getScoreAvg() - a.getScoreAvg()));
+
         model.addAttribute("hotelList", hotelForms);
         model.addAttribute("person", 2);
 
@@ -169,9 +169,8 @@ public class ShopController {
                             @RequestParam("size") Long size) {
 
         HttpSession session = req.getSession();
-        if (session.getAttribute("userid") != null) {
-            model.addAttribute("userid", session.getAttribute("userid"));
-        }
+        String userId = (String) session.getAttribute("userLogined");
+        model.addAttribute("userid",userId);
 
         model.addAttribute("checkin", checkin);
         model.addAttribute("checkout", checkout);
@@ -186,8 +185,6 @@ public class ShopController {
         List<Shop> hotelList = shopService.hotelList(1L);
 
         List<HotelForm> hotelForms = new ArrayList<>();
-
-        String userId = req.getSession().getAttribute("userid").toString();
 
         for (int i = 0; i < hotelList.size(); i++) {
             List<Feat> shopFeats = hotelList.get(i).getShopFeats();
@@ -206,9 +203,9 @@ public class ShopController {
         }
 
         if (order.equals("price")) {
-            Collections.sort(hotelForms, (a, b) -> (int) (b.getPrice() - a.getPrice()));
-        } else {
-//            Collections.sort(hotelForms, (a, b) -> (int) (b.getPrice() - a.getPrice()));
+            hotelForms.sort((a, b) -> (int) (a.getPrice() - b.getPrice()));
+        } else if(order.equals("score")) {
+            hotelForms.sort((a, b) -> (int) (b.getScoreAvg() - a.getScoreAvg()));
         }
 
         model.addAttribute("hotelList", hotelForms);
@@ -385,7 +382,7 @@ public class ShopController {
         bookingRepository.save(booking);
 
 
-        return "redirect:/mypage/mypage_booking";
+        return "redirect:/mypage/booking";
 
     }
 
@@ -471,12 +468,7 @@ public class ShopController {
         }
         Optional<Hotelimg> hotelimg = hotelimgRepository.findByShopid(hotelList.get(i).getShopid());
         String path = "";
-
-        if (hotelimg.isPresent()) {
-            path = hotelimg.get().getPath();
-        } else {
-            path = "https://withpetimg.s3.ap-northeast-2.amazonaws.com/images/hoteldefault.jpg";
-        }
+        path = hotelimg.get().getPath();
         hotelForm.setPath(path);
         hotelForms.add(hotelForm);
     }

@@ -13,25 +13,17 @@
     <th:block th:replace="fragments/index::style"></th:block>
 </head>
 <style>
-    #btn_update,#btn_delete:hover{
+    #btn_update{
         border: none;
         outline: none;
         height: 50px;
-        width: 100%;
+        width: 30%;
         background-color: #000;
         color: white;
         border-radius: 4px;
         font-weight: bold;
     }
     #btn_update:hover{
-        background: white;
-        border: 1px solid;
-        color:  #000;
-    }
-    #btn_delete{
-        height: 50px;
-        width: 100%;
-        border-radius: 4px;
         background: white;
         border: 1px solid;
         color:  #000;
@@ -171,11 +163,9 @@
                                 <td>비밀번호 </td>
                                 <td><input type="password" name="password" id="password" class="form-control" placeholder="********"></td>
                             </tr>
-                            <tr align="center">
-                                <td>
-                                    <div>
-                                        <button type="button" id="btn_update" class="btn1 mt-3 mb-5">수정</button>
-                                    </div>
+                            <tr>
+                                <td colspan="2" align="center">
+                                    <button type="button" id="btn_update" class="btn1 mt-3 mb-5">수정</button>
                                 </td>
                             </tr>
                         </table>

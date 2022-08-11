@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
@@ -32,41 +33,24 @@ public class BusinessUserController {
 
     private final FeatlistRepository featlistRepository;
     private final ShopTypeRepository shopTypeRepository;
-//    private final RegionRepository regionRepository;
+    private final RegionRepository regionRepository;
     private final S3Uploader s3Uploader;
     private final HotelroomService hotelroomService;
     private final HotelroomimgRepository hotelroomimgRepository;
 
     @Autowired
-    public BusinessUserController(BusinessUserService businessUserService, ShopService shopService, HotelimgRepository hotelimgRepository, FeatlistRepository featlistRepository, ShopTypeRepository shopTypeRepository, S3Uploader s3Uploader, HotelroomService hotelroomService, HotelroomimgRepository hotelroomimgRepository) {
+    public BusinessUserController(BusinessUserService businessUserService, ShopService shopService, HotelimgRepository hotelimgRepository, FeatlistRepository featlistRepository, ShopTypeRepository shopTypeRepository, RegionRepository regionRepository, S3Uploader s3Uploader, HotelroomService hotelroomService, HotelroomimgRepository hotelroomimgRepository) {
         this.businessUserService = businessUserService;
         this.shopService = shopService;
         this.hotelimgRepository = hotelimgRepository;
         this.featlistRepository = featlistRepository;
         this.shopTypeRepository = shopTypeRepository;
-//        this.regionRepository = regionRepository;
+        this.regionRepository = regionRepository;
         this.s3Uploader = s3Uploader;
         this.hotelroomService = hotelroomService;
         this.hotelroomimgRepository = hotelroomimgRepository;
     }
 
-//    @GetMapping("/businessPage")
-//    public String businessPage(HttpServletRequest req, Model model) {
-//        if (!tools.isUserLogined(req)) {
-//            return "login";
-//        }
-//
-//        HttpSession session = req.getSession();
-//
-//        if (session.getAttribute("userid") != null) {
-//            model.addAttribute("userid", session.getAttribute("userid"));
-//        }
-//
-//        if (businessUserService.isBusinessUser(req.getSession().getAttribute("userid").toString()) == -1L) {
-//            return "registBusiness";
-//        }
-//        return "redirect:/businessInfo";
-//    }
 
     @GetMapping("/registBusiness")
     public String registBusiness(HttpServletRequest req) {
@@ -86,6 +70,11 @@ public class BusinessUserController {
         if (!tools.isUserLogined(req)) {
             return "login";
         }
+
+        if (businessUserService.isBusinessUser(req.getSession().getAttribute("userid").toString()) == -1L) {
+            return "registBusiness";
+        }
+
         model.addAttribute("businessId", businessUserService.findByUid(req.getSession().getAttribute("userid").toString()).getBid());
         req.getSession().setAttribute("businessId", model.getAttribute("businessId").toString());
         return "businessInfo";
@@ -145,12 +134,11 @@ public class BusinessUserController {
             addressSplit[0] = "제주도";
         }
 
-//        shop.setRegion(regionRepository.findByRegname(addressSplit[0]));
-
+        shop.setRegion(regionRepository.findByRegname(addressSplit[0]));
 
         Long shopid = shopService.save(shop);
-        String path = s3Uploader.uploadFiles(thumb, "thumbnail",0);
-        hotelimgRepository.save(new Hotelimg(shopid, UUID.randomUUID().toString(), thumb.getOriginalFilename(), path));
+        String path = s3Uploader.uploadFiles(thumb, "thumbnail",1);
+        hotelimgRepository.save(new Hotelimg(shopid, thumb.getOriginalFilename(), thumb.getOriginalFilename(), path));
 
 
         String[] featid = featidList.split(",");
@@ -166,7 +154,7 @@ public class BusinessUserController {
                 hotelroomimgRepository.save(new Hotelroomimg(hotelroom.getRoomid(), UUID.randomUUID().toString(), roomThumb[i].getOriginalFilename(), roomPath));
             }
         }
-        return "redirect:/businessInfo";
+        return "redirect:/shopInfo";
     }
 
     @PostMapping("/updateShop")
@@ -189,7 +177,7 @@ public class BusinessUserController {
             addressSplit[0] = "제주도";
         }
 
-//        shop.setRegion(regionRepository.findByRegname(addressSplit[0]));
+        shop.setRegion(regionRepository.findByRegname(addressSplit[0]));
 
         shop.setShopid(shopid);
         shopService.save(shop);
@@ -201,8 +189,8 @@ public class BusinessUserController {
 
 
         String[] featid = featidList.split(",");
+        featlistRepository.deleteByShopid(shopid);
         for (int i = 0; i < featid.length; i++) {
-            featlistRepository.deleteByShopid(shopid);
             featlistRepository.save(new Featlist(shopid, Long.parseLong(featid[i])));
         }
 
@@ -216,7 +204,7 @@ public class BusinessUserController {
                 }
             }
         }
-        return "redirect:/businessInfo";
+        return "redirect:/shopInfo";
     }
 
     @GetMapping("/shopInfo")
@@ -230,7 +218,13 @@ public class BusinessUserController {
             return "login";
         }
 
+
+        if (businessUserService.isBusinessUser(req.getSession().getAttribute("userid").toString()) == -1L) {
+            return "registBusiness";
+        }
+
         model.addAttribute("businessId", businessUserService.findByUid(req.getSession().getAttribute("userid").toString()).getBid());
+
 
         List<Shop> shops = shopService.findAllByBid(Long.parseLong(req.getSession().getAttribute("businessId").toString()));
         System.out.println("shops size = " + shops.size());
@@ -246,8 +240,15 @@ public class BusinessUserController {
         return "shopInfo";
     }
 
+    @GetMapping("/shopInfo/deleteRoom")
+    @ResponseBody
+    public String deleteRoom(@RequestParam Long roomid){
+        hotelroomService.deleteById(roomid);
+        return "a";
+    }
+
     @GetMapping("/shopInfo/deleteShop")
-    public String deleteShop(@RequestParam Long shopid, @RequestParam Long typeid) {
+    public String deleteShop(@RequestParam Long shopid) {
         shopService.deleteById(shopid);
         return "redirect:/shopInfo";
     }

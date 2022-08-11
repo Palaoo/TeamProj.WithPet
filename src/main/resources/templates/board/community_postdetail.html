@@ -23,6 +23,7 @@
 
     #addReply {
         padding: 0;
+        width:60px;
         height: 40px;
         background-color: #000;
         color: white;
@@ -38,8 +39,9 @@
         vertical-align: text-top;
     }
 
-    #content {
+    #content,textarea {
         color: #000;
+        resize:none;
     }
 
     #modify, #delete {
@@ -182,7 +184,7 @@
                                     <table id="rtable2">
                                         <tr style="width: 100%">
                                             <td class="col-lg-2 col-md-2">
-                                                <p th:text="${userid}" id="writer"></p>
+                                                <h6 th:text="${userid}" id="writer"></h6>
                                             </td>
                                             <td class="col-lg-8 col-md-8">
                                                         <textarea name="content" id="content"
@@ -198,7 +200,7 @@
                                     <!--                                        </form>-->
                                 </div>
                                 <div th:if="${#strings.isEmpty(userid)}">
-                                    <textarea placeholder="댓글을 작성하시려면 로그인해주세요." readonly></textarea>
+                                    <textarea placeholder="댓글을 작성하시려면 로그인해주세요." style="width:100%" readonly></textarea>
                                 </div>
                                 <table id="rtable" align="center">
                                 </table>
@@ -228,7 +230,7 @@
                             + '</td><td class="col-lg-3 col-md-3">' + this.date + '</td>'
                         if (this.writer == $('#writer').text()) {
                             str = str + '<td>' +
-                                '<input type="button" value="삭제" class="deleteReply" id="' + this.rid + '">' +
+                                '<input type="button" class="btn btn-outline-danger btn-sm" value="삭제" class="deleteReply" id="' + this.rid + '">' +
                                 '</td>'
                         }
                         str = str + '</tr>'

@@ -5,9 +5,7 @@ import com.project.withpet.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -28,19 +26,33 @@ public class UserController {
         return "signup";
     }
 
+    @PostMapping("/users/update")
+    public String appendKakaoEmail(@RequestParam(value = "userId") String userId,HttpServletRequest req,
+                                   @RequestParam(value = "kakaoEmail") String kakaoEmail) {
+        userService.updateKakaoEmail(userId, kakaoEmail);
+        req.getSession().setAttribute("userid",userId);
+        req.getSession().setAttribute("userLogined",userId);
+
+        return "redirect:/";
+    }
+
     @PostMapping("/appendUser")
     @ResponseBody
-    public String appendUser(HttpServletRequest req) {
+    public String appendUser(HttpServletRequest req, @RequestParam(value = "kakaoEmail") String kakaoEmail) {
         String id = req.getParameter("id");
         String password = req.getParameter("password");
         String name = req.getParameter("name");
         String mobile = req.getParameter("mobile");
+
         System.out.println(id + password + name + mobile);
         User user = new User();
         user.setUserId(id);
         user.setPassword(password);
         user.setName(name);
         user.setMobile(mobile);
+        if (kakaoEmail != "undefined" && kakaoEmail != "" && kakaoEmail != null) {
+            user.setKakaoEmail(kakaoEmail);
+        }
 
         try {
             userService.join(user);
@@ -72,8 +84,6 @@ public class UserController {
     }
 
 
-
-
 //    @GetMapping("/")
 //    public String home(HttpServletRequest req, Model model) {
 //        if (!tools.isUserLogined(req)) {
@@ -100,7 +110,7 @@ public class UserController {
     }
 
     @GetMapping("mypage")
-    public String myPage(Model model,HttpServletRequest req) {
+    public String myPage(Model model, HttpServletRequest req) {
         model.addAttribute("userid", req.getSession().getAttribute("userid").toString());
         return "mypage";
     }

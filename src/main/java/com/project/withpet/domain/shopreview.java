@@ -44,3 +44,4 @@ public class shopreview {
 //    @JoinColumn(name = "userid")
 //    private member member;
 }
+

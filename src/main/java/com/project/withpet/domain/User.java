@@ -1,9 +1,6 @@
 package com.project.withpet.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class User {
@@ -13,6 +10,18 @@ public class User {
     String password;
     String name;
     String mobile;
+
+    @Column(name = "kakao_email")
+    String kakaoEmail;
+
+
+    public String getKakaoEmail() {
+        return kakaoEmail;
+    }
+
+    public void setKakaoEmail(String kakaoEmail) {
+        this.kakaoEmail = kakaoEmail;
+    }
 
     public String getUserId() {
         return userid;

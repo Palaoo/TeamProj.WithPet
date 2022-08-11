@@ -39,7 +39,8 @@ public class JpaLikeHotelRepository implements LikeHotelRepository {
     @Override
     public boolean isLike(Long shopId, String userId) {
         String query = "select lh from LikeHotel lh where lh.shopId=:shopId and lh.userId=:userId";
-        if (em.createQuery(query, LikeHotel.class).setParameter("shopId", shopId).setParameter("userId", userId)
+        if (em.createQuery(query, LikeHotel.class)
+                .setParameter("shopId", shopId).setParameter("userId", userId)
                 .getResultList() == null) {
             return false;
         } else
