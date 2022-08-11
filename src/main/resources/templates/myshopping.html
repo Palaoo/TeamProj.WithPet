@@ -55,8 +55,7 @@
     textarea {
         width: 80%;
     }
-    <!--
-    review-- > .star-rating {
+   .star-rating {
         display: flex;
         flex-direction: row-reverse;
         font-size: 2.25rem;
@@ -85,11 +84,13 @@
     }
 
     .star-rating label:hover,
-
     .star-rating label:hover ~ label {
         -webkit-text-fill-color: #fff58c;
     }
 
+    a:hover{
+        color:white !important;
+    }
 
 </style>
 
@@ -260,10 +261,9 @@
 <!--                    </tbody>-->
 <!--                </table>-->
 <!--            </div>-->
-            <div align="center">
+            <div class="col-12" align="center">
             <table th:each="orderDTO:${orderDTOList}" >
                 <p id="date" th:text="${#strings.substring(orderDTO.ordertable.orderdate,0,10)}"></p>
-
                 <tr th:each="prodandCount:${orderDTO.prodandCounts}" style="width: 100%">
                     <td class="product__cart__item" style="width: 20%">
                         <div class="product__cart__item__pic">
@@ -288,7 +288,7 @@
                         </div>
                     </div>-->
                     </td>
-                    <td class="cart__price" style="width: 20%">
+                    <td class="cart__price" style="width: 20%"  align="right">
                         <a href="#" class="primary-btn" th:name="${prodandCount.prod.id}"
                            onclick="new_window(this.getAttribute('name'))">리뷰쓰기</a>
                         <!--<button id="btnComplain">문의하기</button>-->
@@ -308,22 +308,24 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-lg-4 col-md-4 col-sm-4">
-                <div class="continue__btn">
-                    <p th:text="${paymentKey}"></p>
-                    <!--<a href="#">Continue Shopping</a>-->
+            <div class="col-12">
+                <div class="col-lg-4 col-md-4 col-sm-4">
+                    <div class="continue__btn">
+                        <p th:text="${paymentKey}"></p>
+                        <!--<a href="#">Continue Shopping</a>-->
+                    </div>
                 </div>
-            </div>
-            <div class="col-lg-4 col-md-4 col-sm-4">
-                <div class="continue__btn update__btn">
-                    <p th:text="${orderId}"></p>
-                    <!--<a href="#"><i class="fa fa-spinner"></i> Update cart</a>-->
+                <div class="col-lg-4 col-md-4 col-sm-4">
+                    <div class="continue__btn update__btn">
+                        <p th:text="${orderId}"></p>
+                        <!--<a href="#"><i class="fa fa-spinner"></i> Update cart</a>-->
+                    </div>
                 </div>
-            </div>
-            <div class="col-lg-4 col-md-4 col-sm-4">
-                <div class="continue__btn update__btn">
-                    <p th:text="${amount}"></p>
-                    <!--<a href="#"><i class="fa fa-spinner"></i> Update cart</a>-->
+                <div class="col-lg-4 col-md-4 col-sm-4">
+                    <div class="continue__btn update__btn">
+                        <p th:text="${amount}"></p>
+                        <!--<a href="#"><i class="fa fa-spinner"></i> Update cart</a>-->
+                    </div>
                 </div>
             </div>
         </div>

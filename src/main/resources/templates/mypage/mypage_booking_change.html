@@ -9,26 +9,169 @@
     <title>MYPAGE</title>
     <th:block th:replace="fragments/index::style"></th:block>
 </head>
+<style>
+    table{
+        border-collapse: separate;
+	    border-spacing: 0 20px;
+    }
+    #detail{
+        resize:none;
+    }
+</style>
 <body>
 
 <div th:replace="fragments/index :: header"></div>
+<section class="breadcrumb-option">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="breadcrumb__text">
 
-    <form method="post" action="/mypage/booking/change">
-        <input type="hidden" name="bookid" th:value="${booking.getBookid()}">
-        <h2 th:text="|${booking.getCheckin()} / ${booking.getCheckout()} (${days}박)|"></h2>
-        예약자명:&nbsp;<br>
-        <input type="text" th:value="${booking.getName()}" style="width:300px; height: 30px" id="name" name="name">
-        <br><br>
-        전화번호: <br>
-        <input type="text" th:value="${booking.getMobile()}" style="width:300px; height: 30px" id="mobile" name="mobile">
-        <br><br>
-        세부사항:&nbsp;<br>
-        <input type="hidden" th:value="${booking.getBookid()}">
-        <textarea th:text="${booking.getDetail()}" style="height: 300px; width: 500px" id="detail" name="detail"></textarea><br>
-        <input type="submit" value="제출"><input type="button" value="취소" id="btnCancel">
-    </form><br><br>
+                    <h4>Mypage</h4>
+                    <div class="breadcrumb__links">
+                        <a href="/">Home</a>
+                        <span>Mypage</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<div class="container">
+    <div class="row">
+        <div class="col-3">
+            <div class="col-12">
+                <br><br>
+                <h5 th:text="|${userid}님|"></h5>
+            </div>
+            <div class="shop__sidebar">
+                <div class="shop__sidebar__accordion">
+                    <div class="accordion" id="accordionExample">
+                        <div class="card">
+                            <div id="collapseOne" class="collapse show" data-parent="#accordionExample">
+                                <div class="card-body">
+                                    <div th:replace="fragments/mypage :: sideBar"></div>
+                                </div>
+                            </div>
 
-    <th:block th:replace="fragments/index :: footer"></th:block>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-9" id="main">
+            <div class="row">
+                <div class="tab-content">
+                    <br><br><br>
+                    <div class="tab-pane active" id="reservation" role="tabpanel" aria-labelledby="reservation-tab" align="center">
+                        <form method="post" action="/mypage/booking/change">
+                            <input type="hidden" name="bookid" th:value="${booking.getBookid()}">
+                            <h4 th:text="|${booking.getCheckin()} / ${booking.getCheckout()} (${days}박)|"></h4>
+                            <table>
+                                <tr>
+                                    <td>예약자명: &nbsp;&nbsp;</td>
+                                    <td><input type="text" th:value="${booking.getName()}" style="width:500px; height: 30px" id="name" name="name"></td>
+                                </tr>
+                                <tr>
+                                    <td>전화번호: &nbsp;&nbsp;</td>
+                                    <td><input type="text" th:value="${booking.getMobile()}" style="width:500px; height: 30px" id="mobile" name="mobile"></td>
+                                </tr>
+                                <tr>
+                                    <td>세부사항: &nbsp;&nbsp;</td>
+                                    <td>
+                                        <input type="hidden" th:value="${booking.getBookid()}">
+                                        <textarea th:text="${booking.getDetail()}" style="height: 80px; width: 500px" id="detail" name="detail"></textarea>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" align="center">
+                                        <input type="submit" value="제출" class="btn btn-outline-primary btn-sm">&nbsp;&nbsp;<input type="button" value="취소" id="btnCancel" class="btn btn-outline-danger btn-sm">
+                                    </td>
+                                </tr>
+                                &nbsp;
+
+                            </table>
+                        </form>
+                        <!--<div class="card mb-2" style="max-width: 700px;" th:each="book, i:${bookList}">
+                            <div class="row g-0">
+                                <div class="col-md-4">
+                                    <img th:src="${book.path}" class="img-fluid rounded-start"
+                                         style="object-fit: cover; width: 100%; height: 15vw">
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="card-body">
+                                        <h5 class="card-text"
+                                            th:text="|${book.getHotelname()} / ${book.getRoomname}|"></h5>
+                                        <p class="card-text"
+                                           th:text="|${book.getCheckin()} ~ ${book.getCheckout()} (${book.getName()})|"></p>
+                                        <p class="card-text" th:text="${book.getMobile()}"></p>
+                                        <p class="card-text" th:text="${book.getDetail()}"></p>
+                                    </div>
+                                </div>
+                                <div class="col-md-2" style="margin: auto" align="center">
+                                    <a th:href="@{/mypage/booking/change(bookid=${book.getBookid()})}">
+                                        <button class="btn btn-outline-primary btn-sm">예약변경</button>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <h5 th:if="${not #strings.isEmpty(businessId)}"><br><br>고객 예약 내역</h5>
+                        <div class="card mb-2" style="max-width: 700px;" th:if="${not #lists.isEmpty(bidBookList)}" th:each="bidBook, i:${bidBookList}">
+                            <div class="row g-0">
+                                <div class="col-md-4">
+                                    <img th:src="${bidBook.path}" class="img-fluid rounded-start" style="object-fit: cover; width: 100%; height: 15vw">
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="card-body">
+                                        <h5 class="card-text"
+                                            th:text="|${bidBook.hotelname} / ${bidBook.roomname}|"></h5>
+                                        <p class="card-text"
+                                           th:text="|${bidBook.booking.checkin} ~ ${bidBook.booking.checkout} (${bidBook.booking.name})|"></p>
+                                        <p class="card-text" th:text="${bidBook.booking.mobile}"></p>
+                                        <p class="card-text" th:text="${bidBook.booking.detail}"></p>
+                                    </div>
+                                </div>
+                                <div class="col-md-2" style="margin: auto" align="center">
+                                </div>
+                            </div>
+                        </div>-->
+
+
+                    </div>
+                    <div class="tab-pane" id="save" role="tabpanel" aria-labelledby="save-tab">
+
+                    </div>
+
+                    <div class="tab-pane" id="review" role="tabpanel" aria-labelledby="review-tab">
+
+                    </div>
+
+                    <div class="tab-pane" id="mywriting" role="tabpanel" aria-labelledby="mywriting-tab">
+
+                    </div>
+
+                    <div class="tab-pane" id="manager" role="tabpanel" aria-labelledby="manager-tab">
+
+                    </div>
+
+                    <div class="tab-pane" id="business" role="tabpanel" aria-labelledby="business-tab">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+<th:block th:replace="fragments/index :: footer"></th:block>
 </body>
 <script>
     $(document)
