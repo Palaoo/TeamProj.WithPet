@@ -26,7 +26,7 @@ public class cafeService {
     private shopreviewRepository shopreviewRepository;
 
 
-    public Page<cafe> cafes(Pageable pageable) { return cafeRepository.findAll(pageable);}
+//    public Page<cafe> cafes(Pageable pageable) { return cafeRepository.findAll(pageable);}
 
     public Page<cafe> findCafes(Pageable pageable, Long typeid) {
         return cafeRepository.findCafe(pageable, typeid);
