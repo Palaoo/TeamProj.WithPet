@@ -77,7 +77,7 @@
                                      th:id="|btnLike${cafeList.cafe.shopid}|" width="25" height="25" alt="">
                                 <img th:if="${!cafeList.islike}" src="/image/heart.png"
                                      th:id="|btnLike${cafeList.cafe.shopid}|" width="25" height="25" alt="">
-                                <p th:text="${cafeList.likeCount}" th:id="|likeCount${cafeList.cafe.getShopid()}|"
+                                <p th:text="${cafeList.getLikeCount()}" th:id="|likeCount${cafeList.cafe.getShopid()}|"
                                    name="likeCount" id="cnt"></p>
                             </a>
                         </div>
@@ -137,16 +137,17 @@
     $('.pagination').on('click', 'li', function() {
         $('.pagination li').removeClass('active');
         $(this).addClass('active');
-    });
+    })
 
         .on('click', '#btnLike', function () {
             shopid = $(this).attr('name')
             $.ajax({
                 type: 'get',
-                url: 'append_shoplike?shopId=' + shopid,
+                url: '/append_shoplike?shopId=' + shopid,
                 success: function (data) {
                     ID = '#btnLike' + shopid
                     if (data == '1') {
+                        console.log('full')
                         $(ID).attr("src", "/image/redheart.png")
                         $(ID).attr("width", "25px")
                         $(ID).attr("height", "25px")

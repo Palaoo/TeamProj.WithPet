@@ -340,11 +340,6 @@ public class ShopController {
                                            @RequestParam("checkout") String checkout,
                                            @RequestParam("person") Long person) {
 
-        HttpSession session = req.getSession();
-        if (session.getAttribute("userid") != null) {
-            model.addAttribute("userid", session.getAttribute("userid"));
-        }
-
         List<Hotelroom> hotelrooms = hotelroomService.findByShopid(shopid);
         List<Hotelroom> availRooms = shopQueryRepository.findAvailRoom(checkin, checkout, person, shopid);
 

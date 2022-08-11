@@ -67,7 +67,6 @@ public class cafeController {
         String userid = (String) session.getAttribute("userLogined");
         model.addAttribute("userid",userid);
 
-
         List<cafe> cafeList = cafeService.findByshoptype(2L);
         List<CafeDTOList> cafeDTOLists = new ArrayList<>();
         for (cafe cafe : cafeList) {
@@ -86,13 +85,74 @@ public class cafeController {
                 avgByShopid=0D;
             }
 
-//            cafeDTOLists.add(new CafeDTOList(cafe, shopLike, path));
             //좋아요
             boolean shopLike = shopLikeService.islike(cafe.getShopid(), userid);
             Long likeCount = shopLikeService.getLikeCount(cafe.getShopid());
+//            model.addAttribute("shopLike",shopLike);
+//            model.addAttribute("likeCount", likeCount);
             cafeDTOLists.add(new com.project.withpet.dto.CafeDTOList(cafe, shopLike, path, likeCount, avgByShopid));
-
         }
+        model.addAttribute("cafeDTOLists", cafeDTOLists);
+
+        //페이징
+        Page<cafe> cafes = cafeService.findCafes(pageable,2L);
+        System.out.println(cafes.getTotalPages());
+        int pageN = pageable.getPageNumber();
+        int startPage = ((int) Math.floor(pageN / 5)) * 5+1;
+        int totalPage = cafes.getTotalPages();
+        int endpage = 0;
+        if(totalPage < startPage + 4) {
+            endpage = totalPage;
+        } else {
+            endpage = startPage + 4;
+        }
+        model.addAttribute("posts", cafes);
+        model.addAttribute("previous", pageable.previousOrFirst().getPageNumber());
+        model.addAttribute("next", pageable.next().getPageNumber());
+        model.addAttribute("hasNext", cafes.hasNext());
+        model.addAttribute("hasPrev", cafes.hasPrevious());
+        model.addAttribute("totalPage", cafes.getTotalPages());
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endpage);
+
+        return "cafe_list";
+    }
+
+
+    @GetMapping("/cafe_list/search")  //지역검색
+    public String searchCafe(@RequestParam("keyword") String keyword, Model model, HttpServletRequest req,
+                             @PageableDefault(sort = "shopid", direction = Sort.Direction.DESC,size = 6)
+                             Pageable pageable) {
+        HttpSession session = req.getSession();
+        String userid = (String) session.getAttribute("userLogined");
+        model.addAttribute("userid", userid);
+
+        List<cafe> cafeList = cafeService.search(keyword, 2L);
+        log.info("지역리스트 = " + cafeList.toString());
+        List<CafeDTOList> cafeDTOLists = new ArrayList<>();
+
+        for (cafe cafe : cafeList) {
+            Optional<Hotelimg> hotelimg = hotelimgRepository.findByShopid(cafe.getShopid());
+            String path = "";
+            if (hotelimg.isPresent()) {
+                path = hotelimg.get().getPath();
+            } else {
+                path = "https://withpetimg.s3.ap-northeast-2.amazonaws.com/images/hoteldefault.jpg";
+            }
+            //좋아요
+            boolean shopLike = shopLikeService.islike(cafe.getShopid(), userid);
+            Long likeCount = shopLikeService.getLikeCount(cafe.getShopid());
+//            model.addAttribute("shopLike",shopLike);
+//            model.addAttribute("likeCount", likeCount);
+            //리뷰 평균
+            Double avgByShopid = shopreviewRepository.getAvgByShopid(cafe.getShopid());
+            if(avgByShopid==null){
+                avgByShopid=0D;
+            }
+
+            cafeDTOLists.add(new CafeDTOList(cafe, shopLike, path, likeCount, avgByShopid));
+        }
+
         model.addAttribute("cafeDTOLists", cafeDTOLists);
 
         //페이징
@@ -116,43 +176,6 @@ public class cafeController {
         model.addAttribute("totalPage", cafes.getTotalPages());
         model.addAttribute("startPage", startPage);
         model.addAttribute("endPage", endpage);
-
-        return "cafe_list";
-    }
-
-
-    @GetMapping("/cafe_list/search")  //지역검색
-    public String searchCafe(@RequestParam("keyword") String keyword, Model model, HttpServletRequest req) {
-        HttpSession session = req.getSession();
-        String userid = (String) session.getAttribute("userLogined");
-        model.addAttribute("userid", userid);
-
-        List<cafe> cafeList = cafeService.search(keyword, 2L);
-        log.info("지역리스트 = " + cafeList.toString());
-        List<CafeDTOList> cafeDTOLists = new ArrayList<>();
-
-        for (cafe cafe : cafeList) {
-            Optional<Hotelimg> hotelimg = hotelimgRepository.findByShopid(cafe.getShopid());
-            String path = "";
-            if (hotelimg.isPresent()) {
-                path = hotelimg.get().getPath();
-            } else {
-                path = "https://withpetimg.s3.ap-northeast-2.amazonaws.com/images/hoteldefault.jpg";
-            }
-            //좋아요
-            boolean shopLike = shopLikeService.islike(cafe.getShopid(), userid);
-            Long likeCount = shopLikeService.getLikeCount(cafe.getShopid());
-            //리뷰 평균
-            Double avgByShopid = shopreviewRepository.getAvgByShopid(cafe.getShopid());
-            if(avgByShopid==null){
-                avgByShopid=0D;
-            }
-
-            cafeDTOLists.add(new CafeDTOList(cafe, shopLike, path, likeCount, avgByShopid));
-        }
-
-        model.addAttribute("cafeDTOLists", cafeDTOLists);
-
 
         return "cafe_list";
     }
@@ -294,7 +317,6 @@ public class cafeController {
         List<CafeDTOList> cafeDTOLists = new ArrayList<>();
         for (cafe cafe : cafeList) {
 
-            boolean shopLike = shopLikeService.islike(cafe.getShopid(), userid);
             Optional<Hotelimg> hotelimg = hotelimgRepository.findByShopid(cafe.getShopid());
             String path = "";
             if (hotelimg.isPresent()) {
@@ -302,8 +324,12 @@ public class cafeController {
             } else {
                 path = "https://withpetimg.s3.ap-northeast-2.amazonaws.com/images/hoteldefault.jpg";
             }
+            //좋아요
+            boolean shopLike = shopLikeService.islike(cafe.getShopid(), userid);
             Long likeCount = shopLikeService.getLikeCount(cafe.getShopid());
             Double avgByShopid = shopreviewRepository.getAvgByShopid(cafe.getShopid());
+//            model.addAttribute("shopLike",shopLike);
+//            model.addAttribute("likeCount", likeCount);
             if(avgByShopid==null){
                 avgByShopid=0D;
             }
@@ -311,7 +337,7 @@ public class cafeController {
             cafeDTOLists.add(new CafeDTOList(cafe, shopLike, path, likeCount, avgByShopid));
         }
         model.addAttribute("cafeList", cafeDTOLists);
-        //페이징
+
         //페이징
         Page<cafe> cafes = cafeService.findCafes(pageable,3L);
         System.out.println(cafes.getTotalPages());
@@ -338,7 +364,9 @@ public class cafeController {
     }
 
     @GetMapping("/Restaurant-list/search")  //지역검색
-    public String searchRestaurant(@RequestParam("keyword") String keyword, Model model, HttpServletRequest req) {
+    public String searchRestaurant(@RequestParam("keyword") String keyword, Model model, HttpServletRequest req,
+                                   @PageableDefault(sort = "shopid", direction = Sort.Direction.DESC,size = 6)
+                                   Pageable pageable) {
         HttpSession session = req.getSession();
         String userid = (String) session.getAttribute("userLogined");
         model.addAttribute("userid", userid);
@@ -358,6 +386,9 @@ public class cafeController {
             //좋아요
             boolean shopLike = shopLikeService.islike(cafe.getShopid(), userid);
             Long likeCount = shopLikeService.getLikeCount(cafe.getShopid());
+//            model.addAttribute("shopLike",shopLike);
+//            model.addAttribute("likeCount", likeCount);
+
             //별점 평균
             Double avgByShopid = shopreviewRepository.getAvgByShopid(cafe.getShopid());
             if(avgByShopid==null){
@@ -368,6 +399,28 @@ public class cafeController {
 
         model.addAttribute("cafeList", cafeDTOLists);
         log.info("맛집 좋아요 = " + cafeDTOLists.toString());
+
+        //페이징
+        Page<cafe> cafes = cafeService.findCafes(pageable,3L);
+        System.out.println(cafes.getTotalPages());
+        int pageN = pageable.getPageNumber();
+        int startPage = ((int) Math.floor(pageN / 5)) * 5+1;
+        int totalPage = cafes.getTotalPages();
+        int endpage = 0;
+        if(totalPage < startPage + 4) {
+            endpage = totalPage;
+        } else {
+            endpage = startPage + 4;
+        }
+
+        model.addAttribute("posts", cafes);
+        model.addAttribute("previous", pageable.previousOrFirst().getPageNumber());
+        model.addAttribute("next", pageable.next().getPageNumber());
+        model.addAttribute("hasNext", cafes.hasNext());
+        model.addAttribute("hasPrev", cafes.hasPrevious());
+        model.addAttribute("totalPage", cafes.getTotalPages());
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endpage);
 
         return "Restaurant-list";
     }

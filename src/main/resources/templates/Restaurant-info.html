@@ -483,20 +483,20 @@
   // })
 </script>
 <script>
-  $(document)
-          //별점 미선택 후기 작성시
-          .on("click","#comment-create-btn",function (){
-            if($(':radio[name="score"]:checked').length<1) {
-              alert ('별점을 선택해주세요.');
-              return false;
-            }
-          })
+  $(document).ready(function () {
+    console.log(document)
+  }).on("click", "#comment-create-btn", function () { //별점 미선택 후기 작성시
+    if ($(':radio[name="score"]:checked').length < 1) {
+      alert("별점을 선택해주세요.");
+      return false;
+    }
+  })
           //좋아요
           .on('click', '#btnLike', function () {
             shopid = $(this).attr('name')
             $.ajax({
               type: 'get',
-              url: 'append_shoplike?shopId=' + shopid,
+              url: '/append_shoplike?shopId=' + shopid,
               success: function (data) {
                 ID = '#btnLike' + shopid
                 if (data == '1') {

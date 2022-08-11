@@ -106,7 +106,7 @@ public class LoginController {
 
     @PostMapping("checkuser")
     @ResponseBody
-    public boolean checkuser(HttpServletRequest req, Model model) {
+    public boolean checkuser(HttpServletRequest req) {
         HttpSession session = req.getSession();
         if (session.getAttribute("userid") != null) {
             return true;
