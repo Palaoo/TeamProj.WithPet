@@ -68,7 +68,8 @@ public class BoardController {
                         "https://withpetimg.s3.ap-northeast-2.amazonaws.com/images/");
                 boardForm.setPath(path);
             } else {
-                String path = "https://withpetimg.s3.ap-northeast-2.amazonaws.com/images/15fe7978-b10a-45c8-9364-44a9e035304692ed0fc7-1005-4a30-a088-05ed3dfffb2f.jfif";
+                String path = "https://withpetimg.s3.ap-northeast-2.amazonaws.com/images/" +
+                        "15fe7978-b10a-45c8-9364-44a9e035304692ed0fc7-1005-4a30-a088-05ed3dfffb2f.jfif";
                 boardForm.setPath(path);
             }
             postList.add(boardForm);
