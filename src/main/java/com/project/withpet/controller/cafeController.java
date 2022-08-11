@@ -130,6 +130,7 @@ public class cafeController {
         List<cafe> cafeList = cafeService.search(keyword, 2L);
         log.info("지역리스트 = " + cafeList.toString());
         List<CafeDTOList> cafeDTOLists = new ArrayList<>();
+
         for (cafe cafe : cafeList) {
             Optional<Hotelimg> hotelimg = hotelimgRepository.findByShopid(cafe.getShopid());
             String path = "";
@@ -138,9 +139,15 @@ public class cafeController {
             } else {
                 path = "https://withpetimg.s3.ap-northeast-2.amazonaws.com/images/hoteldefault.jpg";
             }
+            //좋아요
             boolean shopLike = shopLikeService.islike(cafe.getShopid(), userid);
             Long likeCount = shopLikeService.getLikeCount(cafe.getShopid());
+
+            //리뷰 평균
             Double avgByShopid = shopreviewRepository.getAvgByShopid(cafe.getShopid());
+            if(avgByShopid==null){
+                avgByShopid=0D;
+            }
             cafeDTOLists.add(new CafeDTOList(cafe, shopLike, path, likeCount, avgByShopid));
         }
 
@@ -185,7 +192,7 @@ public class cafeController {
         boolean shopLike = shopLikeService.islike(shopid, userid);
         model.addAttribute("shopLike", shopLike);
         Long likeCount = shopLikeService.getLikeCount(shopid);
-        model.addAttribute("likecount", likeCount);
+        model.addAttribute("likeCount", likeCount);
 
         Optional<Hotelimg> hotelimg = hotelimgRepository.findByShopid(shopid);
         String path = hotelimg.get().getPath();
@@ -348,9 +355,14 @@ public class cafeController {
             } else {
                 path = "https://withpetimg.s3.ap-northeast-2.amazonaws.com/images/hoteldefault.jpg";
             }
+            //좋아요
             boolean shopLike = shopLikeService.islike(cafe.getShopid(), userid);
             Long likeCount = shopLikeService.getLikeCount(cafe.getShopid());
-            double avgByShopid = shopreviewRepository.getAvgByShopid(cafe.getShopid());
+            //별점 평균
+            Double avgByShopid = shopreviewRepository.getAvgByShopid(cafe.getShopid());
+            if(avgByShopid==null){
+                avgByShopid=0D;
+            }
             cafeDTOLists.add(new CafeDTOList(cafe, shopLike, path, likeCount, avgByShopid));
         }
 
@@ -407,7 +419,7 @@ public class cafeController {
         boolean shopLike = shopLikeService.islike(shopid, userid);
         model.addAttribute("shopLike", shopLike);
         Long likeCount = shopLikeService.getLikeCount(shopid);
-        model.addAttribute("likecount", likeCount);
+        model.addAttribute("likeCount", likeCount);
 
         Optional<Hotelimg> hotelimg = hotelimgRepository.findByShopid(shopid);
         String path = hotelimg.get().getPath();

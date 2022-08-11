@@ -266,7 +266,7 @@
                         console.log(data)
                         var str = '<tr><td class="col-lg-2 col-md-2">' + data.writer + '</td><td class="col-lg-7 col-md-7" align="left">' + data.content
                             + '</td><td class="col-lg-3 col-md-3">' + data.date + '</td>' +
-                            '<td><input type="button" value="삭제" class="deleteReply" id="' + data.rid + '"></td></tr>'
+                            '<td><input type="button" value="삭제" class="btn btn-outline-danger btn-sm" id="' + data.rid + '"></td></tr>'
                         $('#rtable').append(str)
                         $('textarea#content').val('')
                     }
