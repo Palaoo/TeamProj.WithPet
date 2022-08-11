@@ -153,13 +153,13 @@
     $('.pagination').on('click', 'li', function() {
         $('.pagination li').removeClass('active');
         $(this).addClass('active');
-    });
+    })
 
         .on('click', '#btnLike', function () {
             shopid = $(this).attr('name')
             $.ajax({
                 type: 'get',
-                url: 'append_shoplike?shopId=' + shopid,
+                url: '/append_shoplike?shopId=' + shopid,
                 success: function (data) {
                     ID = '#btnLike' + shopid
                     if (data == '1') {
