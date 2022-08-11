@@ -34,8 +34,20 @@
         border: 1px solid;
         color: #000;
     }
-
+    .deleteReply{
+        padding: 0;
+        width:60px;
+        height: 40px;
+        background-color: #000;
+        color: white;
+    }
+    .deleteReply:hover{
+        background: white;
+        border: 1px solid;
+        color: #000;
+    }
     #writer {
+        text-align:right;
         vertical-align: text-top;
     }
 
@@ -186,7 +198,7 @@
                                             <td class="col-lg-2 col-md-2">
                                                 <h6 th:text="${userid}" id="writer"></h6>
                                             </td>
-                                            <td class="col-lg-8 col-md-8">
+                                            <td class="col-lg-5 col-md-8">
                                                         <textarea name="content" id="content"
                                                                   placeholder="댓글 달기"></textarea>
                                                 <input type="hidden" name="boardcode" th:value="${boardcode}"
@@ -226,11 +238,11 @@
                 data: {boardcode: $('#boardcode').val()},
                 success: function (data) {
                     $(data).each(function () {
-                        var str = '<tr><td class="col-lg-2 col-md-2">' + this.writer + '</td><td class="col-lg-7 col-md-7" align="left">' + this.content
+                        var str = '<tr><td class="col-lg-2 col-md-2">' + this.writer + '</td><td class="col-lg-5 col-md-5" align="left">' + this.content
                             + '</td><td class="col-lg-3 col-md-3">' + this.date + '</td>'
                         if (this.writer == $('#writer').text()) {
-                            str = str + '<td>' +
-                                '<input type="button" class="btn btn-outline-danger btn-sm" value="삭제" class="deleteReply" id="' + this.rid + '">' +
+                            str = str + '<td class="col-lg-2 col-md-2">' +
+                                '<input type="button" value="삭제" class="deleteReply" id="' + this.rid + '">' +
                                 '</td>'
                         }
                         str = str + '</tr>'
@@ -264,9 +276,9 @@
                     },
                     success: function (data) {
                         console.log(data)
-                        var str = '<tr><td class="col-lg-2 col-md-2">' + data.writer + '</td><td class="col-lg-7 col-md-7" align="left">' + data.content
+                        var str = '<tr><td class="col-lg-2 col-md-2">' + data.writer + '</td><td class="col-lg-5 col-md-5" align="left">' + data.content
                             + '</td><td class="col-lg-3 col-md-3">' + data.date + '</td>' +
-                            '<td><input type="button" value="삭제" class="btn btn-outline-danger btn-sm" id="' + data.rid + '"></td></tr>'
+                            '<td class="col-lg-2 col-md-2"><input type="button" value="삭제" class="deleteReply" id="' + data.rid + '"></td></tr>'
                         $('#rtable').append(str)
                         $('textarea#content').val('')
                     }
