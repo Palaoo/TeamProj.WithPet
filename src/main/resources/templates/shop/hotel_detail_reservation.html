@@ -113,7 +113,9 @@
 <th:block th:replace="fragments/index :: footer"></th:block>
 </body>
 <script>
-    $(document).on('click', '#btnPay', function () {
+    $(document)
+
+        .on('click', '#btnPay', function () {
         if ($('#name').val() != "" && $('#detail').val() != "") {
             if ($('#check1').is(":checked") && $('#check2').is(":checked") && $('#check3').is(":checked")) {
                 tossPayments()
@@ -124,9 +126,9 @@
         } else {
             alert('내용을 입력해주세요')
             return false;
-
         }
     })
+
     function tossPayments() {
         var clientKey = 'test_ck_D5GePWvyJnrK0W0k6q8gLzN97Eoq'
         var tossPayments = TossPayments(clientKey)

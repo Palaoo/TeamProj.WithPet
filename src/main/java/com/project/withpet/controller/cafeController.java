@@ -140,7 +140,7 @@ public class cafeController {
             }
             boolean shopLike = shopLikeService.islike(cafe.getShopid(), userid);
             Long likeCount = shopLikeService.getLikeCount(cafe.getShopid());
-            double avgByShopid = shopreviewRepository.getAvgByShopid(cafe.getShopid());
+            Double avgByShopid = shopreviewRepository.getAvgByShopid(cafe.getShopid());
             cafeDTOLists.add(new CafeDTOList(cafe, shopLike, path, likeCount, avgByShopid));
         }
 
