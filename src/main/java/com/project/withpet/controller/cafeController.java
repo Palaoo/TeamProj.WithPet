@@ -69,8 +69,9 @@ public class cafeController {
 
         List<cafe> cafeList = cafeService.findByshoptype(2L);
         List<CafeDTOList> cafeDTOLists = new ArrayList<>();
-        for (cafe cafe : cafeList) {
-
+        Page<cafe> cafes = cafeService.findCafes(pageable,2L);
+        for (int i = 0; i < cafes.getNumberOfElements();i++) {
+            cafe cafe = cafes.toList().get(i);
             Optional<Hotelimg> hotelimg = hotelimgRepository.findByShopid(cafe.getShopid());
             String path = "";
             if (hotelimg.isPresent()) {
@@ -88,15 +89,12 @@ public class cafeController {
             //좋아요
             boolean shopLike = shopLikeService.islike(cafe.getShopid(), userid);
             Long likeCount = shopLikeService.getLikeCount(cafe.getShopid());
-//            model.addAttribute("shopLike",shopLike);
-//            model.addAttribute("likeCount", likeCount);
+
             cafeDTOLists.add(new com.project.withpet.dto.CafeDTOList(cafe, shopLike, path, likeCount, avgByShopid));
         }
         model.addAttribute("cafeDTOLists", cafeDTOLists);
 
         //페이징
-        Page<cafe> cafes = cafeService.findCafes(pageable,2L);
-        System.out.println(cafes.getTotalPages());
         int pageN = pageable.getPageNumber();
         int startPage = ((int) Math.floor(pageN / 5)) * 5+1;
         int totalPage = cafes.getTotalPages();
@@ -130,6 +128,7 @@ public class cafeController {
         List<cafe> cafeList = cafeService.search(keyword, 2L);
         log.info("지역리스트 = " + cafeList.toString());
         List<CafeDTOList> cafeDTOLists = new ArrayList<>();
+        Page<cafe> cafes = cafeService.findCafes(pageable,2L);
 
         for (cafe cafe : cafeList) {
             Optional<Hotelimg> hotelimg = hotelimgRepository.findByShopid(cafe.getShopid());
@@ -156,7 +155,6 @@ public class cafeController {
         model.addAttribute("cafeDTOLists", cafeDTOLists);
 
         //페이징
-        Page<cafe> cafes = cafeService.findCafes(pageable,2L);
         System.out.println(cafes.getTotalPages());
         int pageN = pageable.getPageNumber();
         int startPage = ((int) Math.floor(pageN / 5)) * 5+1;
@@ -316,8 +314,9 @@ public class cafeController {
 
         List<cafe> cafeList = cafeService.findByshoptype(3L);
         List<CafeDTOList> cafeDTOLists = new ArrayList<>();
-        for (cafe cafe : cafeList) {
-
+        Page<cafe> cafes = cafeService.findCafes(pageable,3L);
+        for (int i = 0; i < cafes.getNumberOfElements();i++) {
+            cafe cafe = cafes.toList().get(i);
             Optional<Hotelimg> hotelimg = hotelimgRepository.findByShopid(cafe.getShopid());
             String path = "";
             if (hotelimg.isPresent()) {
@@ -325,23 +324,24 @@ public class cafeController {
             } else {
                 path = "https://withpetimg.s3.ap-northeast-2.amazonaws.com/images/hoteldefault.jpg";
             }
+
+
             //좋아요
             boolean shopLike = shopLikeService.islike(cafe.getShopid(), userid);
             Long likeCount = shopLikeService.getLikeCount(cafe.getShopid());
+
+            //리뷰 점수 평균
             Double avgByShopid = shopreviewRepository.getAvgByShopid(cafe.getShopid());
-//            model.addAttribute("shopLike",shopLike);
-//            model.addAttribute("likeCount", likeCount);
             if(avgByShopid==null){
                 avgByShopid=0D;
             }
 
             cafeDTOLists.add(new CafeDTOList(cafe, shopLike, path, likeCount, avgByShopid));
         }
+
         model.addAttribute("cafeList", cafeDTOLists);
 
         //페이징
-        Page<cafe> cafes = cafeService.findCafes(pageable,3L);
-        System.out.println(cafes.getTotalPages());
         int pageN = pageable.getPageNumber();
         int startPage = ((int) Math.floor(pageN / 5)) * 5+1;
         int totalPage = cafes.getTotalPages();
