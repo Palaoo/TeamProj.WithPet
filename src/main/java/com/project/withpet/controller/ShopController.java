@@ -610,7 +610,9 @@ public class ShopController {
 
             addHotelForm(availShop, hotelList, hotelForms, i, likeCount, liked);
         }
-        model.addAttribute("hotelList", hotelForms);
+
+        hotelForms.sort((a, b) -> (int) (b.getScoreAvg() - a.getScoreAvg()));
+
         model.addAttribute("hotelList", hotelForms);
         model.addAttribute("person", 2);
 

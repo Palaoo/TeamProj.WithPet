@@ -100,9 +100,6 @@
           <h2 th:text="${cafe.getName()}"></h2>
           <!--<h6 th:text="${cafe.getIntro()}"></h6>-->
           <ul>
-            <li><span th:text="${#lists.size(shopreview)}"></span> Reviews</li>
-            <li th:if="${#lists.size(shopreview)!=0}"><p th:text="|⭐ ${scoreAvg} / 5 |"></p></li>
-            <li th:unless="${#lists.size(shopreview)!=0}"><p>⭐ 0 / 5</p></li>
             <li>
               <a href="javascript:return false;" id="btnLike" th:name="${cafe.getShopid()}">
                 <img th:if="${islike}" src="/image/redheart.png"
@@ -113,6 +110,11 @@
               <span th:text="${likeCount}" th:id="|likeCount${cafe.getShopid()}|"
                     name="likeCount" id="cnt"></span>
             </li>
+            <li>
+              <span th:text="${#lists.size(shopreview)}"></span> Reviews
+            </li>
+            <li th:if="${#lists.size(shopreview)!=0}"><p th:text="|⭐ ${scoreAvg} / 5 |"></p></li>
+            <li th:unless="${#lists.size(shopreview)!=0}"><p>⭐ 0 / 5</p></li>
             <li>
               <th:block th:each="feat: ${cafe.getShopFeats()}">
                 <span th:text="${feat.getFeatname()}+' '"></span>

@@ -17,12 +17,16 @@ public interface cafeRepository extends JpaRepository<cafe, Long> {
     @Override
     List<cafe> findAll();
 
-    Page<cafe> findAll(Pageable pageable);
+
+//    Page<cafe> findAll(Pageable pageable);
 
     @Query("select c from cafe c where c.shoptype= (select st.typeid from Shoptype st where st.typeid= :typeId)")
     Page<cafe> findCafe(Pageable pageable,@Param(value = "typeId") Long typeId);
 
+
+
     List<cafe> findAllByShoptypeTypeid(Long typeid);
 
     List<cafe> findByAddressContainingAndShoptypeTypeid(String keyword, Long typeid);
+
 }
