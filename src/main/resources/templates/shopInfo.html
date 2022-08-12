@@ -102,12 +102,12 @@
                     </div>
 
                     <div class="tab-pane active" id="shops" role="tabpanel" aria-labelledby="shops-tab">
-                        <div class="row">
+                        <div class="row" style="max-width: 750px;">
                             <div class="col-12" id="top">
                                 <div class="col-6" style="float:left">
                                     <input type="text" id="business_id" th:value="|사업자 번호 : ${businessId}|">
                                 </div>
-                                <div class="col-6" style="float:right" align="center">
+                                <div class="col-6" style="float:right" align="right">
                                     <form action="newShop" method="get">
                                         <button class="primary-btn" type="submit">상점등록하기</button>
                                     </form>

@@ -178,6 +178,7 @@ public class ProdController {
 
 
         }
+
         int pageN = pageable.getPageNumber();
         int startPage = ((int) Math.floor(pageN / 5)) * 5 + 1;
         int totalPages = prods.getTotalPages();
@@ -187,7 +188,6 @@ public class ProdController {
         } else {
             endPage = startPage + 4;
         }
-
 
         model.addAttribute("startPage", startPage);
         model.addAttribute("endPage", endPage);

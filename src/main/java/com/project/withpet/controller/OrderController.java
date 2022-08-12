@@ -55,15 +55,15 @@ public class OrderController {
                 .uri(URI.create("https://api.tosspayments.com/v1/payments/confirm"))
                 .header("Authorization", "Basic dGVzdF9za196WExrS0V5cE5BcldtbzUwblgzbG1lYXhZRzVSOg==")
                 .header("Content-Type", "application/json")
-                .method("POST", HttpRequest.BodyPublishers.ofString("{\"paymentKey\":\"" + paymentKey + "\",\"amount\":" + amount + ",\"orderId\":\"" + orderId + "\"}"))
+                .method("POST", HttpRequest.BodyPublishers.ofString("{\"paymentKey\":\"" + paymentKey +
+                        "\",\"amount\":" + amount + ",\"orderId\":\"" + orderId + "\"}"))
                 .build();
         HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
         System.out.println(response.body());
 
-        Long orderid = orderService.save(new Ordertable(req.getSession().getAttribute("userid").toString(), tools.getLDTnow())).getOrderid();
+        Long orderid = orderService.save(new Ordertable(req.getSession().getAttribute("userid").toString(),
+                tools.getLDTnow())).getOrderid();
         orderprodService.save(new Orderprod(orderid, priceid, count));
-
-
 
         return "redirect:/myshopping";
     }
@@ -74,7 +74,7 @@ public class OrderController {
                                    HttpServletRequest req, Model model, @RequestParam(required = false) Integer paging) {
 
         HttpSession session = req.getSession();
-        if(session.getAttribute("userid")!=null){
+        if (session.getAttribute("userid") != null) {
             model.addAttribute("userid", session.getAttribute("userid"));
         }
         System.out.printf("From OrderController myShopping(), startDate: %s, endDate: %s\n", startDate, endDate);
