@@ -547,10 +547,11 @@ public class ShopController {
     @GetMapping("/hotel/search")  //지역검색
     public String searchHotel(@RequestParam("keyword") String keyword, Model model, HttpServletRequest req) {
         HttpSession session = req.getSession();
-        if (session.getAttribute("userid") == null) {
-            return "login";
+        if (session.getAttribute("userid") != null) {
+            model.addAttribute("userid", session.getAttribute("userid"));
         }
-        String userId = req.getSession().getAttribute("userid").toString();
+
+        String userId = (String) req.getSession().getAttribute("userLogined");
         model.addAttribute("userid", userId);
 
         LocalDate now = LocalDate.now();

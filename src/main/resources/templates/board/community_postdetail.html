@@ -23,7 +23,7 @@
 
     #addReply {
         padding: 0;
-        width:60px;
+        width: 60px;
         height: 40px;
         background-color: #000;
         color: white;
@@ -34,26 +34,29 @@
         border: 1px solid;
         color: #000;
     }
-    .deleteReply{
+
+    .deleteReply {
         padding: 0;
-        width:60px;
+        width: 60px;
         height: 40px;
         background-color: #000;
         color: white;
     }
-    .deleteReply:hover{
+
+    .deleteReply:hover {
         background: white;
         border: 1px solid;
         color: #000;
     }
+
     #writer {
-        text-align:right;
+        text-align: right;
         vertical-align: text-top;
     }
 
-    #content,textarea {
+    #content, textarea {
         color: #000;
-        resize:none;
+        resize: none;
     }
 
     #modify, #delete {
@@ -191,6 +194,8 @@
                     <div class="blog__details__comment">
                         <div class="row">
                             <div class="col-lg-12">
+                                <input type="hidden" name="boardcode" th:value="${boardcode}"
+                                       id="boardcode">
 
                                 <div th:if="${not #strings.isEmpty(userid)}">
                                     <table id="rtable2">
@@ -201,15 +206,12 @@
                                             <td class="col-lg-5 col-md-8">
                                                         <textarea name="content" id="content"
                                                                   placeholder="댓글 달기"></textarea>
-                                                <input type="hidden" name="boardcode" th:value="${boardcode}"
-                                                       id="boardcode">
                                             </td>
                                             <td class="col-lg-2 col-md-2">
                                                 <input type="button" id="addReply" value="작성">
                                             </td>
                                         </tr>
                                     </table>
-                                    <!--                                        </form>-->
                                 </div>
                                 <div th:if="${#strings.isEmpty(userid)}">
                                     <textarea placeholder="댓글을 작성하시려면 로그인해주세요." style="width:100%" readonly></textarea>
