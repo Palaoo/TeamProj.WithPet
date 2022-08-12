@@ -88,11 +88,11 @@
                         <div class="col-sm-2" id="heart_img">
                             <a href="javascript:return false;" id="btnLike" th:name="${cafeList.cafe.getShopid()}">
                                 <img th:if="${cafeList.islike}" src="/image/redheart.png"
-                                     th:id="|btnLike${cafeList.cafe.shopid}|" width="25" height="25" alt="">
+                                     th:id="|btnLike${cafeList.cafe.getShopid()}|" width="25" height="25" alt="">
                                 <img th:if="${!cafeList.islike}" src="/image/heart.png"
-                                     th:id="|btnLike${cafeList.cafe.shopid}|" width="25" height="25" alt="">
+                                     th:id="|btnLike${cafeList.cafe.getShopid()}|" width="25" height="25" alt="">
 
-                                <p th:text="${cafeList.likeCount}" th:id="|likeCount${cafeList.cafe.shopid}|"
+                                <p th:text="${cafeList.likeCount}" th:id="|likeCount${cafeList.cafe.getShopid()}|"
                                    name="likeCount" id="cnt"></p>
                             </a>
                         </div>

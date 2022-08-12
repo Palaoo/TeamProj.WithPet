@@ -88,7 +88,9 @@ public class cafeController {
 
             //좋아요
             boolean shopLike = shopLikeService.islike(cafe.getShopid(), userid);
+            model.addAttribute("shopLike", shopLike);
             Long likeCount = shopLikeService.getLikeCount(cafe.getShopid());
+            model.addAttribute("likeCount", likeCount);
 
             cafeDTOLists.add(new com.project.withpet.dto.CafeDTOList(cafe, shopLike, path, likeCount, avgByShopid));
         }
@@ -128,7 +130,7 @@ public class cafeController {
         List<cafe> cafeList = cafeService.search(keyword, 2L);
         log.info("지역리스트 = " + cafeList.toString());
         List<CafeDTOList> cafeDTOLists = new ArrayList<>();
-        Page<cafe> cafes = cafeService.findCafes(pageable,2L);
+        Page<cafe> cafes = cafeService.findCafes(pageable,3L);
 
         for (cafe cafe : cafeList) {
             Optional<Hotelimg> hotelimg = hotelimgRepository.findByShopid(cafe.getShopid());
@@ -140,9 +142,10 @@ public class cafeController {
             }
             //좋아요
             boolean shopLike = shopLikeService.islike(cafe.getShopid(), userid);
+            model.addAttribute("shopLike", shopLike);
             Long likeCount = shopLikeService.getLikeCount(cafe.getShopid());
-//            model.addAttribute("shopLike",shopLike);
-//            model.addAttribute("likeCount", likeCount);
+            model.addAttribute("likeCount", likeCount);
+
             //리뷰 평균
             Double avgByShopid = shopreviewRepository.getAvgByShopid(cafe.getShopid());
             if(avgByShopid==null){
@@ -166,7 +169,7 @@ public class cafeController {
             endpage = startPage + 4;
         }
 
-        model.addAttribute("posts", cafes);
+        model.addAttribute("cafes", cafeService.findCafes(pageable,2L));
         model.addAttribute("previous", pageable.previousOrFirst().getPageNumber());
         model.addAttribute("next", pageable.next().getPageNumber());
         model.addAttribute("hasNext", cafes.hasNext());
@@ -328,7 +331,9 @@ public class cafeController {
 
             //좋아요
             boolean shopLike = shopLikeService.islike(cafe.getShopid(), userid);
+            model.addAttribute("shopLike", shopLike);
             Long likeCount = shopLikeService.getLikeCount(cafe.getShopid());
+            model.addAttribute("likeCount", likeCount);
 
             //리뷰 점수 평균
             Double avgByShopid = shopreviewRepository.getAvgByShopid(cafe.getShopid());
@@ -386,9 +391,9 @@ public class cafeController {
             }
             //좋아요
             boolean shopLike = shopLikeService.islike(cafe.getShopid(), userid);
+            model.addAttribute("shopLike", shopLike);
             Long likeCount = shopLikeService.getLikeCount(cafe.getShopid());
-//            model.addAttribute("shopLike",shopLike);
-//            model.addAttribute("likeCount", likeCount);
+            model.addAttribute("likeCount", likeCount);
 
             //별점 평균
             Double avgByShopid = shopreviewRepository.getAvgByShopid(cafe.getShopid());
@@ -414,7 +419,7 @@ public class cafeController {
             endpage = startPage + 4;
         }
 
-        model.addAttribute("posts", cafes);
+        model.addAttribute("cafes", cafeService.findCafes(pageable,2L));
         model.addAttribute("previous", pageable.previousOrFirst().getPageNumber());
         model.addAttribute("next", pageable.next().getPageNumber());
         model.addAttribute("hasNext", cafes.hasNext());
