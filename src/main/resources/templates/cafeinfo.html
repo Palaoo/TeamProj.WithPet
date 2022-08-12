@@ -122,9 +122,9 @@
                     <ul>
                         <li>
                             <a href="javascript:return false;" id="btnLike" th:name="${cafe.getShopid()}">
-                                <img th:if="${islike}" src="/image/redheart.png"
+                                <img th:if="${shopLike}" src="/image/redheart.png"
                                      th:id="|btnLike${cafe.getShopid()}|" width="25" height="25" alt="">
-                                <img th:unless="${islike}" src="/image/heart.png"
+                                <img th:unless="${shopLike}" src="/image/heart.png"
                                      th:id="|btnLike${cafe.getShopid()}|" width="25" height="25" alt="">
                             </a>
                             <span th:text="${likeCount}" th:id="|likeCount${cafe.getShopid()}|"
