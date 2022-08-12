@@ -71,25 +71,23 @@
                     <div class="tab-pane active" id="reservation" role="tabpanel" aria-labelledby="reservation-tab">
                         <h5 id="top"><br><br>내 예약 내역</h5>
                         <div class="card mb-2" style="max-width: 700px;" th:each="book, i:${bookList}">
-                            <div class="row g-0">
-                                <div class="col-md-4">
-                                    <img th:src="${book.path}" class="img-fluid rounded-start"
-                                         style="object-fit: cover; width: 100%; height: 15vw">
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="card-body">
-                                        <h5 class="card-text"
-                                            th:text="|${book.getHotelname()} / ${book.getRoomname}|"></h5>
-                                        <p class="card-text"
-                                           th:text="|${book.getCheckin()} ~ ${book.getCheckout()} (${book.getName()})|"></p>
-                                        <p class="card-text" th:text="${book.getMobile()}"></p>
-                                        <p class="card-text" th:text="${book.getDetail()}"></p>
-                                    </div>
-                                </div>
-                                <div class="col-md-2" style="margin: auto" align="center">
-                                    <a th:href="@{/mypage/booking/change(bookid=${book.getBookid()})}">
-                                        <button class="btn btn-outline-primary btn-sm">예약변경</button>
-                                    </a>
+                        <div class="row g-0">
+                            <div class="col-md-4">
+                                <img th:src="${book.path}" class="img-fluid rounded-start"
+                                     style="object-fit: cover; width: 100%; height: 15vw; cursor: pointer"
+                                     th:onclick="|location.href='/hotel/detail?shopid=${book.shopid}'|">
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card-body">
+                                    <h5 class="card-text"
+                                        th:text="|${book.getHotelname()} / ${book.getRoomname}|"
+                                        style="cursor: pointer"
+                                        th:onclick="|location.href='/hotel/detail?shopid=${book.shopid}'|"></h5>
+                                    <p class="card-text"
+                                       th:text="|${book.getCheckin()} ~ ${book.getCheckout()} (${book.getName()})|"
+                                    ></p>
+                                    <p class="card-text" th:text="${book.getMobile()}"></p>
+                                    <p class="card-text" th:text="${book.getDetail()}"></p>
                                 </div>
                             </div>
                         </div>

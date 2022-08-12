@@ -121,7 +121,8 @@
                                 <div class="row g-0">
                                     <div class="col-md-4">
                                         <img th:src="${shopReviewDTO.path}" class="img-fluid rounded-start"
-                                             style="object-fit: cover; width: 100%; height: 15vw">
+                                             style="object-fit: cover; width: 100%; height: 15vw; cursor: pointer"
+                                             th:onclick="|location.href='/cafeinfo?shopid=${shopReviewDTO.cafe.shopid}'|">
                                     </div>
 
                                     <div class="col-md-6">
@@ -129,7 +130,9 @@
                                             <div class="row">
                                                 <div class="col-sm-8">
                                                     <h5 class="card-title"
-                                                        th:text="${shopReviewDTO.cafe.name}"></h5>
+                                                        th:text="${shopReviewDTO.cafe.name}"
+                                                        style="cursor: pointer"
+                                                        th:onclick="|location.href='/cafeinfo?shopid=${shopReviewDTO.cafe.shopid}'|"></h5>
                                                 </div>
                                                 <div class="col-sm-4">
                                                     <div class="card-score">
@@ -194,19 +197,24 @@
                                                             <div class="updatescore">
                                                                 <fieldset>
                                                                     <span class="text-bold">별점을 선택하세요</span>
-                                                                    <input type="radio" name="score" value="5" th:id="|5_${i.index}|"
+                                                                    <input type="radio" name="score" value="5"
+                                                                           th:id="|5_${i.index}|"
                                                                            th:checked="${shopReviewDTO.shopreview.getScore()==5}"><label
                                                                         th:for="|5_${i.index}|">★</label>
-                                                                    <input type="radio" name="score" value="4" th:id="|4_${i.index}|"
+                                                                    <input type="radio" name="score" value="4"
+                                                                           th:id="|4_${i.index}|"
                                                                            th:checked="${shopReviewDTO.shopreview.getScore()==4}"><label
                                                                         th:for="|4_${i.index}|">★</label>
-                                                                    <input type="radio" name="score" value="3" th:id="|3_${i.index}|"
+                                                                    <input type="radio" name="score" value="3"
+                                                                           th:id="|3_${i.index}|"
                                                                            th:checked="${shopReviewDTO.shopreview.getScore()==3}"><label
                                                                         th:for="|3_${i.index}|">★</label>
-                                                                    <input type="radio" name="score" value="2" th:id="|2_${i.index}|"
+                                                                    <input type="radio" name="score" value="2"
+                                                                           th:id="|2_${i.index}|"
                                                                            th:checked="${shopReviewDTO.shopreview.getScore()==2}"><label
                                                                         th:for="|2_${i.index}|">★</label>
-                                                                    <input type="radio" name="score" value="1" th:id="|1_${i.index}|"
+                                                                    <input type="radio" name="score" value="1"
+                                                                           th:id="|1_${i.index}|"
                                                                            th:checked="${shopReviewDTO.shopreview.getScore()==1}"><label
                                                                         th:for="|1_${i.index}|">★</label>
                                                                 </fieldset>
