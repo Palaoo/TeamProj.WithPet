@@ -11,12 +11,14 @@
 </head>
 
 <style>
-    form{
-        display:inline;
+    form {
+        display: inline;
     }
-    .nav-link:hover,.nav-link:focus{
+
+    .nav-link:hover, .nav-link:focus {
         color: #000 !important;
     }
+
     .div1 {
         width: 95%;
         height: 600px;
@@ -40,25 +42,29 @@
         -webkit-text-fill-color: gold;
     }
 
-    #quantity{
-        width:100%;
-        border:0;
-        outline:0;
-        text-align:right;
+    #quantity {
+        width: 100%;
+        border: 0;
+        outline: 0;
+        text-align: right;
         /*height: 100%;*/
         padding-top: 10px;
     }
-    #totalPrice{
+
+    #totalPrice {
         padding-top: 10px;
     }
-    .breadcrumb-option{
+
+    .breadcrumb-option {
         margin-bottom: 10%;
     }
-    #totalPrice{
+
+    #totalPrice {
         margin-top: 10px;
         margin-bottom: 10px;
     }
-    #total_dv{
+
+    #total_dv {
         padding-top: 30px;
         padding-bottom: 30px;
     }
@@ -121,11 +127,11 @@
 
                         <p th:text="${product.name}">상품명</p>
                         <div class="rating">
-                           <!-- <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star-o"></i>-->
+                            <!-- <i class="fa fa-star"></i>
+                             <i class="fa fa-star"></i>
+                             <i class="fa fa-star"></i>
+                             <i class="fa fa-star"></i>
+                             <i class="fa fa-star-o"></i>-->
                             <span th:text="|${pReviewList.size()}Reviews|"> - 5 Reviews</span>
                         </div>
                         <h3 th:text="${product.price}" id="price"></h3> <!--<span>70.00</span>-->
@@ -137,44 +143,6 @@
 
                             <div class="quantity" align="center">
                                 <div class="pro-qty-2">
-                                    <!--                                    <table>-->
-                                    <!--                                        <tr>-->
-                                    <!--                                            <td>-->
-                                    <!--                                                <input id="quantity" name="quantity_name" style="" value="1" type="text"/>-->
-                                    <!--                                            </td>-->
-                                    <!--                                            <td>-->
-                                    <!--                                                <button-->
-                                    <!--                                                        id="btnQuantityUp"><img-->
-                                    <!--                                                        src="//img.echosting.cafe24.com/skin/base_ko_KR/product/btn_count_up.gif"-->
-                                    <!--                                                        alt="수량증가"-->
-                                    <!--                                                        class="QuantityUp up"/></button>-->
-                                    <!--                                            </td>-->
-                                    <!--                                            <td>-->
-
-                                    <!--                                            </td>-->
-                                    <!--                                        </tr>-->
-                                    <!--                                    </table>-->
-
-                                    <!--    <div align="center" style="float:left; margin-right:10px; border:none;">
-                                            <input id="quantity" name="quantity_name" style="" value="1" type="text"/>
-                                        </div>
-                                        <div align="center" style="float:left;">
-                                            <div>
-                                                <button
-                                                        id="btnQuantityUp"><img
-                                                        src="//img.echosting.cafe24.com/skin/base_ko_KR/product/btn_count_up.gif"
-                                                        width="22" height="13"
-                                                        alt="수량증가"
-                                                        class="QuantityUp up"/></button>
-                                            </div>
-                                            <div>
-                                                <button id="btnQuantityDown"><img
-                                                        src="//img.echosting.cafe24.com/skin/base_ko_KR/product/btn_count_down.gif"
-                                                        width="22" height="13"
-                                                        alt="수량감소" class="fa fa-angle-left dec qtybtn"/></button>
-                                            </div>
-
-                                        </div>-->
                                     <div class="row">
                                         <div align="right" class="col-6">
                                             <input id="quantity" name="quantity_name" style="" value="1" type="text"/>
@@ -205,15 +173,11 @@
 
                             </div>
                             <div>
-                                <a href="#" class="primary-btn" id="payment">TossPay 결제</a>
-                                <a href="#" class="primary-btn" id="bascket">장바구니</a>
+                                <a href="" class="primary-btn" id="payment">TossPay 결제</a>
+                                <a href="" class="primary-btn" id="bascket">장바구니</a>
                             </div>
                         </div>
 
-                        <!--<div class="product__details__btns__option">
-                            <a href="#"><i class="fa fa-heart"></i> add to wishlist</a>
-                            <a href="#"><i class="fa fa-exchange"></i> Add To Compare</a>
-                        </div>-->
                     </div>
                 </div>
             </div>
@@ -240,19 +204,6 @@
                                     <p name="" id="" cols="30" rows="10" th:utext="${product.detail}"></p>
                                 </div>
                             </div>
-
-
-<!--                            <ul class="nav nav-tabs" role="tablist">-->
-<!--                                <li class="nav-item">-->
-<!--                                    <a class="nav-link" data-toggle="tab" href="#tabs-5"-->
-<!--                                       role="tab">Description</a>-->
-<!--                                </li>-->
-<!--                                <li class="nav-item">-->
-<!--                                    <a class="nav-link active" data-toggle="tab" href="#tabs-6" role="tab"-->
-<!--                                       th:text="|Customer Previews(${pReviewList.size()})|">Customer-->
-<!--                                        Previews(5)</a>-->
-<!--                                </li>-->
-<!--                            </ul>-->
 
                             <div class="tab-pane" id="tabs-6" role="tabpanel">
                                 <div class="product__details__tab__content" th:each="pReview:${pReviewList}">
@@ -311,24 +262,35 @@
         });
     });
 
-    $(document).on('click', '#payment', function () {
-        tossPayments()
-    }).on('click', '#btnQuantityUp', function () {
-        $('#quantity').val(parseInt($('#quantity').val()) + 1);
-        $('#totalPrice').text(parseInt($('#price').text()) * parseInt($('#quantity').val()))
-    }).on('click', '#btnQuantityDown', function () {
-
-    if($('#quantity').val()>1)
-        $('#quantity').val(parseInt($('#quantity').val()) - 1);
-        $('#totalPrice').text(parseInt($('#price').text()) * parseInt($('#quantity').val()))
-    }).on('click', '#bascket', function () {
-        $.ajax({
-            type: 'get', url: 'append_basket?prodId=' + $('#prodId').val(),
-            success: function () {
-                alert('장바구니에 추가되었습니다.')
-            }
+    $(document)
+        .on('click', '#payment', function () {
+            tossPayments()
         })
-    })
+
+        .on('click', '#btnQuantityUp', function () {
+            $('#quantity').val(parseInt($('#quantity').val()) + 1);
+            $('#totalPrice').text(parseInt($('#price').text()) * parseInt($('#quantity').val()))
+        })
+
+        .on('click', '#btnQuantityDown', function () {
+
+            if ($('#quantity').val() > 1)
+                $('#quantity').val(parseInt($('#quantity').val()) - 1);
+            $('#totalPrice').text(parseInt($('#price').text()) * parseInt($('#quantity').val()))
+        })
+
+        .on('click', '#bascket', function () {
+            $.ajax({
+                type: 'get', url: 'append_basket?prodId=' + $('#prodId').val(),
+                success: function (data) {
+                    if (data == '1')
+                        alert("장바구니에 추가되었습니다.")
+                    else {
+                        alert("장바구니에 이미 추가된 상품입니다.")
+                    }
+                }
+            })
+        })
 
 
     $('#logo').on('click', function () {
@@ -361,9 +323,6 @@
         $('#tabs-6').show();
         $('#tabs-6').tab('show');
     }
-
-
-
 
 
 </script>
