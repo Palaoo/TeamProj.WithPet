@@ -38,15 +38,16 @@ public class LoginController {
         return "home";
     }
 
-    @GetMapping(value = "signup")
-    public String createForm(@RequestParam(value = "kakaoEmail", required = false) String kakaoEmail,
+    @GetMapping("/signup")
+    public String createForm(@RequestParam(required = false) String kakaoEmail,
                              Model model) {
+        System.out.println("LoginController createForm() kakaoEmail: " + kakaoEmail);
         model.addAttribute("kakaoEmail", kakaoEmail);
         return "signup";
     }
 
 
-    @PostMapping(value = "signup")
+    @PostMapping("/signup")
     public String create(@ModelAttribute @Valid UserForm form, BindingResult errors, Model model) {
         /*if (errors.hasErrors()) {
             model.addAttribute("userDto", form);
@@ -141,7 +142,7 @@ public class LoginController {
             model.addAttribute("userId", userService.findById(kakaoEmail).get().getUserId());
             return "kakao-login-valid";
         } else { // 0( kakao email과 동일하지 않고, userid도 없음 ) -> 회원가입으로
-            return "signup?kakaoEmail=" + kakaoEmail;
+            return "redirect:/signup?kakaoEmail=" + kakaoEmail;
         }
 
     }
