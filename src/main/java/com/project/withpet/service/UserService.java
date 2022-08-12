@@ -41,14 +41,20 @@ public class UserService {
 
     public int kakaoUserValidation(String kakaoEmail) {
         Optional<User> result = userRepository.findByKakaoEmail(kakaoEmail);
-        if (result.isPresent())
+        if (result.isPresent()){
+            System.out.println("kakaoUserValidation result: "+ 1);
             return 1;
+        }
 
         if (result.isEmpty())
-            if (userRepository.findById(kakaoEmail).isPresent())
+            if (userRepository.findById(kakaoEmail).isPresent()){
+                System.out.println("kakaoUserValidation result: "+ 2);
                 return 2;
-            else
+            }
+            else{
+                System.out.println("kakaoUserValidation result: "+ 0);
                 return 0;
+            }
 
         return 0;
     }
